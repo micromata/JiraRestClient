@@ -1,4 +1,4 @@
-package de.micromata.jira.rest.domain.session;
+package de.micromata.jira.rest;
 
 
 import com.sun.jersey.api.client.Client;

@@ -5,7 +5,6 @@ package de.micromata.jira.rest;
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.session.JiraRestClient;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.util.RestException;
 

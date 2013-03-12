@@ -12,7 +12,6 @@ import com.sun.jersey.core.util.Base64;
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.session.JiraRestClient;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlHelper;
 import de.micromata.jira.rest.parser.BasicProjectParser;

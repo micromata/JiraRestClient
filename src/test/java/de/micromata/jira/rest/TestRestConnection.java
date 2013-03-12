@@ -1,7 +1,6 @@
 package de.micromata.jira.rest;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
-import de.micromata.jira.rest.domain.session.JiraRestClient;
 import de.micromata.jira.rest.util.RestException;
 import org.junit.Ignore;
 import org.junit.Test;
