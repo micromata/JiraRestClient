@@ -13,6 +13,7 @@ import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.ProjectBean;
 import de.micromata.jira.rest.jql.JqlBean;
+import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.jql.JqlHelper;
 import de.micromata.jira.rest.parser.BasicProjectParser;
 import de.micromata.jira.rest.parser.IssueParser;
@@ -35,7 +36,7 @@ import java.util.List;
  * Time: 11:18
  * To change this template use File | Settings | File Templates.
  */
-public class RestWrapperImpl implements RestWrapper, RestConstants {
+public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
 
 
     @Override
@@ -82,8 +83,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants {
         URI baseUri = jiraRestClient.getBaseUri();
         JqlBean jqlBean = new JqlBean();
         jqlBean.setProjectKey(projectKey);
-        String jql = JqlHelper.buildJqlString(jqlBean);
-        URI uri = RestURIBuilder.buildSearchURI(baseUri, jql);
+        jqlBean.addField( FIELD_SUMMARY ,FIELD_SUMMARY, FIELD_STATUS, FIELD_DUEDATE, FIELD_PRIORITY);
+        URI uri = RestURIBuilder.buildSearchURI(baseUri, jqlBean);
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.header(AUTHORIZATION, BASIC + auth).type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){

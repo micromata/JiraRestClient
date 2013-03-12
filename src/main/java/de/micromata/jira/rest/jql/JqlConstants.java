@@ -18,4 +18,18 @@ public interface JqlConstants {
     public static final String AND = "and";
 
     public static final String OR = "or";
+
+
+    // Issue Field Names für die JQL Suche
+
+    public static final String FIELD_SUMMARY = "summary";
+
+    public static final String FIELD_ISSUETYPE = "issuetype";
+
+    public static final String FIELD_STATUS = "status";
+
+    public static final String FIELD_DUEDATE = "duedate";
+
+    public static final String FIELD_PRIORITY = "priority";
+
 }

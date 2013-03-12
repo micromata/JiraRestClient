@@ -3,6 +3,10 @@ package de.micromata.jira.rest.jql;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * User: Christian
  * Date: 11.03.13
@@ -16,6 +20,15 @@ public class JqlBean {
     private String issueType = StringUtils.EMPTY;
 
     private String status = StringUtils.EMPTY;
+
+    private List<String> fields = null;
+
+
+    public void addField(String ... fieldName){
+        for (String s : fieldName) {
+            getFields().add(s);
+        }
+    }
 
 
     public String getProjectKey() {
@@ -40,5 +53,16 @@ public class JqlBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<String> getFields() {
+        if(fields == null){
+            fields = new ArrayList<String>();
+        }
+        return fields;
+    }
+
+    public void setFields(List<String> fields) {
+        this.fields = fields;
     }
 }

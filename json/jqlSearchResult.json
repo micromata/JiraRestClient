@@ -1,0 +1,158 @@
+{
+  "expand": "schema,names",
+  "startAt": 0,
+  "maxResults": 50,
+  "total": 6,
+  "issues": [
+    {
+      "expand": "editmeta,renderedFields,transitions,changelog,operations",
+      "id": "10005",
+      "self": "http://localhost:2990/jira/rest/api/2/issue/10005",
+      "key": "DEMO-6",
+      "fields": {
+        "summary": "What's next?",
+        "issuetype": {
+          "self": "http://localhost:2990/jira/rest/api/2/issuetype/3",
+          "id": "3",
+          "description": "Eine Aufgabe, die erledigt werden muss.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/issuetypes/task.png",
+          "name": "Aufgabe",
+          "subtask": false
+        },
+        "status": {
+          "self": "http://localhost:2990/jira/rest/api/2/status/1",
+          "description": "Der Vorgang ist offen und bereit, dass der Bearbeiter mit der Arbeit daran beginnen kann.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/statuses/open.png",
+          "name": "Offen",
+          "id": "1"
+        },
+        "duedate": null
+      }
+    },
+    {
+      "expand": "editmeta,renderedFields,transitions,changelog,operations",
+      "id": "10004",
+      "self": "http://localhost:2990/jira/rest/api/2/issue/10004",
+      "key": "DEMO-5",
+      "fields": {
+        "summary": "Searching",
+        "issuetype": {
+          "self": "http://localhost:2990/jira/rest/api/2/issuetype/1",
+          "id": "1",
+          "description": "Ein Problem, das die Funktionen des Produkts beeinträchtigt oder verhindert.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/issuetypes/bug.png",
+          "name": "Bug",
+          "subtask": false
+        },
+        "status": {
+          "self": "http://localhost:2990/jira/rest/api/2/status/1",
+          "description": "Der Vorgang ist offen und bereit, dass der Bearbeiter mit der Arbeit daran beginnen kann.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/statuses/open.png",
+          "name": "Offen",
+          "id": "1"
+        },
+        "duedate": null
+      }
+    },
+    {
+      "expand": "editmeta,renderedFields,transitions,changelog,operations",
+      "id": "10003",
+      "self": "http://localhost:2990/jira/rest/api/2/issue/10003",
+      "key": "DEMO-4",
+      "fields": {
+        "summary": "Editing issues",
+        "issuetype": {
+          "self": "http://localhost:2990/jira/rest/api/2/issuetype/1",
+          "id": "1",
+          "description": "Ein Problem, das die Funktionen des Produkts beeinträchtigt oder verhindert.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/issuetypes/bug.png",
+          "name": "Bug",
+          "subtask": false
+        },
+        "status": {
+          "self": "http://localhost:2990/jira/rest/api/2/status/1",
+          "description": "Der Vorgang ist offen und bereit, dass der Bearbeiter mit der Arbeit daran beginnen kann.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/statuses/open.png",
+          "name": "Offen",
+          "id": "1"
+        },
+        "duedate": "2013-03-22"
+      }
+    },
+    {
+      "expand": "editmeta,renderedFields,transitions,changelog,operations",
+      "id": "10002",
+      "self": "http://localhost:2990/jira/rest/api/2/issue/10002",
+      "key": "DEMO-3",
+      "fields": {
+        "summary": "Keyboard shortcuts",
+        "issuetype": {
+          "self": "http://localhost:2990/jira/rest/api/2/issuetype/4",
+          "id": "4",
+          "description": "Eine Verbesserung oder Erweiterung zu einer bestehenden Funktion oder Aufgabe.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/issuetypes/improvement.png",
+          "name": "Verbesserung",
+          "subtask": false
+        },
+        "status": {
+          "self": "http://localhost:2990/jira/rest/api/2/status/1",
+          "description": "Der Vorgang ist offen und bereit, dass der Bearbeiter mit der Arbeit daran beginnen kann.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/statuses/open.png",
+          "name": "Offen",
+          "id": "1"
+        },
+        "duedate": null
+      }
+    },
+    {
+      "expand": "editmeta,renderedFields,transitions,changelog,operations",
+      "id": "10001",
+      "self": "http://localhost:2990/jira/rest/api/2/issue/10001",
+      "key": "DEMO-2",
+      "fields": {
+        "summary": "Changing an issue's status",
+        "issuetype": {
+          "self": "http://localhost:2990/jira/rest/api/2/issuetype/2",
+          "id": "2",
+          "description": "Eine neue Produktfunktion, die noch entwickelt werden muss.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/issuetypes/newfeature.png",
+          "name": "Neue Funktion",
+          "subtask": false
+        },
+        "status": {
+          "self": "http://localhost:2990/jira/rest/api/2/status/1",
+          "description": "Der Vorgang ist offen und bereit, dass der Bearbeiter mit der Arbeit daran beginnen kann.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/statuses/open.png",
+          "name": "Offen",
+          "id": "1"
+        },
+        "duedate": null
+      }
+    },
+    {
+      "expand": "editmeta,renderedFields,transitions,changelog,operations",
+      "id": "10000",
+      "self": "http://localhost:2990/jira/rest/api/2/issue/10000",
+      "key": "DEMO-1",
+      "fields": {
+        "summary": "What is an issue?",
+        "issuetype": {
+          "self": "http://localhost:2990/jira/rest/api/2/issuetype/3",
+          "id": "3",
+          "description": "Eine Aufgabe, die erledigt werden muss.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/issuetypes/task.png",
+          "name": "Aufgabe",
+          "subtask": false
+        },
+        "status": {
+          "self": "http://localhost:2990/jira/rest/api/2/status/1",
+          "description": "Der Vorgang ist offen und bereit, dass der Bearbeiter mit der Arbeit daran beginnen kann.",
+          "iconUrl": "http://localhost:2990/jira/images/icons/statuses/open.png",
+          "name": "Offen",
+          "id": "1"
+        },
+        "duedate": null
+      }
+    }
+  ]
+}

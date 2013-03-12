@@ -39,6 +39,27 @@ public interface JsonConstants {
 
     public static final String PROP_ARCHIVED = "archived";
 
+    public static final String PROP_SUBTASK = "subtask";
+
+    public static final String PROP_ICONURL = "iconUrl";
+
+    public static final String PROP_SUMMARY = "summary";
+
+
+    // Properties und Elemente der JQL-Suche
+
+    public static final String PROP_EXPAND = "expand";
+
+    public static final String PROP_STARTAT = "startAt";
+
+    public static final String PROP_MAXRESULTS = "maxResults";
+
+    public static final String PROP_TOTAL = "total";
+
+    public static final String ELEM_ISSUES = "issues";
+
+    // ElementNamen
+
     public static final String ELEM_COMPONENTS = "components";
 
     public static final String ELEM_ISSUETYPES = "issueTypes";
@@ -53,7 +74,9 @@ public interface JsonConstants {
 
     public static final String ELEM_AVATAR_URLS = "avatarUrls";
 
+    public static final String ELEM_FIELDS = "fields";
 
-    String PROP_SUBTASK = "subtask";
-    String PROP_ICONURL = "iconUrl";
+    public static final String ELEM_STATUS = "status";
+
+
 }

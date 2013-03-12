@@ -1,6 +1,7 @@
 package de.micromata.jira.rest;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
+import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.util.RestException;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -40,7 +41,17 @@ public class TestRestConnection {
         JiraRestClient jiraRestClient = new JiraRestClient(uri, username, password);
         List<BasicProjectBean> allProjects = restWrapper.getAllProjects(jiraRestClient);
         assertFalse(allProjects.isEmpty());
+    }
 
+    @Test
+    public void testGetIssuesForProject() throws RestException {
+        RestWrapper restWrapper = new RestWrapperImpl();
+        String uri = "http://localhost:2990/jira";
+        String username = "admin";
+        String password = "admin";
+        JiraRestClient jiraRestClient = new JiraRestClient(uri, username, password);
+        List<IssueBean> issuesForProject = restWrapper.getIssuesForProject(jiraRestClient, "DEMO");
+        assertFalse(issuesForProject.isEmpty());
 
     }
 
