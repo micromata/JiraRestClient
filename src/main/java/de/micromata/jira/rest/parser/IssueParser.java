@@ -3,8 +3,12 @@ package de.micromata.jira.rest.parser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.micromata.jira.rest.domain.IssueBean;
+import de.micromata.jira.rest.domain.IssueTypeBean;
+import de.micromata.jira.rest.domain.StatusBean;
+import de.micromata.jira.rest.util.DateParser;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,13 +42,25 @@ public class IssueParser extends BaseParser {
             }
             JsonElement issuetypeElement = fieldObject.get(ELEM_ISSUETYPES);
             if(issuetypeElement != null){
-
+                JsonObject isseuTypeObject = issuetypeElement.getAsJsonObject();
+                IssueTypeBean issueType = IssueTypeParser.parse(isseuTypeObject);
+                issueBean.setIssueType(issueType);
+            }
+            JsonElement statusElement = fieldObject.get(ELEM_STATUS);
+            if(statusElement != null){
+                JsonObject statusObject = statusElement.getAsJsonObject();
+                StatusBean status = StatusParser.parse(statusObject);
+                issueBean.setStatus(status);
+            }
+            JsonElement jsonElement = fieldObject.get(PROP_DUEDATE);
+            if(jsonElement != null){
+                String dueDateString = jsonElement.getAsString();
+                Date dueDate = DateParser.parseDateFormat1(dueDateString);
+                issueBean.setDueDate(dueDate);
             }
 
 
         }
-
-
         return issueBean;
     }
 

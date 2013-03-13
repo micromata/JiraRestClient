@@ -2,6 +2,8 @@ package de.micromata.jira.rest.domain;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Christian
@@ -20,6 +22,8 @@ public class IssueBean extends BaseBean {
     private IssueTypeBean issueType = null;
 
     private StatusBean status = null;
+
+    private Date dueDate = null;
 
     public String getExpand() {
         return expand;
@@ -59,5 +63,13 @@ public class IssueBean extends BaseBean {
 
     public void setStatus(StatusBean status) {
         this.status = status;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 }

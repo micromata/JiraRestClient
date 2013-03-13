@@ -45,6 +45,8 @@ public interface JsonConstants {
 
     public static final String PROP_SUMMARY = "summary";
 
+    public static final String PROP_DUEDATE = "duedate";
+
 
     // Properties und Elemente der JQL-Suche
 
