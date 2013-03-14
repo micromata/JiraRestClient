@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class JqlSearchParser implements JsonConstants {
 
-    public JqlSearchResultBean parse(JsonObject jsonObject){
+    public static JqlSearchResultBean parse(JsonObject jsonObject){
         JqlSearchResultBean searchResultBean = new JqlSearchResultBean();
         String expand = jsonObject.get(PROP_EXPAND).getAsString();
         int startAt = jsonObject.get(PROP_STARTAT).getAsInt();

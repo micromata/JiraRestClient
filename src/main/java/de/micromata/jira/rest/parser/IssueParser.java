@@ -1,6 +1,7 @@
 package de.micromata.jira.rest.parser;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.IssueTypeBean;
@@ -53,7 +54,7 @@ public class IssueParser extends BaseParser {
                 issueBean.setStatus(status);
             }
             JsonElement jsonElement = fieldObject.get(PROP_DUEDATE);
-            if(jsonElement != null){
+            if(jsonElement != null && jsonElement instanceof JsonNull == false){
                 String dueDateString = jsonElement.getAsString();
                 Date dueDate = DateParser.parseDateFormat1(dueDateString);
                 issueBean.setDueDate(dueDate);

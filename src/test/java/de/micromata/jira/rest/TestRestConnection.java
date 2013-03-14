@@ -2,6 +2,7 @@ package de.micromata.jira.rest;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.IssueBean;
+import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.util.RestException;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -57,9 +58,9 @@ public class TestRestConnection {
         String username = "admin";
         String password = "admin";
         JiraRestClient jiraRestClient = new JiraRestClient(uri, username, password);
-        List<IssueBean> issuesForProject = restWrapper.getIssuesForProject(jiraRestClient, "DEMO");
+        JqlSearchResultBean resultBean = restWrapper.getIssuesForProject(jiraRestClient, "DEMO");
 
-        System.out.println("testGetIssueForProject: " + !issuesForProject.isEmpty());
+        System.out.println("testGetIssueForProject: " + !resultBean.getIssueBeans().isEmpty());
 
     }
 

@@ -2,6 +2,7 @@ package de.micromata.jira.rest.domain;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +55,9 @@ public class JqlSearchResultBean {
     }
 
     public List<IssueBean> getIssueBeans() {
+        if(issueBeans == null){
+            issueBeans = new ArrayList<IssueBean>();
+        }
         return issueBeans;
     }
 

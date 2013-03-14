@@ -11,12 +11,12 @@ import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.core.util.Base64;
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.IssueBean;
+import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlConstants;
-import de.micromata.jira.rest.jql.JqlHelper;
 import de.micromata.jira.rest.parser.BasicProjectParser;
-import de.micromata.jira.rest.parser.IssueParser;
+import de.micromata.jira.rest.parser.JqlSearchParser;
 import de.micromata.jira.rest.parser.ProjectParser;
 import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
@@ -77,7 +77,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     }
 
     @Override
-    public List<IssueBean> getIssuesForProject(JiraRestClient jiraRestClient, String projectKey) throws RestException {
+    public JqlSearchResultBean getIssuesForProject(JiraRestClient jiraRestClient, String projectKey) throws RestException {
         String auth = jiraRestClient.getAuth();
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
@@ -89,8 +89,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         ClientResponse clientResponse = webResource.header(AUTHORIZATION, BASIC + auth).type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
             String entity = clientResponse.getEntity(String.class);
-            List<JsonObject> jsonObjects = GsonParserUtil.parseJsonObjects(entity);
-            return IssueParser.parse(jsonObjects);
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+            return JqlSearchParser.parse(jsonObject);
         }
         else{
             throw new RestException(clientResponse);
