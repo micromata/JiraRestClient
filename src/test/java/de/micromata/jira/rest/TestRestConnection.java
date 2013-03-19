@@ -47,7 +47,6 @@ public class TestRestConnection {
         String password = "admin";
         JiraRestClient jiraRestClient = new JiraRestClient(uri, username, password);
         List<BasicProjectBean> allProjects = restWrapper.getAllProjects(jiraRestClient);
-
         System.out.println("testGetProject: " + !allProjects.isEmpty());
     }
 
