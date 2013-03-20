@@ -1,14 +1,15 @@
 package de.micromata.jira.rest.parser;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.gson.JsonObject;
+
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.JsonConstants;
-
-import java.util.List;
 
 /**
  * User: Christian
@@ -19,7 +20,12 @@ public class JqlSearchParser implements JsonConstants {
 
     public static JqlSearchResultBean parse(JsonObject jsonObject){
         JqlSearchResultBean searchResultBean = new JqlSearchResultBean();
-        String expand = jsonObject.get(PROP_EXPAND).getAsString();
+        
+        String expand = StringUtils.EMPTY;
+        if(jsonObject.get(PROP_EXPAND) != null) {
+        	expand = jsonObject.get(PROP_EXPAND).getAsString();
+        }
+        
         int startAt = jsonObject.get(PROP_STARTAT).getAsInt();
         int maxResults = jsonObject.get(PROP_MAXRESULTS).getAsInt();
         int total = jsonObject.get(PROP_TOTAL).getAsInt();

@@ -21,7 +21,7 @@ public class JqlHelper implements JqlConstants {
         }
         if (StringUtils.trimToNull(jqlBean.getIssueType()) != null) {
             sb.append(AND + " ");
-            sb.append(ISSUETYPE + " = " + jqlBean.getIssueType());
+            sb.append(ISSUETYPE + " = " + jqlBean.getIssueType() + " ");
         }
         if (StringUtils.trimToNull(jqlBean.getStatus()) != null) {
             sb.append(AND + " ");

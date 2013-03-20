@@ -1,15 +1,19 @@
 package de.micromata.jira.rest;
 
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
-import com.sun.jersey.core.util.Base64;
-import de.micromata.jira.rest.util.RestConstants;
-
-import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
+
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
+
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.json.JSONConfiguration;
+import com.sun.jersey.client.apache.ApacheHttpClient;
+import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
+import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
+import com.sun.jersey.core.util.Base64;
+
+import de.micromata.jira.rest.util.RestConstants;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,36 +24,30 @@ import java.net.URI;
  */
 public class JiraRestClient {
 
-    private Client client;
-
-    private String auth;
+    private ApacheHttpClient client;
 
     private URI baseUri;
 
     public JiraRestClient(String uri, String username, String password) {
-        ClientConfig clientConfig = new DefaultClientConfig();
-        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING,
-                Boolean.TRUE);
-        client = Client.create(clientConfig);
-        String authString = username + ":" + password;
-        auth = new String(Base64.encode(authString));
-        baseUri = UriBuilder.fromUri(uri).path(RestConstants.BASE_REST_PATH).build();
+    	String authString = username + ":" + password;
+    	String auth = new String(Base64.encode(authString));
+
+    	ApacheHttpClientConfig clientConfig = new DefaultApacheHttpClientConfig();
+        clientConfig.getProperties().put(ApacheHttpClientConfig.PROPERTY_HANDLE_COOKIES, Boolean.TRUE);
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+        this.client = ApacheHttpClient.create(clientConfig);
+        
+        this.baseUri = UriBuilder.fromUri(uri).path(RestConstants.BASE_REST_PATH).build();
+        this.client.resource(baseUri).header(RestConstants.AUTHORIZATION, RestConstants.BASIC + auth).
+        	type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
     }
 
-    public Client getClient() {
+    public ApacheHttpClient getClient() {
         return client;
     }
 
-    public void setClient(Client client) {
+    public void setClient(ApacheHttpClient client) {
         this.client = client;
-    }
-
-    public String getAuth() {
-        return auth;
-    }
-
-    public void setAuth(String auth) {
-        this.auth = auth;
     }
 
     public URI getBaseUri() {
