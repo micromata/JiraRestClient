@@ -30,7 +30,7 @@ public interface RestWrapper {
 
     public List<IssueBean> searchIssuesForProject(JiraRestClient jiraRestClient, JqlBean jqlBean) throws RestException;
 
-    public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey);
+    public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException;
 
     public boolean testRestConnection(URI uri, String username, String password);
 }

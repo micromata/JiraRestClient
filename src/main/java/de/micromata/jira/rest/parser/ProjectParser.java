@@ -1,6 +1,7 @@
 package de.micromata.jira.rest.parser;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.*;
@@ -23,15 +24,20 @@ public class ProjectParser extends BaseParser {
         ProjectBean bean = new ProjectBean();
         parseBaseProperties(bean, object);
 
-        String description = object.get(PROP_DESCRIPTION).getAsString();
+        JsonElement descriptionElement = object.get(PROP_DESCRIPTION);
+        if(descriptionElement != null) {
+        	String description = descriptionElement.getAsString();
+        	bean.setDescription(description);
+        }
         String key = object.get(PROP_KEY).getAsString();
-        bean.setDescription(description);
         bean.setKey(key);
 
         JsonObject lead = object.getAsJsonObject(ELEM_LEAD);
-        UserBean userBean = UserParser.parse(lead);
-        bean.setLead(userBean);
-
+        if(lead != null) {
+	        UserBean userBean = UserParser.parse(lead);
+	        bean.setLead(userBean);
+        }
+        
         JsonArray componentJsonArray = object.getAsJsonArray(ELEM_COMPONENTS);
         if (componentJsonArray != null) {
             List<JsonObject> componentJonObjects = GsonParserUtil.parseJsonArray(componentJsonArray);
@@ -46,7 +52,7 @@ public class ProjectParser extends BaseParser {
             bean.setVersions(connectVersionBeans);
         }
 
-        JsonArray issuetypesJsonArray = object.getAsJsonArray(ELEM_ISSUETYPES);
+        JsonArray issuetypesJsonArray = object.getAsJsonArray(ELEM_ISSUETYPE);
         if (issuetypesJsonArray != null) {
             List<JsonObject> issuetypeJsonObjects = GsonParserUtil.parseJsonArray(issuetypesJsonArray);
             List<IssueTypeBean> issueTypeBeans = IssueTypeParser.parse(issuetypeJsonObjects);

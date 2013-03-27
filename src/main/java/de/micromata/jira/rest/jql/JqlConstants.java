@@ -44,7 +44,7 @@ public interface JqlConstants {
     
     public static final String STATUS_REOPENED = "reopened";
 
-    //Issue Type für die JQL Suche
+//    //Issue Type für die JQL Suche
     
     public static final String ISSUETYPE_IMPROVEMENT = "improvement"; 
 
@@ -55,4 +55,16 @@ public interface JqlConstants {
     public static final String ISSUETYPE_SUBTASK = "sub-task"; 
 
     public static final String ISSUETYPE_TASK = "task"; 
+    
+//    //Priority für die SQL Suche
+//    
+//    public static final String PRIORITY_MAJOR = "major";
+//    
+//    public static final String PRIORITY_BLOCKER = "blocker";
+//    
+//    public static final String PRIORITY_CRITICAL = "critical";
+//    
+//    public static final String PRIORITY_MINOR = "minor";
+//    
+//    public static final String PRIORITY_TRIVIAL = "trivial";
 }

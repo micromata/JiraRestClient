@@ -24,6 +24,8 @@ public interface RestConstants {
     public static final String USER = "/user";
 
     public static final String SEARCH = "/search";
+    
+    public static final String ISSUE = "/issue";
 
     // Parameternamen
 
@@ -32,5 +34,11 @@ public interface RestConstants {
     public static final String JQL = "jql";
 
     public static final String FIELDS = "fields";
+    
+    // Rückgabe der Felder bei Suchfunktion
+    
+    public static final String FIELDS_ALL = "*all"; //set by default
+    
+    public static final String FIELDS_NAVIGABLE = "*navigable";
 
 }

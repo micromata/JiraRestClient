@@ -23,9 +23,9 @@ public class IssueTypeParser extends BaseParser {
         String description = object.get(PROP_DESCRIPTION).getAsString();
         boolean subtask = object.get(PROP_SUBTASK).getAsBoolean();
         String iconURL = object.get(PROP_ICONURL).getAsString();
-        URI uri = URIParser.parseStringToURI(iconURL);
+        URI uriIcon = URIParser.parseStringToURI(iconURL);
         bean.setDescription(description);
-        bean.setIconURL(uri);
+        bean.setIconURL(uriIcon);
         bean.setSubtask(subtask);
         return bean;
     }

@@ -11,9 +11,19 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ComponentBean extends BaseBean {
 
-    public String description = StringUtils.EMPTY;
+    private String description = StringUtils.EMPTY;
+    
+    private UserBean lead = null;
 
-    public boolean isAssigneeTypeValid = false;
+    private boolean isAssigneeTypeValid = false;
+    
+    private String assigneeType = StringUtils.EMPTY;
+    
+    private AssigneeBean assignee = null;
+
+    private String realAssigneeType = StringUtils.EMPTY;
+    
+    private AssigneeBean realAssignee = null;
 
     public String getDescription() {
         return description;
@@ -30,4 +40,44 @@ public class ComponentBean extends BaseBean {
     public void setAssigneeTypeValid(boolean assigneeTypeValid) {
         isAssigneeTypeValid = assigneeTypeValid;
     }
+
+	public UserBean getLead() {
+		return lead;
+	}
+
+	public void setLead(UserBean lead) {
+		this.lead = lead;
+	}
+
+	public String getAssigneeType() {
+		return assigneeType;
+	}
+
+	public void setAssigneeType(String assigneeType) {
+		this.assigneeType = assigneeType;
+	}
+
+	public AssigneeBean getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(AssigneeBean assignee) {
+		this.assignee = assignee;
+	}
+
+	public String getRealAssigneeType() {
+		return realAssigneeType;
+	}
+
+	public void setRealAssigneeType(String realAssigneeType) {
+		this.realAssigneeType = realAssigneeType;
+	}
+
+	public AssigneeBean getRealAssignee() {
+		return realAssignee;
+	}
+
+	public void setRealAssignee(AssigneeBean realAssignee) {
+		this.realAssignee = realAssignee;
+	}
 }

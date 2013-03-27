@@ -3,9 +3,6 @@ package de.micromata.jira.rest.jql;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collection;
-import java.util.List;
-
 /**
  * User: Christian
  * Date: 11.03.13
@@ -27,6 +24,7 @@ public class JqlHelper implements JqlConstants {
             sb.append(AND + " ");
             sb.append(STATUS + " = " + jqlBean.getStatus());
         }
+        
         return sb.toString();
     }
 
