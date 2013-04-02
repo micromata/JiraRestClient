@@ -59,7 +59,6 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 
     public void testGetAllProjects() throws URISyntaxException, RestException {
         List<BasicProjectBean> allProjects = restWrapper.getAllProjects(jiraRestClient);
-
         System.out.println("testGetProject: " + !allProjects.isEmpty());
     }
     
