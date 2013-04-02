@@ -19,15 +19,19 @@ import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import com.sun.jersey.core.util.Base64;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
+import de.micromata.jira.rest.domain.CommentSummaryBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.parser.BasicProjectParser;
+import de.micromata.jira.rest.parser.CommentSummaryParser;
 import de.micromata.jira.rest.parser.IssueParser;
 import de.micromata.jira.rest.parser.JqlSearchParser;
 import de.micromata.jira.rest.parser.ProjectParser;
+import de.micromata.jira.rest.parser.VersionParser;
 import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
@@ -54,7 +58,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if(response.getStatus() == HttpURLConnection.HTTP_OK){
             String entity = response.getEntity(String.class);
             List<JsonObject> jsonObjects = GsonParserUtil.parseJsonObjects(entity);
-            return BasicProjectParser.parse(jsonObjects);
+            return BasicProjectParser.parseBasicProject(jsonObjects);
         }
         else{
            throw new RestException(response);
@@ -77,6 +81,24 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         else{
             throw new RestException(clientResponse);
         }
+    }
+    
+    @Override
+    public List<VersionBean> getProjectVersions(JiraRestClient jiraRestClient, String projectKey) throws RestException {
+    	
+    	Client client = jiraRestClient.getClient();
+    	URI baseUri = jiraRestClient.getBaseUri();
+    	URI uri = RestURIBuilder.buildProjectVersionsByKeyURI(baseUri, projectKey);
+    	WebResource webResource = client.resource(uri);
+    	ClientResponse clientResponse = webResource.get(ClientResponse.class);
+    	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+    		String entity = clientResponse.getEntity(String.class);
+    		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
+    		return VersionParser.parse(objects);
+    	}
+    	else{
+    		throw new RestException(clientResponse);
+    	}
     }
 
     @Override
@@ -137,6 +159,23 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         else{
             throw new RestException(clientResponse);
         }
+    }
+    
+    @Override
+    public CommentSummaryBean getCommentsByIssue(JiraRestClient jiraRestClient, String issueKey) throws RestException {
+    	Client client = jiraRestClient.getClient();
+    	URI baseUri = jiraRestClient.getBaseUri();
+    	URI uri = RestURIBuilder.buildCommentByIssueURI(baseUri, issueKey);
+    	
+    	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
+    	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+    		String entity = clientResponse.getEntity(String.class);
+    		JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+    		return CommentSummaryParser.parse(jsonObject);
+    	}
+    	else{
+    		throw new RestException(clientResponse);
+    	}
     }
 
     @Override

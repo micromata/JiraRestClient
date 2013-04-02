@@ -5,10 +5,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.*;
+import de.micromata.jira.rest.util.ERoles;
 import de.micromata.jira.rest.util.GsonParserUtil;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,21 +20,19 @@ import java.util.List;
  * Time: 17:47
  * To change this template use File | Settings | File Templates.
  */
-public class ProjectParser extends BaseParser {
+public class ProjectParser extends BasicProjectParser {
 
 
     public static ProjectBean parse(JsonObject object) {
         ProjectBean bean = new ProjectBean();
-        parseBaseProperties(bean, object);
+        parseBasicProject(bean, object);
 
         JsonElement descriptionElement = object.get(PROP_DESCRIPTION);
         if(descriptionElement != null) {
         	String description = descriptionElement.getAsString();
         	bean.setDescription(description);
         }
-        String key = object.get(PROP_KEY).getAsString();
-        bean.setKey(key);
-
+        
         JsonObject lead = object.getAsJsonObject(ELEM_LEAD);
         if(lead != null) {
 	        UserBean userBean = UserParser.parse(lead);
@@ -57,6 +58,18 @@ public class ProjectParser extends BaseParser {
             List<JsonObject> issuetypeJsonObjects = GsonParserUtil.parseJsonArray(issuetypesJsonArray);
             List<IssueTypeBean> issueTypeBeans = IssueTypeParser.parse(issuetypeJsonObjects);
             bean.setIssueTypes(issueTypeBeans);
+        }
+        
+        JsonElement assigneeTypeElement = object.get(PROP_ASSIGNEETYPE);
+        if(assigneeTypeElement != null) {
+        	String assigneeType = assigneeTypeElement.getAsString();
+        	bean.setAssigneeType(assigneeType);
+        }
+        
+        JsonElement rolesElement = object.get(ELEM_ROLES);
+        if(rolesElement != null) {
+        	Map<ERoles, URI> roles = RolesParser.parse(object.getAsJsonObject());
+        	bean.setRoles(roles);
         }
 
         return bean;

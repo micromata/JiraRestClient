@@ -32,6 +32,8 @@ public class VersionParser extends BaseParser {
         bean.setReleased(released);
         boolean overdue = object.get(PROP_OVERDUE).getAsBoolean();
         bean.setOverdue(overdue);
+        Date date = DateParser.parseDateFormat2(object.get(PROP_USER_RELEASE_DATE).getAsString());
+        bean.setUserReleaseDate(date);
         return bean;
     }
 

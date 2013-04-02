@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.CommentBean;
@@ -26,15 +27,18 @@ public class CommentParser extends BaseParser {
 		String body = object.get(PROP_BODY).getAsString();
 		UserBean au = UserParser.parse(object.get(ELEM_AUTHOR).getAsJsonObject());
 		UserBean uau = UserParser.parse(object.get(ELEM_UPDATE_AUTHOR).getAsJsonObject());
-		Date created = DateParser.parseDateFormat1(object.get(PROP_CREATED).getAsString());
-		Date updated = DateParser.parseDateFormat1(object.get(PROP_UPDATED).getAsString());
-		VisibilityBean visibilityBean = VisibilityParser.parse(object.get(ELEM_VISIBILITY).getAsJsonObject());
+		Date created = DateParser.parseDateFormat3(object.get(PROP_CREATED).getAsString());
+		Date updated = DateParser.parseDateFormat3(object.get(PROP_UPDATED).getAsString());
+		JsonElement element = object.get(ELEM_VISIBILITY);
+		if(element != null) {
+			VisibilityBean visibilityBean = VisibilityParser.parse(element.getAsJsonObject());
+			bean.setVisibility(visibilityBean);
+		}
 		bean.setAuthor(au);
 		bean.setUpdateAuthor(uau);
 		bean.setBody(body);
 		bean.setCreated(created);
 		bean.setUpdated(updated);
-		bean.setVisibility(visibilityBean);
 		return bean;
 	}
 	

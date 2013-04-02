@@ -28,7 +28,7 @@ public class IssueBean extends IssueBasicBean {
 	
 	private VotesBean votesBean = null;
 	
-	private ReporterBean reporterBean = null;
+	private UserBean reporterBean = null;
 	
 	private Date updated = null;
 	
@@ -56,7 +56,7 @@ public class IssueBean extends IssueBasicBean {
 	
 	private int workratio = -1;
 	
-	private AssigneeBean assigneeBean = null;
+	private UserBean assigneeBean = null;
 	
 	private List<AttachmentBean> attachments = null;
 	
@@ -138,11 +138,11 @@ public class IssueBean extends IssueBasicBean {
 		this.votesBean = votesBean;
 	}
 
-	public ReporterBean getReporter() {
+	public UserBean getReporter() {
 		return reporterBean;
 	}
 
-	public void setReporter(ReporterBean reporterBean) {
+	public void setReporter(UserBean reporterBean) {
 		this.reporterBean = reporterBean;
 	}
 
@@ -251,11 +251,11 @@ public class IssueBean extends IssueBasicBean {
 		this.workratio = workratio;
 	}
 
-	public AssigneeBean getAssignee() {
+	public UserBean getAssignee() {
 		return assigneeBean;
 	}
 
-	public void setAssignee(AssigneeBean assigneeBean) {
+	public void setAssignee(UserBean assigneeBean) {
 		this.assigneeBean = assigneeBean;
 	}
 

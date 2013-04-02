@@ -12,8 +12,7 @@ public class BasicProjectBean extends BaseBean {
 
     private  String key;
 
-    public BasicProjectBean() {
-    }
+    private AvatarURLBean avatarURLs = null;
 
     public String getKey() {
         return key;
@@ -22,4 +21,12 @@ public class BasicProjectBean extends BaseBean {
     public void setKey(String key) {
         this.key = key;
     }
+
+	public AvatarURLBean getAvatarURLs() {
+		return avatarURLs;
+	}
+
+	public void setAvatarURLs(AvatarURLBean avatarURLs) {
+		this.avatarURLs = avatarURLs;
+	}
 }

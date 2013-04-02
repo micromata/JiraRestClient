@@ -136,6 +136,8 @@ public interface JsonConstants {
     public static final String PROP_REAL_ASSIGNEE_TYPE = "realAssigneeType";
     
     public static final String PROP_BODY = "body";
+    
+    public static final String PROP_USER_RELEASE_DATE = "userReleaseDate";
 
     // Properties und Elemente der JQL-Suche
 
@@ -204,4 +206,12 @@ public interface JsonConstants {
     public static final String ELEM_REAL_ASSIGNEE = "realAssignee";
     
     public static final String ELEM_COMMENT = "comment";
+    
+    // Rollen
+    
+    public static final String ROLE_ADMINISTRATORS = "Administrator";
+    
+    public static final String ROLE_USERS = "Users";
+    
+    public static final String ROLE_DEVELOPERS = "Developers";
 }

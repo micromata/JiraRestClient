@@ -1,6 +1,8 @@
 package de.micromata.jira.rest.parser;
 
 import com.google.gson.JsonObject;
+
+import de.micromata.jira.rest.domain.AvatarURLBean;
 import de.micromata.jira.rest.domain.BasicProjectBean;
 
 import java.util.ArrayList;
@@ -16,19 +18,20 @@ import java.util.List;
 public class BasicProjectParser extends BaseParser {
 
 
-    public static BasicProjectBean parse(JsonObject object) {
-        BasicProjectBean bean = new BasicProjectBean();
+    public static void parseBasicProject(BasicProjectBean bean, JsonObject object) {
         parseBaseProperties(bean, object);
         String key = object.get(PROP_KEY).getAsString();
+        AvatarURLBean parse = AvatarURLParser.parse(object.getAsJsonObject(ELEM_AVATAR_URLS));
+        bean.setAvatarURLs(parse);
         bean.setKey(key);
-        return  bean;
     }
 
-
-    public static List<BasicProjectBean> parse(List<JsonObject> objects) {
+    public static List<BasicProjectBean> parseBasicProject(List<JsonObject> objects) {
         List<BasicProjectBean> retval = new ArrayList<BasicProjectBean>();
         for (JsonObject jsonObject : objects) {
-            retval.add(parse(jsonObject));
+        	BasicProjectBean bean = new BasicProjectBean();
+        	parseBasicProject(bean, jsonObject);
+            retval.add(bean);
         }
         return retval;
     }

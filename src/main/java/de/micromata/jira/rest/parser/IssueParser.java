@@ -10,7 +10,6 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.AggregateprogressBean;
-import de.micromata.jira.rest.domain.AssigneeBean;
 import de.micromata.jira.rest.domain.AttachmentBean;
 import de.micromata.jira.rest.domain.CommentSummaryBean;
 import de.micromata.jira.rest.domain.ComponentBean;
@@ -20,10 +19,10 @@ import de.micromata.jira.rest.domain.IssueTypeBean;
 import de.micromata.jira.rest.domain.PriorityBean;
 import de.micromata.jira.rest.domain.ProgressBean;
 import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.ReporterBean;
 import de.micromata.jira.rest.domain.ResolutionBean;
 import de.micromata.jira.rest.domain.StatusBean;
 import de.micromata.jira.rest.domain.TimetrackingBean;
+import de.micromata.jira.rest.domain.UserBean;
 import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.domain.VotesBean;
 import de.micromata.jira.rest.domain.WatchesBean;
@@ -138,7 +137,7 @@ public class IssueParser extends BaseParser {
             JsonElement reporterElement = fieldObject.get(ELEM_REPORTER);
             if(reporterElement != null){
             	JsonObject reporterObject = reporterElement.getAsJsonObject();
-            	ReporterBean reporter = ReporterParser.parse(reporterObject);
+            	UserBean reporter = UserParser.parse(reporterObject);
             	issueBean.setReporter(reporter);
             }
             JsonElement priorityElement = fieldObject.get(ELEM_PRIORITY);
@@ -186,7 +185,7 @@ public class IssueParser extends BaseParser {
             JsonElement assigneeElement = fieldObject.get(ELEM_ASSIGNEE);
             if(assigneeElement != null){
             	JsonObject assigneeObject = assigneeElement.getAsJsonObject();
-            	AssigneeBean assignee = AssigneeParser.parse(assigneeObject);
+            	UserBean assignee = UserParser.parse(assigneeObject);
             	issueBean.setAssignee(assignee);
             }
             JsonArray attachmentArray = fieldObject.getAsJsonArray(ELEM_ATTACHMENT);

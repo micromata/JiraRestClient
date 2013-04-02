@@ -5,8 +5,11 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
+import de.micromata.jira.rest.domain.CommentSummaryBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
+import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.util.RestConstants;
@@ -37,9 +40,12 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         TestRestConnection testRestConnection = new TestRestConnection();
 //        testRestConnection.testRestConnection();
 //        testRestConnection.testGetAllProjects();
+//        testRestConnection.testGetProjectByKey();
+        testRestConnection.testGetProjectVersions();
 //        testRestConnection.testGetIssuesForProject();
 //        testRestConnection.testSearchIssuesForProject();
-        testRestConnection.testGetIssueByKey();
+//        testRestConnection.testGetIssueByKey();
+//        testRestConnection.testGetCommentsByIssue();
     }
 
     public void testRestConnection() throws URISyntaxException {
@@ -55,6 +61,18 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         List<BasicProjectBean> allProjects = restWrapper.getAllProjects(jiraRestClient);
 
         System.out.println("testGetProject: " + !allProjects.isEmpty());
+    }
+    
+    public void testGetProjectByKey() throws RestException {
+    	ProjectBean projectByKey = restWrapper.getProjectByKey(jiraRestClient, "DEMO");
+    	
+    	System.out.println("testGetProjectByKey: " + projectByKey.getName().equals("DEMO"));
+    }
+
+    public void testGetProjectVersions() throws RestException {
+    	List<VersionBean> versions = restWrapper.getProjectVersions(jiraRestClient, "DEMO");
+    	
+    	System.out.println("testGetProjectVersions: " + !versions.isEmpty());
     }
 
     public void testGetIssuesForProject() throws RestException {
@@ -80,5 +98,12 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	IssueBean issueBean = restWrapper.getIssueByKey(jiraRestClient, issueKey);
     	
     	System.out.println("testGetIssueByKey: " + issueBean.getIssueType().getName().equals("Bug"));
+    }
+
+    public void testGetCommentsByIssue() throws RestException {
+    	String issueKey = "DEMO-1";
+    	CommentSummaryBean commentSummaryBean = restWrapper.getCommentsByIssue(jiraRestClient, issueKey);
+    	
+    	System.out.println("testGetCommentByIssue: " + !commentSummaryBean.getComments().isEmpty());
     }
 }

@@ -19,11 +19,11 @@ public class ComponentBean extends BaseBean {
     
     private String assigneeType = StringUtils.EMPTY;
     
-    private AssigneeBean assignee = null;
+    private UserBean assignee = null;
 
     private String realAssigneeType = StringUtils.EMPTY;
     
-    private AssigneeBean realAssignee = null;
+    private UserBean realAssignee = null;
 
     public String getDescription() {
         return description;
@@ -57,11 +57,11 @@ public class ComponentBean extends BaseBean {
 		this.assigneeType = assigneeType;
 	}
 
-	public AssigneeBean getAssignee() {
+	public UserBean getAssignee() {
 		return assignee;
 	}
 
-	public void setAssignee(AssigneeBean assignee) {
+	public void setAssignee(UserBean assignee) {
 		this.assignee = assignee;
 	}
 
@@ -73,11 +73,11 @@ public class ComponentBean extends BaseBean {
 		this.realAssigneeType = realAssigneeType;
 	}
 
-	public AssigneeBean getRealAssignee() {
+	public UserBean getRealAssignee() {
 		return realAssignee;
 	}
 
-	public void setRealAssignee(AssigneeBean realAssignee) {
+	public void setRealAssignee(UserBean realAssignee) {
 		this.realAssignee = realAssignee;
 	}
 }
