@@ -3,9 +3,6 @@ package de.micromata.jira.rest.jql;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collection;
-import java.util.List;
-
 /**
  * User: Christian
  * Date: 11.03.13
@@ -21,12 +18,13 @@ public class JqlHelper implements JqlConstants {
         }
         if (StringUtils.trimToNull(jqlBean.getIssueType()) != null) {
             sb.append(AND + " ");
-            sb.append(ISSUETYPE + " = " + jqlBean.getIssueType());
+            sb.append(ISSUETYPE + " = " + jqlBean.getIssueType() + " ");
         }
         if (StringUtils.trimToNull(jqlBean.getStatus()) != null) {
             sb.append(AND + " ");
             sb.append(STATUS + " = " + jqlBean.getStatus());
         }
+        
         return sb.toString();
     }
 

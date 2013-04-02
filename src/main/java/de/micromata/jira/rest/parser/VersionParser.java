@@ -1,12 +1,13 @@
 package de.micromata.jira.rest.parser;
 
-import com.google.gson.JsonObject;
-import de.micromata.jira.rest.domain.VersionBean;
-import de.micromata.jira.rest.util.DateParser;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.google.gson.JsonObject;
+
+import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.util.DateParser;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,9 +17,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class VersionParser extends BaseParser {
-
-
-
 
     public static VersionBean parse(JsonObject object){
         VersionBean bean = new VersionBean();
@@ -34,6 +32,8 @@ public class VersionParser extends BaseParser {
         bean.setReleased(released);
         boolean overdue = object.get(PROP_OVERDUE).getAsBoolean();
         bean.setOverdue(overdue);
+        Date date = DateParser.parseDateFormat2(object.get(PROP_USER_RELEASE_DATE).getAsString());
+        bean.setUserReleaseDate(date);
         return bean;
     }
 

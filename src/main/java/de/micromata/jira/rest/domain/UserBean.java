@@ -17,6 +17,8 @@ public class UserBean extends BaseBean {
     private String displayName = StringUtils.EMPTY;
 
     private boolean active = true;
+    
+    private String emailAddress = StringUtils.EMPTY;
 
     public AvatarURLBean getAvatarUrl() {
         return avatarUrl;
@@ -41,4 +43,12 @@ public class UserBean extends BaseBean {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
 }

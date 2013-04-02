@@ -1,5 +1,6 @@
 package de.micromata.jira.rest.parser;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.micromata.jira.rest.domain.AvatarURLBean;
 import de.micromata.jira.rest.domain.UserBean;
@@ -24,6 +25,11 @@ public class UserParser extends BaseParser {
         String displayName = object.get(PROP_DISPLAYNAME).getAsString();
         JsonObject avatarUrls = object.get(ELEM_AVATAR_URLS).getAsJsonObject();
         AvatarURLBean avatarURLBean = AvatarURLParser.parse(avatarUrls);
+        JsonElement element = object.get(PROP_EMAIL_ADRESS);
+        if(element != null) {
+	        String ea = element.getAsString();
+	        bean.setEmailAddress(ea);
+        }
         bean.setActive(active);
         bean.setDisplayName(displayName);
         bean.setAvatarUrl(avatarURLBean);

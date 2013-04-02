@@ -24,6 +24,18 @@ public class RestURIBuilder implements RestConstants {
     public static URI buildProjectByKeyURI(URI baseURI, String projectKey) {
         return UriBuilder.fromUri(baseURI).path(PROJECT).path(projectKey).build();
     }
+    
+    public static URI buildProjectVersionsByKeyURI(URI baseURI, String projectKey) {
+    	return UriBuilder.fromUri(baseURI).path(PROJECT).path(projectKey).path(VERSIONS).build();
+    }
+    
+    public static URI buildIssueByKeyURI(URI baseURI, String issueKey) {
+    	return UriBuilder.fromUri(baseURI).path(ISSUE).path(issueKey).build();
+    }
+
+    public static URI buildCommentByIssueURI(URI baseURI, String issueKey) {
+    	return UriBuilder.fromUri(baseURI).path(ISSUE).path(issueKey).path(COMMENT).build();
+    }
 
     public static URI buildSearchURI(URI baseUri, JqlBean jqlBean) {
         String jql = JqlHelper.buildJqlString(jqlBean);

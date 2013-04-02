@@ -1,8 +1,12 @@
 package de.micromata.jira.rest.domain;
 
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
+import de.micromata.jira.rest.util.ERoles;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,8 +28,8 @@ public class ProjectBean extends BasicProjectBean {
     private List<IssueTypeBean> issueTypes = null;
 
     private String assigneeType = StringUtils.EMPTY;
-
-    private List<AvatarURLBean> avatarURLs = null;
+    
+    private Map<ERoles, URI> roles = null;
 
     public String getDescription() {
         return description;
@@ -75,11 +79,11 @@ public class ProjectBean extends BasicProjectBean {
         this.assigneeType = assigneeType;
     }
 
-    public List<AvatarURLBean> getAvatarURLs() {
-        return avatarURLs;
-    }
+	public Map<ERoles, URI> getRoles() {
+		return roles;
+	}
 
-    public void setAvatarURLs(List<AvatarURLBean> avatarURLs) {
-        this.avatarURLs = avatarURLs;
-    }
+	public void setRoles(Map<ERoles, URI> roles) {
+		this.roles = roles;
+	}
 }

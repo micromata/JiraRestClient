@@ -2,15 +2,17 @@ package de.micromata.jira.rest;
 
 
 
+import java.net.URI;
+import java.util.List;
+
 import de.micromata.jira.rest.domain.BasicProjectBean;
+import de.micromata.jira.rest.domain.CommentSummaryBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.util.RestException;
-
-import java.net.URI;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,7 +32,13 @@ public interface RestWrapper {
 
     public List<IssueBean> searchIssuesForProject(JiraRestClient jiraRestClient, JqlBean jqlBean) throws RestException;
 
-    public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey);
+    public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException;
 
     public boolean testRestConnection(URI uri, String username, String password);
+
+	public CommentSummaryBean getCommentsByIssue(JiraRestClient jiraRestClient,
+			String issueKey) throws RestException;
+
+	public List<VersionBean> getProjectVersions(JiraRestClient jiraRestClient,
+			String projectKey) throws RestException;
 }
