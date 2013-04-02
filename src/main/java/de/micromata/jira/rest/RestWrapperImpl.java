@@ -20,6 +20,7 @@ import com.sun.jersey.core.util.Base64;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.CommentSummaryBean;
+import de.micromata.jira.rest.domain.ComponentBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
@@ -28,6 +29,7 @@ import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.parser.BasicProjectParser;
 import de.micromata.jira.rest.parser.CommentSummaryParser;
+import de.micromata.jira.rest.parser.ComponentParser;
 import de.micromata.jira.rest.parser.IssueParser;
 import de.micromata.jira.rest.parser.JqlSearchParser;
 import de.micromata.jira.rest.parser.ProjectParser;
@@ -95,6 +97,24 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     		String entity = clientResponse.getEntity(String.class);
     		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
     		return VersionParser.parse(objects);
+    	}
+    	else{
+    		throw new RestException(clientResponse);
+    	}
+    }
+    
+    @Override
+    public List<ComponentBean> getProjectComponents(JiraRestClient jiraRestClient, String projectKey) throws RestException {
+    	
+    	Client client = jiraRestClient.getClient();
+    	URI baseUri = jiraRestClient.getBaseUri();
+    	URI uri = RestURIBuilder.buildProjectComponentsByKeyURI(baseUri, projectKey);
+    	WebResource webResource = client.resource(uri);
+    	ClientResponse clientResponse = webResource.get(ClientResponse.class);
+    	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+    		String entity = clientResponse.getEntity(String.class);
+    		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
+    		return ComponentParser.parse(objects);
     	}
     	else{
     		throw new RestException(clientResponse);

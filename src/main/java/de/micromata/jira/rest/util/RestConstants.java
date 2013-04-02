@@ -30,6 +30,8 @@ public interface RestConstants {
     public static final String COMMENT = "/comment";
     
     public static final String VERSIONS = "/versions";
+    
+    public static final String COMPONENTS = "/components";
 
     // Parameternamen
 

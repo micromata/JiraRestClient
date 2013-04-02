@@ -6,6 +6,7 @@ import java.util.List;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.CommentSummaryBean;
+import de.micromata.jira.rest.domain.ComponentBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
@@ -41,7 +42,8 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testRestConnection();
 //        testRestConnection.testGetAllProjects();
 //        testRestConnection.testGetProjectByKey();
-        testRestConnection.testGetProjectVersions();
+//        testRestConnection.testGetProjectVersions();
+        testRestConnection.testGetProjectComponents();
 //        testRestConnection.testGetIssuesForProject();
 //        testRestConnection.testSearchIssuesForProject();
 //        testRestConnection.testGetIssueByKey();
@@ -72,6 +74,12 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	List<VersionBean> versions = restWrapper.getProjectVersions(jiraRestClient, "DEMO");
     	
     	System.out.println("testGetProjectVersions: " + !versions.isEmpty());
+    }
+    
+    public void testGetProjectComponents() throws RestException {
+    	List<ComponentBean> components = restWrapper.getProjectComponents(jiraRestClient, "DEMO");
+    	
+    	System.out.println("testGetProjectComponents: " + !components.isEmpty());
     }
 
     public void testGetIssuesForProject() throws RestException {
