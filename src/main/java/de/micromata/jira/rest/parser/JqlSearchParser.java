@@ -19,14 +19,22 @@ public class JqlSearchParser implements JsonConstants {
 
     public static JqlSearchResultBean parse(JsonObject jsonObject){
         JqlSearchResultBean searchResultBean = new JqlSearchResultBean();
-        String expand = jsonObject.get(PROP_EXPAND).getAsString();
-        int startAt = jsonObject.get(PROP_STARTAT).getAsInt();
-        int maxResults = jsonObject.get(PROP_MAXRESULTS).getAsInt();
-        int total = jsonObject.get(PROP_TOTAL).getAsInt();
-        searchResultBean.setExpand(expand);
-        searchResultBean.setStartAt(startAt);
-        searchResultBean.setMaxResults(maxResults);
-        searchResultBean.setTotal(total);
+        JsonElement expandElement = jsonObject.get(PROP_EXPAND);
+        if(expandElement != null){
+            searchResultBean.setExpand(expandElement.getAsString());
+        }
+        JsonElement startAtElement = jsonObject.get(PROP_STARTAT);
+        if(startAtElement != null){
+            searchResultBean.setStartAt(startAtElement.getAsInt());
+        }
+        JsonElement maxresultsElement = jsonObject.get(PROP_MAXRESULTS);
+        if(maxresultsElement != null){
+            searchResultBean.setMaxResults(maxresultsElement.getAsInt());
+        }
+        JsonElement totalElement = jsonObject.get(PROP_TOTAL);
+        if(totalElement != null){
+            searchResultBean.setTotal(totalElement.getAsInt());
+        }
         List<JsonObject> jsonObjects = GsonParserUtil.parseJsonArray(jsonObject.getAsJsonArray(ELEM_ISSUES));
         List<IssueBean> issueBeans = IssueParser.parse(jsonObjects);
         searchResultBean.setIssueBeans(issueBeans);
