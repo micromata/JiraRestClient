@@ -29,6 +29,10 @@ public class RestURIBuilder implements RestConstants {
     	return UriBuilder.fromUri(baseURI).path(PROJECT).path(projectKey).path(VERSIONS).build();
     }
     
+    public static URI buildProjectComponentsByKeyURI(URI baseURI, String projectKey) {
+    	return UriBuilder.fromUri(baseURI).path(PROJECT).path(projectKey).path(COMPONENTS).build();
+    }
+    
     public static URI buildIssueByKeyURI(URI baseURI, String issueKey) {
     	return UriBuilder.fromUri(baseURI).path(ISSUE).path(issueKey).build();
     }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.CommentSummaryBean;
+import de.micromata.jira.rest.domain.ComponentBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
@@ -40,5 +41,8 @@ public interface RestWrapper {
 			String issueKey) throws RestException;
 
 	public List<VersionBean> getProjectVersions(JiraRestClient jiraRestClient,
+			String projectKey) throws RestException;
+
+	public List<ComponentBean> getProjectComponents(JiraRestClient jiraRestClient,
 			String projectKey) throws RestException;
 }
