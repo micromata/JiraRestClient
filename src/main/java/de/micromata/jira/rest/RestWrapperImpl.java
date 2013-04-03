@@ -128,7 +128,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI baseUri = jiraRestClient.getBaseUri();
         JqlBean jqlBean = new JqlBean();
         jqlBean.setProjectKey(projectKey);
-    	jqlBean.addField(FIELD_SUMMARY, FIELD_PRIORITY, FIELD_DUEDATE);
+    	jqlBean.addField(FIELDS_ALL);
         
         URI uri = RestURIBuilder.buildSearchURI(baseUri, jqlBean);
         WebResource webResource = client.resource(uri);
