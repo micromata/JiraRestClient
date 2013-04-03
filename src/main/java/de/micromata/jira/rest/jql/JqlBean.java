@@ -13,6 +13,12 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class JqlBean {
 
+    private String searchTerm = StringUtils.EMPTY;
+
+    private Integer startAt = null;
+
+    private Integer maxResult = null;
+
 
     private String projectKey = StringUtils.EMPTY;
 

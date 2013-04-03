@@ -28,6 +28,8 @@ public class JiraRestClient {
 
     private URI baseUri;
 
+
+
     public JiraRestClient(String uri, String username, String password) {
     	String authString = username + ":" + password;
     	String auth = new String(Base64.encode(authString));
@@ -46,15 +48,8 @@ public class JiraRestClient {
         return client;
     }
 
-    public void setClient(ApacheHttpClient client) {
-        this.client = client;
-    }
-
     public URI getBaseUri() {
         return baseUri;
     }
 
-    public void setBaseUri(URI baseUri) {
-        this.baseUri = baseUri;
-    }
 }
