@@ -229,7 +229,7 @@ public class IssueParser extends BaseParser {
             	issueBean.setAggregateprogress(aggregateprogress);
             }
             JsonElement lastViewedElement = fieldObject.get(PROP_LAST_VIEWED);
-            if(lastViewedElement != null) {
+            if(lastViewedElement != null && !lastViewedElement.isJsonNull()) {
             	Date date = DateParser.parseDateFormat1(lastViewedElement.getAsString());
             	issueBean.setLastViewed(date);
             }
