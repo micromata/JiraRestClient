@@ -4,13 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import de.micromata.jira.rest.domain.BasicProjectBean;
-import de.micromata.jira.rest.domain.CommentSummaryBean;
-import de.micromata.jira.rest.domain.ComponentBean;
-import de.micromata.jira.rest.domain.IssueBean;
-import de.micromata.jira.rest.domain.JqlSearchResultBean;
-import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.util.RestConstants;
@@ -43,11 +37,12 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testGetAllProjects();
 //        testRestConnection.testGetProjectByKey();
 //        testRestConnection.testGetProjectVersions();
-        testRestConnection.testGetProjectComponents();
+//        testRestConnection.testGetProjectComponents();
 //        testRestConnection.testGetIssuesForProject();
 //        testRestConnection.testSearchIssuesForProject();
 //        testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
+        testRestConnection.testGetIssueTypes();
     }
 
     public void testRestConnection() throws URISyntaxException {
@@ -112,5 +107,10 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	CommentSummaryBean commentSummaryBean = restWrapper.getCommentsByIssue(jiraRestClient, issueKey);
     	
     	System.out.println("testGetCommentByIssue: " + !commentSummaryBean.getComments().isEmpty());
+    }
+
+    public void testGetIssueTypes() throws RestException {
+        List<IssueTypeBean> issueTypes = restWrapper.getIssueTypes(jiraRestClient);
+        System.out.println("testGetIssueTypes: " + !issueTypes.isEmpty());
     }
 }

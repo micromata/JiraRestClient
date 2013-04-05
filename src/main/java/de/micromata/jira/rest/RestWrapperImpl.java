@@ -18,22 +18,10 @@ import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import com.sun.jersey.core.util.Base64;
 
-import de.micromata.jira.rest.domain.BasicProjectBean;
-import de.micromata.jira.rest.domain.CommentSummaryBean;
-import de.micromata.jira.rest.domain.ComponentBean;
-import de.micromata.jira.rest.domain.IssueBean;
-import de.micromata.jira.rest.domain.JqlSearchResultBean;
-import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlConstants;
-import de.micromata.jira.rest.parser.BasicProjectParser;
-import de.micromata.jira.rest.parser.CommentSummaryParser;
-import de.micromata.jira.rest.parser.ComponentParser;
-import de.micromata.jira.rest.parser.IssueParser;
-import de.micromata.jira.rest.parser.JqlSearchParser;
-import de.micromata.jira.rest.parser.ProjectParser;
-import de.micromata.jira.rest.parser.VersionParser;
+import de.micromata.jira.rest.parser.*;
 import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
@@ -119,6 +107,23 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     	else{
     		throw new RestException(clientResponse);
     	}
+    }
+
+    @Override
+    public List<IssueTypeBean> getIssueTypes(JiraRestClient jiraRestClient) throws RestException {
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = RestURIBuilder.buildIssueTypeURI(baseUri);
+        WebResource webResource = client.resource(uri);
+        ClientResponse clientResponse = webResource.get(ClientResponse.class);
+        if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+            String entity = clientResponse.getEntity(String.class);
+            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
+            return IssueTypeParser.parse(objects);
+        }
+        else{
+            throw new RestException(clientResponse);
+        }
     }
 
     @Override

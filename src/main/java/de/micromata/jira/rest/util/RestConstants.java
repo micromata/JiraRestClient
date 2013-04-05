@@ -33,6 +33,8 @@ public interface RestConstants {
     
     public static final String COMPONENTS = "/components";
 
+    public static final String ISSUETPYES = "/issuetype";
+
     // Parameternamen
 
     public static final String PARAM_USERNAME = "username";
