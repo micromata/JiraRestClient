@@ -1,14 +1,14 @@
 package de.micromata.jira.rest.parser;
 
-import com.google.gson.JsonArray;
+import java.util.List;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.JsonConstants;
-
-import java.util.List;
 
 /**
  * User: Christian

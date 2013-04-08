@@ -15,7 +15,9 @@ public class DateParser {
 
     private static SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MMM/yy");
     
-    private static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+    
+    private static SimpleDateFormat sdf4 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
     
     public static Date parseDateFormat1(String dateString){
         try {
@@ -37,12 +39,20 @@ public class DateParser {
 
     public static Date parseDateFormat3(String dateString){
     	try {
-    		String replace = dateString.replace('T', ' ');
-    		return sdf3.parse(replace);
+    		return sdf3.parse(dateString);
     	} catch (ParseException e) {
     		e.printStackTrace();
     	}
     	return null;
     }
 
+
+    public static Date parseDateFormat4(String dateString){
+        try {
+            return sdf4.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

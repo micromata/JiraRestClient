@@ -7,6 +7,7 @@ import java.util.List;
 
 import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.jql.JqlBean;
+import de.micromata.jira.rest.jql.JqlBean2;
 import de.micromata.jira.rest.util.RestException;
 
 /**
@@ -41,4 +42,7 @@ public interface RestWrapper {
 			String projectKey) throws RestException;
 
     public List<IssueTypeBean> getIssueTypes(JiraRestClient jiraRestClient) throws RestException;
+
+	List<IssueBean> searchIssuesForProject2(JiraRestClient jiraRestClient,
+			JqlBean2 jqlBean) throws RestException;
 }

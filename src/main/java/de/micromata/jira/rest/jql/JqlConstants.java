@@ -19,7 +19,6 @@ public interface JqlConstants {
 
     public static final String OR = "or";
 
-
     // Issue Field Names für die JQL Suche
 
     public static final String FIELD_SUMMARY = "summary";
@@ -44,7 +43,7 @@ public interface JqlConstants {
     
     public static final String STATUS_REOPENED = "reopened";
 
-//    //Issue Type für die JQL Suche
+    //Issue Type für die JQL Suche
     
     public static final String ISSUETYPE_IMPROVEMENT = "improvement"; 
 
@@ -56,15 +55,21 @@ public interface JqlConstants {
 
     public static final String ISSUETYPE_TASK = "task"; 
     
-//    //Priority für die SQL Suche
-//    
-//    public static final String PRIORITY_MAJOR = "major";
-//    
-//    public static final String PRIORITY_BLOCKER = "blocker";
-//    
-//    public static final String PRIORITY_CRITICAL = "critical";
-//    
-//    public static final String PRIORITY_MINOR = "minor";
-//    
-//    public static final String PRIORITY_TRIVIAL = "trivial";
+    //Priority für die SQL Suche
+    
+    public static final String PRIORITY_MAJOR = "major";
+    
+    public static final String PRIORITY_BLOCKER = "blocker";
+    
+    public static final String PRIORITY_CRITICAL = "critical";
+    
+    public static final String PRIORITY_MINOR = "minor";
+    
+    public static final String PRIORITY_TRIVIAL = "trivial";
+    
+    // Rückgabe der Felder bei Suchfunktion
+    
+    public static final String FIELDS_ALL = "*all"; //set by default
+    
+    public static final String FIELDS_NAVIGABLE = "*navigable";
 }

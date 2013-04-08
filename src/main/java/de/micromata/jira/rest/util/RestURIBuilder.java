@@ -1,6 +1,7 @@
 package de.micromata.jira.rest.util;
 
 import de.micromata.jira.rest.jql.JqlBean;
+import de.micromata.jira.rest.jql.JqlBean2;
 import de.micromata.jira.rest.jql.JqlHelper;
 
 import javax.ws.rs.core.UriBuilder;
@@ -53,6 +54,14 @@ public class RestURIBuilder implements RestConstants {
             path.queryParam(FIELDS, buildFieldParameter(jqlBean.getFields()));
         }
         return path.build();
+    }
+    
+    public static URI buildSearchURI2(URI baseUri, JqlBean2 jqlBean) {
+    	String jql = JqlHelper.buildJqlString2(jqlBean);
+    	UriBuilder path = UriBuilder.fromUri(baseUri).path(SEARCH);
+    	path.queryParam(JQL, jql);
+    	
+    	return path.build();
     }
 
     private static String buildFieldParameter(List<String> fieldNames) {

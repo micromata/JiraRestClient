@@ -42,11 +42,5 @@ public interface RestConstants {
     public static final String JQL = "jql";
 
     public static final String FIELDS = "fields";
-    
-    // Rückgabe der Felder bei Suchfunktion
-    
-    public static final String FIELDS_ALL = "*all"; //set by default
-    
-    public static final String FIELDS_NAVIGABLE = "*navigable";
 
 }

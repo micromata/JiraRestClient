@@ -20,6 +20,7 @@ import com.sun.jersey.core.util.Base64;
 
 import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.jql.JqlBean;
+import de.micromata.jira.rest.jql.JqlBean2;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.parser.*;
 import de.micromata.jira.rest.util.GsonParserUtil;
@@ -167,6 +168,26 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
             throw new RestException(clientResponse);
         }
 
+    }
+    
+    @Override
+    public List<IssueBean> searchIssuesForProject2(JiraRestClient jiraRestClient, JqlBean2 jqlBean) throws RestException {
+    	
+    	Client client = jiraRestClient.getClient();
+    	URI baseUri = jiraRestClient.getBaseUri();
+    	URI uri = RestURIBuilder.buildSearchURI2(baseUri, jqlBean);
+    	
+    	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
+    	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+    		String entity = clientResponse.getEntity(String.class);
+    		JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+    		JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);
+    		return jqlSearchResultBean.getIssueBeans();
+    	}
+    	else{
+    		throw new RestException(clientResponse);
+    	}
+    	
     }
 
     @Override
