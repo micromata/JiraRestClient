@@ -18,11 +18,25 @@ import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import com.sun.jersey.core.util.Base64;
 
-import de.micromata.jira.rest.domain.*;
+import de.micromata.jira.rest.domain.BasicProjectBean;
+import de.micromata.jira.rest.domain.CommentSummaryBean;
+import de.micromata.jira.rest.domain.ComponentBean;
+import de.micromata.jira.rest.domain.IssueBean;
+import de.micromata.jira.rest.domain.IssueTypeBean;
+import de.micromata.jira.rest.domain.JqlSearchResultBean;
+import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.JqlBean;
-import de.micromata.jira.rest.jql.JqlBean2;
 import de.micromata.jira.rest.jql.JqlConstants;
-import de.micromata.jira.rest.parser.*;
+import de.micromata.jira.rest.jql.JqlSearchBean;
+import de.micromata.jira.rest.parser.BasicProjectParser;
+import de.micromata.jira.rest.parser.CommentSummaryParser;
+import de.micromata.jira.rest.parser.ComponentParser;
+import de.micromata.jira.rest.parser.IssueParser;
+import de.micromata.jira.rest.parser.IssueTypeParser;
+import de.micromata.jira.rest.parser.JqlSearchParser;
+import de.micromata.jira.rest.parser.ProjectParser;
+import de.micromata.jira.rest.parser.VersionParser;
 import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
@@ -171,11 +185,11 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     }
     
     @Override
-    public List<IssueBean> searchIssuesForProject2(JiraRestClient jiraRestClient, JqlBean2 jqlBean) throws RestException {
+    public List<IssueBean> extendedSearchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jqlBean) throws RestException {
     	
     	Client client = jiraRestClient.getClient();
     	URI baseUri = jiraRestClient.getBaseUri();
-    	URI uri = RestURIBuilder.buildSearchURI2(baseUri, jqlBean);
+    	URI uri = RestURIBuilder.buildExtendedSearchURI(baseUri, jqlBean);
     	
     	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
     	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){

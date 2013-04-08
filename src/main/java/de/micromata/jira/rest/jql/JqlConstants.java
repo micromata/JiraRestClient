@@ -66,10 +66,4 @@ public interface JqlConstants {
     public static final String PRIORITY_MINOR = "minor";
     
     public static final String PRIORITY_TRIVIAL = "trivial";
-    
-    // Rückgabe der Felder bei Suchfunktion
-    
-    public static final String FIELDS_ALL = "*all"; //set by default
-    
-    public static final String FIELDS_NAVIGABLE = "*navigable";
 }

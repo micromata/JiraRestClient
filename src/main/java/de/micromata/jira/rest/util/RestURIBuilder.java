@@ -1,13 +1,14 @@
 package de.micromata.jira.rest.util;
 
-import de.micromata.jira.rest.jql.JqlBean;
-import de.micromata.jira.rest.jql.JqlBean2;
-import de.micromata.jira.rest.jql.JqlHelper;
-
-import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.ws.rs.core.UriBuilder;
+
+import de.micromata.jira.rest.jql.JqlBean;
+import de.micromata.jira.rest.jql.JqlHelper;
+import de.micromata.jira.rest.jql.JqlSearchBean;
 
 /**
  * Created with IntelliJ IDEA.
@@ -56,18 +57,29 @@ public class RestURIBuilder implements RestConstants {
         return path.build();
     }
     
-    public static URI buildSearchURI2(URI baseUri, JqlBean2 jqlBean) {
-    	String jql = JqlHelper.buildJqlString2(jqlBean);
+    public static URI buildExtendedSearchURI(URI baseUri, JqlSearchBean jqlBean) {
+    	String jql = jqlBean.toString();
+    	int startAt = jqlBean.getStartAt();
+    	int maxResults = jqlBean.getMaxResult();
+    	
     	UriBuilder path = UriBuilder.fromUri(baseUri).path(SEARCH);
     	path.queryParam(JQL, jql);
-    	
+    	path.queryParam(START_AT, startAt);
+    	path.queryParam(MAX_RESULTS, maxResults);
+    	if(jqlBean.isFieldAll()) {
+    		path.queryParam(FIELDS, FIELDS_ALL);
+    	} else if(jqlBean.isFieldNavigable()) {
+    		path.queryParam(FIELDS, FIELDS_NAVIGABLE);
+    	} else if (!jqlBean.getFields().isEmpty()) {
+            path.queryParam(FIELDS, buildFieldParameter(jqlBean.getFields()));
+        }
     	return path.build();
     }
 
-    private static String buildFieldParameter(List<String> fieldNames) {
+    private static <E> String buildFieldParameter(List<E> fieldNames) {
         StringBuilder sb = new StringBuilder();
 
-        Iterator<String> iterator = fieldNames.iterator();
+        Iterator<E> iterator = fieldNames.iterator();
         sb.append(iterator.next());
         while (iterator.hasNext()) {
             sb.append(",");
@@ -82,6 +94,5 @@ public class RestURIBuilder implements RestConstants {
 
 
     }
-
 
 }

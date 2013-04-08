@@ -27,13 +27,4 @@ public class JqlHelper implements JqlConstants {
         
         return sb.toString();
     }
-
-    public static String buildJqlString2(JqlBean2 jqlBean) {
-    	
-    	return jqlBean.toString();
-    }
-
-
-
-
 }
