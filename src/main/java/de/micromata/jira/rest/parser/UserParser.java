@@ -1,12 +1,13 @@
 package de.micromata.jira.rest.parser;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import de.micromata.jira.rest.domain.AvatarURLBean;
-import de.micromata.jira.rest.domain.UserBean;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import de.micromata.jira.rest.domain.AvatarURLBean;
+import de.micromata.jira.rest.domain.UserBean;
 
 /**
  * Created with IntelliJ IDEA.

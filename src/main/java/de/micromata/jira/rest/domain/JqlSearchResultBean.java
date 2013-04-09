@@ -1,9 +1,9 @@
 package de.micromata.jira.rest.domain;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * User: Christian

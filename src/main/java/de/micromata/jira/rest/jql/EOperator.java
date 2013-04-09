@@ -1,5 +1,8 @@
 package de.micromata.jira.rest.jql;
 
+/**
+ * Operators for JQL clause(s).
+ */
 public enum EOperator {
 
 	/**
@@ -175,12 +178,23 @@ public enum EOperator {
 	 */
 	CHANGED("changed");
 	
+	/** The operator. */
 	private final String operator;
 	
+	/**
+	 * Instantiates a new operator.
+	 *
+	 * @param operator the name of the operator
+	 */
 	private EOperator(String operator) {
 		this.operator = operator;
 	}
 
+	/**
+	 * Gets the operator.
+	 *
+	 * @return the operator
+	 */
 	public String getOperator() {
 		return operator;
 	}

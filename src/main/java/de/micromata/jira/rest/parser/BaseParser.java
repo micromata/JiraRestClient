@@ -1,13 +1,13 @@
 package de.micromata.jira.rest.parser;
 
+import java.net.URI;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import de.micromata.jira.rest.domain.BaseBean;
 import de.micromata.jira.rest.util.JsonConstants;
 import de.micromata.jira.rest.util.URIParser;
-
-
-import java.net.URI;
 
 /**
  * User: Christian

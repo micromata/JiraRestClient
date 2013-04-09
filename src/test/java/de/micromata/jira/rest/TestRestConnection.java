@@ -13,7 +13,6 @@ import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
 import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.EField;
-import de.micromata.jira.rest.jql.EKeyword;
 import de.micromata.jira.rest.jql.EOperator;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlClause;

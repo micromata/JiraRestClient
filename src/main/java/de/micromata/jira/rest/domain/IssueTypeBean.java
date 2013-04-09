@@ -1,8 +1,8 @@
 package de.micromata.jira.rest.domain;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.net.URI;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,17 +1,21 @@
 package de.micromata.jira.rest.parser;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.util.ERoles;
-import de.micromata.jira.rest.util.GsonParserUtil;
-
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import de.micromata.jira.rest.domain.ComponentBean;
+import de.micromata.jira.rest.domain.IssueTypeBean;
+import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.UserBean;
+import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.util.ERoles;
+import de.micromata.jira.rest.util.GsonParserUtil;
 
 /**
  * Created with IntelliJ IDEA.

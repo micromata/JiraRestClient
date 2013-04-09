@@ -1,12 +1,13 @@
 package de.micromata.jira.rest.parser;
 
-import com.google.gson.JsonObject;
-import de.micromata.jira.rest.domain.IssueTypeBean;
-import de.micromata.jira.rest.util.URIParser;
-
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.JsonObject;
+
+import de.micromata.jira.rest.domain.IssueTypeBean;
+import de.micromata.jira.rest.util.URIParser;
 
 /**
  * Created with IntelliJ IDEA.

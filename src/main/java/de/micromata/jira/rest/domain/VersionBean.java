@@ -2,9 +2,9 @@ package de.micromata.jira.rest.domain;
 
 
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Date;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created with IntelliJ IDEA.
