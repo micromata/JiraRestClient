@@ -51,8 +51,8 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testGetProjectComponents();
 //        testRestConnection.testGetIssuesForProject();
 //        testRestConnection.testSearchIssuesForProject();
-        testRestConnection.testExtendedSearchIssuesForProject();
-//        testRestConnection.testGetIssueByKey();
+//        testRestConnection.testExtendedSearchIssuesForProject();
+        testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
 //        testRestConnection.testGetIssueTypes();
     }

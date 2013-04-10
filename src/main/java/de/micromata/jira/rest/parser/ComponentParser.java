@@ -3,6 +3,7 @@ package de.micromata.jira.rest.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.ComponentBean;
@@ -22,19 +23,34 @@ public class ComponentParser extends BaseParser {
         ComponentBean bean = new ComponentBean();
         parseBaseProperties(bean, object);
         String description = object.get(PROP_DESCRIPTION).getAsString();
-        boolean isAssigneeTypeValid = object.get(PROP_ISASSIGNEETYPEVALID).getAsBoolean();
-        UserBean userBean = UserParser.parse(object.get(ELEM_LEAD).getAsJsonObject());
-        String at = object.get(PROP_ASSIGNEETYPE).getAsString();
-        UserBean assigneeBean = UserParser.parse(object.get(ELEM_ASSIGNEE).getAsJsonObject());
-        String rat = object.get(PROP_REAL_ASSIGNEE_TYPE).getAsString();
-        UserBean realAssignee = UserParser.parse(object.get(ELEM_REAL_ASSIGNEE).getAsJsonObject());
-        bean.setAssigneeTypeValid(isAssigneeTypeValid);
         bean.setDescription(description);
-        bean.setLead(userBean);
-        bean.setAssigneeType(at);
-        bean.setAssignee(assigneeBean);
-        bean.setRealAssignee(realAssignee);
-        bean.setRealAssigneeType(rat);
+        JsonElement element = object.get(PROP_ISASSIGNEETYPEVALID);
+        if(element != null) {
+        	bean.setAssigneeTypeValid(element.getAsBoolean());        	
+        }
+        element = object.get(ELEM_LEAD);
+        if(element != null) {
+        	UserBean userBean = UserParser.parse(element.getAsJsonObject());
+        	bean.setLead(userBean);
+        }
+        element = object.get(PROP_ASSIGNEETYPE);
+        if(element != null) {        	
+        	bean.setAssigneeType(element.getAsString());
+        }
+        element = object.get(ELEM_ASSIGNEE);
+        if(element != null) {
+        	UserBean assigneeBean = UserParser.parse(element.getAsJsonObject());
+        	bean.setAssignee(assigneeBean);        	
+        }
+        element = object.get(PROP_REAL_ASSIGNEE_TYPE);
+        if(element != null) {
+	        bean.setRealAssigneeType(element.getAsString());
+        }
+        element = object.get(ELEM_REAL_ASSIGNEE);
+        if(element != null) {
+        	UserBean realAssignee = UserParser.parse(element.getAsJsonObject());
+        	bean.setRealAssignee(realAssignee);
+        }
 
         return bean;
     }

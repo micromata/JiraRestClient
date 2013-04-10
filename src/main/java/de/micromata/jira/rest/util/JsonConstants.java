@@ -207,6 +207,8 @@ public interface JsonConstants {
     
     public static final String ELEM_COMMENT = "comment";
     
+    public static final String ELEM_PARENT = "parent";
+    
     // Rollen
     
     public static final String ROLE_ADMINISTRATORS = "Administrator";

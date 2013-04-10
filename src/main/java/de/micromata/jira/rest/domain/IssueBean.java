@@ -12,13 +12,11 @@ import org.apache.commons.lang3.StringUtils;
  * Time: 13:44
  * To change this template use File | Settings | File Templates.
  */
-public class IssueBean extends IssueBasicBean {
+public class IssueBean extends BaseBean {
 
     private String expand = StringUtils.EMPTY;
 
     private String summary = StringUtils.EMPTY;
-
-    private IssueTypeBean issueType = null;
 
     private Date dueDate = null;
     
@@ -82,6 +80,16 @@ public class IssueBean extends IssueBasicBean {
 
 	private CommentSummaryBean commentSummaryBean = null;
 	
+	private String key = StringUtils.EMPTY;
+	
+	private StatusBean statusBean = null;
+
+    private IssueTypeBean issueType = null;
+    
+    private IssueBasicBean parentBean = null;
+    
+    private List<IssueBasicBean> subtasks = null;
+	
     public String getExpand() {
         return expand;
     }
@@ -96,14 +104,6 @@ public class IssueBean extends IssueBasicBean {
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public IssueTypeBean getIssueType() {
-        return issueType;
-    }
-
-    public void setIssueType(IssueTypeBean issueType) {
-        this.issueType = issueType;
     }
 
     public Date getDueDate() {
@@ -353,5 +353,45 @@ public class IssueBean extends IssueBasicBean {
 
 	public void setComments(CommentSummaryBean commentSummaryBean) {
 		this.commentSummaryBean = commentSummaryBean;
+	}
+	
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public StatusBean getStatus() {
+		return statusBean;
+	}
+
+	public void setStatus(StatusBean statusBean) {
+		this.statusBean = statusBean;
+	}
+
+    public IssueTypeBean getIssueType() {
+        return issueType;
+    }
+
+    public void setIssueType(IssueTypeBean issueType) {
+        this.issueType = issueType;
+    }
+
+	public IssueBasicBean getParent() {
+		return parentBean;
+	}
+
+	public void setParent(IssueBasicBean parentBean) {
+		this.parentBean = parentBean;
+	}
+
+	public List<IssueBasicBean> getSubtasks() {
+		return subtasks;
+	}
+
+	public void setSubtasks(List<IssueBasicBean> subtasks) {
+		this.subtasks = subtasks;
 	}
 }

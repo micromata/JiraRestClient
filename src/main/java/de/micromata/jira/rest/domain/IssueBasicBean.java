@@ -1,10 +1,18 @@
 package de.micromata.jira.rest.domain;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class IssueBasicBean extends BaseBean {
 
-	private String key;
+	private String key = StringUtils.EMPTY;
 	
-	private StatusBean statusBean;
+	private String summary = StringUtils.EMPTY;
+	
+	private PriorityBean priorityBean = null;
+	
+	private StatusBean statusBean = null;
+	
+	private IssueTypeBean issueTypeBean = null;
 
 	public String getKey() {
 		return key;
@@ -14,11 +22,35 @@ public class IssueBasicBean extends BaseBean {
 		this.key = key;
 	}
 
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public PriorityBean getPriority() {
+		return priorityBean;
+	}
+
+	public void setPriority(PriorityBean priorityBean) {
+		this.priorityBean = priorityBean;
+	}
+
 	public StatusBean getStatus() {
 		return statusBean;
 	}
 
 	public void setStatus(StatusBean statusBean) {
 		this.statusBean = statusBean;
+	}
+
+	public IssueTypeBean getIssueType() {
+		return issueTypeBean;
+	}
+
+	public void setIssueType(IssueTypeBean issueTypeBean) {
+		this.issueTypeBean = issueTypeBean;
 	}
 }

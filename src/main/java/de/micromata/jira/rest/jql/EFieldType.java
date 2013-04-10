@@ -5,7 +5,6 @@ import java.util.List;
 
 import static de.micromata.jira.rest.jql.EOperator.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The type of a field sets the supported operators.
  */

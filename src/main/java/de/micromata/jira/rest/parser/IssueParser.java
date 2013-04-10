@@ -13,6 +13,7 @@ import de.micromata.jira.rest.domain.AggregateprogressBean;
 import de.micromata.jira.rest.domain.AttachmentBean;
 import de.micromata.jira.rest.domain.CommentSummaryBean;
 import de.micromata.jira.rest.domain.ComponentBean;
+import de.micromata.jira.rest.domain.IssueBasicBean;
 import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.IssueLinkBean;
 import de.micromata.jira.rest.domain.IssueTypeBean;
@@ -166,7 +167,9 @@ public class IssueParser extends BaseParser {
             }
             JsonArray subtasksArray = fieldObject.getAsJsonArray(PROP_SUBTASKS);
             if(subtasksArray != null){
-            	//TODO
+            	List<JsonObject> list = GsonParserUtil.parseJsonArray(subtasksArray);
+            	List<IssueBasicBean> subtasks = IssueBasicParser.parse(list);
+            	issueBean.setSubtasks(subtasks);
             }
             JsonElement statusElement = fieldObject.get(ELEM_STATUS);
             if(statusElement != null){
@@ -250,6 +253,12 @@ public class IssueParser extends BaseParser {
             	JsonObject commentObject = commentElement.getAsJsonObject();
             	CommentSummaryBean comments = CommentSummaryParser.parse(commentObject);
             	issueBean.setComments(comments);
+            }
+            JsonElement parentElement = fieldObject.get(ELEM_PARENT);
+            if(parentElement != null){
+            	JsonObject parentObject = parentElement.getAsJsonObject();
+            	IssueBasicBean parent = IssueBasicParser.parse(parentObject);
+            	issueBean.setParent(parent);
             }
         }
         return issueBean;
