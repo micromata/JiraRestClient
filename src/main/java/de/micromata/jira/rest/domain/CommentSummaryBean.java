@@ -1,5 +1,6 @@
 package de.micromata.jira.rest.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +45,9 @@ public class CommentSummaryBean {
 	}
 
 	public List<CommentBean> getComments() {
+        if(comments == null){
+            comments = new ArrayList<CommentBean>();
+        }
 		return comments;
 	}
 

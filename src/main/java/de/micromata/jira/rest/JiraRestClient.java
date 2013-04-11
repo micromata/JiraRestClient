@@ -28,8 +28,6 @@ public class JiraRestClient {
 
     private URI baseUri;
 
-
-
     public JiraRestClient(String uri, String username, String password) {
     	String authString = username + ":" + password;
     	String auth = new String(Base64.encode(authString));

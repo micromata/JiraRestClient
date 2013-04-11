@@ -122,27 +122,27 @@ public class IssueParser extends BaseParser {
             	issueBean.setAggregateTimeEstimate(aggregateTimeEstimate);
             }
             JsonElement updatedElement = fieldObject.get(PROP_UPDATED);
-            if(updatedElement != null) {
+            if(updatedElement != null && updatedElement.isJsonNull() == false) {
             	Date date = DateParser.parseDateFormat1(updatedElement.getAsString());
             	issueBean.setUpdated(date);
             }
             JsonElement createdElement = fieldObject.get(PROP_CREATED);
-            if(createdElement != null) {
+            if(createdElement != null && createdElement.isJsonNull() == false)  {
             	Date date = DateParser.parseDateFormat1(createdElement.getAsString());
             	issueBean.setCreated(date);
             }
             JsonElement descriptionElement = fieldObject.get(PROP_DESCRIPTION);
-            if(descriptionElement != null) {
+            if(descriptionElement != null && descriptionElement.isJsonNull() == false) {
             	issueBean.setDescription(descriptionElement.getAsString());
             }
             JsonElement reporterElement = fieldObject.get(ELEM_REPORTER);
-            if(reporterElement != null){
+            if(reporterElement != null && reporterElement.isJsonNull() == false){
             	JsonObject reporterObject = reporterElement.getAsJsonObject();
             	UserBean reporter = UserParser.parse(reporterObject);
             	issueBean.setReporter(reporter);
             }
             JsonElement priorityElement = fieldObject.get(ELEM_PRIORITY);
-            if(priorityElement != null){
+            if(priorityElement != null && priorityElement.isJsonNull() == false){
             	JsonObject priorityObject = priorityElement.getAsJsonObject();
             	PriorityBean priority = PriorityParser.parse(priorityObject);
             	issueBean.setPriority(priority);
@@ -154,39 +154,39 @@ public class IssueParser extends BaseParser {
             	issueBean.setIssueLinks(issueLinks);
             }
             JsonElement watchesElement = fieldObject.get(ELEM_WATCHES);
-            if(watchesElement != null){
+            if(watchesElement != null && watchesElement.isJsonNull() == false){
             	JsonObject watchesObject = watchesElement.getAsJsonObject();
             	WatchesBean watches = WatchesParser.parse(watchesObject);
             	issueBean.setWatches(watches);
             }
             JsonElement worklogElement = fieldObject.get(ELEM_WORKLOG);
-            if(worklogElement != null){
+            if(worklogElement != null && worklogElement.isJsonNull() == false){
             	JsonObject worklogObject = worklogElement.getAsJsonObject();
             	WorklogSummaryBean worklogs = WorklogSummaryParser.parse(worklogObject);
             	issueBean.setWorklogs(worklogs);
             }
             JsonArray subtasksArray = fieldObject.getAsJsonArray(PROP_SUBTASKS);
-            if(subtasksArray != null){
+            if(subtasksArray != null && subtasksArray.isJsonNull() == false){
             	List<JsonObject> list = GsonParserUtil.parseJsonArray(subtasksArray);
             	List<IssueBasicBean> subtasks = IssueBasicParser.parse(list);
             	issueBean.setSubtasks(subtasks);
             }
             JsonElement statusElement = fieldObject.get(ELEM_STATUS);
-            if(statusElement != null){
+            if(statusElement != null && statusElement.isJsonNull() == false){
                 JsonObject statusObject = statusElement.getAsJsonObject();
                 StatusBean status = StatusParser.parse(statusObject);
                 issueBean.setStatus(status);
             }
             JsonArray labelsArray = fieldObject.getAsJsonArray(PROP_LABELS);
-            if(labelsArray != null) {
+            if(labelsArray != null && labelsArray.isJsonNull() == false) {
             	//TODO
             }
             JsonElement workratioElement = fieldObject.get(PROP_WORKRATIO);
-            if(workratioElement != null) {
+            if(workratioElement != null && workratioElement.isJsonNull() == false) {
             	issueBean.setWorkratio(workratioElement.getAsInt());
             }
             JsonElement assigneeElement = fieldObject.get(ELEM_ASSIGNEE);
-            if(assigneeElement != null){
+            if(assigneeElement != null && assigneeElement.isJsonNull() == false){
             	JsonObject assigneeObject = assigneeElement.getAsJsonObject();
             	UserBean assignee = UserParser.parse(assigneeObject);
             	issueBean.setAssignee(assignee);
@@ -198,7 +198,7 @@ public class IssueParser extends BaseParser {
             	issueBean.setAttachments(attachments);
             }
             JsonElement projectElement = fieldObject.get(ELEM_PROJECT);
-            if(projectElement != null){
+            if(projectElement != null && projectElement.isJsonNull() == false){
             	JsonObject projectObject = projectElement.getAsJsonObject();
             	ProjectBean project = ProjectParser.parse(projectObject);
             	issueBean.setProject(project);
@@ -249,13 +249,13 @@ public class IssueParser extends BaseParser {
                 issueBean.setDueDate(dueDate);
             }
             JsonElement commentElement = fieldObject.get(ELEM_COMMENT);
-            if(commentElement != null){
+            if(commentElement != null && commentElement.isJsonNull() == false){
             	JsonObject commentObject = commentElement.getAsJsonObject();
             	CommentSummaryBean comments = CommentSummaryParser.parse(commentObject);
             	issueBean.setComments(comments);
             }
             JsonElement parentElement = fieldObject.get(ELEM_PARENT);
-            if(parentElement != null){
+            if(parentElement != null && parentElement.isJsonNull() == false){
             	JsonObject parentObject = parentElement.getAsJsonObject();
             	IssueBasicBean parent = IssueBasicParser.parse(parentObject);
             	issueBean.setParent(parent);
