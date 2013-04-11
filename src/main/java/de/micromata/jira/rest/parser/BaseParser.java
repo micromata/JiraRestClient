@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.BaseBean;
 import de.micromata.jira.rest.util.JsonConstants;
+import de.micromata.jira.rest.util.JsonElementUtil;
 import de.micromata.jira.rest.util.URIParser;
 
 /**
@@ -19,18 +20,18 @@ public class BaseParser implements JsonConstants {
     public static void parseBaseProperties(BaseBean bean, JsonObject object){
 
         JsonElement idElement = object.get(PROP_ID);
-        if(idElement != null){
+        if(JsonElementUtil.checkNotNull(idElement) == true){
           long id = idElement.getAsLong();
             bean.setId(id);
         }
         JsonElement selfElement = object.get(PROP_SELF);
-        if(selfElement != null){
+        if(JsonElementUtil.checkNotNull(selfElement) == true){
             String self = selfElement.getAsString();
             URI uri = URIParser.parseStringToURI(self);
             bean.setSelf(uri);
         }
         JsonElement nameElement = object.get(PROP_NAME);
-        if(nameElement != null){
+        if(JsonElementUtil.checkNotNull(nameElement) == true){
             String name = nameElement.getAsString();
             bean.setName(name);
         }
