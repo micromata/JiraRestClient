@@ -116,16 +116,16 @@ public class JqlClause {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		if(field != null) {
-			sb.append(field);
+			sb.append(field + " ");
 		}
 		if(operator != null) {
-			sb.append(operator);
+			sb.append(operator + " ");
 		}
 		if(operand != null) {
-			sb.append(" " + operand);
+			sb.append(operand + " ");
 		}
 		if(keyword != null) {
-			sb.append(keyword);
+			sb.append(keyword + " ");
 		}
 		
 		return sb.toString();

@@ -2,6 +2,7 @@ package de.micromata.jira.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
@@ -13,8 +14,8 @@ import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
 import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.EField;
+import de.micromata.jira.rest.jql.EKeyword;
 import de.micromata.jira.rest.jql.EOperator;
-import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlClause;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.jql.JqlSearchBean;
@@ -38,8 +39,6 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         String username = "admin";
         String password = "admin";
 
-
-        
         jiraRestClient = new JiraRestClient(uri, username, password);
         restWrapper = new RestWrapperImpl();
 	}
@@ -52,11 +51,11 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testGetProjectVersions();
 //        testRestConnection.testGetProjectComponents();
 //        testRestConnection.testGetIssuesForProject();
-//        testRestConnection.testSearchIssuesForProject();
+        testRestConnection.testSearchIssuesForProject();
 //        testRestConnection.testExtendedSearchIssuesForProject();
 //        testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
-        testRestConnection.testGetIssueTypes();
+//        testRestConnection.testGetIssueTypes();
     }
 
     public void testRestConnection() throws URISyntaxException {
@@ -98,13 +97,15 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     }
     
     public void testSearchIssuesForProject() throws RestException {
-    	JqlBean jqlBean = new JqlBean();
-    	jqlBean.setProjectKey("DEMO");
-    	jqlBean.setStatus(STATUS_OPEN);
-    	jqlBean.setIssueType(ISSUETYPE_BUG);
-    	jqlBean.addField(FIELDS_ALL);
+    	JqlSearchBean jsb = new JqlSearchBean();
+    	List<JqlClause> clauses = new ArrayList<JqlClause>();
+    	clauses.add(new JqlClause(EField.PROJECT, EOperator.EQUALS, "DEMO", EKeyword.AND));
+    	clauses.add(new JqlClause(EField.STATUS, EOperator.EQUALS, STATUS_OPEN, EKeyword.AND));
+    	clauses.add(new JqlClause(EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG, null));
+    	jsb.setClauses(clauses);
+    	jsb.setFieldAll(true);
     	
-    	List<IssueBean> searchIssuesForProject = restWrapper.searchIssuesForProject(jiraRestClient, jqlBean);
+    	List<IssueBean> searchIssuesForProject = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
     	
     	System.out.println("testSearchIssuesForProject: " + !searchIssuesForProject.isEmpty());
     }
