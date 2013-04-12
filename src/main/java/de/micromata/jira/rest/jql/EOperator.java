@@ -176,7 +176,15 @@ public enum EOperator {
 	 * <br>
 	 * (Note: This operator can be used with the Assignee, Fix Version, Priority, Reporter, Resolution and Status fields only.)
 	 */
-	CHANGED("changed");
+	CHANGED("changed"),
+	AFTER("after"),
+	BEFORE("before"),
+	BY("by"),
+	FROM("from"),
+	LIKE("like"),
+	NOT_LIKE("not like"),
+	ON("on"),
+	TO("to");
 	
 	/** The operator. */
 	private final String operator;

@@ -17,6 +17,8 @@ import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.util.ERoles;
 import de.micromata.jira.rest.util.GsonParserUtil;
 
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Christian
@@ -32,46 +34,46 @@ public class ProjectParser extends BasicProjectParser {
         parseBasicProject(bean, object);
 
         JsonElement descriptionElement = object.get(PROP_DESCRIPTION);
-        if(descriptionElement != null) {
+        if(checkNotNull(descriptionElement)) {
         	String description = descriptionElement.getAsString();
         	bean.setDescription(description);
         }
         
         JsonObject lead = object.getAsJsonObject(ELEM_LEAD);
-        if(lead != null) {
+        if(checkNotNull(lead)) {
 	        UserBean userBean = UserParser.parse(lead);
 	        bean.setLead(userBean);
         }
         
         JsonArray componentJsonArray = object.getAsJsonArray(ELEM_COMPONENTS);
-        if (componentJsonArray != null) {
+        if (checkNotNull(componentJsonArray)) {
             List<JsonObject> componentJonObjects = GsonParserUtil.parseJsonArray(componentJsonArray);
             List<ComponentBean> componentBeans = ComponentParser.parse(componentJonObjects);
             bean.setComponents(componentBeans);
         }
 
         JsonArray versionJsonArray = object.getAsJsonArray(ELEM_VERSIONS);
-        if (versionJsonArray != null) {
+        if (checkNotNull(versionJsonArray)) {
             List<JsonObject> versionJsonObjects = GsonParserUtil.parseJsonArray(versionJsonArray);
             List<VersionBean> connectVersionBeans = VersionParser.parse(versionJsonObjects);
             bean.setVersions(connectVersionBeans);
         }
 
         JsonArray issuetypesJsonArray = object.getAsJsonArray(ELEM_ISSUETYPE);
-        if (issuetypesJsonArray != null) {
+        if (checkNotNull(issuetypesJsonArray)) {
             List<JsonObject> issuetypeJsonObjects = GsonParserUtil.parseJsonArray(issuetypesJsonArray);
             List<IssueTypeBean> issueTypeBeans = IssueTypeParser.parse(issuetypeJsonObjects);
             bean.setIssueTypes(issueTypeBeans);
         }
         
         JsonElement assigneeTypeElement = object.get(PROP_ASSIGNEETYPE);
-        if(assigneeTypeElement != null) {
+        if(checkNotNull(assigneeTypeElement)) {
         	String assigneeType = assigneeTypeElement.getAsString();
         	bean.setAssigneeType(assigneeType);
         }
         
         JsonElement rolesElement = object.get(ELEM_ROLES);
-        if(rolesElement != null) {
+        if(checkNotNull(rolesElement)) {
         	Map<ERoles, URI> roles = RolesParser.parse(object.getAsJsonObject());
         	bean.setRoles(roles);
         }

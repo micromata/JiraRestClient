@@ -10,26 +10,31 @@ import de.micromata.jira.rest.domain.IssueBasicBean;
 import de.micromata.jira.rest.domain.IssueLinkBean;
 import de.micromata.jira.rest.domain.TypeBean;
 
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
+
 public class IssueLinkParser extends BaseParser {
 	
 	public static IssueLinkBean parse(JsonObject object) {
 		IssueLinkBean bean = new IssueLinkBean();
 		parseBaseProperties(bean, object);
-		JsonElement jsonElement = object.get(ELEM_TYPE);
-		if(jsonElement != null) {
-			JsonObject asJsonObject = jsonElement.getAsJsonObject();
+		
+		JsonElement typeElement = object.get(ELEM_TYPE);
+		if(checkNotNull(typeElement)) {
+			JsonObject asJsonObject = typeElement.getAsJsonObject();
 			TypeBean typeBean = de.micromata.jira.rest.parser.TypeParser.parse(asJsonObject);
 			bean.setTypeBean(typeBean);
 		}
-		jsonElement = object.get(ELEM_OUTWARD_ISSUE);
-		if(jsonElement != null) {
-			JsonObject asJsonObject = jsonElement.getAsJsonObject();
+		
+		JsonElement outwardIssueElement = object.get(ELEM_OUTWARD_ISSUE);
+		if(checkNotNull(outwardIssueElement)) {
+			JsonObject asJsonObject = outwardIssueElement.getAsJsonObject();
 			IssueBasicBean oib = IssueBasicParser.parse(asJsonObject);
 			bean.setOutwardIssue(oib);			
 		}
-		jsonElement = object.get(ELEM_INWARD_ISSUE);
-		if(jsonElement != null) {
-			JsonObject asJsonObject = jsonElement.getAsJsonObject();
+		
+		JsonElement inwardIssueElement = object.get(ELEM_INWARD_ISSUE);
+		if(checkNotNull(inwardIssueElement)) {
+			JsonObject asJsonObject = inwardIssueElement.getAsJsonObject();
 			IssueBasicBean iib = IssueBasicParser.parse(asJsonObject);
 			bean.setInwardIssue(iib);	
 		}

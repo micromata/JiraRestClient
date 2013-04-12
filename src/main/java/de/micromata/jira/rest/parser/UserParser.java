@@ -9,6 +9,8 @@ import com.google.gson.JsonObject;
 import de.micromata.jira.rest.domain.AvatarURLBean;
 import de.micromata.jira.rest.domain.UserBean;
 
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Christian
@@ -22,18 +24,31 @@ public class UserParser extends BaseParser {
     public static UserBean parse(JsonObject object) {
         UserBean bean = new UserBean();
         parseBaseProperties(bean, object);
-        boolean active = object.get(PROP_ACTIVE).getAsBoolean();
-        String displayName = object.get(PROP_DISPLAYNAME).getAsString();
-        JsonObject avatarUrls = object.get(ELEM_AVATAR_URLS).getAsJsonObject();
-        AvatarURLBean avatarURLBean = AvatarURLParser.parse(avatarUrls);
-        JsonElement element = object.get(PROP_EMAIL_ADRESS);
-        if(element != null) {
-	        String ea = element.getAsString();
+        
+        JsonElement activeElement = object.get(PROP_ACTIVE);
+        if(checkNotNull(activeElement)) {
+        	boolean active = activeElement.getAsBoolean();
+        	bean.setActive(active);
+        }
+        
+        JsonElement displaynameElement = object.get(PROP_DISPLAYNAME);
+        if(checkNotNull(displaynameElement)) {
+        	String displayName = displaynameElement.getAsString();
+        	bean.setDisplayName(displayName);
+        }
+        
+        JsonElement avatarUrlsElement = object.get(ELEM_AVATAR_URLS);
+        if(checkNotNull(avatarUrlsElement)) {
+        	JsonObject avatarUrls = avatarUrlsElement.getAsJsonObject();
+        	AvatarURLBean avatarURLBean = AvatarURLParser.parse(avatarUrls);
+        	bean.setAvatarUrl(avatarURLBean);
+        }
+        
+        JsonElement emailAdressElement = object.get(PROP_EMAIL_ADRESS);
+        if(checkNotNull(emailAdressElement)) {
+	        String ea = emailAdressElement.getAsString();
 	        bean.setEmailAddress(ea);
         }
-        bean.setActive(active);
-        bean.setDisplayName(displayName);
-        bean.setAvatarUrl(avatarURLBean);
         return bean;
     }
 

@@ -6,38 +6,46 @@ import com.google.gson.JsonObject;
 import de.micromata.jira.rest.domain.TimetrackingBean;
 import de.micromata.jira.rest.util.JsonConstants;
 
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
+
 public class TimetrackingParser implements JsonConstants {
 
 	public static TimetrackingBean parse(JsonObject object) {
 		TimetrackingBean bean = new TimetrackingBean();
-		JsonElement jsonElement = object.get(PROP_ORIGINALESTIMATE);
-		if(jsonElement != null) {
-			String s = jsonElement.getAsString();
+		
+		JsonElement originalEstimateElement = object.get(PROP_ORIGINALESTIMATE);
+		if(checkNotNull(originalEstimateElement)) {
+			String s = originalEstimateElement.getAsString();
 			bean.setOriginalEstimate(s);			
 		}
-		jsonElement = object.get(PROP_REMAININGESTIMATE);
-		if(jsonElement != null) {
-			String s = jsonElement.getAsString();
+		
+		JsonElement remainingEstimateElement = object.get(PROP_REMAININGESTIMATE);
+		if(checkNotNull(remainingEstimateElement)) {
+			String s = remainingEstimateElement.getAsString();
 			bean.setRemainingEstimate(s);
 		}
-		jsonElement = object.get(PROP_TIMESPENT);
-		if(jsonElement != null) {
-			String s = jsonElement.getAsString();
+		
+		JsonElement timeSpentElement = object.get(PROP_TIMESPENT);
+		if(checkNotNull(timeSpentElement)) {
+			String s = timeSpentElement.getAsString();
 			bean.setTimeSpent(s);
 		}
-		jsonElement = object.get(PROP_TIME_SPENT_SECONDS);
-		if(jsonElement != null) {
-			int i = jsonElement.getAsInt();
+		
+		JsonElement timeSpentSecondsElement = object.get(PROP_TIME_SPENT_SECONDS);
+		if(checkNotNull(timeSpentSecondsElement)) {
+			int i = timeSpentSecondsElement.getAsInt();
 			bean.setTimeSpentSeconds(i);
 		}
-		jsonElement = object.get(PROP_ORIGINAL_ESTIMATE_SECONDS);
-		if(jsonElement != null) {
-			int i = jsonElement.getAsInt();
+		
+		JsonElement originalEstimateSecondsElement = object.get(PROP_ORIGINAL_ESTIMATE_SECONDS);
+		if(checkNotNull(originalEstimateSecondsElement)) {
+			int i = originalEstimateSecondsElement.getAsInt();
 			bean.setOriginalEstimateSeconds(i);
 		}
-		jsonElement = object.get(PROP_REMAINING_ESTIMATE_SECONDS);
-		if(jsonElement != null) {
-			int i = jsonElement.getAsInt();
+		
+		JsonElement remainingEstimateSocondsElement = object.get(PROP_REMAINING_ESTIMATE_SECONDS);
+		if(remainingEstimateSocondsElement != null) {
+			int i = remainingEstimateSocondsElement.getAsInt();
 			bean.setRemainingEstimateSeconds(i);
 		}
 		return bean;

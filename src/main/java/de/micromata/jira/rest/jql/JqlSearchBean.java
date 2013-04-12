@@ -15,10 +15,10 @@ public class JqlSearchBean {
     private Integer maxResult = null;
     
     /** JQL clause(s). */
-    private final List<JqlClause> clauses;
+    private List<JqlClause> clauses = null;
 
     /** Result fields for a query. */
-    private final List<EField> fields;
+    private List<EField> fields = null;
     
     /** Result for a query contains all fields. */
     private boolean fieldAll = false;
@@ -142,5 +142,13 @@ public class JqlSearchBean {
 	 */
 	public void setFieldNavigable(boolean fieldNavigable) {
 		this.fieldNavigable = fieldNavigable;
+	}
+
+	public void setClauses(List<JqlClause> clauses) {
+		this.clauses = clauses;
+	}
+
+	public void setFields(List<EField> fields) {
+		this.fields = fields;
 	}
 }

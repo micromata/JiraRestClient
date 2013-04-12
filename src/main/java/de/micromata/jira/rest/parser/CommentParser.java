@@ -12,6 +12,8 @@ import de.micromata.jira.rest.domain.UserBean;
 import de.micromata.jira.rest.domain.VisibilityBean;
 import de.micromata.jira.rest.util.DateParser;
 
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Christian
@@ -24,21 +26,42 @@ public class CommentParser extends BaseParser {
 	public static CommentBean parse(JsonObject object) {
 		CommentBean bean = new CommentBean();
 		parseBaseProperties(bean, object);
-		String body = object.get(PROP_BODY).getAsString();
-		UserBean au = UserParser.parse(object.get(ELEM_AUTHOR).getAsJsonObject());
-		UserBean uau = UserParser.parse(object.get(ELEM_UPDATE_AUTHOR).getAsJsonObject());
-		Date created = DateParser.parseDateFormat3(object.get(PROP_CREATED).getAsString());
-		Date updated = DateParser.parseDateFormat3(object.get(PROP_UPDATED).getAsString());
-		JsonElement element = object.get(ELEM_VISIBILITY);
-		if(element != null) {
-			VisibilityBean visibilityBean = VisibilityParser.parse(element.getAsJsonObject());
+		
+		JsonElement bodyElement = object.get(PROP_BODY);
+		if(checkNotNull(bodyElement)) {
+			String body = bodyElement.getAsString();
+			bean.setBody(body);
+		}
+
+		JsonElement authorElement = object.get(ELEM_AUTHOR);
+		if(checkNotNull(authorElement)) {
+			UserBean au = UserParser.parse(authorElement.getAsJsonObject());
+			bean.setAuthor(au);
+		}
+		
+		JsonElement updateAuthorElement = object.get(ELEM_UPDATE_AUTHOR);
+		if(checkNotNull(updateAuthorElement)) {
+			UserBean uau = UserParser.parse(updateAuthorElement.getAsJsonObject());
+			bean.setUpdateAuthor(uau);
+		}
+		
+		JsonElement createdElement = object.get(PROP_CREATED);
+		if(checkNotNull(createdElement)) {
+			Date created = DateParser.parseDateFormat3(createdElement.getAsString());
+			bean.setCreated(created);
+		}
+		
+		JsonElement updatedElement = object.get(PROP_UPDATED);
+		if(checkNotNull(updatedElement)) {
+			Date updated = DateParser.parseDateFormat3(updatedElement.getAsString());
+			bean.setUpdated(updated);
+		}
+
+		JsonElement visibilityElement = object.get(ELEM_VISIBILITY);
+		if(checkNotNull(visibilityElement)) {
+			VisibilityBean visibilityBean = VisibilityParser.parse(visibilityElement.getAsJsonObject());
 			bean.setVisibility(visibilityBean);
 		}
-		bean.setAuthor(au);
-		bean.setUpdateAuthor(uau);
-		bean.setBody(body);
-		bean.setCreated(created);
-		bean.setUpdated(updated);
 		return bean;
 	}
 	

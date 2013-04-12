@@ -4,10 +4,13 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.IssueTypeBean;
 import de.micromata.jira.rest.util.URIParser;
+
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,13 +24,25 @@ public class IssueTypeParser extends BaseParser {
     public static IssueTypeBean parse(JsonObject object) {
         IssueTypeBean bean = new IssueTypeBean();
         parseBaseProperties(bean, object);
-        String description = object.get(PROP_DESCRIPTION).getAsString();
-        boolean subtask = object.get(PROP_SUBTASK).getAsBoolean();
-        String iconURL = object.get(PROP_ICONURL).getAsString();
-        URI uriIcon = URIParser.parseStringToURI(iconURL);
-        bean.setDescription(description);
-        bean.setIconURL(uriIcon);
-        bean.setSubtask(subtask);
+        
+        JsonElement descriptionElement = object.get(PROP_DESCRIPTION);
+        if(checkNotNull(descriptionElement)) {
+	        String description = descriptionElement.getAsString();
+	        bean.setDescription(description);
+        }
+        
+        JsonElement subtaskElement = object.get(PROP_SUBTASK);
+        if(checkNotNull(subtaskElement)) {
+	        boolean subtask = subtaskElement.getAsBoolean();
+	        bean.setSubtask(subtask);
+        }
+
+        JsonElement iconUrlElement = object.get(PROP_ICONURL);
+        if(checkNotNull(iconUrlElement)) {
+	        String iconURL = iconUrlElement.getAsString();
+	        URI uriIcon = URIParser.parseStringToURI(iconURL);
+	        bean.setIconURL(uriIcon);
+        }
         return bean;
     }
 

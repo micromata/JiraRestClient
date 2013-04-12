@@ -11,6 +11,8 @@ import de.micromata.jira.rest.domain.IssueTypeBean;
 import de.micromata.jira.rest.domain.PriorityBean;
 import de.micromata.jira.rest.domain.StatusBean;
 
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
+
 public class IssueBasicParser extends BaseParser {
 
 	public static IssueBasicBean parse(JsonObject object) {
@@ -19,29 +21,31 @@ public class IssueBasicParser extends BaseParser {
 		parseBaseProperties(bean, object);
 		
 		JsonElement keyElement = object.get(PROP_KEY);
-        bean.setKey(keyElement.getAsString());
+		if(checkNotNull(keyElement)) {
+			bean.setKey(keyElement.getAsString());
+		}
         
         JsonElement fieldsElement = object.get(ELEM_FIELDS);
-        if(fieldsElement != null){
+        if(checkNotNull(fieldsElement)){
             JsonObject fieldObject = fieldsElement.getAsJsonObject();
             JsonElement summaryElement = fieldObject.get(PROP_SUMMARY);
-            if(summaryElement != null){
+            if(checkNotNull(summaryElement)){
                 bean.setSummary(summaryElement.getAsString());
             }
             JsonElement issuetypeElement = fieldObject.get(ELEM_ISSUETYPE);
-            if(issuetypeElement != null){
+            if(checkNotNull(issuetypeElement)){
                 JsonObject isseuTypeObject = issuetypeElement.getAsJsonObject();
                 IssueTypeBean issueType = IssueTypeParser.parse(isseuTypeObject);
                 bean.setIssueType(issueType);
             }
             JsonElement statusElement = fieldObject.get(ELEM_STATUS);
-            if(statusElement != null){
+            if(checkNotNull(statusElement)){
                 JsonObject statusObject = statusElement.getAsJsonObject();
                 StatusBean status = StatusParser.parse(statusObject);
                 bean.setStatus(status);
             }
             JsonElement priorityElement = fieldObject.get(ELEM_PRIORITY);
-            if(priorityElement != null){
+            if(checkNotNull(priorityElement)){
             	JsonObject priorityObject = priorityElement.getAsJsonObject();
             	PriorityBean priority = PriorityParser.parse(priorityObject);
             	bean.setPriority(priority);

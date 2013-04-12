@@ -1,18 +1,29 @@
 package de.micromata.jira.rest.parser;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.AggregateprogressBean;
 import de.micromata.jira.rest.util.JsonConstants;
 
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
+
 public class AggregateprogressParser implements JsonConstants {
 
 	public static AggregateprogressBean parse(JsonObject object) {
 		AggregateprogressBean bean = new AggregateprogressBean();
-		int pr = object.get(ELEM_PROGRESS).getAsInt();
-		int to = object.get(PROP_TOTAL).getAsInt();
-		bean.setProgress(pr);
-		bean.setTotal(to);
+		
+		JsonElement progressElement = object.get(ELEM_PROGRESS);
+		if(checkNotNull(progressElement)) {
+			int pr = progressElement.getAsInt();
+			bean.setProgress(pr);
+		}
+
+		JsonElement totalElement = object.get(PROP_TOTAL);
+		if(checkNotNull(totalElement)) {
+			int to = totalElement.getAsInt();
+			bean.setTotal(to);
+		}
 		return bean;
 	}
 

@@ -4,10 +4,13 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.AvatarURLBean;
 import de.micromata.jira.rest.util.URIParser;
+
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,12 +23,20 @@ public class AvatarURLParser extends BaseParser {
 
     public static AvatarURLBean parse(JsonObject object){
         AvatarURLBean bean = new AvatarURLBean();
-        String prop16x16 = object.get(PROP_16x16).getAsString();
-        URI uri16x16 = URIParser.parseStringToURI(prop16x16);
-        String prop48x48 = object.get(PROP_48x48).getAsString();
-        URI uri48x48 = URIParser.parseStringToURI(prop48x48);
-        bean.setUri16x16(uri16x16);
-        bean.setUri48x48(uri48x48);
+        
+        JsonElement prop16x16Element = object.get(PROP_16x16);
+        if(checkNotNull(prop16x16Element)) {
+	        String prop16x16 = prop16x16Element.getAsString();
+	        URI uri16x16 = URIParser.parseStringToURI(prop16x16);
+	        bean.setUri16x16(uri16x16);
+        }
+        
+        JsonElement prop48x48Element = object.get(PROP_48x48);
+        if(checkNotNull(prop48x48Element)) {
+        	String prop48x48 = prop48x48Element.getAsString();
+	        URI uri48x48 = URIParser.parseStringToURI(prop48x48);
+	        bean.setUri48x48(uri48x48);
+        }
         return bean;
     }
 

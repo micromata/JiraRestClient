@@ -1,5 +1,7 @@
 package de.micromata.jira.rest.parser;
 
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
+
 import java.util.List;
 
 import com.google.gson.JsonElement;
@@ -19,25 +21,33 @@ public class JqlSearchParser implements JsonConstants {
 
     public static JqlSearchResultBean parse(JsonObject jsonObject){
         JqlSearchResultBean searchResultBean = new JqlSearchResultBean();
+        
         JsonElement expandElement = jsonObject.get(PROP_EXPAND);
-        if(expandElement != null){
+        if(checkNotNull(expandElement)){
             searchResultBean.setExpand(expandElement.getAsString());
         }
+        
         JsonElement startAtElement = jsonObject.get(PROP_STARTAT);
-        if(startAtElement != null){
+        if(checkNotNull(startAtElement)){
             searchResultBean.setStartAt(startAtElement.getAsInt());
         }
+        
         JsonElement maxresultsElement = jsonObject.get(PROP_MAXRESULTS);
-        if(maxresultsElement != null){
+        if(checkNotNull(maxresultsElement)){
             searchResultBean.setMaxResults(maxresultsElement.getAsInt());
         }
+        
         JsonElement totalElement = jsonObject.get(PROP_TOTAL);
-        if(totalElement != null){
+        if(checkNotNull(totalElement)){
             searchResultBean.setTotal(totalElement.getAsInt());
         }
-        List<JsonObject> jsonObjects = GsonParserUtil.parseJsonArray(jsonObject.getAsJsonArray(ELEM_ISSUES));
-        List<IssueBean> issueBeans = IssueParser.parse(jsonObjects);
-        searchResultBean.setIssueBeans(issueBeans);
+        
+        JsonElement issuesElement = jsonObject.get(ELEM_ISSUES);
+        if(checkNotNull(issuesElement)) {
+	        List<JsonObject> jsonObjects = GsonParserUtil.parseJsonArray(issuesElement.getAsJsonArray());
+	        List<IssueBean> issueBeans = IssueParser.parse(jsonObjects);
+	        searchResultBean.setIssueBeans(issueBeans);
+        }
         return searchResultBean;
     }
 

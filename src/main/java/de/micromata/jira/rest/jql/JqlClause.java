@@ -3,8 +3,12 @@ package de.micromata.jira.rest.jql;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * JQL clause is a part of a query. A query has three basic parts: fields, operators, and operands(values).
+ * JQL clause is a part of a query. A query has three basic parts: fields, operators, and operands(=values).
  * You can optionally link them together using a few select keywords.
+ * 
+ * <p>JQLClause = ( field + operator + operand ) + keyword + ...
+ * <p>Example: ( PROJECT = DEMO ) + AND ...
+ * 
  */
 public class JqlClause {
 
@@ -112,16 +116,16 @@ public class JqlClause {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		if(field != null) {
-			sb.append(field + " ");
+			sb.append(field);
 		}
 		if(operator != null) {
-			sb.append(operator + " ");
+			sb.append(operator);
 		}
 		if(operand != null) {
-			sb.append(operand + " ");
+			sb.append(" " + operand);
 		}
 		if(keyword != null) {
-			sb.append(keyword + " ");
+			sb.append(keyword);
 		}
 		
 		return sb.toString();

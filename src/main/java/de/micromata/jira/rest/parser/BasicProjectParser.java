@@ -3,10 +3,13 @@ package de.micromata.jira.rest.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.AvatarURLBean;
 import de.micromata.jira.rest.domain.BasicProjectBean;
+
+import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,10 +23,18 @@ public class BasicProjectParser extends BaseParser {
 
     public static void parseBasicProject(BasicProjectBean bean, JsonObject object) {
         parseBaseProperties(bean, object);
-        String key = object.get(PROP_KEY).getAsString();
-        AvatarURLBean parse = AvatarURLParser.parse(object.getAsJsonObject(ELEM_AVATAR_URLS));
-        bean.setAvatarURLs(parse);
-        bean.setKey(key);
+        
+        JsonElement keyElement = object.get(PROP_KEY);
+        if(checkNotNull(keyElement)) {
+        	String key = keyElement.getAsString();
+        	bean.setKey(key);
+        }
+        
+        JsonElement avatarUrlsElement = object.get(ELEM_AVATAR_URLS);
+        if(checkNotNull(avatarUrlsElement)) {
+	        AvatarURLBean parse = AvatarURLParser.parse(avatarUrlsElement.getAsJsonObject());
+	        bean.setAvatarURLs(parse);
+        }
     }
 
     public static List<BasicProjectBean> parseBasicProject(List<JsonObject> objects) {
