@@ -47,6 +47,10 @@ public class RestURIBuilder implements RestConstants {
         return UriBuilder.fromUri(baseURI).path(ISSUETPYES).build();
     }
 
+    public static URI buildStateURI(URI baseUri) {
+        return UriBuilder.fromUri(baseUri).path(STATUS).build();
+    }
+
     public static URI buildSearchURI(URI baseUri, JqlBean jqlBean) {
         String jql = JqlHelper.buildJqlString(jqlBean);
         UriBuilder path = UriBuilder.fromUri(baseUri).path(SEARCH);
@@ -94,5 +98,6 @@ public class RestURIBuilder implements RestConstants {
 
 
     }
+
 
 }

@@ -50,7 +50,6 @@
 			<version>1.13</version>
 			<type>jar</type>
 		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
