@@ -37,6 +37,8 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 		String uri = "http://localhost:2990/jira";
         String username = "admin";
         String password = "admin";
+
+
         
         jiraRestClient = new JiraRestClient(uri, username, password);
         restWrapper = new RestWrapperImpl();
@@ -52,9 +54,9 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testGetIssuesForProject();
 //        testRestConnection.testSearchIssuesForProject();
 //        testRestConnection.testExtendedSearchIssuesForProject();
-        testRestConnection.testGetIssueByKey();
+//        testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
-//        testRestConnection.testGetIssueTypes();
+        testRestConnection.testGetIssueTypes();
     }
 
     public void testRestConnection() throws URISyntaxException {

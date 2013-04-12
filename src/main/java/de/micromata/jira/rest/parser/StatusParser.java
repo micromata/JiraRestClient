@@ -1,6 +1,8 @@
 package de.micromata.jira.rest.parser;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -29,6 +31,17 @@ public class StatusParser extends BaseParser {
             bean.setIconUrl(uri);
         }
         return bean;
+    }
+
+
+
+    public static List<StatusBean> parse(List<JsonObject> jsonObjectList){
+        List<StatusBean> retval = new ArrayList<StatusBean>();
+        for (JsonObject jsonObject : jsonObjectList) {
+            StatusBean parse = parse(jsonObject);
+            retval.add(parse);
+        }
+        return retval;
     }
 
 }

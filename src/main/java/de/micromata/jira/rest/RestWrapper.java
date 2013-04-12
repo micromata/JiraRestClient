@@ -5,14 +5,7 @@ package de.micromata.jira.rest;
 import java.net.URI;
 import java.util.List;
 
-import de.micromata.jira.rest.domain.BasicProjectBean;
-import de.micromata.jira.rest.domain.CommentSummaryBean;
-import de.micromata.jira.rest.domain.ComponentBean;
-import de.micromata.jira.rest.domain.IssueBean;
-import de.micromata.jira.rest.domain.IssueTypeBean;
-import de.micromata.jira.rest.domain.JqlSearchResultBean;
-import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlSearchBean;
 import de.micromata.jira.rest.util.RestException;
@@ -49,6 +42,8 @@ public interface RestWrapper {
 			String projectKey) throws RestException;
 
     public List<IssueTypeBean> getIssueTypes(JiraRestClient jiraRestClient) throws RestException;
+
+    public List<StatusBean> getStates(JiraRestClient jiraRestClient) throws RestException;
 
 	public List<IssueBean> extendedSearchIssuesForProject(
 			JiraRestClient jiraRestClient, JqlSearchBean jqlBean) throws RestException;
