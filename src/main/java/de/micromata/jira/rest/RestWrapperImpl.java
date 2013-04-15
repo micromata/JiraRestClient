@@ -188,26 +188,6 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         }
 
     }
-    
-    @Override
-    public List<IssueBean> extendedSearchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jqlBean) throws RestException {
-    	
-    	Client client = jiraRestClient.getClient();
-    	URI baseUri = jiraRestClient.getBaseUri();
-    	URI uri = RestURIBuilder.buildExtendedSearchURI(baseUri, jqlBean);
-    	
-    	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
-    	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-    		String entity = clientResponse.getEntity(String.class);
-    		JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
-    		JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);
-    		return jqlSearchResultBean.getIssueBeans();
-    	}
-    	else{
-    		throw new RestException(clientResponse);
-    	}
-    	
-    }
 
     @Override
     public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException {

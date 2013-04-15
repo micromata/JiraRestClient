@@ -144,10 +144,20 @@ public class JqlSearchBean {
 		this.fieldNavigable = fieldNavigable;
 	}
 
+	/**
+	 * Sets the clauses.
+	 *
+	 * @param clauses the new clauses
+	 */
 	public void setClauses(List<JqlClause> clauses) {
 		this.clauses = clauses;
 	}
 
+	/**
+	 * Sets the fields.
+	 *
+	 * @param fields the new fields
+	 */
 	public void setFields(List<EField> fields) {
 		this.fields = fields;
 	}

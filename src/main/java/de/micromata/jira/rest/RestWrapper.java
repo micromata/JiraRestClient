@@ -1,7 +1,5 @@
 package de.micromata.jira.rest;
 
-
-
 import java.net.URI;
 import java.util.List;
 
@@ -22,36 +20,117 @@ import de.micromata.jira.rest.util.RestException;
  * User: Christian
  * Date: 28.02.13
  * Time: 11:18
- * To change this template use File | Settings | File Templates.
+ * 
+ * <p>REST services for the the connected client.
  */
 public interface RestWrapper {
 
-
+	/**
+	 * Returns a list of all projects.
+	 * 
+	 * @param jiraRestClient = the connected client 
+	 * @return list of projects
+	 * @throws RestException 
+	 */
     public List<BasicProjectBean> getAllProjects(JiraRestClient jiraRestClient) throws RestException;
 
+    /**
+     * Returns a full representation of the project for the given key.
+     * 
+     * @param jiraRestClient = the connected client
+     * @param projectKey = the project key
+     * @return all informations for the project
+     * @throws RestException
+     */
     public ProjectBean getProjectByKey(JiraRestClient jiraRestClient, String projectKey) throws RestException;
 
+    /**
+     * Returns a list of all issues for the given project.
+     * 
+     * @param jiraRestClient = the connected client
+     * @param projectKey = the project key
+     * @return JQL search results
+     * @throws RestException
+     */
     public JqlSearchResultBean getIssuesForProject(JiraRestClient jiraRestClient, String projectKey) throws RestException;
 
+    /**
+     * Performs an extended search for issues given by the project.
+     * 
+     * @param jiraRestClient = the connected client
+     * @param jqlBean = JQL requirements for an extended search  
+     * @return list of issues
+     * @throws RestException
+     */
     public List<IssueBean> searchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jqlBean) throws RestException;
 
+    /**
+     * Returns a full representation of the issue for the given issue key.
+     * 
+     * @param jiraRestClient = the connected client
+     * @param issueKey = issue key
+     * @return all informations for the issue
+     * @throws RestException
+     */
     public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException;
 
+    /**
+     * Test the REST connection with login data.
+     * 
+     * @param uri = the URI for the server where JIRA is running
+     * @param username = login name 
+     * @param password = login password
+     * @return true if the connection success
+     */
     public boolean testRestConnection(URI uri, String username, String password);
 
+    /**
+     * Returns a summarized representation of all comments for the given issue.
+     * 
+     * @param jiraRestClient = the connected client
+     * @param issueKey = issue key
+     * @return summarized representation of all comments
+     * @throws RestException
+     */
 	public CommentSummaryBean getCommentsByIssue(JiraRestClient jiraRestClient,
 			String issueKey) throws RestException;
 
+	/**
+	 * Returns a list of all versions for a project.
+	 * @param jiraRestClient = the connected client
+	 * @param projectKey = the project key
+	 * @return list of versions
+	 * @throws RestException
+	 */
 	public List<VersionBean> getProjectVersions(JiraRestClient jiraRestClient,
 			String projectKey) throws RestException;
 
+	/**
+	 * Returns a list of all components for a project.
+	 * 
+	 * @param jiraRestClient = the connected client
+	 * @param projectKey = the project key
+	 * @return list of components
+	 * @throws RestException
+	 */
 	public List<ComponentBean> getProjectComponents(JiraRestClient jiraRestClient,
 			String projectKey) throws RestException;
 
+	/**
+	 * Returns a list of all issue types visible to the connected client.
+	 * 
+	 * @param jiraRestClient = the connected client
+	 * @return list of issue types 
+	 * @throws RestException
+	 */
     public List<IssueTypeBean> getIssueTypes(JiraRestClient jiraRestClient) throws RestException;
 
+    /**
+     * Returns a list of all statuses.
+     * 
+     * @param jiraRestClient = the connected client 
+     * @return list of statuses
+     * @throws RestException
+     */
     public List<StatusBean> getStates(JiraRestClient jiraRestClient) throws RestException;
-
-	public List<IssueBean> extendedSearchIssuesForProject(
-			JiraRestClient jiraRestClient, JqlSearchBean jqlBean) throws RestException;
 }

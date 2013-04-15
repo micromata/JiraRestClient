@@ -29,7 +29,7 @@ public class JqlClause {
 	 *
 	 * @param field = type of information
 	 * @param operator = link between field and operand
-	 * @param operand = actual data
+	 * @param operand = value
 	 * @param keyword = link to another clause (should be null, if there is nothing to link)
 	 */
 	public JqlClause(EField field, EOperator operator, String operand,

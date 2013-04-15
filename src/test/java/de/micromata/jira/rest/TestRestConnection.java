@@ -50,8 +50,8 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testGetProjectByKey();
 //        testRestConnection.testGetProjectVersions();
 //        testRestConnection.testGetProjectComponents();
-//        testRestConnection.testGetIssuesForProject();
-        testRestConnection.testSearchIssuesForProject();
+        testRestConnection.testGetIssuesForProject();
+//        testRestConnection.testSearchIssuesForProject();
 //        testRestConnection.testExtendedSearchIssuesForProject();
 //        testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
@@ -119,7 +119,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	jsb.setMaxResult(2);
     	jsb.setFieldAll(true);
     	
-    	List<IssueBean> searchIssuesForProject = restWrapper.extendedSearchIssuesForProject(jiraRestClient, jsb);
+    	List<IssueBean> searchIssuesForProject = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
     	
     	System.out.println("testExtendedSearchIssuesForProject: " + !searchIssuesForProject.isEmpty());
     }
@@ -141,5 +141,19 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     public void testGetIssueTypes() throws RestException {
         List<IssueTypeBean> issueTypes = restWrapper.getIssueTypes(jiraRestClient);
         System.out.println("testGetIssueTypes: " + !issueTypes.isEmpty());
+    }
+    
+    public void testJqlSearchString() throws RestException {
+    	JqlSearchBean jsb = new JqlSearchBean();
+    	jsb.getClauses().add(new JqlClause(EField.PROJECT, EOperator.EQUALS, "DEMO", null));
+//    	jsb.getClauses().add(new JqlClause(EField.STATUS, EOperator.EQUALS, STATUS_OPEN, EKeyword.AND));
+//    	jsb.getClauses().add(new JqlClause(EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG, null));
+    	jsb.setStartAt(1);
+    	jsb.setMaxResult(2);
+    	jsb.setFieldAll(true);
+    	
+    	List<IssueBean> searchIssuesForProject = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
+    	
+    	System.out.println("testExtendedSearchIssuesForProject: " + !searchIssuesForProject.isEmpty());
     }
 }

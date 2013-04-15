@@ -1,6 +1,5 @@
 package de.micromata.jira.rest;
 
-
 import java.net.URI;
 
 import javax.ws.rs.core.MediaType;
@@ -20,18 +19,29 @@ import de.micromata.jira.rest.util.RestConstants;
  * User: Christian
  * Date: 01.03.13
  * Time: 17:22
- * To change this template use File | Settings | File Templates.
+ * 
+ * <p>Contains informations about the client which is connecting to JIRA over REST.</p>
  */
 public class JiraRestClient {
 
+    /** The Apache HTTP client. */
     private ApacheHttpClient client;
 
+    /** The base URI. */
     private URI baseUri;
 
+    /**
+     * Builds and configures a new client connection to JIRA. 
+     *
+     * @param uri = the login mask URI where JIRA is running
+     * @param username = login name
+     * @param password = login password
+     */
     public JiraRestClient(String uri, String username, String password) {
     	String authString = username + ":" + password;
     	String auth = new String(Base64.encode(authString));
 
+    	//Apache HTTP client setup 
     	ApacheHttpClientConfig clientConfig = new DefaultApacheHttpClientConfig();
         clientConfig.getProperties().put(ApacheHttpClientConfig.PROPERTY_HANDLE_COOKIES, Boolean.TRUE);
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
@@ -42,10 +52,20 @@ public class JiraRestClient {
         	type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
     }
 
+    /**
+     * Gets the Apache HTTP client.
+     *
+     * @return the client
+     */
     public ApacheHttpClient getClient() {
         return client;
     }
 
+    /**
+     * Gets the base URI.
+     *
+     * @return the base URI
+     */
     public URI getBaseUri() {
         return baseUri;
     }

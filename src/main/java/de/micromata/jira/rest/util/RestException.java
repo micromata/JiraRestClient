@@ -11,13 +11,27 @@ import com.sun.jersey.api.client.ClientResponse;
  */
 public class RestException extends Exception {
 
-
 	private static final long serialVersionUID = -4441370450013391046L;
 
-	ClientResponse response = null;
+	/** The client response. */
+	private ClientResponse response = null;
 
+    /**
+     * Instantiates a new REST exception.
+     *
+     * @param response the response of the client
+     */
     public RestException(ClientResponse response) {
             super(response.getClientResponseStatus().getReasonPhrase());
             this.response = response;
     }
+
+	/**
+	 * Gets the response.
+	 *
+	 * @return the response
+	 */
+	public ClientResponse getResponse() {
+		return response;
+	}
 }

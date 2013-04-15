@@ -2,6 +2,14 @@ package de.micromata.jira.rest.domain;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Vitali Filippow
+ * @date 15.04.2013
+ * @time 14:04:52
+ *	
+ * Summarized representation of worklogs.
+ */
 public class WorklogSummaryBean {
 
 	private int startAt = 0;
