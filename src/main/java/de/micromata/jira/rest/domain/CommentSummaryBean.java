@@ -8,7 +8,8 @@ import java.util.List;
  * User: Christian
  * Date: 06.03.13
  * Time: 13:45
- * To change this template use File | Settings | File Templates.
+ * 
+ * Summarized representation for comments. 
  */
 public class CommentSummaryBean {
 	

@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.ws.rs.core.UriBuilder;
 
-import de.micromata.jira.rest.jql.JqlBean;
-import de.micromata.jira.rest.jql.JqlHelper;
 import de.micromata.jira.rest.jql.JqlSearchBean;
 
 /**
@@ -51,31 +49,31 @@ public class RestURIBuilder implements RestConstants {
         return UriBuilder.fromUri(baseUri).path(STATUS).build();
     }
 
-    public static URI buildSearchURI(URI baseUri, JqlBean jqlBean) {
-        String jql = JqlHelper.buildJqlString(jqlBean);
+    public static URI buildSearchURI(URI baseUri, JqlSearchBean jsb) {
+        String jql = jsb.toString();
         UriBuilder path = UriBuilder.fromUri(baseUri).path(SEARCH);
         path.queryParam(JQL, jql);
-        if (jqlBean.getFields().isEmpty() == false) {
-            path.queryParam(FIELDS, buildFieldParameter(jqlBean.getFields()));
+        if (jsb.getFields().isEmpty() == false) {
+            path.queryParam(FIELDS, buildFieldParameter(jsb.getFields()));
         }
         return path.build();
     }
     
-    public static URI buildExtendedSearchURI(URI baseUri, JqlSearchBean jqlBean) {
-    	String jql = jqlBean.toString();
-    	int startAt = jqlBean.getStartAt();
-    	int maxResults = jqlBean.getMaxResult();
+    public static URI buildExtendedSearchURI(URI baseUri, JqlSearchBean jsb) {
+    	String jql = jsb.toString();
+    	int startAt = jsb.getStartAt();
+    	int maxResults = jsb.getMaxResult();
     	
     	UriBuilder path = UriBuilder.fromUri(baseUri).path(SEARCH);
     	path.queryParam(JQL, jql);
     	path.queryParam(START_AT, startAt);
     	path.queryParam(MAX_RESULTS, maxResults);
-    	if(jqlBean.isFieldAll()) {
+    	if(jsb.isFieldAll()) {
     		path.queryParam(FIELDS, FIELDS_ALL);
-    	} else if(jqlBean.isFieldNavigable()) {
+    	} else if(jsb.isFieldNavigable()) {
     		path.queryParam(FIELDS, FIELDS_NAVIGABLE);
-    	} else if (!jqlBean.getFields().isEmpty()) {
-            path.queryParam(FIELDS, buildFieldParameter(jqlBean.getFields()));
+    	} else if (!jsb.getFields().isEmpty()) {
+            path.queryParam(FIELDS, buildFieldParameter(jsb.getFields()));
         }
     	return path.build();
     }

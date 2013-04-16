@@ -19,6 +19,8 @@ public class DateParser {
     
     private static SimpleDateFormat sdf4 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
     
+    private static SimpleDateFormat sdf5 = new SimpleDateFormat("dd. MMM yyyy");
+    
     public static Date parseDateFormat1(String dateString){
         try {
             return sdf1.parse(dateString);
@@ -54,5 +56,14 @@ public class DateParser {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public static Date parseDateFormat5(String dateString){
+    	try {
+    		return sdf5.parse(dateString);
+    	} catch (ParseException e) {
+    		e.printStackTrace();
+    	}
+    	return null;
     }
 }

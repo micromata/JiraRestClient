@@ -20,16 +20,13 @@ import de.micromata.jira.rest.util.RestException;
 public interface RestWrapper {
 
 
-
-    public UserBean getLoggedInRemoteUser(JiraRestClient jiraRestClient) throws RestException;
-
     public List<BasicProjectBean> getAllProjects(JiraRestClient jiraRestClient) throws RestException;
 
     public ProjectBean getProjectByKey(JiraRestClient jiraRestClient, String projectKey) throws RestException;
 
     public JqlSearchResultBean getIssuesForProject(JiraRestClient jiraRestClient, String projectKey) throws RestException;
 
-    public JqlSearchResultBean searchIssuesForProject(JiraRestClient jiraRestClient, JqlBean jqlBean) throws RestException;
+    public List<IssueBean> searchIssuesForProject(JiraRestClient jiraRestClient, JqlBean jqlBean) throws RestException;
 
     public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException;
 
@@ -48,6 +45,6 @@ public interface RestWrapper {
 
     public List<StatusBean> getStates(JiraRestClient jiraRestClient) throws RestException;
 
-	public JqlSearchResultBean extendedSearchIssuesForProject(
+	public List<IssueBean> extendedSearchIssuesForProject(
 			JiraRestClient jiraRestClient, JqlSearchBean jqlBean) throws RestException;
 }

@@ -29,7 +29,7 @@ public class JqlClause {
 	 *
 	 * @param field = type of information
 	 * @param operator = link between field and operand
-	 * @param operand = actual data
+	 * @param operand = value
 	 * @param keyword = link to another clause (should be null, if there is nothing to link)
 	 */
 	public JqlClause(EField field, EOperator operator, String operand,
@@ -116,16 +116,16 @@ public class JqlClause {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		if(field != null) {
-			sb.append(field);
+			sb.append(field + " ");
 		}
 		if(operator != null) {
-			sb.append(operator);
+			sb.append(operator + " ");
 		}
 		if(operand != null) {
-			sb.append(" " + operand);
+			sb.append(operand + " ");
 		}
 		if(keyword != null) {
-			sb.append(keyword);
+			sb.append(keyword + " ");
 		}
 		
 		return sb.toString();

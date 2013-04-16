@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
  * User: Christian
  * Date: 12.03.13
  * Time: 15:40
+ * 
+ * <p>JQL search results.
  */
 public class JqlSearchResultBean {
 

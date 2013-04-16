@@ -19,7 +19,9 @@ import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import com.sun.jersey.core.util.Base64;
 
 import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.jql.JqlBean;
+import de.micromata.jira.rest.jql.EField;
+import de.micromata.jira.rest.jql.EOperator;
+import de.micromata.jira.rest.jql.JqlClause;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.jql.JqlSearchBean;
 import de.micromata.jira.rest.parser.*;
@@ -166,11 +168,11 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         
     	Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-        JqlBean jqlBean = new JqlBean();
-        jqlBean.setProjectKey(projectKey);
-    	jqlBean.addField(FIELDS_ALL);
+        JqlSearchBean jsb = new JqlSearchBean();
+        jsb.getClauses().add(new JqlClause(EField.PROJECT, EOperator.EQUALS, projectKey, null));
+        jsb.setFieldAll(true);
         
-        URI uri = RestURIBuilder.buildSearchURI(baseUri, jqlBean);
+        URI uri = RestURIBuilder.buildSearchURI(baseUri, jsb);
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
@@ -185,43 +187,23 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     }
 
     @Override
-    public JqlSearchResultBean searchIssuesForProject(JiraRestClient jiraRestClient, JqlBean jqlBean) throws RestException {
+    public List<IssueBean> searchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jsb) throws RestException {
     	
     	Client client = jiraRestClient.getClient();
     	URI baseUri = jiraRestClient.getBaseUri();
-    	URI uri = RestURIBuilder.buildSearchURI(baseUri, jqlBean);
+    	URI uri = RestURIBuilder.buildSearchURI(baseUri, jsb);
     	
     	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
             String entity = clientResponse.getEntity(String.class);
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
             JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);
-            return jqlSearchResultBean;
+            return jqlSearchResultBean.getIssueBeans();
         }
         else{
             throw new RestException(clientResponse);
         }
 
-    }
-    
-    @Override
-    public JqlSearchResultBean extendedSearchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jqlBean) throws RestException {
-    	
-    	Client client = jiraRestClient.getClient();
-    	URI baseUri = jiraRestClient.getBaseUri();
-    	URI uri = RestURIBuilder.buildExtendedSearchURI(baseUri, jqlBean);
-    	
-    	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
-    	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-    		String entity = clientResponse.getEntity(String.class);
-    		JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
-    		JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);
-    		return jqlSearchResultBean;
-    	}
-    	else{
-    		throw new RestException(clientResponse);
-    	}
-    	
     }
 
     @Override
