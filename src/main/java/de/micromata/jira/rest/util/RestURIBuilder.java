@@ -80,6 +80,13 @@ public class RestURIBuilder implements RestConstants {
     	return path.build();
     }
 
+    public static URI buildGetUserByUsername(URI baseUri, String username) {
+        UriBuilder path = UriBuilder.fromUri(baseUri).path(USER);
+        path.queryParam(PARAM_USERNAME, username);
+        return path.build();
+    }
+
+
     private static <E> String buildFieldParameter(List<E> fieldNames) {
         StringBuilder sb = new StringBuilder();
 
@@ -98,6 +105,7 @@ public class RestURIBuilder implements RestConstants {
 
 
     }
+
 
 
 }

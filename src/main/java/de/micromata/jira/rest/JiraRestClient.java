@@ -14,6 +14,7 @@ import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import com.sun.jersey.core.util.Base64;
 
 import de.micromata.jira.rest.util.RestConstants;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,7 +29,10 @@ public class JiraRestClient {
 
     private URI baseUri;
 
+    private String username = StringUtils.EMPTY;
+
     public JiraRestClient(String uri, String username, String password) {
+        this.username = username;
     	String authString = username + ":" + password;
     	String auth = new String(Base64.encode(authString));
 
@@ -50,4 +54,7 @@ public class JiraRestClient {
         return baseUri;
     }
 
+    public String getUsername() {
+        return username;
+    }
 }

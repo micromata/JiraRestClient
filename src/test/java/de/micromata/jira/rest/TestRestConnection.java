@@ -103,10 +103,10 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	jqlBean.setStatus(STATUS_OPEN);
     	jqlBean.setIssueType(ISSUETYPE_BUG);
     	jqlBean.addField(FIELDS_ALL);
-    	
-    	List<IssueBean> searchIssuesForProject = restWrapper.searchIssuesForProject(jiraRestClient, jqlBean);
-    	
-    	System.out.println("testSearchIssuesForProject: " + !searchIssuesForProject.isEmpty());
+
+        JqlSearchResultBean jqlSearchResultBean = restWrapper.searchIssuesForProject(jiraRestClient, jqlBean);
+
+        System.out.println("testSearchIssuesForProject: " + !jqlSearchResultBean.getIssueBeans().isEmpty());
     }
     
     public void testExtendedSearchIssuesForProject() throws RestException {
@@ -117,10 +117,10 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	jsb.setStartAt(1);
     	jsb.setMaxResult(2);
     	jsb.setFieldAll(true);
-    	
-    	List<IssueBean> searchIssuesForProject = restWrapper.extendedSearchIssuesForProject(jiraRestClient, jsb);
-    	
-    	System.out.println("testExtendedSearchIssuesForProject: " + !searchIssuesForProject.isEmpty());
+
+        JqlSearchResultBean jqlSearchResultBean = restWrapper.extendedSearchIssuesForProject(jiraRestClient, jsb);
+
+        System.out.println("testExtendedSearchIssuesForProject: " + !jqlSearchResultBean.getIssueBeans().isEmpty());
     }
     
     public void testGetIssueByKey() throws RestException {
