@@ -9,7 +9,7 @@ import java.net.URI;
  * Time: 09:55
  * To change this template use File | Settings | File Templates.
  */
-public class BaseBean {
+public class BaseBean implements Comparable<BaseBean> {
 
     protected long id;
 
@@ -39,5 +39,10 @@ public class BaseBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int compareTo(BaseBean o) {
+        return this.name.compareTo(o.getName());
     }
 }

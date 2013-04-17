@@ -6,7 +6,6 @@ import java.net.URI;
 import java.util.List;
 
 import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.jql.JqlBean;
 import de.micromata.jira.rest.jql.JqlSearchBean;
 import de.micromata.jira.rest.util.RestException;
 
@@ -19,6 +18,7 @@ import de.micromata.jira.rest.util.RestException;
  */
 public interface RestWrapper {
 
+    public UserBean getLoggedInRemoteUser(JiraRestClient jiraRestClient) throws RestException;
 
     public List<BasicProjectBean> getAllProjects(JiraRestClient jiraRestClient) throws RestException;
 
@@ -26,7 +26,7 @@ public interface RestWrapper {
 
     public JqlSearchResultBean getIssuesForProject(JiraRestClient jiraRestClient, String projectKey) throws RestException;
 
-    public List<IssueBean> searchIssuesForProject(JiraRestClient jiraRestClient, JqlBean jqlBean) throws RestException;
+    public JqlSearchResultBean searchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jsb) throws RestException;
 
     public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException;
 
@@ -45,6 +45,4 @@ public interface RestWrapper {
 
     public List<StatusBean> getStates(JiraRestClient jiraRestClient) throws RestException;
 
-	public List<IssueBean> extendedSearchIssuesForProject(
-			JiraRestClient jiraRestClient, JqlSearchBean jqlBean) throws RestException;
 }
