@@ -45,7 +45,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 	
     public static void main(String[] args) throws URISyntaxException, RestException {
         TestRestConnection testRestConnection = new TestRestConnection();
-//        testRestConnection.testRestConnection();
+        testRestConnection.testRestConnection();
 //        testRestConnection.testGetAllProjects();
 //        testRestConnection.testGetProjectByKey();
 //        testRestConnection.testGetProjectVersions();

@@ -265,7 +265,6 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         WebResource webResource = client.resource(userUri).queryParam(PARAM_USERNAME, username);
         ClientResponse clientResponse = webResource.header(RestConstants.AUTHORIZATION, RestConstants.BASIC + auth).
             	type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
             return true;
         }

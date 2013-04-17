@@ -14,6 +14,7 @@ import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import com.sun.jersey.core.util.Base64;
 
 import de.micromata.jira.rest.util.RestConstants;
+import de.micromata.jira.rest.util.RestException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -40,7 +41,7 @@ public class JiraRestClient {
      * @param username = login name
      * @param password = login password
      */
-    public JiraRestClient(String uri, String username, String password) {
+    public JiraRestClient(String uri, String username, String password){
         this.username = username;
     	String authString = username + ":" + password;
     	String auth = new String(Base64.encode(authString));
@@ -53,7 +54,8 @@ public class JiraRestClient {
         
         this.baseUri = UriBuilder.fromUri(uri).path(RestConstants.BASE_REST_PATH).build();
         this.client.resource(baseUri).header(RestConstants.AUTHORIZATION, RestConstants.BASIC + auth).
-        	type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+                type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
     }
 
     /**
