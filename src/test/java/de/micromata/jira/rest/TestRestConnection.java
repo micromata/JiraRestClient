@@ -99,9 +99,9 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     public void testSearchIssuesForProject() throws RestException {
     	JqlSearchBean jsb = new JqlSearchBean();
     	List<JqlClause> clauses = new ArrayList<JqlClause>();
-    	clauses.add(new JqlClause(EField.PROJECT, EOperator.EQUALS, "DEMO", EKeyword.AND));
-    	clauses.add(new JqlClause(EField.STATUS, EOperator.EQUALS, STATUS_OPEN, EKeyword.AND));
-    	clauses.add(new JqlClause(EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG, null));
+    	clauses.add(new JqlClause(null, EField.PROJECT, EOperator.EQUALS, "DEMO"));
+    	clauses.add(new JqlClause(EKeyword.AND,EField.STATUS, EOperator.EQUALS, STATUS_OPEN));
+        clauses.add(new JqlClause(EKeyword.AND, EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG));
     	jsb.setClauses(clauses);
     	jsb.setFieldAll(true);
         jsb.setStartAt(0);
@@ -114,9 +114,9 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     
     public void testExtendedSearchIssuesForProject() throws RestException {
     	JqlSearchBean jsb = new JqlSearchBean();
-    	jsb.getClauses().add(new JqlClause(EField.PROJECT, EOperator.EQUALS, "DEMO", null));
-//    	jsb.getClauses().add(new JqlClause(EField.STATUS, EOperator.EQUALS, STATUS_OPEN, EKeyword.AND));
-//    	jsb.getClauses().add(new JqlClause(EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG, null));
+    	jsb.getClauses().add(new JqlClause(null, EField.PROJECT, EOperator.EQUALS, "DEMO"));
+//    	jsb.getClauses().add(new JqlClause(EKeyword.AND, EField.STATUS, EOperator.EQUALS, STATUS_OPEN));
+//    	jsb.getClauses().add(new JqlClause(EKeyword.AND, EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG));
     	jsb.setStartAt(1);
     	jsb.setMaxResult(2);
     	jsb.setFieldAll(true);
@@ -147,9 +147,9 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     
     public void testJqlSearchString() throws RestException {
     	JqlSearchBean jsb = new JqlSearchBean();
-    	jsb.getClauses().add(new JqlClause(EField.PROJECT, EOperator.EQUALS, "DEMO", null));
-//    	jsb.getClauses().add(new JqlClause(EField.STATUS, EOperator.EQUALS, STATUS_OPEN, EKeyword.AND));
-//    	jsb.getClauses().add(new JqlClause(EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG, null));
+    	jsb.getClauses().add(new JqlClause(null, EField.PROJECT, EOperator.EQUALS, "DEMO"));
+//    	jsb.getClauses().add(new JqlClause(EKeyword.AND, EField.STATUS, EOperator.EQUALS, STATUS_OPEN));
+//    	jsb.getClauses().add(new JqlClause(EKeyword.AND, EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG));
     	jsb.setStartAt(1);
     	jsb.setMaxResult(2);
     	jsb.setFieldAll(true);
