@@ -3,36 +3,24 @@ package de.micromata.jira.rest.jql;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * JQL search requirements.
  */
 public class JqlSearchBean {
+	
+	/** JQL search string. */
+	private String jql = StringUtils.EMPTY;
 
 	/** Result list start at. */
 	private Integer startAt = null;
 
     /** Maximum result list size. */
-    private Integer maxResult = null;
-    
-    /** JQL clause(s). */
-    private List<JqlClause> clauses = null;
+    private Integer maxResults = null;
 
     /** Result fields for a query. */
-    private List<EField> fields = null;
-    
-    /** Result for a query contains all fields. */
-    private boolean fieldAll = false;
-    
-    /** Result for a query contains only navigable fields. */
-    private boolean fieldNavigable = false;
-    
-    /**
-     * Instantiates a new jql search bean.
-     */
-    public JqlSearchBean() {
-		clauses = new ArrayList<JqlClause>();
-		fields = new ArrayList<EField>();
-	}
+    private List<String> fields = null;
 
     /**
      * Adds fields which should be returned after the request.
@@ -41,7 +29,7 @@ public class JqlSearchBean {
      */
     public void addField(EField ... fields){
         for (EField f : fields) {
-            getFields().add(f);
+            getFields().add(f.toString());
         }
     }
     
@@ -68,8 +56,8 @@ public class JqlSearchBean {
 	 *
 	 * @return the max result
 	 */
-	public Integer getMaxResult() {
-		return maxResult;
+	public Integer getMaxResults() {
+		return maxResults;
 	}
 
 	/**
@@ -77,26 +65,8 @@ public class JqlSearchBean {
 	 *
 	 * @param maxResult the new max result
 	 */
-	public void setMaxResult(Integer maxResult) {
-		this.maxResult = maxResult;
-	}
-
-	/**
-	 * Gets the clauses.
-	 *
-	 * @return the clauses
-	 */
-	public List<JqlClause> getClauses() {
-		return clauses;
-	}
-
-	@Override
-	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		for(JqlClause c : clauses) {
-			sb.append(c);
-		}
-		return sb.toString();
+	public void setMaxResults(Integer maxResults) {
+		this.maxResults = maxResults;
 	}
 
 	/**
@@ -104,61 +74,27 @@ public class JqlSearchBean {
 	 *
 	 * @return the fields
 	 */
-	public List<EField> getFields() {
+	public List<String> getFields() {
+		if(fields == null) {
+			fields = new ArrayList<String>();
+		}
 		return fields;
 	}
 
-    /**
-     * Return all fields after a request.
-     *
-     * @return true, if all fields should be returned
-     */
-	public boolean isFieldAll() {
-		return fieldAll;
+	public String getJql() {
+		return jql;
 	}
 
-	/**
-	 * Sets the returned fields to all.
-	 *
-	 * @param fieldAll = true if all fields for query should be returned
-	 */
-	public void setFieldAll(boolean fieldAll) {
-		this.fieldAll = fieldAll;
+	public void setJqlString(String jql) {
+		this.jql = jql;
 	}
 	
-    /**
-     * Return navigable fields after a request.
-     *
-     * @return true, if navigable field should be returned
-     */
-	public boolean isFieldNavigable() {
-		return fieldNavigable;
-	}
-
-	/**
-	 * Sets the returned fields to navigable.
-	 *
-	 * @param fieldNavigable = true if navigable fields should be returned.
-	 */
-	public void setFieldNavigable(boolean fieldNavigable) {
-		this.fieldNavigable = fieldNavigable;
-	}
-
-	/**
-	 * Sets the clauses.
-	 *
-	 * @param clauses the new clauses
-	 */
-	public void setClauses(List<JqlClause> clauses) {
-		this.clauses = clauses;
-	}
-
-	/**
-	 * Sets the fields.
-	 *
-	 * @param fields the new fields
-	 */
-	public void setFields(List<EField> fields) {
-		this.fields = fields;
+	public void setJqlStringFromList(List<JqlClause> clauses) {
+		StringBuffer sb = new StringBuffer();
+		for(JqlClause c : clauses) {
+			sb.append(c);
+		}
+		
+		this.jql = sb.toString();
 	}
 }

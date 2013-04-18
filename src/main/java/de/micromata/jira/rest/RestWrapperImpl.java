@@ -18,13 +18,29 @@ import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import com.sun.jersey.core.util.Base64;
 
-import de.micromata.jira.rest.domain.*;
+import de.micromata.jira.rest.domain.BasicProjectBean;
+import de.micromata.jira.rest.domain.CommentSummaryBean;
+import de.micromata.jira.rest.domain.ComponentBean;
+import de.micromata.jira.rest.domain.IssueBean;
+import de.micromata.jira.rest.domain.IssueTypeBean;
+import de.micromata.jira.rest.domain.JqlSearchResultBean;
+import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.StatusBean;
+import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.EField;
 import de.micromata.jira.rest.jql.EOperator;
 import de.micromata.jira.rest.jql.JqlClause;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.jql.JqlSearchBean;
-import de.micromata.jira.rest.parser.*;
+import de.micromata.jira.rest.parser.BasicProjectParser;
+import de.micromata.jira.rest.parser.CommentSummaryParser;
+import de.micromata.jira.rest.parser.ComponentParser;
+import de.micromata.jira.rest.parser.IssueParser;
+import de.micromata.jira.rest.parser.IssueTypeParser;
+import de.micromata.jira.rest.parser.JqlSearchParser;
+import de.micromata.jira.rest.parser.ProjectParser;
+import de.micromata.jira.rest.parser.StatusParser;
+import de.micromata.jira.rest.parser.VersionParser;
 import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
@@ -151,13 +167,17 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         
     	Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
+
         JqlSearchBean jsb = new JqlSearchBean();
-        jsb.getClauses().add(new JqlClause(EField.PROJECT, EOperator.EQUALS, projectKey, null));
-        jsb.setFieldAll(true);
+        JqlClause clause = new JqlClause(EField.PROJECT, EOperator.EQUALS, projectKey, null);
+        jsb.setJqlString(clause.toString());
+        jsb.addField(EField.ALL);
+        String json = GsonParserUtil.parseObjectToJson(jsb);
         
-        URI uri = RestURIBuilder.buildSearchURI(baseUri, jsb);
+        URI uri = RestURIBuilder.buildSearchURI(baseUri);
         WebResource webResource = client.resource(uri);
-        ClientResponse clientResponse = webResource.get(ClientResponse.class);
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
+        
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
             String entity = clientResponse.getEntity(String.class);
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
@@ -174,10 +194,13 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     	
     	Client client = jiraRestClient.getClient();
     	URI baseUri = jiraRestClient.getBaseUri();
-    	URI uri = RestURIBuilder.buildSearchURI(baseUri, jsb);
+    	String json = GsonParserUtil.parseObjectToJson(jsb);
     	
-    	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+    	URI uri = RestURIBuilder.buildSearchURI(baseUri);
+    	WebResource webResource = client.resource(uri);
+		ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
+        
+		if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
             String entity = clientResponse.getEntity(String.class);
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
             JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);

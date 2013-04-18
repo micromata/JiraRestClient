@@ -48,10 +48,4 @@ public interface RestConstants {
     public static final String MAX_RESULTS = "maxResults";
 
     public static final String FIELDS = "fields";
-
-    // Rückgabe der Felder bei Suchfunktion
-    
-    public static final String FIELDS_ALL = "*all"; //set by default
-    
-    public static final String FIELDS_NAVIGABLE = "*navigable";
 }

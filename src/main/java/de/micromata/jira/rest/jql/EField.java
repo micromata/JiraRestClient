@@ -4,6 +4,10 @@ package de.micromata.jira.rest.jql;
  * Searchable issue fields in JIRA.
  */
 public enum EField {
+	
+	ALL("*all", null),
+	
+	NAVIGABLE("*naviagble", null),
 
 	/** 
 	 * Issues that are assigned to a particular Affects Version(s). 
