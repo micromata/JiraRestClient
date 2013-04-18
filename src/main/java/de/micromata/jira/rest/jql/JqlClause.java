@@ -32,12 +32,12 @@ public class JqlClause {
 	 * @param operand = value
 	 * @param keyword = link to another clause (should be null, if there is nothing to link)
 	 */
-	public JqlClause(EField field, EOperator operator, String operand,
-			EKeyword keyword) {
+	public JqlClause(EKeyword keyword, EField field, EOperator operator, String operand) {
+        this.keyword = keyword;
 		this.field = field;
 		this.operator = operator;
 		this.operand = operand;
-		this.keyword = keyword;
+
 	}
 
 	/**
@@ -115,6 +115,9 @@ public class JqlClause {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
+        if(keyword != null) {
+            sb.append(keyword + " ");
+        }
 		if(field != null) {
 			sb.append(field + " ");
 		}
@@ -124,10 +127,6 @@ public class JqlClause {
 		if(operand != null) {
 			sb.append(operand + " ");
 		}
-		if(keyword != null) {
-			sb.append(keyword + " ");
-		}
-		
 		return sb.toString();
 	}
 }

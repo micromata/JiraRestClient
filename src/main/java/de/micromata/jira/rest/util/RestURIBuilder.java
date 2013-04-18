@@ -48,4 +48,9 @@ public class RestURIBuilder implements RestConstants {
     public static URI buildSearchURI(URI baseUri) {
     	return UriBuilder.fromUri(baseUri).path(SEARCH).build();
     }
+    public static URI buildGetUserByUsername(URI baseUri, String username) {
+        UriBuilder path = UriBuilder.fromUri(baseUri).path(USER);
+        path.queryParam(PARAM_USERNAME, username);
+        return path.build();
+    }
 }

@@ -45,7 +45,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 	
     public static void main(String[] args) throws URISyntaxException, RestException {
         TestRestConnection testRestConnection = new TestRestConnection();
-//        testRestConnection.testRestConnection();
+        testRestConnection.testRestConnection();
 //        testRestConnection.testGetAllProjects();
 //        testRestConnection.testGetProjectByKey();
 //        testRestConnection.testGetProjectVersions();
@@ -99,31 +99,31 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     public void testSearchIssuesForProject() throws RestException {
     	JqlSearchBean jsb = new JqlSearchBean();
     	List<JqlClause> clauses = new ArrayList<JqlClause>();
-    	clauses.add(new JqlClause(EField.PROJECT, EOperator.EQUALS, "DEMO", EKeyword.AND));
-    	clauses.add(new JqlClause(EField.STATUS, EOperator.EQUALS, STATUS_OPEN, EKeyword.AND));
-    	clauses.add(new JqlClause(EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG, null));
+    	clauses.add(new JqlClause(null, EField.PROJECT, EOperator.EQUALS, "DEMO"));
+    	clauses.add(new JqlClause(EKeyword.AND, EField.STATUS, EOperator.EQUALS, STATUS_OPEN));
+    	clauses.add(new JqlClause(EKeyword.AND, EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG));
     	jsb.setJqlStringFromList(clauses);
     	jsb.addField(EField.ALL);
-    	
-    	List<IssueBean> searchIssuesForProject = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
-    	
-    	System.out.println("testSearchIssuesForProject: " + !searchIssuesForProject.isEmpty());
+
+        JqlSearchResultBean jqlSearchResultBean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
+
+        System.out.println("testSearchIssuesForProject: " + !jqlSearchResultBean.getIssueBeans().isEmpty());
     }
     
     public void testExtendedSearchIssuesForProject() throws RestException {
     	JqlSearchBean jsb = new JqlSearchBean();
     	List<JqlClause> clauses = new ArrayList<JqlClause>();
-    	clauses.add(new JqlClause(EField.PROJECT, EOperator.EQUALS, "DEMO", null));
+    	clauses.add(new JqlClause(null, EField.PROJECT, EOperator.EQUALS, "DEMO"));
 //    	clauses.add(new JqlClause(EField.STATUS, EOperator.EQUALS, STATUS_OPEN, EKeyword.AND));
 //    	clauses.add(new JqlClause(EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG, null));
     	jsb.setJqlStringFromList(clauses);
     	jsb.setStartAt(1);
     	jsb.setMaxResults(2);
     	jsb.addField(EField.ALL);
+
+        JqlSearchResultBean jqlSearchResultBean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
     	
-    	List<IssueBean> searchIssuesForProject = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
-    	
-    	System.out.println("testExtendedSearchIssuesForProject: " + !searchIssuesForProject.isEmpty());
+    	System.out.println("testExtendedSearchIssuesForProject: " + !jqlSearchResultBean.getIssueBeans().isEmpty());
     }
     
     public void testGetIssueByKey() throws RestException {
@@ -142,6 +142,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 
     public void testGetIssueTypes() throws RestException {
         List<IssueTypeBean> issueTypes = restWrapper.getIssueTypes(jiraRestClient);
+        
         System.out.println("testGetIssueTypes: " + !issueTypes.isEmpty());
     }
 }

@@ -3,6 +3,7 @@ package de.micromata.jira.rest;
 
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
@@ -26,6 +27,7 @@ import de.micromata.jira.rest.domain.IssueTypeBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
 import de.micromata.jira.rest.domain.StatusBean;
+import de.micromata.jira.rest.domain.UserBean;
 import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.EField;
 import de.micromata.jira.rest.jql.EOperator;
@@ -40,6 +42,7 @@ import de.micromata.jira.rest.parser.IssueTypeParser;
 import de.micromata.jira.rest.parser.JqlSearchParser;
 import de.micromata.jira.rest.parser.ProjectParser;
 import de.micromata.jira.rest.parser.StatusParser;
+import de.micromata.jira.rest.parser.UserParser;
 import de.micromata.jira.rest.parser.VersionParser;
 import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.RestConstants;
@@ -57,6 +60,23 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
 
 
     @Override
+    public UserBean getLoggedInRemoteUser(JiraRestClient jiraRestClient) throws RestException {
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = RestURIBuilder.buildGetUserByUsername(baseUri, jiraRestClient.getUsername());
+        WebResource webResource = client.resource(uri);
+        ClientResponse response = webResource.get(ClientResponse.class);
+        if(response.getStatus() == HttpURLConnection.HTTP_OK){
+            String entity = response.getEntity(String.class);
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+            return UserParser.parse(jsonObject);
+        }
+        else{
+            throw new RestException(response);
+        }
+    }
+
+    @Override
     public List<BasicProjectBean> getAllProjects(JiraRestClient jiraRestClient) throws RestException {
         
         Client client = jiraRestClient.getClient();
@@ -67,7 +87,9 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if(response.getStatus() == HttpURLConnection.HTTP_OK){
             String entity = response.getEntity(String.class);
             List<JsonObject> jsonObjects = GsonParserUtil.parseJsonObjects(entity);
-            return BasicProjectParser.parseBasicProject(jsonObjects);
+            List<BasicProjectBean> beans = BasicProjectParser.parseBasicProject(jsonObjects);
+            Collections.sort(beans);
+            return beans;
         }
         else{
            throw new RestException(response);
@@ -103,7 +125,9 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
     		String entity = clientResponse.getEntity(String.class);
     		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
-    		return VersionParser.parse(objects);
+            List<VersionBean> parse = VersionParser.parse(objects);
+            Collections.sort(parse);
+            return parse;
     	}
     	else{
     		throw new RestException(clientResponse);
@@ -121,7 +145,9 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
     		String entity = clientResponse.getEntity(String.class);
     		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
-    		return ComponentParser.parse(objects);
+            List<ComponentBean> parse = ComponentParser.parse(objects);
+            Collections.sort(parse);
+            return parse;
     	}
     	else{
     		throw new RestException(clientResponse);
@@ -138,7 +164,9 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
             String entity = clientResponse.getEntity(String.class);
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
-            return IssueTypeParser.parse(objects);
+            List<IssueTypeBean> parse = IssueTypeParser.parse(objects);
+            Collections.sort(parse);
+            return parse;
         }
         else{
             throw new RestException(clientResponse);
@@ -155,7 +183,9 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
             String entity = clientResponse.getEntity(String.class);
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
-            return StatusParser.parse(objects);
+            List<StatusBean> parse = StatusParser.parse(objects);
+            Collections.sort(parse);
+            return parse;
         }
         else{
             throw new RestException(clientResponse);
@@ -169,7 +199,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI baseUri = jiraRestClient.getBaseUri();
 
         JqlSearchBean jsb = new JqlSearchBean();
-        JqlClause clause = new JqlClause(EField.PROJECT, EOperator.EQUALS, projectKey, null);
+        JqlClause clause = new JqlClause(null, EField.PROJECT, EOperator.EQUALS, projectKey);
         jsb.setJqlString(clause.toString());
         jsb.addField(EField.ALL);
         String json = GsonParserUtil.parseObjectToJson(jsb);
@@ -190,7 +220,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     }
 
     @Override
-    public List<IssueBean> searchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jsb) throws RestException {
+    public JqlSearchResultBean searchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jsb) throws RestException {
     	
     	Client client = jiraRestClient.getClient();
     	URI baseUri = jiraRestClient.getBaseUri();
@@ -204,7 +234,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
             String entity = clientResponse.getEntity(String.class);
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
             JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);
-            return jqlSearchResultBean.getIssueBeans();
+            return jqlSearchResultBean;
         }
         else{
             throw new RestException(clientResponse);
