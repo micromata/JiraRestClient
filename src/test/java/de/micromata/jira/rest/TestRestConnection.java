@@ -4,8 +4,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import com.atlassian.query.order.SortOrder;
-
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.CommentSummaryBean;
 import de.micromata.jira.rest.domain.ComponentBean;
@@ -19,6 +17,7 @@ import de.micromata.jira.rest.jql.EOperator;
 import de.micromata.jira.rest.jql.JqlBuilder;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.jql.JqlSearchBean;
+import de.micromata.jira.rest.jql.SortOrder;
 import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
 

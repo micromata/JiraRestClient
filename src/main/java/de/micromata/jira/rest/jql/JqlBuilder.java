@@ -1,8 +1,5 @@
 package de.micromata.jira.rest.jql;
 
-import com.atlassian.query.order.SortOrder;
-
-
 /**
  * JQL clause is a part of a query. A query has three basic parts: fields, operators, and operands(=values).
  * You can optionally link them together using a few select keywords.
