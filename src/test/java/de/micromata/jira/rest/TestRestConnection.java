@@ -2,8 +2,9 @@ package de.micromata.jira.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.atlassian.query.order.SortOrder;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.CommentSummaryBean;
@@ -14,9 +15,8 @@ import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
 import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.EField;
-import de.micromata.jira.rest.jql.EKeyword;
 import de.micromata.jira.rest.jql.EOperator;
-import de.micromata.jira.rest.jql.JqlClause;
+import de.micromata.jira.rest.jql.JqlBuilder;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.jql.JqlSearchBean;
 import de.micromata.jira.rest.util.RestConstants;
@@ -98,11 +98,11 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     
     public void testSearchIssuesForProject() throws RestException {
     	JqlSearchBean jsb = new JqlSearchBean();
-    	List<JqlClause> clauses = new ArrayList<JqlClause>();
-    	clauses.add(new JqlClause(null, EField.PROJECT, EOperator.EQUALS, "DEMO"));
-    	clauses.add(new JqlClause(EKeyword.AND, EField.STATUS, EOperator.EQUALS, STATUS_OPEN));
-    	clauses.add(new JqlClause(EKeyword.AND, EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG));
-    	jsb.setJqlStringFromList(clauses);
+    	JqlBuilder builder = new JqlBuilder();
+    	String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "DEMO")
+    		.or().addCondition(EField.STATUS, EOperator.EQUALS, STATUS_OPEN)
+    		.orderBy(SortOrder.ASC, EField.CREATED);
+    	jsb.setJql(jql);
     	jsb.addField(EField.ALL);
 
         JqlSearchResultBean jqlSearchResultBean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
@@ -112,11 +112,9 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     
     public void testExtendedSearchIssuesForProject() throws RestException {
     	JqlSearchBean jsb = new JqlSearchBean();
-    	List<JqlClause> clauses = new ArrayList<JqlClause>();
-    	clauses.add(new JqlClause(null, EField.PROJECT, EOperator.EQUALS, "DEMO"));
-//    	clauses.add(new JqlClause(EField.STATUS, EOperator.EQUALS, STATUS_OPEN, EKeyword.AND));
-//    	clauses.add(new JqlClause(EField.TYPE, EOperator.EQUALS, ISSUETYPE_BUG, null));
-    	jsb.setJqlStringFromList(clauses);
+    	JqlBuilder builder = new JqlBuilder();
+    	String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "DEMO").build();
+    	jsb.setJql(jql);
     	jsb.setStartAt(1);
     	jsb.setMaxResults(2);
     	jsb.addField(EField.ALL);

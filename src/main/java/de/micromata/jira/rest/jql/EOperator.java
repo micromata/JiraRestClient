@@ -181,8 +181,6 @@ public enum EOperator {
 	BEFORE("before"),
 	BY("by"),
 	FROM("from"),
-	LIKE("like"),
-	NOT_LIKE("not like"),
 	ON("on"),
 	TO("to");
 	

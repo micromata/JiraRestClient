@@ -9,9 +9,6 @@ import org.apache.commons.lang3.StringUtils;
  * JQL search requirements.
  */
 public class JqlSearchBean {
-	
-	/** JQL search string. */
-	private String jql = StringUtils.EMPTY;
 
 	/** Result list start at. */
 	private Integer startAt = null;
@@ -21,6 +18,8 @@ public class JqlSearchBean {
 
     /** Result fields for a query. */
     private List<String> fields = null;
+    
+    private String jql = StringUtils.EMPTY;
 
     /**
      * Adds fields which should be returned after the request.
@@ -85,16 +84,7 @@ public class JqlSearchBean {
 		return jql;
 	}
 
-	public void setJqlString(String jql) {
+	public void setJql(String jql) {
 		this.jql = jql;
-	}
-	
-	public void setJqlStringFromList(List<JqlClause> clauses) {
-		StringBuffer sb = new StringBuffer();
-		for(JqlClause c : clauses) {
-			sb.append(c);
-		}
-		
-		this.jql = sb.toString();
 	}
 }

@@ -31,7 +31,7 @@ import de.micromata.jira.rest.domain.UserBean;
 import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.EField;
 import de.micromata.jira.rest.jql.EOperator;
-import de.micromata.jira.rest.jql.JqlClause;
+import de.micromata.jira.rest.jql.JqlBuilder;
 import de.micromata.jira.rest.jql.JqlConstants;
 import de.micromata.jira.rest.jql.JqlSearchBean;
 import de.micromata.jira.rest.parser.BasicProjectParser;
@@ -199,8 +199,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI baseUri = jiraRestClient.getBaseUri();
 
         JqlSearchBean jsb = new JqlSearchBean();
-        JqlClause clause = new JqlClause(null, EField.PROJECT, EOperator.EQUALS, projectKey);
-        jsb.setJqlString(clause.toString());
+        String jql = new JqlBuilder().addCondition(EField.PROJECT, EOperator.EQUALS, projectKey).build();
+        jsb.setJql(jql);
         jsb.addField(EField.ALL);
         String json = GsonParserUtil.parseObjectToJson(jsb);
         
