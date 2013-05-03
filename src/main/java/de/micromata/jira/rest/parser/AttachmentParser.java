@@ -38,7 +38,7 @@ public class AttachmentParser extends BaseParser {
         }
         JsonElement createdElement = object.get(PROP_CREATED);
         if(JsonElementUtil.checkNotNull(createdElement) == true){
-            Date date = DateParser.parseDateFormat1(createdElement.getAsString());
+            Date date = DateParser.parseDateFormat(createdElement.getAsString(), DateParser.Format.YYYY_MM_DD);
             bean.setCreated(date);
         }
         JsonElement sizeElement = object.get(PROP_SIZE);

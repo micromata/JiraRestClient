@@ -10,60 +10,34 @@ import java.util.Date;
  * Time: 14:55
  */
 public class DateParser {
+	
+	public enum Format {
+		
+		YYYY_MM_DD("yyyy-MM-dd"), 
+		DD_MMM_YY("dd'/'MMM'/'yy"), 
+		YYYY_MM_DD_T_HH_MM_SS_SSSZ("yyyy-MM-dd'T'HH:mm:ss.SSSZ"), 
+		YYYY_MM_DD_HH_MM("yyyy/MM/dd HH:mm"), 
+		DD_MMM_YYYY("dd. MMM yyyy");
 
-    private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		private final SimpleDateFormat simpleDateFormat;
+		
+		private Format(String pattern) {
+			simpleDateFormat = new SimpleDateFormat(pattern);
+		}
 
-    private static SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MMM/yy");
-    
-    private static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-    
-    private static SimpleDateFormat sdf4 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-    
-    private static SimpleDateFormat sdf5 = new SimpleDateFormat("dd. MMM yyyy");
-    
-    public static Date parseDateFormat1(String dateString){
+		public SimpleDateFormat getSimpleDateFormat() {
+			return simpleDateFormat;
+		}
+		
+	}
+	
+    public static Date parseDateFormat(String dateString, DateParser.Format dateFormat){
         try {
-            return sdf1.parse(dateString);
+            return dateFormat.simpleDateFormat.parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static Date parseDateFormat2(String dateString){
-        try {
-            return sdf2.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static Date parseDateFormat3(String dateString){
-    	try {
-    		return sdf3.parse(dateString);
-    	} catch (ParseException e) {
-    		e.printStackTrace();
-    	}
-    	return null;
-    }
-
-
-    public static Date parseDateFormat4(String dateString){
-        try {
-            return sdf4.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    
-    public static Date parseDateFormat5(String dateString){
-    	try {
-    		return sdf5.parse(dateString);
-    	} catch (ParseException e) {
-    		e.printStackTrace();
-    	}
-    	return null;
-    }
 }

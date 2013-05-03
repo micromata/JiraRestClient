@@ -93,7 +93,7 @@ public class IssueParser extends BaseParser {
             JsonElement resolutionDateElement = fieldObject.get(PROP_RESOLUTIONDATE);
             if(checkNotNull(resolutionDateElement)) {
             	String resolutionDate = resolutionDateElement.getAsString();
-            	Date date = DateParser.parseDateFormat1(resolutionDate);
+            	Date date = DateParser.parseDateFormat(resolutionDate, DateParser.Format.YYYY_MM_DD);
             	issueBean.setResolutionDate(date);
             }
             JsonElement fixVersionElement = fieldObject.get(PROP_FIX_VERSIONS);
@@ -123,12 +123,12 @@ public class IssueParser extends BaseParser {
             }
             JsonElement updatedElement = fieldObject.get(PROP_UPDATED);
             if(checkNotNull(updatedElement)) {
-            	Date date = DateParser.parseDateFormat1(updatedElement.getAsString());
+            	Date date = DateParser.parseDateFormat(updatedElement.getAsString(), DateParser.Format.YYYY_MM_DD);
             	issueBean.setUpdated(date);
             }
             JsonElement createdElement = fieldObject.get(PROP_CREATED);
             if(checkNotNull(createdElement))  {
-            	Date date = DateParser.parseDateFormat1(createdElement.getAsString());
+            	Date date = DateParser.parseDateFormat(createdElement.getAsString(), DateParser.Format.YYYY_MM_DD);
             	issueBean.setCreated(date);
             }
             JsonElement descriptionElement = fieldObject.get(PROP_DESCRIPTION);
@@ -233,7 +233,7 @@ public class IssueParser extends BaseParser {
             }
             JsonElement lastViewedElement = fieldObject.get(PROP_LAST_VIEWED);
             if(checkNotNull(lastViewedElement)) {
-            	Date date = DateParser.parseDateFormat1(lastViewedElement.getAsString());
+            	Date date = DateParser.parseDateFormat(lastViewedElement.getAsString(), DateParser.Format.YYYY_MM_DD);
             	issueBean.setLastViewed(date);
             }
             JsonElement componentsElement = fieldObject.get(ELEM_COMPONENTS);
@@ -245,7 +245,7 @@ public class IssueParser extends BaseParser {
             JsonElement dueDateElement = fieldObject.get(PROP_DUEDATE);
             if(checkNotNull(dueDateElement)){
                 String dueDateString = dueDateElement.getAsString();
-                Date dueDate = DateParser.parseDateFormat1(dueDateString);
+                Date dueDate = DateParser.parseDateFormat(dueDateString, DateParser.Format.YYYY_MM_DD);
                 issueBean.setDueDate(dueDate);
             }
             JsonElement commentElement = fieldObject.get(ELEM_COMMENT);

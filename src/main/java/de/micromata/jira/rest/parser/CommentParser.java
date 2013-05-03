@@ -47,13 +47,13 @@ public class CommentParser extends BaseParser {
 		
 		JsonElement createdElement = object.get(PROP_CREATED);
 		if(checkNotNull(createdElement)) {
-			Date created = DateParser.parseDateFormat3(createdElement.getAsString());
+			Date created = DateParser.parseDateFormat(createdElement.getAsString(), DateParser.Format.YYYY_MM_DD_T_HH_MM_SS_SSSZ);
 			bean.setCreated(created);
 		}
 		
 		JsonElement updatedElement = object.get(PROP_UPDATED);
 		if(checkNotNull(updatedElement)) {
-			Date updated = DateParser.parseDateFormat3(updatedElement.getAsString());
+			Date updated = DateParser.parseDateFormat(updatedElement.getAsString(), DateParser.Format.YYYY_MM_DD_T_HH_MM_SS_SSSZ);
 			bean.setUpdated(updated);
 		}
 

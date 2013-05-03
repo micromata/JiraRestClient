@@ -5,10 +5,15 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
+import org.apache.commons.httpclient.auth.AuthScope;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -17,7 +22,6 @@ import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.client.apache.ApacheHttpClient;
 import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
-import com.sun.jersey.core.util.Base64;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.CommentSummaryBean;
@@ -27,6 +31,7 @@ import de.micromata.jira.rest.domain.IssueTypeBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
 import de.micromata.jira.rest.domain.StatusBean;
+import de.micromata.jira.rest.domain.TransitionBean;
 import de.micromata.jira.rest.domain.UserBean;
 import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.EField;
@@ -42,9 +47,12 @@ import de.micromata.jira.rest.parser.IssueTypeParser;
 import de.micromata.jira.rest.parser.JqlSearchParser;
 import de.micromata.jira.rest.parser.ProjectParser;
 import de.micromata.jira.rest.parser.StatusParser;
+import de.micromata.jira.rest.parser.TransitionParser;
 import de.micromata.jira.rest.parser.UserParser;
 import de.micromata.jira.rest.parser.VersionParser;
 import de.micromata.jira.rest.util.GsonParserUtil;
+import de.micromata.jira.rest.util.JsonConstants;
+import de.micromata.jira.rest.util.JsonElementUtil;
 import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
 import de.micromata.jira.rest.util.RestURIBuilder;
@@ -57,7 +65,47 @@ import de.micromata.jira.rest.util.RestURIBuilder;
  * To change this template use File | Settings | File Templates.
  */
 public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
+	
+	@Override
+	public boolean updateIssueTransitionByKey(JiraRestClient jiraRestClient, String issueKey, int transitionId) throws RestException {
+		Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
 
+        String json = GsonParserUtil.parseTransitionToJson(transitionId);
+        URI uri = RestURIBuilder.buildIssueTransitionsByKeyURI(baseUri, issueKey);
+        WebResource webResource = client.resource(uri);
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
+        if(clientResponse.getStatus() == HttpURLConnection.HTTP_NO_CONTENT) {
+        	return true;
+        }
+        else{
+            throw new RestException(clientResponse);
+        }
+	}
+
+	@Override
+	public Map<Integer, TransitionBean> getIssueTransitionsByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException {
+		Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = RestURIBuilder.buildIssueTransitionsByKeyExpandFields(baseUri, issueKey);
+        WebResource webResource = client.resource(uri);
+        ClientResponse response = webResource.get(ClientResponse.class);
+        if(response.getStatus() == HttpURLConnection.HTTP_OK){
+        	String entity = response.getEntity(String.class);
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+            
+            JsonElement transitionsElement = jsonObject.get(JsonConstants.PROP_TRANSITIONS);
+            if(JsonElementUtil.checkNotNull(transitionsElement)) {
+            	JsonArray array = transitionsElement.getAsJsonArray();
+            	List<JsonObject> list = GsonParserUtil.parseJsonArray(array);
+            	return TransitionParser.parse(list);
+            }
+            
+            return Collections.emptyMap();
+        } else {
+        	throw new RestException(response);
+        }
+	}
 
     @Override
     public UserBean getLoggedInRemoteUser(JiraRestClient jiraRestClient) throws RestException {
@@ -277,25 +325,27 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     }
 
     @Override
-    public boolean testRestConnection(URI uri, String username, String password) {
-    	String authString = username + ":" + password;
-    	String auth = new String(Base64.encode(authString));
+    public boolean testRestConnection(URI uri, String username, String password) throws RestException {
+//    	String authString = username + ":" + password;
+//    	String auth = new String(Base64.encode(authString));
 
     	ApacheHttpClientConfig clientConfig = new DefaultApacheHttpClientConfig();
         clientConfig.getProperties().put(ApacheHttpClientConfig.PROPERTY_HANDLE_COOKIES, Boolean.TRUE);
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+        clientConfig.getProperties().put(ApacheHttpClientConfig.PROPERTY_PREEMPTIVE_AUTHENTICATION, Boolean.TRUE);
+        clientConfig.getState().setCredentials(AuthScope.ANY_REALM, uri.getHost(), uri.getPort(), username, password);
         ApacheHttpClient client = ApacheHttpClient.create(clientConfig);
         
         URI userUri = UriBuilder.fromUri(uri).path(RestConstants.BASE_REST_PATH).path(USER).build();
         WebResource webResource = client.resource(userUri).queryParam(PARAM_USERNAME, username);
-        ClientResponse clientResponse = webResource.header(RestConstants.AUTHORIZATION, RestConstants.BASIC + auth).
+        ClientResponse clientResponse = webResource.
+        		//header(RestConstants.AUTHORIZATION, RestConstants.BASIC + auth).
             	type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
             return true;
         }
-        return false;
+        throw new RestException(clientResponse);
     }
-
 
 }

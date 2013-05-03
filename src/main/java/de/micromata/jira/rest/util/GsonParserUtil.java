@@ -9,8 +9,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import de.micromata.jira.rest.jql.JqlSearchBean;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Christian
@@ -43,9 +41,25 @@ public class GsonParserUtil {
         return retval;
     }
     
-    public static String parseObjectToJson(JqlSearchBean jsb) {
+    public static String parseObjectToJson(Object object) {
     	Gson gson = new Gson();
-        String jsonString = gson.toJson(jsb);
+    	String jsonString = gson.toJson(object);
+    	return jsonString;
+    }
+    
+    public static String parseTransitionToJson(int transitionId) {
+    	JsonObject parent = new JsonObject();
+    	JsonObject transitionObject = new JsonObject();
+    	transitionObject.addProperty(JsonConstants.PROP_ID, transitionId);
+    	parent.add(JsonConstants.ELEM_TRANSITION, transitionObject);
+//    	if(assigneeName != null) {
+//    		JsonObject fieldsObject = new JsonObject();
+//
+//    		JsonObject assigneeObject = new JsonObject();
+//    		assigneeObject.addProperty(JsonConstants.PROP_NAME, assigneeName);
+//    		fieldsObject.add(JsonConstants.ELEM_ASSIGNEE, assigneeObject);
+//    	}
+    	String jsonString = new Gson().toJson(parent);
     	return jsonString;
     }
 }

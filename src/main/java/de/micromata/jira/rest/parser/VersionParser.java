@@ -32,7 +32,7 @@ public class VersionParser extends BaseParser {
         JsonElement releaseDateElement = object.get(PROP_RELEASEDATE);
         if(JsonElementUtil.checkNotNull(releaseDateElement) == true){
             String relesaseDateString = releaseDateElement.getAsString();
-            Date releaseDate = DateParser.parseDateFormat1(relesaseDateString);
+            Date releaseDate = DateParser.parseDateFormat(relesaseDateString, DateParser.Format.YYYY_MM_DD);
             bean.setReleaseDate(releaseDate);
         }
 
@@ -56,7 +56,7 @@ public class VersionParser extends BaseParser {
 
         JsonElement userReleaseDateElement = object.get(PROP_USER_RELEASE_DATE);
         if(JsonElementUtil.checkNotNull(userReleaseDateElement) == true){
-            Date date = DateParser.parseDateFormat5(userReleaseDateElement.getAsString());
+            Date date = DateParser.parseDateFormat(userReleaseDateElement.getAsString(), DateParser.Format.DD_MMM_YY);
             bean.setUserReleaseDate(date);
         }
         return bean;

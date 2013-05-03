@@ -49,7 +49,7 @@ public class WorklogParser extends BaseParser {
 		JsonElement startedElement = object.get(PROP_STARTED);
 		if(checkNotNull(startedElement)) {
 			String d = startedElement.getAsString();
-			Date date = DateParser.parseDateFormat1(d);
+			Date date = DateParser.parseDateFormat(d, DateParser.Format.YYYY_MM_DD);
 			bean.setStarted(date);
 		}
 		JsonElement timeSpentSecondsElement = object.get(PROP_TIME_SPENT_SECONDS);

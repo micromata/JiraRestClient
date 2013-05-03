@@ -138,6 +138,18 @@ public interface JsonConstants {
     public static final String PROP_BODY = "body";
     
     public static final String PROP_USER_RELEASE_DATE = "userReleaseDate";
+    
+    public static final String PROP_STEPS = "steps";
+    
+    public static final String PROP_DEFAULT = "default";
+    
+    public static final String PROP_TO = "to";
+    
+    public static final String PROP_TRANSITIONS = "transitions";
+    
+    public static final String PROP_ERROR_MESSAGES = "errorMessages";
+    
+    public static final String PROP_REQUIRED = "required";
 
     // Properties und Elemente der JQL-Suche
 
@@ -208,6 +220,8 @@ public interface JsonConstants {
     public static final String ELEM_COMMENT = "comment";
     
     public static final String ELEM_PARENT = "parent";
+    
+    public static final String ELEM_TRANSITION = "transition";
     
     // Rollen
     

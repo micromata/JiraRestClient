@@ -36,6 +36,8 @@ public interface RestConstants {
     public static final String ISSUETPYES = "/issuetype";
 
     public static final String STATUS = "/status";
+    
+    public static final String TRANSITIONS = "/transitions";
 
     // Parameternamen
 
@@ -48,4 +50,8 @@ public interface RestConstants {
     public static final String MAX_RESULTS = "maxResults";
 
     public static final String FIELDS = "fields";
+    
+    public static final String EXPAND = "expand";
+    
+    public static final String TRANSITIONS_FIELDS = "transitions.fields";
 }

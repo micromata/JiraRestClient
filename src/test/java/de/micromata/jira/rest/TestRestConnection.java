@@ -3,6 +3,9 @@ package de.micromata.jira.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
+
+import com.sun.jersey.api.client.ClientHandlerException;
 
 import de.micromata.jira.rest.domain.BasicProjectBean;
 import de.micromata.jira.rest.domain.CommentSummaryBean;
@@ -11,6 +14,7 @@ import de.micromata.jira.rest.domain.IssueBean;
 import de.micromata.jira.rest.domain.IssueTypeBean;
 import de.micromata.jira.rest.domain.JqlSearchResultBean;
 import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.TransitionBean;
 import de.micromata.jira.rest.domain.VersionBean;
 import de.micromata.jira.rest.jql.EField;
 import de.micromata.jira.rest.jql.EOperator;
@@ -33,8 +37,8 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 	
 	private RestWrapper restWrapper;
 	
-	public TestRestConnection() {
-		String uri = "http://localhost:2990/jira";
+	public TestRestConnection() throws URISyntaxException, RestException {
+		URI uri = new URI("http://localhost:2990/jira");
         String username = "admin";
         String password = "admin";
 
@@ -44,26 +48,32 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 	
     public static void main(String[] args) throws URISyntaxException, RestException {
         TestRestConnection testRestConnection = new TestRestConnection();
-        testRestConnection.testRestConnection();
+//        testRestConnection.testRestConnection();
 //        testRestConnection.testGetAllProjects();
 //        testRestConnection.testGetProjectByKey();
 //        testRestConnection.testGetProjectVersions();
 //        testRestConnection.testGetProjectComponents();
-        testRestConnection.testGetIssuesForProject();
-        testRestConnection.testSearchIssuesForProject();
-        testRestConnection.testExtendedSearchIssuesForProject();
+//        testRestConnection.testGetIssuesForProject();
+//        testRestConnection.testSearchIssuesForProject();
+//        testRestConnection.testExtendedSearchIssuesForProject();
 //        testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
 //        testRestConnection.testGetIssueTypes();
+//        testRestConnection.testGetIssueTransitionsByKey();
+        testRestConnection.testUpdateIssueTransitionByKey();
     }
-
+    
     public void testRestConnection() throws URISyntaxException {
         URI uri = new URI("http://localhost:2990/jira");
         String username = "admin";
         String password = "admin";
-        boolean test = restWrapper.testRestConnection(uri, username, password);
-
-        System.out.println("testRestConnection: " + test);
+        boolean test = false;
+		try {
+			test = restWrapper.testRestConnection(uri, username, password);
+			System.out.println("testRestConnection: " + test);
+		} catch (RestException | ClientHandlerException e) {
+			e.printStackTrace();
+		}
     }
 
     public void testGetAllProjects() throws URISyntaxException, RestException {
@@ -141,5 +151,57 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         List<IssueTypeBean> issueTypes = restWrapper.getIssueTypes(jiraRestClient);
         
         System.out.println("testGetIssueTypes: " + !issueTypes.isEmpty());
+    }
+    
+    public void testGetIssueTransitionsByKey() throws RestException {
+    	String issueKey = "DEMO-1";
+    	Map<Integer, TransitionBean> issueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
+    	
+    	System.out.println("testGetIssueTransitions: " + !issueTransitions.isEmpty());
+    }
+    
+    public void testUpdateIssueTransitionByKey() throws RestException {
+    	String issueKey = "DEMO-1";
+    	
+    	//Suche Issue-Status
+    	JqlSearchBean jsb = new JqlSearchBean();
+    	JqlBuilder builder = new JqlBuilder();
+    	String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "DEMO")
+    					.and().addCondition(EField.ISSUE_KEY, EOperator.EQUALS, issueKey).build();
+    	jsb.setJql(jql);
+    	jsb.addField(EField.STATUS);
+
+    	//aktueller Status vom Issue
+        JqlSearchResultBean bean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
+        String status = bean.getIssueBeans().iterator().next().getStatus().getName();
+        System.out.println("---------------------------------------------------------------------------------------------------");
+        System.out.println("Aktueller Status: " + status);
+    	
+        //zufällige Auswahl einer möglichen Transition
+    	Map<Integer, TransitionBean> availableIssueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
+    	
+		System.out.println("Mögliche Transitions für das Issue: " + issueKey);
+		System.out.println("---------------------------------------------------------------------------------------------------");
+		for (int id : availableIssueTransitions.keySet()) {
+			TransitionBean tb = availableIssueTransitions.get(id);
+			System.out.println("Transition ID: " + id + " Name: " + tb.getName());
+		}
+		System.out.println("---------------------------------------------------------------------------------------------------");
+    	
+    	Object[] transitions = availableIssueTransitions.keySet().toArray();
+    	int choice = (int) (Math.random() * transitions.length);
+    	int transitionId = (int) transitions[choice];
+    	String transitionName = availableIssueTransitions.get(transitionId).getName();
+    	System.out.println("Folgende Transition gewählt: ID=" + transitionId + " Name=" + transitionName);
+   
+    	boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, issueKey, transitionId);
+    	
+    	//Status vom Issue nach Update
+        bean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
+        status = bean.getIssueBeans().iterator().next().getStatus().getName();
+        System.out.println("Status nach Update: " + status);
+    	System.out.println("---------------------------------------------------------------------------------------------------");
+    	System.out.println("testUpdateIssueTransitionByKey: " + update);
+    	System.out.println("---------------------------------------------------------------------------------------------------");
     }
 }
