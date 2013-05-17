@@ -42,9 +42,9 @@ public class IssueBean extends BaseBean {
 	
 	private WorklogSummaryBean worklogs = null;
 	
-	private String timeSpent = StringUtils.EMPTY;
+	private Long timeSpent = null;
 	
-	private String aggregateTimeOriginalEstimate = StringUtils.EMPTY;
+	private Long aggregateTimeOriginalEstimate = null;
 	
 	private List<Integer> fixVersions = null;
 	
@@ -74,7 +74,7 @@ public class IssueBean extends BaseBean {
 	
 	private String timeoriginalestimate = StringUtils.EMPTY;
 	
-	private String aggregatetimespent = StringUtils.EMPTY;
+	private Long aggregatetimespent = null;
 	
 	private List<ComponentBean> components = null;
 
@@ -202,20 +202,20 @@ public class IssueBean extends BaseBean {
 		this.worklogs = worklogs;
 	}
 
-	public String getTimeSpent() {
+	public Long getTimeSpent() {
 		return timeSpent;
 	}
 
-	public void setTimeSpent(String timeSpent) {
+	public void setTimeSpent(Long timeSpent) {
 		this.timeSpent = timeSpent;
 	}
 
-	public String getAggregateTimeOriginalEstimate() {
+	public Long getAggregateTimeOriginalEstimate() {
 		return aggregateTimeOriginalEstimate;
 	}
 
 	public void setAggregateTimeOriginalEstimate(
-			String aggregateTimeOriginalEstimate) {
+			Long aggregateTimeOriginalEstimate) {
 		this.aggregateTimeOriginalEstimate = aggregateTimeOriginalEstimate;
 	}
 
@@ -339,11 +339,11 @@ public class IssueBean extends BaseBean {
 		this.timeoriginalestimate = timeoriginalestimate;
 	}
 
-	public String getAggregatetimespent() {
+	public Long getAggregatetimespent() {
 		return aggregatetimespent;
 	}
 
-	public void setAggregatetimespent(String aggregatetimespent) {
+	public void setAggregatetimespent(Long aggregatetimespent) {
 		this.aggregatetimespent = aggregatetimespent;
 	}
 

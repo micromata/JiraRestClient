@@ -17,6 +17,7 @@ import de.micromata.jira.rest.domain.StatusBean;
 import de.micromata.jira.rest.domain.TransitionBean;
 import de.micromata.jira.rest.domain.UserBean;
 import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.domain.WorklogBean;
 import de.micromata.jira.rest.jql.JqlSearchBean;
 import de.micromata.jira.rest.util.RestException;
 
@@ -28,6 +29,20 @@ import de.micromata.jira.rest.util.RestException;
  * To change this template use File | Settings | File Templates.
  */
 public interface RestWrapper {
+
+	/**
+	 * Returns true if the worklog is successfully transfered to the Issue. 
+	 * 
+	 * <p>This method is for merging log time for an Issue.
+	 * 
+	 * @param jiraRestClient = the connected client
+	 * @param issueKey = the issue key
+	 * @param worklog = the one which would be transfered
+	 * @return created state
+	 * @throws RestException
+	 */
+	public boolean transferWorklogInIssue(JiraRestClient jiraRestClient, String issueKey,
+			WorklogBean worklog) throws RestException;
 
 	/**
 	 * Returns true if the transition update on an Issue success.
@@ -168,5 +183,4 @@ public interface RestWrapper {
      * @throws RestException
      */
     public List<StatusBean> getStates(JiraRestClient jiraRestClient) throws RestException;
-
 }

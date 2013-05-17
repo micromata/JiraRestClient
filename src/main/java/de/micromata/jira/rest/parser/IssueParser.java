@@ -68,7 +68,7 @@ public class IssueParser extends BaseParser {
             }
             JsonElement timetrackingElement = fieldObject.get(ELEM_TIMETRACKING);
             if(checkNotNull(timetrackingElement)) {
-            	JsonObject timetrackingObject = progressElement.getAsJsonObject();
+            	JsonObject timetrackingObject = timetrackingElement.getAsJsonObject();
             	TimetrackingBean timetracking = TimetrackingParser.parse(timetrackingObject);
             	issueBean.setTimetracking(timetracking);
             }
@@ -108,12 +108,12 @@ public class IssueParser extends BaseParser {
             }
             JsonElement timeSpentElement = fieldObject.get(PROP_TIMESPENT);
             if(checkNotNull(timeSpentElement)) {
-            	String timespent = timeSpentElement.getAsString();
+            	Long timespent = timeSpentElement.getAsLong();
             	issueBean.setTimeSpent(timespent);
             }
             JsonElement aggregateTimeOriginalEstimateElement = fieldObject.get(PROP_AGGREGATETIMEORIGINALESTIMATE);
             if(checkNotNull(aggregateTimeOriginalEstimateElement)) {
-            	String aggregateTimeOriginalEstimate = aggregateTimeOriginalEstimateElement.getAsString();
+            	Long aggregateTimeOriginalEstimate = aggregateTimeOriginalEstimateElement.getAsLong();
             	issueBean.setAggregateTimeOriginalEstimate(aggregateTimeOriginalEstimate);
             }
             JsonElement aggregateTimeEstimateElement = fieldObject.get(PROP_AGGREGATETIMEESTIMATE);
@@ -223,7 +223,7 @@ public class IssueParser extends BaseParser {
             }
             JsonElement aggregatetimespentElement = fieldObject.get(PROP_AGGREGATETIMESPENT);
             if(checkNotNull(aggregatetimespentElement)) {
-            	issueBean.setAggregatetimespent(aggregatetimespentElement.getAsString());
+            	issueBean.setAggregatetimespent(aggregatetimespentElement.getAsLong());
             }
             JsonElement aggregateprogressElement = fieldObject.get(ELEM_AGGREGATEPROGRESS);
             if(checkNotNull(aggregateprogressElement)){

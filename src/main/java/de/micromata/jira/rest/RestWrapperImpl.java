@@ -34,6 +34,7 @@ import de.micromata.jira.rest.domain.StatusBean;
 import de.micromata.jira.rest.domain.TransitionBean;
 import de.micromata.jira.rest.domain.UserBean;
 import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.domain.WorklogBean;
 import de.micromata.jira.rest.jql.EField;
 import de.micromata.jira.rest.jql.EOperator;
 import de.micromata.jira.rest.jql.JqlBuilder;
@@ -65,6 +66,23 @@ import de.micromata.jira.rest.util.RestURIBuilder;
  * To change this template use File | Settings | File Templates.
  */
 public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
+	
+	@Override
+	public boolean transferWorklogInIssue(JiraRestClient jiraRestClient, String issueKey, WorklogBean worklog) throws RestException {
+		Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+
+        String json = GsonParserUtil.parseWorklogToJson(worklog);
+        URI uri = RestURIBuilder.buildIssueWorklogByKeyURI(baseUri, issueKey);
+        WebResource webResource = client.resource(uri);
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
+        if(clientResponse.getStatus() == HttpURLConnection.HTTP_CREATED) {
+        	return true;
+        }
+        else{
+            throw new RestException(clientResponse);
+        }
+	}
 	
 	@Override
 	public boolean updateIssueTransitionByKey(JiraRestClient jiraRestClient, String issueKey, int transitionId) throws RestException {

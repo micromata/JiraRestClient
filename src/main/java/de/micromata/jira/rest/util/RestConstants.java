@@ -38,6 +38,8 @@ public interface RestConstants {
     public static final String STATUS = "/status";
     
     public static final String TRANSITIONS = "/transitions";
+    
+    public static final String WORKLOG = "/worklog";
 
     // Parameternamen
 

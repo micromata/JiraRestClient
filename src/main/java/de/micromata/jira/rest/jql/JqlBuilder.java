@@ -1,10 +1,9 @@
 package de.micromata.jira.rest.jql;
 
 /**
- * JQL clause is a part of a query. A query has three basic parts: fields, operators, and operands(=values).
- * You can optionally link them together using a few select keywords.
+ * JQL builder
  * 
- * <p>JQLClause = ( field + operator + operand ) + keyword + ...
+ * <p>JQL condition = ( field + operator + operand ) + JqlKeyword + ...
  * <p>Example: ( PROJECT = DEMO ) + AND ...
  * 
  */
@@ -34,6 +33,10 @@ public class JqlBuilder {
 	
 	public JqlBuilder getJqlBuilder() {
 		return this;
+	}
+	
+	public void clear() {
+		jql.setLength(0);
 	}
 	
 	public class JqlKeyword {
@@ -66,8 +69,15 @@ public class JqlBuilder {
 			return build();
 		}
 		
+		/**
+		 * Return the request String and clear the buffer.
+		 * 
+		 * @return
+		 */
 		public String build() {
-			return jql.toString();
+			String request = jql.toString();
+			clear();
+			return request;
 		}
 	}
 }

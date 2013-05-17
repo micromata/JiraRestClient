@@ -75,4 +75,12 @@ public class WorklogBean extends BaseBean {
 	public void setTimeSpentSeconds(long timeSpentSeconds) {
 		this.timeSpentSeconds = timeSpentSeconds;
 	}
+
+	@Override
+	public String toString() {
+		return "WorklogBean [id=" + id + ", author=" + author + ", updateAuthor="
+				+ updateAuthor + ", comment=" + comment + ", visibilityBean="
+				+ visibilityBean + ", started=" + started + ", timeSpent="
+				+ timeSpent + ", timeSpentSeconds=" + timeSpentSeconds + "]";
+	}
 }

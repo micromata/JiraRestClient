@@ -57,7 +57,7 @@ public interface JsonConstants {
     
     public static final String PROP_RESOLUTIONDATE = "resolutiondate";
     
-    public static final String PROP_TIMESPENT = "timespent";
+    public static final String PROP_TIMESPENT = "timeSpent";
     
     public static final String PROP_EMAIL_ADRESS = "emailAddress";
     

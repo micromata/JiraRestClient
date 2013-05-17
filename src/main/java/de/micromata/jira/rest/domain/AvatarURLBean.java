@@ -30,4 +30,10 @@ public class AvatarURLBean {
     public void setUri48x48(URI uri48x48) {
         this.uri48x48 = uri48x48;
     }
+
+	@Override
+	public String toString() {
+		return "AvatarURLBean [uri16x16=" + uri16x16 + ", uri48x48=" + uri48x48
+				+ "]";
+	}
 }

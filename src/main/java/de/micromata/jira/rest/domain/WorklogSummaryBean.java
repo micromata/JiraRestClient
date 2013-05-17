@@ -51,4 +51,11 @@ public class WorklogSummaryBean {
 	public void setWorklogs(List<WorklogBean> worklogs) {
 		this.worklogs = worklogs;
 	}
+
+	@Override
+	public String toString() {
+		return "WorklogSummaryBean [startAt=" + startAt + ", maxResults="
+				+ maxResults + ", total=" + total + ", worklogs=" + worklogs
+				+ "]";
+	}
 }

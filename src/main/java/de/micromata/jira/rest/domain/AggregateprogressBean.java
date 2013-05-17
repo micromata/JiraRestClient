@@ -2,23 +2,23 @@ package de.micromata.jira.rest.domain;
 
 public class AggregateprogressBean {
 
-	private int progress;
+	private Integer progress = null;
 	
-	private int total;
+	private Integer total = null;
 
-	public int getProgress() {
+	public Integer getProgress() {
 		return progress;
 	}
 
-	public void setProgress(int progress) {
+	public void setProgress(Integer progress) {
 		this.progress = progress;
 	}
 
-	public int getTotal() {
+	public Integer getTotal() {
 		return total;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(Integer total) {
 		this.total = total;
 	}
 }

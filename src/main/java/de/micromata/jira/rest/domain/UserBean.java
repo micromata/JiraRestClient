@@ -51,4 +51,11 @@ public class UserBean extends BaseBean {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
+
+	@Override
+	public String toString() {
+		return "UserBean [avatarUrl=" + avatarUrl + ", displayName="
+				+ displayName + ", active=" + active + ", emailAddress="
+				+ emailAddress + "]";
+	}
 }

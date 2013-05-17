@@ -33,19 +33,19 @@ public class TimetrackingParser implements JsonConstants {
 		
 		JsonElement timeSpentSecondsElement = object.get(PROP_TIME_SPENT_SECONDS);
 		if(checkNotNull(timeSpentSecondsElement)) {
-			int i = timeSpentSecondsElement.getAsInt();
+			Long i = timeSpentSecondsElement.getAsLong();
 			bean.setTimeSpentSeconds(i);
 		}
 		
 		JsonElement originalEstimateSecondsElement = object.get(PROP_ORIGINAL_ESTIMATE_SECONDS);
 		if(checkNotNull(originalEstimateSecondsElement)) {
-			int i = originalEstimateSecondsElement.getAsInt();
+			Long i = originalEstimateSecondsElement.getAsLong();
 			bean.setOriginalEstimateSeconds(i);
 		}
 		
 		JsonElement remainingEstimateSocondsElement = object.get(PROP_REMAINING_ESTIMATE_SECONDS);
 		if(remainingEstimateSocondsElement != null) {
-			int i = remainingEstimateSocondsElement.getAsInt();
+			Long i = remainingEstimateSocondsElement.getAsLong();
 			bean.setRemainingEstimateSeconds(i);
 		}
 		return bean;

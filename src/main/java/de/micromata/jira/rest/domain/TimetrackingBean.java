@@ -10,11 +10,11 @@ public class TimetrackingBean {
 	
 	private String timeSpent = StringUtils.EMPTY;
 	
-	private int originalEstimateSeconds;
+	private Long originalEstimateSeconds = null;
 	
-	private int remainingEstimateSeconds;
+	private Long remainingEstimateSeconds = null;
 	
-	private int timeSpentSeconds;
+	private Long timeSpentSeconds = null;
 
 	public String getOriginalEstimate() {
 		return originalEstimate;
@@ -40,27 +40,27 @@ public class TimetrackingBean {
 		this.timeSpent = timeSpent;
 	}
 
-	public int getOriginalEstimateSeconds() {
+	public Long getOriginalEstimateSeconds() {
 		return originalEstimateSeconds;
 	}
 
-	public void setOriginalEstimateSeconds(int originalEstimateSeconds) {
+	public void setOriginalEstimateSeconds(Long originalEstimateSeconds) {
 		this.originalEstimateSeconds = originalEstimateSeconds;
 	}
 
-	public int getRemainingEstimateSeconds() {
+	public Long getRemainingEstimateSeconds() {
 		return remainingEstimateSeconds;
 	}
 
-	public void setRemainingEstimateSeconds(int remainingEstimateSeconds) {
+	public void setRemainingEstimateSeconds(Long remainingEstimateSeconds) {
 		this.remainingEstimateSeconds = remainingEstimateSeconds;
 	}
 
-	public int getTimeSpentSeconds() {
+	public Long getTimeSpentSeconds() {
 		return timeSpentSeconds;
 	}
 
-	public void setTimeSpentSeconds(int timeSpentSeconds) {
+	public void setTimeSpentSeconds(Long timeSpentSeconds) {
 		this.timeSpentSeconds = timeSpentSeconds;
 	}
 }

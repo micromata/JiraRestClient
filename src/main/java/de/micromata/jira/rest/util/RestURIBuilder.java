@@ -64,4 +64,8 @@ public class RestURIBuilder implements RestConstants {
     	path.queryParam(EXPAND, TRANSITIONS_FIELDS);
     	return path.build();
     }
+    
+    public static URI buildIssueWorklogByKeyURI(URI baseUri, String issueKey) {
+    	return UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(WORKLOG).build();
+    }
 }
