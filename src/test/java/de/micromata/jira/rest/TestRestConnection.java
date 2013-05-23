@@ -57,14 +57,14 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testGetProjectComponents();
 //        testRestConnection.testGetIssuesForProject();
 //        testRestConnection.testSearchIssuesForProject();
-//        testRestConnection.testExtendedSearchIssuesForProject();
+        testRestConnection.testExtendedSearchIssuesForProject();
 //        testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
 //        testRestConnection.testGetIssueTypes();
 //        testRestConnection.testGetIssueTransitionsByKey();
 //        testRestConnection.testUpdateIssueTransitionByKey();
 //        testRestConnection.testAggregateTimeOriginalEstimate();
-        testRestConnection.testPutWorklogsInIssue();
+//        testRestConnection.testPutWorklogsInIssue();
     }
     
     public void testRestConnection() throws URISyntaxException, RestException {
@@ -127,7 +127,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	jsb.setJql(jql);
     	jsb.setStartAt(1);
     	jsb.setMaxResults(2);
-    	jsb.addField(EField.ALL);
+    	jsb.addField(EField.ISSUE_KEY, EField.STATUS, EField.DUE, EField.SUMMARY, EField.TYPE, EField.PRIORITY);
 
         JqlSearchResultBean jqlSearchResultBean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
     	
