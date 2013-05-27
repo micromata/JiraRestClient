@@ -297,7 +297,7 @@ public enum EField {
 	 * <li>issueType in (Bug,Improvement)
 	 * <li>issueType = 2
 	 * */
-	TYPE("type", EFieldType.ISSUE_TYPE),
+	ISSUE_TYPE("issuetype", EFieldType.ISSUE_TYPE),
 	
 	/** 
 	 * <i>Only available if time-tracking has been enabled by your JIRA administrator.</i>

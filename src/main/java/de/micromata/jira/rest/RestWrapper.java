@@ -107,7 +107,6 @@ public interface RestWrapper {
      * Performs an extended search for issues given by the project.
      * 
      * @param jiraRestClient = the connected client
-     * @param jqlBean = JQL requirements for an extended search  
      * @return list of issues
      * @throws RestException
      */

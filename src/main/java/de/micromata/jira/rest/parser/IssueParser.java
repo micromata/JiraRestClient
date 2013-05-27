@@ -96,14 +96,10 @@ public class IssueParser extends BaseParser {
             	Date date = DateParser.parseDateFormat(resolutionDate, DateParser.Format.YYYY_MM_DD);
             	issueBean.setResolutionDate(date);
             }
-            JsonElement fixVersionElement = fieldObject.get(PROP_FIX_VERSIONS);
+            JsonElement fixVersionElement = fieldObject.get(ELEM_FIX_VERSIONS);
             if(checkNotNull(fixVersionElement)) {
-            	List<Integer> fixVersions = new ArrayList<>();
-            	
-            	for(JsonElement j : fixVersionElement.getAsJsonArray()) {
-					JsonElement element = j.getAsJsonObject().get(PROP_ID);
-					fixVersions.add(element.getAsInt());
-				}
+                List<JsonObject> list = GsonParserUtil.parseJsonArray(fixVersionElement.getAsJsonArray());
+                List<VersionBean> fixVersions = VersionParser.parse(list);
             	issueBean.setFixVersions(fixVersions);
             }
             JsonElement timeSpentElement = fieldObject.get(PROP_TIMESPENT);

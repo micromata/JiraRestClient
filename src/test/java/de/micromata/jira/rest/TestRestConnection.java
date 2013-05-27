@@ -57,8 +57,8 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testGetProjectComponents();
 //        testRestConnection.testGetIssuesForProject();
 //        testRestConnection.testSearchIssuesForProject();
-        testRestConnection.testExtendedSearchIssuesForProject();
-//        testRestConnection.testGetIssueByKey();
+//        testRestConnection.testExtendedSearchIssuesForProject();
+        testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
 //        testRestConnection.testGetIssueTypes();
 //        testRestConnection.testGetIssueTransitionsByKey();
@@ -127,7 +127,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	jsb.setJql(jql);
     	jsb.setStartAt(1);
     	jsb.setMaxResults(2);
-    	jsb.addField(EField.ISSUE_KEY, EField.STATUS, EField.DUE, EField.SUMMARY, EField.TYPE, EField.PRIORITY);
+    	jsb.addField(EField.ISSUE_KEY, EField.STATUS, EField.DUE, EField.SUMMARY, EField.ISSUE_TYPE, EField.PRIORITY);
 
         JqlSearchResultBean jqlSearchResultBean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
     	

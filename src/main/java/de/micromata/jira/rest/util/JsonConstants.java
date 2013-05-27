@@ -53,7 +53,7 @@ public interface JsonConstants {
     
     public static final String PROP_HAS_VOTED = "hasVoted";
     
-    public static final String PROP_FIX_VERSIONS = "fixVersions";
+
     
     public static final String PROP_RESOLUTIONDATE = "resolutiondate";
     
@@ -170,6 +170,8 @@ public interface JsonConstants {
     public static final String ELEM_ISSUETYPE = "issuetype";
 
     public static final String ELEM_VERSIONS = "versions";
+
+    public static final String ELEM_FIX_VERSIONS = "fixVersions";
 
     public static final String ELEM_ROLES = "roles";
 

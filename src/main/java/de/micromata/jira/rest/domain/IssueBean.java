@@ -46,7 +46,7 @@ public class IssueBean extends BaseBean {
 	
 	private Long aggregateTimeOriginalEstimate = null;
 	
-	private List<Integer> fixVersions = null;
+	private List<VersionBean> fixVersions = null;
 	
 	private Date resolutionDate = null;
 	
@@ -219,11 +219,11 @@ public class IssueBean extends BaseBean {
 		this.aggregateTimeOriginalEstimate = aggregateTimeOriginalEstimate;
 	}
 
-	public List<Integer> getFixVersions() {
+	public List<VersionBean> getFixVersions() {
 		return fixVersions;
 	}
 
-	public void setFixVersions(List<Integer> fixVersions) {
+	public void setFixVersions(List<VersionBean> fixVersions) {
 		this.fixVersions = fixVersions;
 	}
 
