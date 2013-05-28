@@ -18,22 +18,32 @@ public class TestIssueTransition {
 	
 	private static RestWrapper restWrapper;
 	
-	private final String ISSUE_KEY = "DEMO-1";
+	private static final String ISSUE_KEY = "DEMO-1";
 	
-	private Map<Integer, TransitionBean> currentIssueTransitions;
+	private static Map<Integer, TransitionBean> currentIssueTransitions;
 	
-	@BeforeClass
-	public static void initClient() throws URISyntaxException, RestException {
+	public static void main(String[] args) throws URISyntaxException, RestException {
 		URI uri = new URI("http://localhost:2990/jira");
         String username = "admin";
         String password = "admin";
 
         jiraRestClient = new JiraRestClient(uri, username, password);
         restWrapper = new RestWrapperImpl();
+        
+        initAvailableTransitionStates();
+        
+        testTransitionCloseToReopen();
+//        testTransitionOpenToClose();
+//        testTransitionOpenToStart();
+//        testTransitionStartToStop();
+//        testTransitionOpenToResolve();
+//        testTransitionResolveToClose();
+        
+        
+        showAvailableTransitionStates();
 	}
 	
-	@Before
-	public void initAvailableTransitionStates() throws RestException {
+	public static void initAvailableTransitionStates() throws RestException {
 		currentIssueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, ISSUE_KEY);
 		
 		System.out.println("---------------------------------------------------------------------------------------------------");
@@ -47,8 +57,7 @@ public class TestIssueTransition {
 		System.out.println("---------------------------------------------------------------------------------------------------");
 	}
 	
-	@After
-	public void showAvailableTransitionStates() throws RestException {
+	public static void showAvailableTransitionStates() throws RestException {
 		currentIssueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, ISSUE_KEY);
 		
 		System.out.println("---------------------------------------------------------------------------------------------------");
@@ -60,8 +69,7 @@ public class TestIssueTransition {
 		System.out.println("---------------------------------------------------------------------------------------------------");
 	}
 	
-//	@Test
-	public void testTransitionCloseToReopen() throws RestException {
+	public static void testTransitionCloseToReopen() throws RestException {
 		int transitionId = 3;
 		
     	boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, ISSUE_KEY, transitionId);
@@ -70,8 +78,7 @@ public class TestIssueTransition {
     	System.out.println("Transition (ID=" + transitionId + ") reopened: " + update);
 	}
 	
-//	@Test
-	public void testTransitionOpenToClose() throws RestException {
+	public static void testTransitionOpenToClose() throws RestException {
 		int transitionId = 2;
 		
 		boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, ISSUE_KEY, transitionId);
@@ -80,8 +87,7 @@ public class TestIssueTransition {
 		System.out.println("Transition (ID=" + transitionId + ") closed: " + update);
 	}
 	
-//	@Test
-	public void testTransitionOpenToStart() throws RestException {
+	public static void testTransitionOpenToStart() throws RestException {
 		int transitionId = 4;
 		
 		boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, ISSUE_KEY, transitionId);
@@ -90,8 +96,7 @@ public class TestIssueTransition {
 		System.out.println("Transition (ID=" + transitionId + ") started: " + update);
 	}
 	
-//	@Test
-	public void testTransitionStartToStop() throws RestException {
+	public static void testTransitionStartToStop() throws RestException {
 		int transitionId = 301;
 		
 		boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, ISSUE_KEY, transitionId);
@@ -100,8 +105,7 @@ public class TestIssueTransition {
 		System.out.println("Transition (ID=" + transitionId + ") stoped: " + update);
 	}
 	
-//	@Test
-	public void testTransitionOpenToResolve() throws RestException {
+	public static void testTransitionOpenToResolve() throws RestException {
 		int transitionId = 5;
 		
 		boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, ISSUE_KEY, transitionId);
@@ -110,8 +114,7 @@ public class TestIssueTransition {
 		System.out.println("Transition (ID=" + transitionId + ") resolved: " + update);
 	}
 	
-	@Test
-	public void testTransitionResolveToClose() throws RestException {
+	public static void testTransitionResolveToClose() throws RestException {
 		int transitionId = 701;
 		
 		boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, ISSUE_KEY, transitionId);
