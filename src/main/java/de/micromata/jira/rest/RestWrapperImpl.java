@@ -1,6 +1,7 @@
 package de.micromata.jira.rest;
 
 
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Collections;
@@ -66,6 +67,15 @@ import de.micromata.jira.rest.util.RestURIBuilder;
  * To change this template use File | Settings | File Templates.
  */
 public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
+	
+	@Override
+	public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException {
+    	Client client = jiraRestClient.getClient();
+    	ClientResponse clientResponse = client.resource(uri).accept(MediaType.APPLICATION_OCTET_STREAM).get(ClientResponse.class);
+    	InputStream inputStream = clientResponse.getEntity(InputStream.class);
+		return inputStream;
+        
+	}
 	
 	@Override
 	public boolean transferWorklogInIssue(JiraRestClient jiraRestClient, String issueKey, WorklogBean worklog) throws RestException {

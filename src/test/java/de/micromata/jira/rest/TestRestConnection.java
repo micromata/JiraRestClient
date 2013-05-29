@@ -1,10 +1,17 @@
 package de.micromata.jira.rest;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
 
 import junit.framework.Assert;
 
@@ -48,7 +55,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         restWrapper = new RestWrapperImpl();
 	}
 	
-    public static void main(String[] args) throws URISyntaxException, RestException {
+    public static void main(String[] args) throws URISyntaxException, RestException, IOException {
         TestRestConnection testRestConnection = new TestRestConnection();
 //        testRestConnection.testRestConnection();
 //        testRestConnection.testGetAllProjects();
@@ -58,13 +65,14 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testGetIssuesForProject();
 //        testRestConnection.testSearchIssuesForProject();
 //        testRestConnection.testExtendedSearchIssuesForProject();
-        testRestConnection.testGetIssueByKey();
+//        testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
 //        testRestConnection.testGetIssueTypes();
 //        testRestConnection.testGetIssueTransitionsByKey();
 //        testRestConnection.testUpdateIssueTransitionByKey();
 //        testRestConnection.testAggregateTimeOriginalEstimate();
 //        testRestConnection.testPutWorklogsInIssue();
+        testRestConnection.testGetAttachment();
     }
     
     public void testRestConnection() throws URISyntaxException, RestException {
@@ -272,5 +280,13 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         boolean putWorklogsInIssue = restWrapper.transferWorklogInIssue(jiraRestClient, "DEMO-6", worklogBean);
         
         System.out.println("testPutWorklogsInIssue: " + putWorklogsInIssue);
+    }
+    
+    public void testGetAttachment() throws RestException, URISyntaxException, IOException {
+    	URI uri = new URI("http://localhost:2990/jira/secure/attachment/10000/IssueTypes.png");
+    	InputStream inputStream = restWrapper.getAttachment(jiraRestClient, uri);
+    	byte[] bytes = IOUtils.toByteArray(inputStream);
+	
+        System.out.println("testGetAttachment: " + (bytes.length > 0));
     }
 }

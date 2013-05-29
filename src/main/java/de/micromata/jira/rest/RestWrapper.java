@@ -2,6 +2,7 @@ package de.micromata.jira.rest;
 
 
 
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,8 @@ import de.micromata.jira.rest.util.RestException;
  * To change this template use File | Settings | File Templates.
  */
 public interface RestWrapper {
+	
+	public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException;
 
 	/**
 	 * Returns true if the worklog is successfully transfered to the Issue. 
