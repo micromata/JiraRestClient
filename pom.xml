@@ -5,9 +5,27 @@
 
 	<groupId>de.micromata</groupId>
 	<artifactId>jiraRestClient</artifactId>
-	<version>1.0-SNAPSHOT</version>
-
+	<version>1.0</version>
 	<packaging>jar</packaging>
+
+
+    <organization>
+        <name>Micromata GmbH</name>
+        <url>http://www.micromata.de</url>
+    </organization>
+    <licenses>
+        <license></license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Christian Schulze</name>
+            <email>christians@micromata.de</email>
+        </developer>
+        <developer>
+            <name>Vitali Filippow</name>
+            <email>v.filippow@micromata.de</email>
+        </developer>
+    </developers>
 
 	<dependencies>
 		<dependency>
@@ -75,30 +93,30 @@
 					<encoding>utf-8</encoding>
 				</configuration>
 			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-source-plugin</artifactId> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>attach-sources</id> -->
-<!-- 						<goals> -->
-<!-- 							<goal>jar</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-javadoc-plugin</artifactId> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>attach-javadocs</id> -->
-<!-- 						<goals> -->
-<!-- 							<goal>jar</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+ 			<plugin>
+ 				<groupId>org.apache.maven.plugins</groupId>
+ 				<artifactId>maven-source-plugin</artifactId>
+ 				<executions>
+ 					<execution>
+ 						<id>attach-sources</id>
+ 						<goals>
+ 							<goal>jar</goal>
+ 						</goals>
+ 					</execution>
+ 				</executions>
+ 			</plugin>
+ 			<plugin>
+ 				<groupId>org.apache.maven.plugins</groupId>
+ 				<artifactId>maven-javadoc-plugin</artifactId>
+ 				<executions>
+ 					<execution>
+ 						<id>attach-javadocs</id>
+ 						<goals>
+ 							<goal>jar</goal>
+ 						</goals>
+ 					</execution>
+ 				</executions>
+ 			</plugin>
 		</plugins>
 	</build>
 
