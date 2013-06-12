@@ -63,4 +63,10 @@ public class CommentBean extends BaseBean {
 	public void setVisibility(VisibilityBean visibility) {
 		this.visibility = visibility;
 	}
+
+    @Override
+    public int compareTo(BaseBean o) {
+        CommentBean c = (CommentBean) o;
+        return this.created.compareTo(c.created);
+    }
 }
