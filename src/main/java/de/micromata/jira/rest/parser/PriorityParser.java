@@ -1,11 +1,14 @@
 package de.micromata.jira.rest.parser;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import de.micromata.jira.rest.domain.PriorityBean;
+import de.micromata.jira.rest.domain.StatusBean;
 import de.micromata.jira.rest.util.JsonElementUtil;
 import de.micromata.jira.rest.util.URIParser;
 
@@ -23,5 +26,14 @@ public class PriorityParser extends BaseParser {
 		}
 		return bean;
 	}
+
+    public static List<PriorityBean> parse(List<JsonObject> jsonObjectList){
+        List<PriorityBean> retval = new ArrayList<PriorityBean>();
+        for (JsonObject jsonObject : jsonObjectList) {
+            PriorityBean parse = parse(jsonObject);
+            retval.add(parse);
+        }
+        return retval;
+    }
 
 }

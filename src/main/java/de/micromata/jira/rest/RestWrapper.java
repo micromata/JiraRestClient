@@ -7,18 +7,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-import de.micromata.jira.rest.domain.BasicProjectBean;
-import de.micromata.jira.rest.domain.CommentSummaryBean;
-import de.micromata.jira.rest.domain.ComponentBean;
-import de.micromata.jira.rest.domain.IssueBean;
-import de.micromata.jira.rest.domain.IssueTypeBean;
-import de.micromata.jira.rest.domain.JqlSearchResultBean;
-import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.StatusBean;
-import de.micromata.jira.rest.domain.TransitionBean;
-import de.micromata.jira.rest.domain.UserBean;
-import de.micromata.jira.rest.domain.VersionBean;
-import de.micromata.jira.rest.domain.WorklogBean;
+import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.jql.JqlSearchBean;
 import de.micromata.jira.rest.util.RestException;
 
@@ -185,4 +174,14 @@ public interface RestWrapper {
      * @throws RestException
      */
     public List<StatusBean> getStates(JiraRestClient jiraRestClient) throws RestException;
+
+
+    /**
+     * Returns a List of all Priority Object from the Remote Jira.
+     *
+     * @param jiraRestClient
+     * @return
+     * @throws RestException
+     */
+    public List<PriorityBean> getPriorities(JiraRestClient jiraRestClient) throws RestException;
 }

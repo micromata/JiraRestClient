@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.domain.VisibilityBean;
 import de.micromata.jira.rest.domain.WorklogBean;
 
@@ -26,7 +27,6 @@ public class GsonParserUtil {
     private static final JsonParser parser = new JsonParser();
 
     public static List<JsonObject> parseJsonObjects(String json){
-
         JsonElement parse = parser.parse(json);
         JsonArray asJsonArray = parse.getAsJsonArray();
         return parseJsonArray(asJsonArray);

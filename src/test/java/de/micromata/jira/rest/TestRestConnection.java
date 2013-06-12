@@ -11,20 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import de.micromata.jira.rest.domain.*;
 import org.apache.commons.io.IOUtils;
 
 import junit.framework.Assert;
 
-import de.micromata.jira.rest.domain.BasicProjectBean;
-import de.micromata.jira.rest.domain.CommentSummaryBean;
-import de.micromata.jira.rest.domain.ComponentBean;
-import de.micromata.jira.rest.domain.IssueBean;
-import de.micromata.jira.rest.domain.IssueTypeBean;
-import de.micromata.jira.rest.domain.JqlSearchResultBean;
-import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.TransitionBean;
-import de.micromata.jira.rest.domain.VersionBean;
-import de.micromata.jira.rest.domain.WorklogBean;
 import de.micromata.jira.rest.jql.EField;
 import de.micromata.jira.rest.jql.EOperator;
 import de.micromata.jira.rest.jql.JqlBuilder;
@@ -72,9 +63,12 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testUpdateIssueTransitionByKey();
 //        testRestConnection.testAggregateTimeOriginalEstimate();
 //        testRestConnection.testPutWorklogsInIssue();
-        testRestConnection.testGetAttachment();
+//        testRestConnection.testGetAttachment();
+        testRestConnection.testGetPriorities();
     }
-    
+
+
+
     public void testRestConnection() throws URISyntaxException, RestException {
         URI uri = new URI("http://localhost:2990/jira");
         String username = "admin";
@@ -288,5 +282,10 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	byte[] bytes = IOUtils.toByteArray(inputStream);
 	
         System.out.println("testGetAttachment: " + (bytes.length > 0));
+    }
+
+    private void testGetPriorities() throws RestException {
+        List<PriorityBean> priorities = restWrapper.getPriorities(jiraRestClient);
+        System.out.println("testGetPriorities: " + !priorities.isEmpty());
     }
 }

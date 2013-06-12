@@ -13,6 +13,8 @@ import javax.ws.rs.core.UriBuilder;
  */
 public class RestURIBuilder implements RestConstants {
 
+
+
     public static URI buildAllProjectURI(URI baseUri) {
         return UriBuilder.fromUri(baseUri).path(PROJECT).build();
     }
@@ -43,6 +45,10 @@ public class RestURIBuilder implements RestConstants {
 
     public static URI buildStateURI(URI baseUri) {
         return UriBuilder.fromUri(baseUri).path(STATUS).build();
+    }
+
+    public static URI buildPrioritieURI(URI baseUri){
+        return UriBuilder.fromUri(baseUri).path(PRIORITY).build();
     }
 
     public static URI buildSearchURI(URI baseUri) {

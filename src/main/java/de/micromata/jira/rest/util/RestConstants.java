@@ -36,6 +36,8 @@ public interface RestConstants {
     public static final String ISSUETPYES = "/issuetype";
 
     public static final String STATUS = "/status";
+
+    public static final String PRIORITY = "/priority";
     
     public static final String TRANSITIONS = "/transitions";
     
