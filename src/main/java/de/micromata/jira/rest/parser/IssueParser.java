@@ -119,7 +119,7 @@ public class IssueParser extends BaseParser {
             }
             JsonElement updatedElement = fieldObject.get(PROP_UPDATED);
             if(checkNotNull(updatedElement)) {
-            	Date date = DateParser.parseDateFormat(updatedElement.getAsString(), DateParser.Format.YYYY_MM_DD);
+            	Date date = DateParser.parseDateFormat(updatedElement.getAsString(), DateParser.Format.YYYY_MM_DD_T_HH_MM_SS_SSSZ);
             	issueBean.setUpdated(date);
             }
             JsonElement createdElement = fieldObject.get(PROP_CREATED);

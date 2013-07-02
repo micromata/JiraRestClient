@@ -56,7 +56,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testGetIssuesForProject();
 //        testRestConnection.testSearchIssuesForProject();
 //        testRestConnection.testExtendedSearchIssuesForProject();
-//        testRestConnection.testGetIssueByKey();
+       testRestConnection.testGetIssueByKey();
 //        testRestConnection.testGetCommentsByIssue();
 //        testRestConnection.testGetIssueTypes();
 //        testRestConnection.testGetIssueTransitionsByKey();
@@ -64,7 +64,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testRestConnection.testAggregateTimeOriginalEstimate();
 //        testRestConnection.testPutWorklogsInIssue();
 //        testRestConnection.testGetAttachment();
-        testRestConnection.testGetPriorities();
+//        testRestConnection.testGetPriorities();
     }
 
 
@@ -193,7 +193,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     	
     	Object[] transitions = availableIssueTransitions.keySet().toArray();
     	int choice = (int) (Math.random() * transitions.length);
-    	int transitionId = (int) transitions[choice];
+    	int transitionId = Integer.parseInt(transitions[choice].toString());
     	String transitionName = availableIssueTransitions.get(transitionId).getName();
     	System.out.println("Folgende Transition gewählt: ID=" + transitionId + " Name=" + transitionName);
    
