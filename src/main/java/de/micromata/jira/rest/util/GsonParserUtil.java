@@ -1,5 +1,7 @@
 package de.micromata.jira.rest.util;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +37,14 @@ public class GsonParserUtil {
     public static JsonObject parseJsonObject(String json){
         JsonElement jsonElement = parser.parse(json);
         return jsonElement.getAsJsonObject();
+    }
+
+    public static JsonObject parseJsonObject(InputStream inputStream){
+        InputStreamReader reader = new InputStreamReader(inputStream);
+        JsonReader jsonReader = new JsonReader(reader);
+        jsonReader.setLenient(true);
+        JsonElement parse = parser.parse(jsonReader);
+        return parse.getAsJsonObject();
     }
 
 

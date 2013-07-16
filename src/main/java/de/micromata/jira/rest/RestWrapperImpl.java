@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
+import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.parser.*;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -283,8 +284,11 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
         
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-            String entity = clientResponse.getEntity(String.class);
+      /*      String entity = clientResponse.getEntity(String.class);
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+            return JqlSearchParser.parse(jsonObject);*/
+            InputStream entityInputStream = clientResponse.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entityInputStream);
             return JqlSearchParser.parse(jsonObject);
         }
         else{
