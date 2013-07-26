@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
-import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.parser.*;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -99,8 +98,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
         if(response.getStatus() == HttpURLConnection.HTTP_OK){
-        	String entity = response.getEntity(String.class);
-            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+            InputStream inputStream = response.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             
             JsonElement transitionsElement = jsonObject.get(JsonConstants.PROP_TRANSITIONS);
             if(JsonElementUtil.checkNotNull(transitionsElement)) {
@@ -123,8 +122,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
         if(response.getStatus() == HttpURLConnection.HTTP_OK){
-            String entity = response.getEntity(String.class);
-            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+            InputStream inputStream = response.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             return UserParser.parse(jsonObject);
         }
         else{
@@ -141,8 +140,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
         if(response.getStatus() == HttpURLConnection.HTTP_OK){
-            String entity = response.getEntity(String.class);
-            List<JsonObject> jsonObjects = GsonParserUtil.parseJsonObjects(entity);
+            InputStream inputStream = response.getEntityInputStream();
+            List<JsonObject> jsonObjects = GsonParserUtil.parseJsonObjects(inputStream);
             List<BasicProjectBean> beans = BasicProjectParser.parseBasicProject(jsonObjects);
             Collections.sort(beans);
             return beans;
@@ -159,14 +158,14 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = RestURIBuilder.buildProjectByKeyURI(baseUri, projectKey);
         WebResource webResource = client.resource(uri);
-        ClientResponse clientResponse = webResource.get(ClientResponse.class);
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-            String entity = clientResponse.getEntity(String.class);
-            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+        ClientResponse response = webResource.get(ClientResponse.class);
+        if(response.getStatus() == HttpURLConnection.HTTP_OK){
+            InputStream inputStream = response.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             return ProjectParser.parse(jsonObject);
         }
         else{
-            throw new RestException(clientResponse);
+            throw new RestException(response);
         }
     }
     
@@ -179,8 +178,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     	WebResource webResource = client.resource(uri);
     	ClientResponse clientResponse = webResource.get(ClientResponse.class);
     	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-    		String entity = clientResponse.getEntity(String.class);
-    		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
+            InputStream inputStream = clientResponse.getEntityInputStream();
+    		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<VersionBean> parse = VersionParser.parse(objects);
             Collections.sort(parse);
             return parse;
@@ -199,8 +198,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     	WebResource webResource = client.resource(uri);
     	ClientResponse clientResponse = webResource.get(ClientResponse.class);
     	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-    		String entity = clientResponse.getEntity(String.class);
-    		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
+            InputStream inputStream = clientResponse.getEntityInputStream();
+    		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<ComponentBean> parse = ComponentParser.parse(objects);
             Collections.sort(parse);
             return parse;
@@ -218,8 +217,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-            String entity = clientResponse.getEntity(String.class);
-            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<IssueTypeBean> parse = IssueTypeParser.parse(objects);
             Collections.sort(parse);
             return parse;
@@ -237,8 +236,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-            String entity = clientResponse.getEntity(String.class);
-            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<StatusBean> parse = StatusParser.parse(objects);
             Collections.sort(parse);
             return parse;
@@ -256,8 +255,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-            String entity = clientResponse.getEntity(String.class);
-            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(entity);
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<PriorityBean> parse = PriorityParser.parse(objects);
             Collections.sort(parse);
             return parse;
@@ -309,8 +308,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
 		ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
 
 		if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-            String entity = clientResponse.getEntity(String.class);
-            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);
             return jqlSearchResultBean;
         }
@@ -328,8 +327,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     	
     	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
         if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-            String entity = clientResponse.getEntity(String.class);
-            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             return IssueParser.parse(jsonObject);
         }
         else{
@@ -345,8 +344,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     	
     	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
     	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
-    		String entity = clientResponse.getEntity(String.class);
-    		JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
+            InputStream inputStream = clientResponse.getEntityInputStream();
+    		JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
     		return CommentSummaryParser.parse(jsonObject);
     	}
     	else{

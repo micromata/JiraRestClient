@@ -184,4 +184,5 @@ public interface RestWrapper {
      * @throws RestException
      */
     public List<PriorityBean> getPriorities(JiraRestClient jiraRestClient) throws RestException;
+
 }

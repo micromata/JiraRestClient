@@ -28,15 +28,13 @@ public class GsonParserUtil {
 
     private static final JsonParser parser = new JsonParser();
 
-    public static List<JsonObject> parseJsonObjects(String json){
-        JsonElement parse = parser.parse(json);
+    public static List<JsonObject> parseJsonObjects(InputStream inputStream){
+        InputStreamReader reader = new InputStreamReader(inputStream);
+        JsonReader jsonReader = new JsonReader(reader);
+        jsonReader.setLenient(true);
+        JsonElement parse = parser.parse(jsonReader);
         JsonArray asJsonArray = parse.getAsJsonArray();
         return parseJsonArray(asJsonArray);
-    }
-
-    public static JsonObject parseJsonObject(String json){
-        JsonElement jsonElement = parser.parse(json);
-        return jsonElement.getAsJsonObject();
     }
 
     public static JsonObject parseJsonObject(InputStream inputStream){

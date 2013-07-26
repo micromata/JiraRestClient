@@ -27,7 +27,7 @@ public class RestException extends Exception {
      */
     public RestException(ClientResponse response) {
     	this(response.getStatus(), response.getClientResponseStatus().getReasonPhrase(), 
-            		ErrorParser.parse(response.getEntity(String.class)));
+            		ErrorParser.parse(response.getEntityInputStream()));
     }
 	
 	public RestException(int statusCode, String reasonPhrase, String restErrorMessage) {
