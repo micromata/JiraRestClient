@@ -47,8 +47,6 @@ public class JiraRestClient {
      */
     public JiraRestClient(URI uri, String username, String password) throws RestException {
         this.username = username;
-//    	String authString = username + ":" + password;
-//    	String auth = new String(Base64.encode(authString));
 
     	//Apache HTTP client setup 
     	ApacheHttpClientConfig clientConfig = new DefaultApacheHttpClientConfig();

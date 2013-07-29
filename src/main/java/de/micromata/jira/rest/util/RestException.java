@@ -5,11 +5,9 @@ import com.sun.jersey.api.client.ClientResponse;
 import de.micromata.jira.rest.parser.ErrorParser;
 
 /**
- * Created with IntelliJ IDEA.
  * User: Christian
  * Date: 06.03.13
  * Time: 13:20
- * To change this template use File | Settings | File Templates.
  */
 @SuppressWarnings("serial")
 public class RestException extends Exception {

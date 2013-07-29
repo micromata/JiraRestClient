@@ -39,13 +39,6 @@ import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
 import de.micromata.jira.rest.util.RestURIBuilder;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Christian
- * Date: 28.02.13
- * Time: 11:18
- * To change this template use File | Settings | File Templates.
- */
 public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
 
     @Override
@@ -274,9 +267,6 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
 
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
-      /*      String entity = clientResponse.getEntity(String.class);
-            JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
-            return JqlSearchParser.parse(jsonObject);*/
             InputStream entityInputStream = clientResponse.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(entityInputStream);
             return JqlSearchParser.parse(jsonObject);
@@ -342,8 +332,6 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
 
     @Override
     public boolean testRestConnection(URI uri, String username, String password) throws RestException, ClientHandlerException {
-//    	String authString = username + ":" + password;
-//    	String auth = new String(Base64.encode(authString));
 
         ApacheHttpClientConfig clientConfig = new DefaultApacheHttpClientConfig();
         clientConfig.getProperties().put(ApacheHttpClientConfig.PROPERTY_HANDLE_COOKIES, Boolean.TRUE);

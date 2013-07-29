@@ -1,11 +1,9 @@
 package de.micromata.jira.rest.util;
 
 /**
- * Created with IntelliJ IDEA.
  * User: Christian
  * Date: 28.02.13
  * Time: 12:25
- * To change this template use File | Settings | File Templates.
  */
 public interface RestConstants {
 

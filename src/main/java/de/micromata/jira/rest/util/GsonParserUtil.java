@@ -18,11 +18,9 @@ import de.micromata.jira.rest.domain.VisibilityBean;
 import de.micromata.jira.rest.domain.WorklogBean;
 
 /**
- * Created with IntelliJ IDEA.
  * User: Christian
  * Date: 01.03.13
  * Time: 17:08
- * To change this template use File | Settings | File Templates.
  */
 public class GsonParserUtil {
 

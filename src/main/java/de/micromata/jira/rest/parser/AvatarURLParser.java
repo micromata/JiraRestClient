@@ -13,11 +13,9 @@ import de.micromata.jira.rest.util.URIParser;
 import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
 
 /**
- * Created with IntelliJ IDEA.
  * User: Christian
  * Date: 07.03.13
  * Time: 13:38
- * To change this template use File | Settings | File Templates.
  */
 public class AvatarURLParser extends BaseParser {
 

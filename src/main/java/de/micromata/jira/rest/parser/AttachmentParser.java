@@ -15,11 +15,9 @@ import de.micromata.jira.rest.util.JsonElementUtil;
 import de.micromata.jira.rest.util.URIParser;
 
 /**
- * Created with IntelliJ IDEA.
  * User: Christian
  * Date: 07.03.13
  * Time: 08:37
- * To change this template use File | Settings | File Templates.
  */
 public class AttachmentParser extends BaseParser {
 
