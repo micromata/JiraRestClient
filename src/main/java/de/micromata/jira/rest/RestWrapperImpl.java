@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
+import com.sun.jersey.api.client.ClientHandlerException;
 import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.parser.*;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -46,73 +47,71 @@ import de.micromata.jira.rest.util.RestURIBuilder;
  * To change this template use File | Settings | File Templates.
  */
 public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
-	
-	@Override
-	public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException {
-    	Client client = jiraRestClient.getClient();
-    	ClientResponse clientResponse = client.resource(uri).accept(MediaType.APPLICATION_OCTET_STREAM).get(ClientResponse.class);
-    	InputStream inputStream = clientResponse.getEntity(InputStream.class);
-		return inputStream;
-        
-	}
-	
-	@Override
-	public boolean transferWorklogInIssue(JiraRestClient jiraRestClient, String issueKey, WorklogBean worklog) throws RestException {
-		Client client = jiraRestClient.getClient();
+
+    @Override
+    public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException {
+        Client client = jiraRestClient.getClient();
+        ClientResponse clientResponse = client.resource(uri).accept(MediaType.APPLICATION_OCTET_STREAM).get(ClientResponse.class);
+        InputStream inputStream = clientResponse.getEntity(InputStream.class);
+        return inputStream;
+
+    }
+
+    @Override
+    public boolean transferWorklogInIssue(JiraRestClient jiraRestClient, String issueKey, WorklogBean worklog) throws RestException {
+        Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
 
         String json = GsonParserUtil.parseWorklogToJson(worklog);
         URI uri = RestURIBuilder.buildIssueWorklogByKeyURI(baseUri, issueKey);
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_CREATED) {
-        	return true;
-        }
-        else{
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_CREATED) {
+            return true;
+        } else {
             throw new RestException(clientResponse);
         }
-	}
-	
-	@Override
-	public boolean updateIssueTransitionByKey(JiraRestClient jiraRestClient, String issueKey, int transitionId) throws RestException {
-		Client client = jiraRestClient.getClient();
+    }
+
+    @Override
+    public boolean updateIssueTransitionByKey(JiraRestClient jiraRestClient, String issueKey, int transitionId) throws RestException {
+        Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
 
         String json = GsonParserUtil.parseTransitionToJson(transitionId);
         URI uri = RestURIBuilder.buildIssueTransitionsByKeyURI(baseUri, issueKey);
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_NO_CONTENT) {
-        	return true;
-        }
-        else{
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_NO_CONTENT) {
+            return true;
+        } else {
             throw new RestException(clientResponse);
         }
-	}
+    }
 
-	@Override
-	public Map<Integer, TransitionBean> getIssueTransitionsByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException {
-		Client client = jiraRestClient.getClient();
+    @Override
+    public Map<Integer, TransitionBean> getIssueTransitionsByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException {
+        Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = RestURIBuilder.buildIssueTransitionsByKeyExpandFields(baseUri, issueKey);
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
-        if(response.getStatus() == HttpURLConnection.HTTP_OK){
+        if (response.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = response.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
-            
+
             JsonElement transitionsElement = jsonObject.get(JsonConstants.PROP_TRANSITIONS);
-            if(JsonElementUtil.checkNotNull(transitionsElement)) {
-            	JsonArray array = transitionsElement.getAsJsonArray();
-            	List<JsonObject> list = GsonParserUtil.parseJsonArray(array);
-            	return TransitionParser.parse(list);
+            if (JsonElementUtil.checkNotNull(transitionsElement)) {
+                JsonArray array = transitionsElement.getAsJsonArray();
+                List<JsonObject> list = GsonParserUtil.parseJsonArray(array);
+                return TransitionParser.parse(list);
             }
-            
+
             return Collections.emptyMap();
         } else {
-        	throw new RestException(response);
+            throw new RestException(response);
         }
-	}
+    }
 
     @Override
     public UserBean getLoggedInRemoteUser(JiraRestClient jiraRestClient) throws RestException {
@@ -121,33 +120,31 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI uri = RestURIBuilder.buildGetUserByUsername(baseUri, jiraRestClient.getUsername());
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
-        if(response.getStatus() == HttpURLConnection.HTTP_OK){
+        if (response.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = response.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             return UserParser.parse(jsonObject);
-        }
-        else{
+        } else {
             throw new RestException(response);
         }
     }
 
     @Override
     public List<BasicProjectBean> getAllProjects(JiraRestClient jiraRestClient) throws RestException {
-        
+
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = RestURIBuilder.buildAllProjectURI(baseUri);
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
-        if(response.getStatus() == HttpURLConnection.HTTP_OK){
+        if (response.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = response.getEntityInputStream();
             List<JsonObject> jsonObjects = GsonParserUtil.parseJsonObjects(inputStream);
             List<BasicProjectBean> beans = BasicProjectParser.parseBasicProject(jsonObjects);
             Collections.sort(beans);
             return beans;
-        }
-        else{
-           throw new RestException(response);
+        } else {
+            throw new RestException(response);
         }
     }
 
@@ -159,54 +156,51 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI uri = RestURIBuilder.buildProjectByKeyURI(baseUri, projectKey);
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
-        if(response.getStatus() == HttpURLConnection.HTTP_OK){
+        if (response.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = response.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             return ProjectParser.parse(jsonObject);
-        }
-        else{
+        } else {
             throw new RestException(response);
         }
     }
-    
+
     @Override
     public List<VersionBean> getProjectVersions(JiraRestClient jiraRestClient, String projectKey) throws RestException {
-    	
-    	Client client = jiraRestClient.getClient();
-    	URI baseUri = jiraRestClient.getBaseUri();
-    	URI uri = RestURIBuilder.buildProjectVersionsByKeyURI(baseUri, projectKey);
-    	WebResource webResource = client.resource(uri);
-    	ClientResponse clientResponse = webResource.get(ClientResponse.class);
-    	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = RestURIBuilder.buildProjectVersionsByKeyURI(baseUri, projectKey);
+        WebResource webResource = client.resource(uri);
+        ClientResponse clientResponse = webResource.get(ClientResponse.class);
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
-    		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
+            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<VersionBean> parse = VersionParser.parse(objects);
             Collections.sort(parse);
             return parse;
-    	}
-    	else{
-    		throw new RestException(clientResponse);
-    	}
+        } else {
+            throw new RestException(clientResponse);
+        }
     }
-    
+
     @Override
     public List<ComponentBean> getProjectComponents(JiraRestClient jiraRestClient, String projectKey) throws RestException {
-    	
-    	Client client = jiraRestClient.getClient();
-    	URI baseUri = jiraRestClient.getBaseUri();
-    	URI uri = RestURIBuilder.buildProjectComponentsByKeyURI(baseUri, projectKey);
-    	WebResource webResource = client.resource(uri);
-    	ClientResponse clientResponse = webResource.get(ClientResponse.class);
-    	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = RestURIBuilder.buildProjectComponentsByKeyURI(baseUri, projectKey);
+        WebResource webResource = client.resource(uri);
+        ClientResponse clientResponse = webResource.get(ClientResponse.class);
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
-    		List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
+            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<ComponentBean> parse = ComponentParser.parse(objects);
             Collections.sort(parse);
             return parse;
-    	}
-    	else{
-    		throw new RestException(clientResponse);
-    	}
+        } else {
+            throw new RestException(clientResponse);
+        }
     }
 
     @Override
@@ -216,14 +210,13 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI uri = RestURIBuilder.buildIssueTypeURI(baseUri);
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<IssueTypeBean> parse = IssueTypeParser.parse(objects);
             Collections.sort(parse);
             return parse;
-        }
-        else{
+        } else {
             throw new RestException(clientResponse);
         }
     }
@@ -235,14 +228,13 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI uri = RestURIBuilder.buildStateURI(baseUri);
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<StatusBean> parse = StatusParser.parse(objects);
             Collections.sort(parse);
             return parse;
-        }
-        else{
+        } else {
             throw new RestException(clientResponse);
         }
     }
@@ -254,22 +246,21 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI uri = RestURIBuilder.buildStateURI(baseUri);
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<PriorityBean> parse = PriorityParser.parse(objects);
             Collections.sort(parse);
             return parse;
-        }
-        else{
+        } else {
             throw new RestException(clientResponse);
         }
     }
 
     @Override
     public JqlSearchResultBean getIssuesForProject(JiraRestClient jiraRestClient, String projectKey) throws RestException {
-        
-    	Client client = jiraRestClient.getClient();
+
+        Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
 
         JqlSearchBean jsb = new JqlSearchBean();
@@ -277,20 +268,19 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         jsb.setJql(jql);
         jsb.addField(EField.ALL);
         String json = GsonParserUtil.parseObjectToJson(jsb);
-        
+
         URI uri = RestURIBuilder.buildSearchURI(baseUri);
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
-        
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
       /*      String entity = clientResponse.getEntity(String.class);
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(entity);
             return JqlSearchParser.parse(jsonObject);*/
             InputStream entityInputStream = clientResponse.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(entityInputStream);
             return JqlSearchParser.parse(jsonObject);
-        }
-        else{
+        } else {
             throw new RestException(clientResponse);
         }
 
@@ -298,22 +288,21 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
 
     @Override
     public JqlSearchResultBean searchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jsb) throws RestException {
-    	
-    	Client client = jiraRestClient.getClient();
-    	URI baseUri = jiraRestClient.getBaseUri();
-    	String json = GsonParserUtil.parseObjectToJson(jsb);
-    	
-    	URI uri = RestURIBuilder.buildSearchURI(baseUri);
-    	WebResource webResource = client.resource(uri);
-		ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
 
-		if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        String json = GsonParserUtil.parseObjectToJson(jsb);
+
+        URI uri = RestURIBuilder.buildSearchURI(baseUri);
+        WebResource webResource = client.resource(uri);
+        ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
+
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);
             return jqlSearchResultBean;
-        }
-        else{
+        } else {
             throw new RestException(clientResponse);
         }
 
@@ -321,60 +310,56 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
 
     @Override
     public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException {
-    	Client client = jiraRestClient.getClient();
-    	URI baseUri = jiraRestClient.getBaseUri();
-    	URI uri = RestURIBuilder.buildIssueByKeyURI(baseUri, issueKey);
-    	
-    	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = RestURIBuilder.buildIssueByKeyURI(baseUri, issueKey);
+
+        ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             return IssueParser.parse(jsonObject);
-        }
-        else{
+        } else {
             throw new RestException(clientResponse);
         }
     }
-    
+
     @Override
     public CommentSummaryBean getCommentsByIssue(JiraRestClient jiraRestClient, String issueKey) throws RestException {
-    	Client client = jiraRestClient.getClient();
-    	URI baseUri = jiraRestClient.getBaseUri();
-    	URI uri = RestURIBuilder.buildCommentByIssueURI(baseUri, issueKey);
-    	
-    	ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
-    	if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = RestURIBuilder.buildCommentByIssueURI(baseUri, issueKey);
+
+        ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
-    		JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
-    		return CommentSummaryParser.parse(jsonObject);
-    	}
-    	else{
-    		throw new RestException(clientResponse);
-    	}
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            return CommentSummaryParser.parse(jsonObject);
+        } else {
+            throw new RestException(clientResponse);
+        }
     }
 
     @Override
-    public boolean testRestConnection(URI uri, String username, String password) throws RestException {
+    public boolean testRestConnection(URI uri, String username, String password) throws RestException, ClientHandlerException {
 //    	String authString = username + ":" + password;
 //    	String auth = new String(Base64.encode(authString));
 
-    	ApacheHttpClientConfig clientConfig = new DefaultApacheHttpClientConfig();
+        ApacheHttpClientConfig clientConfig = new DefaultApacheHttpClientConfig();
         clientConfig.getProperties().put(ApacheHttpClientConfig.PROPERTY_HANDLE_COOKIES, Boolean.TRUE);
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         clientConfig.getProperties().put(ApacheHttpClientConfig.PROPERTY_PREEMPTIVE_AUTHENTICATION, Boolean.TRUE);
         clientConfig.getState().setCredentials(AuthScope.ANY_REALM, uri.getHost(), uri.getPort(), username, password);
         ApacheHttpClient client = ApacheHttpClient.create(clientConfig);
-        
+
         URI userUri = UriBuilder.fromUri(uri).path(RestConstants.BASE_REST_PATH).path(USER).build();
         WebResource webResource = client.resource(userUri).queryParam(PARAM_USERNAME, username);
-        ClientResponse clientResponse = webResource.
-        		//header(RestConstants.AUTHORIZATION, RestConstants.BASIC + auth).
-            	type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        
-        if(clientResponse.getStatus() == HttpURLConnection.HTTP_OK){
+
+        ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             return true;
         }
         throw new RestException(clientResponse);
-    }
 
+    }
 }
