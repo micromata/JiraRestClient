@@ -1,89 +1,96 @@
 /*
- * Micromata GmbH
- * Copyright (c)
+ * Copyright 2013 the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * 23.08.13 09:14
- * connect
- * Christian
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.micromata.jira.rest.domain;
 
 import java.net.URI;
 import java.util.Date;
+
 /**
  * @author Christian Schulze
  * @author Vitali Filippow
  */
 public class AttachmentBean extends BaseBean {
 
-	private String fileName;
-	
-	private UserBean author;
-	
-	private Date created;
-	
-	private int size;
-	
-	private String mimeType;
-	
-	private URI content;
-	
-	private URI thumbnail;
+    private String fileName;
 
-	public String getFileName() {
-		return fileName;
-	}
+    private UserBean author;
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    private Date created;
 
-	public UserBean getAuthor() {
-		return author;
-	}
+    private int size;
 
-	public void setAuthor(UserBean author) {
-		this.author = author;
-	}
+    private String mimeType;
 
-	public Date getCreated() {
-		return created;
-	}
+    private URI content;
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
+    private URI thumbnail;
 
-	public int getSize() {
-		return size;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setSize(int size) {
-		this.size = size;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public String getMimeType() {
-		return mimeType;
-	}
+    public UserBean getAuthor() {
+        return author;
+    }
 
-	public void setMimeType(String mimeType) {
-		this.mimeType = mimeType;
-	}
+    public void setAuthor(UserBean author) {
+        this.author = author;
+    }
 
-	public URI getContent() {
-		return content;
-	}
+    public Date getCreated() {
+        return created;
+    }
 
-	public void setContent(URI content) {
-		this.content = content;
-	}
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
-	public URI getThumbnail() {
-		return thumbnail;
-	}
+    public int getSize() {
+        return size;
+    }
 
-	public void setThumbnail(URI thumbnail) {
-		this.thumbnail = thumbnail;
-	}
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
+    }
+
+    public URI getContent() {
+        return content;
+    }
+
+    public void setContent(URI content) {
+        this.content = content;
+    }
+
+    public URI getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(URI thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 }

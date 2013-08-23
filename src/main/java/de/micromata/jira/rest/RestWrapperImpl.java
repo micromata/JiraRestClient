@@ -1,15 +1,40 @@
 /*
- * Micromata GmbH
- * Copyright (c)
+ * Copyright 2013 the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * 23.08.13 09:14
- * connect
- * Christian
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.micromata.jira.rest;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientHandlerException;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.json.JSONConfiguration;
+import com.sun.jersey.client.apache.ApacheHttpClient;
+import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
+import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
+import de.micromata.jira.rest.domain.*;
+import de.micromata.jira.rest.jql.*;
+import de.micromata.jira.rest.parser.*;
+import de.micromata.jira.rest.util.*;
+import org.apache.commons.httpclient.auth.AuthScope;
+
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -17,42 +42,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
-
-import com.sun.jersey.api.client.ClientHandlerException;
-import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.parser.*;
-import org.apache.commons.httpclient.auth.AuthScope;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.json.JSONConfiguration;
-import com.sun.jersey.client.apache.ApacheHttpClient;
-import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
-import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
-
-import de.micromata.jira.rest.jql.EField;
-import de.micromata.jira.rest.jql.EOperator;
-import de.micromata.jira.rest.jql.JqlBuilder;
-import de.micromata.jira.rest.jql.JqlConstants;
-import de.micromata.jira.rest.jql.JqlSearchBean;
-import de.micromata.jira.rest.util.GsonParserUtil;
-import de.micromata.jira.rest.util.JsonConstants;
-import de.micromata.jira.rest.util.JsonElementUtil;
-import de.micromata.jira.rest.util.RestConstants;
-import de.micromata.jira.rest.util.RestException;
-import de.micromata.jira.rest.util.RestURIBuilder;
-
 
 /**
  * @author Christian Schulze
  * @author Vitali Filippow
- *
  */
 public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
 

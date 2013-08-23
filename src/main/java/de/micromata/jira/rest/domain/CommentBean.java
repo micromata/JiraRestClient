@@ -1,10 +1,16 @@
 /*
- * Micromata GmbH
- * Copyright (c)
+ * Copyright 2013 the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * 23.08.13 09:14
- * connect
- * Christian
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.micromata.jira.rest.domain;
@@ -17,65 +23,65 @@ import java.util.Date;
  */
 public class CommentBean extends BaseBean {
 
-	private UserBean author;
-	
-	private String body;
-	
-	private UserBean updateAuthor;
-	
-	private Date created;
-	
-	private Date updated;
-	
-	private VisibilityBean visibility;
+    private UserBean author;
 
-	public UserBean getAuthor() {
-		return author;
-	}
+    private String body;
 
-	public void setAuthor(UserBean author) {
-		this.author = author;
-	}
+    private UserBean updateAuthor;
 
-	public String getBody() {
-		return body;
-	}
+    private Date created;
 
-	public void setBody(String body) {
-		this.body = body;
-	}
+    private Date updated;
 
-	public UserBean getUpdateAuthor() {
-		return updateAuthor;
-	}
+    private VisibilityBean visibility;
 
-	public void setUpdateAuthor(UserBean updateAuthor) {
-		this.updateAuthor = updateAuthor;
-	}
+    public UserBean getAuthor() {
+        return author;
+    }
 
-	public Date getCreated() {
-		return created;
-	}
+    public void setAuthor(UserBean author) {
+        this.author = author;
+    }
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
+    public String getBody() {
+        return body;
+    }
 
-	public Date getUpdated() {
-		return updated;
-	}
+    public void setBody(String body) {
+        this.body = body;
+    }
 
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
+    public UserBean getUpdateAuthor() {
+        return updateAuthor;
+    }
 
-	public VisibilityBean getVisibility() {
-		return visibility;
-	}
+    public void setUpdateAuthor(UserBean updateAuthor) {
+        this.updateAuthor = updateAuthor;
+    }
 
-	public void setVisibility(VisibilityBean visibility) {
-		this.visibility = visibility;
-	}
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public VisibilityBean getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(VisibilityBean visibility) {
+        this.visibility = visibility;
+    }
 
     @Override
     public int compareTo(BaseBean o) {

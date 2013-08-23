@@ -1,10 +1,16 @@
 /*
- * Micromata GmbH
- * Copyright (c)
+ * Copyright 2013 the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * 23.08.13 09:14
- * connect
- * Christian
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.micromata.jira.rest.domain;
@@ -17,50 +23,50 @@ import java.util.List;
  */
 public class WorklogSummaryBean {
 
-	private int startAt = 0;
-	
-	private int maxResults = 0;
-	
-	private int total = 0;
-	
-	private List<WorklogBean> worklogs = null;
+    private int startAt = 0;
 
-	public int getStartAt() {
-		return startAt;
-	}
+    private int maxResults = 0;
 
-	public void setStartAt(int startAt) {
-		this.startAt = startAt;
-	}
+    private int total = 0;
 
-	public int getMaxResults() {
-		return maxResults;
-	}
+    private List<WorklogBean> worklogs = null;
 
-	public void setMaxResults(int maxResults) {
-		this.maxResults = maxResults;
-	}
+    public int getStartAt() {
+        return startAt;
+    }
 
-	public int getTotal() {
-		return total;
-	}
+    public void setStartAt(int startAt) {
+        this.startAt = startAt;
+    }
 
-	public void setTotal(int total) {
-		this.total = total;
-	}
+    public int getMaxResults() {
+        return maxResults;
+    }
 
-	public List<WorklogBean> getWorklogs() {
-		return worklogs;
-	}
+    public void setMaxResults(int maxResults) {
+        this.maxResults = maxResults;
+    }
 
-	public void setWorklogs(List<WorklogBean> worklogs) {
-		this.worklogs = worklogs;
-	}
+    public int getTotal() {
+        return total;
+    }
 
-	@Override
-	public String toString() {
-		return "WorklogSummaryBean [startAt=" + startAt + ", maxResults="
-				+ maxResults + ", total=" + total + ", worklogs=" + worklogs
-				+ "]";
-	}
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public List<WorklogBean> getWorklogs() {
+        return worklogs;
+    }
+
+    public void setWorklogs(List<WorklogBean> worklogs) {
+        this.worklogs = worklogs;
+    }
+
+    @Override
+    public String toString() {
+        return "WorklogSummaryBean [startAt=" + startAt + ", maxResults="
+                + maxResults + ", total=" + total + ", worklogs=" + worklogs
+                + "]";
+    }
 }

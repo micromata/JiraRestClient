@@ -1,98 +1,105 @@
 /*
- * Micromata GmbH
- * Copyright (c)
+ * Copyright 2013 the original author or authors.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * 23.08.13 09:14
- * connect
- * Christian
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.micromata.jira.rest.domain;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
 /**
  * @author Christian Schulze
  * @author Vitali Filippow
  */
 public class WorklogBean extends BaseBean {
 
-	private UserBean author = null;
-	
-	private UserBean updateAuthor = null;
-	
-	private String comment = StringUtils.EMPTY;
-	
-	private VisibilityBean visibilityBean = null;
-	
-	private Date started = null;
-	
-	private String timeSpent = StringUtils.EMPTY;
-	
-	private long timeSpentSeconds = 0;
+    private UserBean author = null;
 
-	public UserBean getAuthor() {
-		return author;
-	}
+    private UserBean updateAuthor = null;
 
-	public void setAuthor(UserBean author) {
-		this.author = author;
-	}
+    private String comment = StringUtils.EMPTY;
 
-	public UserBean getUpdateAuthor() {
-		return updateAuthor;
-	}
+    private VisibilityBean visibilityBean = null;
 
-	public void setUpdateAuthor(UserBean updateAuthor) {
-		this.updateAuthor = updateAuthor;
-	}
+    private Date started = null;
 
-	public String getComment() {
-		return comment;
-	}
+    private String timeSpent = StringUtils.EMPTY;
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    private long timeSpentSeconds = 0;
 
-	public VisibilityBean getVisibility() {
-		return visibilityBean;
-	}
+    public UserBean getAuthor() {
+        return author;
+    }
 
-	public void setVisibility(VisibilityBean visibilityBean) {
-		this.visibilityBean = visibilityBean;
-	}
+    public void setAuthor(UserBean author) {
+        this.author = author;
+    }
 
-	public Date getStarted() {
-		return started;
-	}
+    public UserBean getUpdateAuthor() {
+        return updateAuthor;
+    }
 
-	public void setStarted(Date started) {
-		this.started = started;
-	}
+    public void setUpdateAuthor(UserBean updateAuthor) {
+        this.updateAuthor = updateAuthor;
+    }
 
-	public String getTimeSpent() {
-		return timeSpent;
-	}
+    public String getComment() {
+        return comment;
+    }
 
-	public void setTimeSpent(String timeSpent) {
-		this.timeSpent = timeSpent;
-	}
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-	public long getTimeSpentSeconds() {
-		return timeSpentSeconds;
-	}
+    public VisibilityBean getVisibility() {
+        return visibilityBean;
+    }
 
-	public void setTimeSpentSeconds(long timeSpentSeconds) {
-		this.timeSpentSeconds = timeSpentSeconds;
-	}
+    public void setVisibility(VisibilityBean visibilityBean) {
+        this.visibilityBean = visibilityBean;
+    }
 
-	@Override
-	public String toString() {
-		return "WorklogBean [id=" + id + ", author=" + author + ", updateAuthor="
-				+ updateAuthor + ", comment=" + comment + ", visibilityBean="
-				+ visibilityBean + ", started=" + started + ", timeSpent="
-				+ timeSpent + ", timeSpentSeconds=" + timeSpentSeconds + "]";
-	}
+    public Date getStarted() {
+        return started;
+    }
+
+    public void setStarted(Date started) {
+        this.started = started;
+    }
+
+    public String getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void setTimeSpent(String timeSpent) {
+        this.timeSpent = timeSpent;
+    }
+
+    public long getTimeSpentSeconds() {
+        return timeSpentSeconds;
+    }
+
+    public void setTimeSpentSeconds(long timeSpentSeconds) {
+        this.timeSpentSeconds = timeSpentSeconds;
+    }
+
+    @Override
+    public String toString() {
+        return "WorklogBean [id=" + id + ", author=" + author + ", updateAuthor="
+                + updateAuthor + ", comment=" + comment + ", visibilityBean="
+                + visibilityBean + ", started=" + started + ", timeSpent="
+                + timeSpent + ", timeSpentSeconds=" + timeSpentSeconds + "]";
+    }
 }
