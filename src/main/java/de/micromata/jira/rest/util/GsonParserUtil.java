@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.util;
 
 import java.io.InputStream;
@@ -18,9 +27,9 @@ import de.micromata.jira.rest.domain.VisibilityBean;
 import de.micromata.jira.rest.domain.WorklogBean;
 
 /**
- * User: Christian
- * Date: 01.03.13
- * Time: 17:08
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class GsonParserUtil {
 

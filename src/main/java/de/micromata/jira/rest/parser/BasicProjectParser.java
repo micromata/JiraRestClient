@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import java.util.ArrayList;
@@ -12,9 +21,9 @@ import de.micromata.jira.rest.domain.BasicProjectBean;
 import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
 
 /**
- * User: Christian
- * Date: 07.03.13
- * Time: 11:58
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class BasicProjectParser extends BaseParser {
 

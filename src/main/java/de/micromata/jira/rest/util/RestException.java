@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.util;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -5,9 +14,9 @@ import com.sun.jersey.api.client.ClientResponse;
 import de.micromata.jira.rest.parser.ErrorParser;
 
 /**
- * User: Christian
- * Date: 06.03.13
- * Time: 13:20
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 @SuppressWarnings("serial")
 public class RestException extends Exception {

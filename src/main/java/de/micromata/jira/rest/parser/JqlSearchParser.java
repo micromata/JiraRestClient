@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
@@ -13,9 +22,9 @@ import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.JsonConstants;
 
 /**
- * User: Christian
- * Date: 12.03.13
- * Time: 15:32
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class JqlSearchParser implements JsonConstants {
 

@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.util;
 
 import java.text.ParseException;
@@ -5,9 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * User: Christian
- * Date: 08.03.13
- * Time: 14:55
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class DateParser {
 	

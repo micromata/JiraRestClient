@@ -1,5 +1,18 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.jql;
 
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ */
 public enum SortOrder {
 
 	ASC("asc"), DESC("desc");

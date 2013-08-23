@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import com.google.gson.JsonElement;
@@ -6,6 +15,12 @@ import com.google.gson.JsonObject;
 import de.micromata.jira.rest.domain.TypeBean;
 import de.micromata.jira.rest.util.JsonElementUtil;
 
+
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
+ */
 public class TypeParser extends BaseParser {
 
 	public static TypeBean parse(JsonObject object) {

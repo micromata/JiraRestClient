@@ -1,9 +1,18 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.util;
 
 /**
- * User: Christian
- * Date: 01.03.13
- * Time: 17:56
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public interface JsonConstants {
 

@@ -1,14 +1,19 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.domain;
 
 import java.util.List;
 
 /**
- * 
+ * @author Christian Schulze
  * @author Vitali Filippow
- * @date 15.04.2013
- * @time 14:04:52
- *	
- * Summarized representation of worklogs.
  */
 public class WorklogSummaryBean {
 

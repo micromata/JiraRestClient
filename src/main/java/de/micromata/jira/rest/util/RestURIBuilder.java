@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.util;
 
 import java.net.URI;
@@ -5,9 +14,9 @@ import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
 
 /**
- * User: Christian
- * Date: 01.03.13
- * Time: 17:34
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class RestURIBuilder implements RestConstants {
 

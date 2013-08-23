@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
@@ -32,11 +41,9 @@ import de.micromata.jira.rest.util.DateParser;
 import de.micromata.jira.rest.util.GsonParserUtil;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Christian
- * Date: 07.03.13
- * Time: 08:37
- * To change this template use File | Settings | File Templates.
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class IssueParser extends BaseParser {
 

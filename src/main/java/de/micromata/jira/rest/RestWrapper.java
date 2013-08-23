@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest;
 
 
@@ -12,11 +21,9 @@ import de.micromata.jira.rest.jql.JqlSearchBean;
 import de.micromata.jira.rest.util.RestException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Christian
- * Date: 28.02.13
- * Time: 11:18
- * To change this template use File | Settings | File Templates.
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public interface RestWrapper {
 	

@@ -1,19 +1,28 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.util;
 
 /**
- * User: Christian
- * Date: 28.02.13
- * Time: 12:25
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public interface RestConstants {
 
-    // Allgemeines für den Jersey Client
+    // Common Stuff for Jersey Client
 
     public static final String AUTHORIZATION = "Authorization";
 
     public static final String BASIC = "Basic ";
 
-    // Pfade der REST-Schnittstelle
+    // REST Paths
 
     public static final String BASE_REST_PATH = "/rest/api/2";
 
@@ -41,7 +50,7 @@ public interface RestConstants {
     
     public static final String WORKLOG = "/worklog";
 
-    // Parameternamen
+    // Parameternames
 
     public static final String PARAM_USERNAME = "username";
 

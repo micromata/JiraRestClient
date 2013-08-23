@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import com.google.gson.JsonElement;
@@ -7,6 +16,12 @@ import de.micromata.jira.rest.domain.VisibilityBean;
 import de.micromata.jira.rest.util.JsonConstants;
 import de.micromata.jira.rest.util.JsonElementUtil;
 
+
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
+ */
 public class VisibilityParser implements JsonConstants {
 
 	public static VisibilityBean parse(JsonObject obj) {

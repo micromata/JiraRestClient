@@ -1,13 +1,19 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.domain;
 
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Christian
- * Date: 06.03.13
- * Time: 13:43
- * To change this template use File | Settings | File Templates.
+ * @author Christian Schulze
+ * @author Vitali Filippow
  */
 public class ComponentBean extends BaseBean {
 

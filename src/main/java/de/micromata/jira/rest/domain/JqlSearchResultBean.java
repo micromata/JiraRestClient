@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.domain;
 
 import java.util.ArrayList;
@@ -6,11 +15,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * User: Christian
- * Date: 12.03.13
- * Time: 15:40
- * 
- * <p>JQL search results.
+ * @author Christian Schulze
+ * @author Vitali Filippow
  */
 public class JqlSearchResultBean {
 

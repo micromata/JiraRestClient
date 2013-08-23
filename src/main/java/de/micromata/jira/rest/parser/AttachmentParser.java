@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import java.net.URI;
@@ -15,9 +24,9 @@ import de.micromata.jira.rest.util.JsonElementUtil;
 import de.micromata.jira.rest.util.URIParser;
 
 /**
- * User: Christian
- * Date: 07.03.13
- * Time: 08:37
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class AttachmentParser extends BaseParser {
 

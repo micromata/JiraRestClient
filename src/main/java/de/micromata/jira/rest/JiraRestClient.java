@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest;
 
 
@@ -21,12 +30,9 @@ import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Christian
- * Date: 01.03.13
- * Time: 17:22
- * 
- * <p>Contains informations about the client which is connecting to JIRA over REST.</p>
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class JiraRestClient {
 

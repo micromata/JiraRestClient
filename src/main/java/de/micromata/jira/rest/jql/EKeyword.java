@@ -1,7 +1,19 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.jql;
 
 /**
  * Keywords for generating contiguous JQL clauses.
+ *
+ * @author Christian Schulze
+ * @author Vitali Filippow
  */
 public enum EKeyword {
 

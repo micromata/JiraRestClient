@@ -1,9 +1,17 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.jql;
 
 /**
- * User: Christian
- * Date: 11.03.13
- * Time: 14:26
+ * @author Christian Schulze
+ * @author Vitali Filippow
  */
 public interface JqlConstants {
 

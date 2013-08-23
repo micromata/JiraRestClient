@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest;
 
 
@@ -39,6 +48,12 @@ import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
 import de.micromata.jira.rest.util.RestURIBuilder;
 
+
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
+ */
 public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
 
     @Override

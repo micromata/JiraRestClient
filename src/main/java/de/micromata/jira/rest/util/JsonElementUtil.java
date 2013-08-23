@@ -1,11 +1,20 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.util;
 
 import com.google.gson.JsonElement;
 
 /**
- * User: Christian
- * Date: 11.04.13
- * Time: 15:34
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class JsonElementUtil {
 

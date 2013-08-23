@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import com.google.gson.JsonElement;
@@ -8,6 +17,12 @@ import de.micromata.jira.rest.util.JsonElementUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
+ */
 public class VotesParser extends BaseParser {
 
     public static VotesBean parse(JsonObject object) {

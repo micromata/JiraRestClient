@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import java.util.ArrayList;
@@ -12,6 +21,12 @@ import de.micromata.jira.rest.domain.TypeBean;
 
 import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
 
+
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
+ */
 public class IssueLinkParser extends BaseParser {
 	
 	public static IssueLinkBean parse(JsonObject object) {

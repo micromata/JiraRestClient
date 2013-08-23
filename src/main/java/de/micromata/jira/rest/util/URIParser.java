@@ -1,12 +1,21 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.util;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * User: Christian
- * Date: 01.03.13
- * Time: 18:06
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class URIParser {
 

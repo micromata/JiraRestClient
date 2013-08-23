@@ -1,8 +1,20 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.domain;
 
 import java.net.URI;
 import java.util.Date;
-
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ */
 public class AttachmentBean extends BaseBean {
 
 	private String fileName;

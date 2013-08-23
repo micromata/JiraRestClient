@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
@@ -13,6 +22,12 @@ import de.micromata.jira.rest.domain.WorklogSummaryBean;
 import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.JsonConstants;
 
+
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
+ */
 public class WorklogSummaryParser implements JsonConstants {
 
 	public static WorklogSummaryBean parse(JsonObject object) {

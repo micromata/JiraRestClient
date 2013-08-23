@@ -1,13 +1,19 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.domain;
 
 import java.net.URI;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Christian
- * Date: 07.03.13
- * Time: 09:55
- * To change this template use File | Settings | File Templates.
+ * @author Christian Schulze
+ * @author Vitali Filippow
  */
 public class BaseBean implements Comparable<BaseBean> {
 

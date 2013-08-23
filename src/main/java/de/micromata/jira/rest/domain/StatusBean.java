@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.domain;
 
 import java.net.URI;
@@ -5,9 +14,8 @@ import java.net.URI;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * User: Christian
- * Date: 12.03.13
- * Time: 17:05
+ * @author Christian Schulze
+ * @author Vitali Filippow
  */
 public class StatusBean extends BaseBean {
 

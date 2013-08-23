@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
@@ -13,6 +22,12 @@ import com.google.gson.JsonObject;
 import de.micromata.jira.rest.domain.TransitionBean;
 import de.micromata.jira.rest.util.URIParser;
 
+
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
+ */
 public class TransitionParser extends BaseParser {
 
 	public static TransitionBean parse(JsonObject object) {

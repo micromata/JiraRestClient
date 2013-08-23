@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.jql;
 
 import java.util.Arrays;
@@ -7,6 +16,9 @@ import static de.micromata.jira.rest.jql.EOperator.*;
 
 /**
  * The type of a field sets the supporting operators.
+ *
+ * @author Christian Schulze
+ * @author Vitali Filippow
  */
 public enum EFieldType {
 

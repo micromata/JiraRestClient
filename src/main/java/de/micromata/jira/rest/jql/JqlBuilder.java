@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.jql;
 
 /**
@@ -5,6 +14,10 @@ package de.micromata.jira.rest.jql;
  * 
  * <p>JQL condition = ( field + operator + operand ) + JqlKeyword + ...
  * <p>Example: ( PROJECT = DEMO ) + AND ...
+ *
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  * 
  */
 public class JqlBuilder {

@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import java.net.URI;
@@ -10,6 +19,12 @@ import de.micromata.jira.rest.util.URIParser;
 
 import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
 
+
+/**
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
+ */
 public class ResolutionParser extends BaseParser {
 
 	public static ResolutionBean parse(JsonObject object) {

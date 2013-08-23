@@ -1,3 +1,12 @@
+/*
+ * Micromata GmbH
+ * Copyright (c)
+ *
+ * 23.08.13 09:14
+ * connect
+ * Christian
+ */
+
 package de.micromata.jira.rest.parser;
 
 import java.util.ArrayList;
@@ -12,11 +21,9 @@ import de.micromata.jira.rest.domain.UserBean;
 import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Christian
- * Date: 07.03.13
- * Time: 08:36
- * To change this template use File | Settings | File Templates.
+ * @author Christian Schulze
+ * @author Vitali Filippow
+ *
  */
 public class ComponentParser extends BaseParser {
 
