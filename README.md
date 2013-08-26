@@ -15,7 +15,7 @@ Bevor you build the Client you can test the Connection with the following Code:
     boolean success = restWrapper.testRestConnection(uri, username, password);
 
 
-The only Thing to do is to create a JiraRestClient like this:
+After that you can create a JiraRestClient like this:
 
     JiraRestClient jiraRestClient = new JiraRestClient(uri, username, password);
 
