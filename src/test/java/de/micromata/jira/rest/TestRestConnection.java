@@ -52,22 +52,22 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 
     public static void main(String[] args) throws URISyntaxException, RestException, IOException {
         TestRestConnection testRestConnection = new TestRestConnection();
-//        testRestConnection.testRestConnection();
-//        testRestConnection.testGetAllProjects();
-//        testRestConnection.testGetProjectByKey();
-//        testRestConnection.testGetProjectVersions();
-//        testRestConnection.testGetProjectComponents();
-//        testRestConnection.testGetIssuesForProject();
-//        testRestConnection.testSearchIssuesForProject();
-//        testRestConnection.testExtendedSearchIssuesForProject();
-//        testRestConnection.testGetIssueByKey();
-//        testRestConnection.testGetCommentsByIssue();
-//        testRestConnection.testGetIssueTypes();
-//        testRestConnection.testGetIssueTransitionsByKey();
-//        testRestConnection.testUpdateIssueTransitionByKey();
-//        testRestConnection.testAggregateTimeOriginalEstimate();
-//        testRestConnection.testPutWorklogsInIssue();
-//        testRestConnection.testGetAttachment();
+        testRestConnection.testRestConnection();
+        testRestConnection.testGetAllProjects();
+        testRestConnection.testGetProjectByKey();
+        testRestConnection.testGetProjectVersions();
+        testRestConnection.testGetProjectComponents();
+        testRestConnection.testGetIssuesForProject();
+        testRestConnection.testSearchIssuesForProject();
+        testRestConnection.testExtendedSearchIssuesForProject();
+        testRestConnection.testGetIssueByKey();
+        testRestConnection.testGetCommentsByIssue();
+        testRestConnection.testGetIssueTypes();
+        testRestConnection.testGetIssueTransitionsByKey();
+        testRestConnection.testUpdateIssueTransitionByKey();
+        testRestConnection.testAggregateTimeOriginalEstimate();
+        testRestConnection.testPutWorklogsInIssue();
+        testRestConnection.testGetAttachment();
         testRestConnection.testGetPriorities();
     }
 
@@ -82,13 +82,13 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 
     public void testGetAllProjects() throws URISyntaxException, RestException {
         List<BasicProjectBean> allProjects = restWrapper.getAllProjects(jiraRestClient);
-        System.out.println("testGetProject: " + !allProjects.isEmpty());
+        System.out.println("testGetAllProject: " + !allProjects.isEmpty());
     }
 
     public void testGetProjectByKey() throws RestException {
         ProjectBean projectByKey = restWrapper.getProjectByKey(jiraRestClient, "DEMO");
 
-        System.out.println("testGetProjectByKey: " + projectByKey.getName().equals("DEMO"));
+        System.out.println("testGetProjectByKey: " + projectByKey.getKey().equals("DEMO"));
     }
 
     public void testGetProjectVersions() throws RestException {

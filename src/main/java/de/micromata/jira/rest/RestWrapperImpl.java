@@ -35,6 +35,7 @@ import org.apache.commons.httpclient.auth.AuthScope;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -68,8 +69,10 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_CREATED) {
+            clientResponse.close();
             return true;
         } else {
+            clientResponse.close();
             throw new RestException(clientResponse);
         }
     }
@@ -84,8 +87,10 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_NO_CONTENT) {
+            clientResponse.close();
             return true;
         } else {
+            clientResponse.close();
             throw new RestException(clientResponse);
         }
     }
@@ -107,6 +112,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
                 List<JsonObject> list = GsonParserUtil.parseJsonArray(array);
                 return TransitionParser.parse(list);
             }
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            response.close();
 
             return Collections.emptyMap();
         } else {
@@ -124,6 +135,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if (response.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = response.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            response.close();
             return UserParser.parse(jsonObject);
         } else {
             throw new RestException(response);
@@ -142,6 +159,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
             InputStream inputStream = response.getEntityInputStream();
             List<JsonObject> jsonObjects = GsonParserUtil.parseJsonObjects(inputStream);
             List<BasicProjectBean> beans = BasicProjectParser.parseBasicProject(jsonObjects);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            response.close();
             Collections.sort(beans);
             return beans;
         } else {
@@ -160,6 +183,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if (response.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = response.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            response.close();
             return ProjectParser.parse(jsonObject);
         } else {
             throw new RestException(response);
@@ -178,11 +207,20 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
             InputStream inputStream = clientResponse.getEntityInputStream();
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<VersionBean> parse = VersionParser.parse(objects);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
             Collections.sort(parse);
             return parse;
         } else {
+            clientResponse.close();
             throw new RestException(clientResponse);
         }
+
+
     }
 
     @Override
@@ -197,6 +235,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
             InputStream inputStream = clientResponse.getEntityInputStream();
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<ComponentBean> parse = ComponentParser.parse(objects);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
             Collections.sort(parse);
             return parse;
         } else {
@@ -215,6 +259,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
             InputStream inputStream = clientResponse.getEntityInputStream();
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<IssueTypeBean> parse = IssueTypeParser.parse(objects);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
             Collections.sort(parse);
             return parse;
         } else {
@@ -233,6 +283,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
             InputStream inputStream = clientResponse.getEntityInputStream();
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<StatusBean> parse = StatusParser.parse(objects);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
             Collections.sort(parse);
             return parse;
         } else {
@@ -251,6 +307,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
             InputStream inputStream = clientResponse.getEntityInputStream();
             List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
             List<PriorityBean> parse = PriorityParser.parse(objects);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
             Collections.sort(parse);
             return parse;
         } else {
@@ -277,6 +339,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream entityInputStream = clientResponse.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(entityInputStream);
+            try {
+                entityInputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
             return JqlSearchParser.parse(jsonObject);
         } else {
             throw new RestException(clientResponse);
@@ -299,6 +367,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
             InputStream inputStream = clientResponse.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
             return jqlSearchResultBean;
         } else {
             throw new RestException(clientResponse);
@@ -316,6 +390,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
             return IssueParser.parse(jsonObject);
         } else {
             throw new RestException(clientResponse);
@@ -332,6 +412,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
             return CommentSummaryParser.parse(jsonObject);
         } else {
             throw new RestException(clientResponse);
@@ -355,6 +441,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             return true;
         }
+        clientResponse.close();
         throw new RestException(clientResponse);
 
     }

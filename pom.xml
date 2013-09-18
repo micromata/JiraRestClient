@@ -24,6 +24,10 @@
     <packaging>jar</packaging>
 
 
+    <properties>
+        <jersey.version>1.8</jersey.version>
+    </properties>
+
     <organization>
         <name>Micromata GmbH</name>
         <url>http://www.micromata.de</url>
@@ -59,19 +63,19 @@
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
-            <version>1.8</version>
+            <version>${jersey.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-core</artifactId>
-            <version>1.8</version>
+            <version>${jersey.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-json</artifactId>
-            <version>1.8</version>
+            <version>${jersey.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -84,15 +88,12 @@
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-apache-client</artifactId>
             <version>1.13</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.6</version>
         </dependency>
-
-
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
