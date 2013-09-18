@@ -80,6 +80,7 @@ public class JiraRestClient {
         if (status == Status.UNAUTHORIZED) {
             throw new RestException(clientResponse);
         }
+        clientResponse.close();
     }
 
     /**
