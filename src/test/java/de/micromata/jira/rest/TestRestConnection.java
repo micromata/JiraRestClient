@@ -24,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
@@ -41,42 +42,46 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     private JiraRestClient jiraRestClient;
     private RestWrapper restWrapper;
 
-    public TestRestConnection() throws URISyntaxException, RestException {
+
+    public static void main(String[] args) throws URISyntaxException, RestException, IOException {
+        new TestRestConnection().run();
+    }
+
+    public void run() throws URISyntaxException, RestException, IOException {
         URI uri = new URI("http://localhost:2990/jira");
         String username = "admin";
         String password = "admin";
-
-        jiraRestClient = new JiraRestClient(uri, username, password);
         restWrapper = new RestWrapperImpl();
+        jiraRestClient = new JiraRestClient();
+        int status = jiraRestClient.connect(uri, username, password);
+        if (status != HttpURLConnection.HTTP_OK) {
+            System.out.println("FehlerStatus: " + status);
+        }
+        testRestConnection();
+        testGetAllProjects();
+        testGetProjectByKey();
+        testGetProjectVersions();
+        testGetProjectComponents();
+        testGetIssuesForProject();
+        testSearchIssuesForProject();
+        testExtendedSearchIssuesForProject();
+        testGetIssueByKey();
+        testGetCommentsByIssue();
+        testGetIssueTypes();
+        testGetIssueTransitionsByKey();
+        testUpdateIssueTransitionByKey();
+        testAggregateTimeOriginalEstimate();
+        testPutWorklogsInIssue();
+        testGetAttachment();
+        testGetPriorities();
     }
 
-    public static void main(String[] args) throws URISyntaxException, RestException, IOException {
-        TestRestConnection testRestConnection = new TestRestConnection();
-        testRestConnection.testRestConnection();
-        testRestConnection.testGetAllProjects();
-        testRestConnection.testGetProjectByKey();
-        testRestConnection.testGetProjectVersions();
-        testRestConnection.testGetProjectComponents();
-        testRestConnection.testGetIssuesForProject();
-        testRestConnection.testSearchIssuesForProject();
-        testRestConnection.testExtendedSearchIssuesForProject();
-        testRestConnection.testGetIssueByKey();
-        testRestConnection.testGetCommentsByIssue();
-        testRestConnection.testGetIssueTypes();
-        testRestConnection.testGetIssueTransitionsByKey();
-        testRestConnection.testUpdateIssueTransitionByKey();
-        testRestConnection.testAggregateTimeOriginalEstimate();
-        testRestConnection.testPutWorklogsInIssue();
-        testRestConnection.testGetAttachment();
-        testRestConnection.testGetPriorities();
-    }
 
     public void testRestConnection() throws URISyntaxException, RestException {
         URI uri = new URI("http://localhost:2990/jira");
         String username = "admin";
         String password = "admin";
         boolean test = restWrapper.testRestConnection(uri, username, password);
-
         System.out.println("testRestConnection: " + test);
     }
 

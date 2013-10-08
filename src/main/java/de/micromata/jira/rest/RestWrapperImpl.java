@@ -56,14 +56,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         ClientResponse clientResponse = client.resource(uri).accept(MediaType.APPLICATION_OCTET_STREAM).get(ClientResponse.class);
         InputStream inputStream = clientResponse.getEntity(InputStream.class);
         return inputStream;
-
     }
 
     @Override
     public boolean transferWorklogInIssue(JiraRestClient jiraRestClient, String issueKey, WorklogBean worklog) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-
         String json = GsonParserUtil.parseWorklogToJson(worklog);
         URI uri = RestURIBuilder.buildIssueWorklogByKeyURI(baseUri, issueKey);
         WebResource webResource = client.resource(uri);
@@ -441,8 +439,12 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             return true;
         }
-        clientResponse.close();
-        throw new RestException(clientResponse);
+        try {
+            throw new RestException(clientResponse.getStatus(), null, null);
+        } finally {
+            clientResponse.close();
+        }
+
 
     }
 }

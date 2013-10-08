@@ -39,7 +39,8 @@ public class TestIssueTransition {
         String username = "admin";
         String password = "admin";
 
-        jiraRestClient = new JiraRestClient(uri, username, password);
+        jiraRestClient = new JiraRestClient();
+        jiraRestClient.connect(uri, username, password);
         restWrapper = new RestWrapperImpl();
 
         initAvailableTransitionStates();

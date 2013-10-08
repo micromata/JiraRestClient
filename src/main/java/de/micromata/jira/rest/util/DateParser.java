@@ -48,8 +48,8 @@ public class DateParser {
     public static Date parseDateFormat(String dateString, DateParser.Format dateFormat) {
         try {
             return dateFormat.simpleDateFormat.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+//            e.printStackTrace();
         }
         return null;
     }

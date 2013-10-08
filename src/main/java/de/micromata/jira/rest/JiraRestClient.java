@@ -24,12 +24,14 @@ import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
+import de.micromata.jira.rest.util.RestURIBuilder;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.UriBuilder;
+import java.net.HttpURLConnection;
 import java.net.URI;
 
 /**
@@ -47,6 +49,10 @@ public class JiraRestClient {
 
     private String username = StringUtils.EMPTY;
 
+
+    public JiraRestClient() {
+    }
+
     /**
      * Builds and configures a new client connection to JIRA.
      *
@@ -55,7 +61,7 @@ public class JiraRestClient {
      * @param password = login password
      * @throws RestException
      */
-    public JiraRestClient(URI uri, String username, String password) throws RestException {
+    public int connect(URI uri, String username, String password) {
         this.username = username;
 
         //Apache HTTP client setup
@@ -66,21 +72,22 @@ public class JiraRestClient {
         clientConfig.getState().setCredentials(AuthScope.ANY_REALM, uri.getHost(), uri.getPort(), username, password);
         this.client = ApacheHttpClient.create(clientConfig);
 
-        //check for errors
+        // Prüfen ob der Server überhaupt erreichbar ist
         ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
         Status status = clientResponse.getClientResponseStatus();
         if (status.getFamily() == Family.CLIENT_ERROR || status.getFamily() == Family.SERVER_ERROR) {
-            throw new RestException(clientResponse);
+            return status.getStatusCode();
         }
-
+        // Prüfen ob der Nutzer sich anmelden kann indem wir seine nutzerdaten abrufen
         this.baseUri = UriBuilder.fromUri(uri).path(RestConstants.BASE_REST_PATH).build();
-        clientResponse = this.client.resource(baseUri).type(MediaType.APPLICATION_JSON).
-                accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        URI uri1 = RestURIBuilder.buildGetUserByUsername(baseUri, username);
+        clientResponse = this.client.resource(uri1).get(ClientResponse.class);
         status = clientResponse.getClientResponseStatus();
         if (status == Status.UNAUTHORIZED) {
-            throw new RestException(clientResponse);
+            return status.getStatusCode();
         }
         clientResponse.close();
+        return status.getStatusCode();
     }
 
     /**
