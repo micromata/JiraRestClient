@@ -57,23 +57,23 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         if (status != HttpURLConnection.HTTP_OK) {
             System.out.println("FehlerStatus: " + status);
         }
-        testRestConnection();
-        testGetAllProjects();
-        testGetProjectByKey();
-        testGetProjectVersions();
-        testGetProjectComponents();
-        testGetIssuesForProject();
-        testSearchIssuesForProject();
-        testExtendedSearchIssuesForProject();
-        testGetIssueByKey();
-        testGetCommentsByIssue();
-        testGetIssueTypes();
+//        testRestConnection();
+//        testGetAllProjects();
+//        testGetProjectByKey();
+//        testGetProjectVersions();
+//        testGetProjectComponents();
+//        testGetIssuesForProject();
+//        testSearchIssuesForProject();
+//        testExtendedSearchIssuesForProject();
+//        testGetIssueByKey();
+//        testGetCommentsByIssue();
+//        testGetIssueTypes();
         testGetIssueTransitionsByKey();
-        testUpdateIssueTransitionByKey();
-        testAggregateTimeOriginalEstimate();
-        testPutWorklogsInIssue();
-        testGetAttachment();
-        testGetPriorities();
+//        testUpdateIssueTransitionByKey();
+//        testAggregateTimeOriginalEstimate();
+//        testPutWorklogsInIssue();
+//        testGetAttachment();
+//        testGetPriorities();
     }
 
 
@@ -164,7 +164,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 
     public void testGetIssueTransitionsByKey() throws RestException {
         String issueKey = "DEMO-1";
-        Map<Integer, TransitionBean> issueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
+        Map<Long, TransitionBean> issueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
 
         System.out.println("testGetIssueTransitions: " + !issueTransitions.isEmpty());
     }
@@ -187,11 +187,11 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         System.out.println("Aktueller Status: " + status);
 
         //zufällige Auswahl einer möglichen Transition
-        Map<Integer, TransitionBean> availableIssueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
+        Map<Long, TransitionBean> availableIssueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
 
         System.out.println("Mögliche Transitions für das Issue: " + issueKey);
         System.out.println("---------------------------------------------------------------------------------------------------");
-        for (int id : availableIssueTransitions.keySet()) {
+        for (Long id : availableIssueTransitions.keySet()) {
             TransitionBean tb = availableIssueTransitions.get(id);
             System.out.println("Transition ID: " + id + " Name: " + tb.getName());
         }

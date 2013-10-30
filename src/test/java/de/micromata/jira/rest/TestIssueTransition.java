@@ -32,7 +32,7 @@ public class TestIssueTransition {
 
     private static final String ISSUE_KEY = "DEMO-1";
 
-    private static Map<Integer, TransitionBean> currentIssueTransitions;
+    private static Map<Long, TransitionBean> currentIssueTransitions;
 
     public static void main(String[] args) throws URISyntaxException, RestException {
         URI uri = new URI("http://localhost:2990/jira");
@@ -63,7 +63,7 @@ public class TestIssueTransition {
         System.out.println("Mögliche Transitions für das Issue: " + ISSUE_KEY);
         System.out.println("---------------------------------------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------------------");
-        for (int id : currentIssueTransitions.keySet()) {
+        for (Long id : currentIssueTransitions.keySet()) {
             TransitionBean tb = currentIssueTransitions.get(id);
             System.out.println("Transition ID: " + id + " Name: " + tb.getName() + " Assignee: " + tb.isAssigneeRequired());
         }
@@ -75,7 +75,7 @@ public class TestIssueTransition {
 
         System.out.println("---------------------------------------------------------------------------------------------------");
         System.out.println("Mögliche Transitions für den nächsten Test:\n");
-        for (int id : currentIssueTransitions.keySet()) {
+        for (Long id : currentIssueTransitions.keySet()) {
             TransitionBean tb = currentIssueTransitions.get(id);
             System.out.println("Transition ID: " + id + " Name: " + tb.getName() + " Assignee: " + tb.isAssigneeRequired());
         }
