@@ -10,8 +10,8 @@ Download and build the jar.
 Bevor you build the Client you can test the Connection with the following Code:
 
     URI uri = new URI("https://team.micromata.de/jira");
-    String username = "irgendeinusername";
-    String password = "irgendeinpassword";
+    String username = "username";
+    String password = "password";
     boolean success = restWrapper.testRestConnection(uri, username, password);
 
 

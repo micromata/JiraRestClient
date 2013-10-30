@@ -71,12 +71,12 @@ public class TransitionParser extends BaseParser {
         return bean;
     }
 
-    public static Map<Integer, TransitionBean> parse(List<JsonObject> list) {
-        Map<Integer, TransitionBean> transitions = new HashMap<Integer, TransitionBean>();
+    public static Map<Long, TransitionBean> parse(List<JsonObject> list) {
+        Map<Long, TransitionBean> transitions = new HashMap<Long, TransitionBean>();
 
         for (JsonObject o : list) {
             TransitionBean bean = parse(o);
-            transitions.put((int) bean.getId(), bean);
+            transitions.put(Long.valueOf(bean.getId()), bean);
         }
 
         return transitions;
