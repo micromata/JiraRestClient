@@ -94,7 +94,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
     }
 
     @Override
-    public Map<Long, TransitionBean> getIssueTransitionsByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException {
+    public List<TransitionBean> getIssueTransitionsByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = RestURIBuilder.buildIssueTransitionsByKeyExpandFields(baseUri, issueKey);
@@ -103,11 +103,11 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if (response.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = response.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
-
             JsonElement transitionsElement = jsonObject.get(JsonConstants.PROP_TRANSITIONS);
             if (JsonElementUtil.checkNotNull(transitionsElement)) {
                 JsonArray array = transitionsElement.getAsJsonArray();
                 List<JsonObject> list = GsonParserUtil.parseJsonArray(array);
+                response.close();
                 return TransitionParser.parse(list);
             }
             try {
@@ -116,8 +116,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
                 e.printStackTrace();
             }
             response.close();
-
-            return Collections.emptyMap();
+            return Collections.emptyList();
         } else {
             throw new RestException(response);
         }

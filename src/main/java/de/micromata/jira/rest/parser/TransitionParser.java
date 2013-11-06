@@ -21,6 +21,7 @@ import de.micromata.jira.rest.domain.TransitionBean;
 import de.micromata.jira.rest.util.URIParser;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,14 +72,12 @@ public class TransitionParser extends BaseParser {
         return bean;
     }
 
-    public static Map<Long, TransitionBean> parse(List<JsonObject> list) {
-        Map<Long, TransitionBean> transitions = new HashMap<Long, TransitionBean>();
-
+    public static List<TransitionBean> parse(List<JsonObject> list) {
+        List<TransitionBean> retval = new ArrayList<TransitionBean>();
         for (JsonObject o : list) {
             TransitionBean bean = parse(o);
-            transitions.put(Long.valueOf(bean.getId()), bean);
+            retval.add(bean);
         }
-
-        return transitions;
+        return retval;
     }
 }

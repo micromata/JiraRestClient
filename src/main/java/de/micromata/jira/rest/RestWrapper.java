@@ -63,10 +63,10 @@ public interface RestWrapper {
      *
      * @param jiraRestClient = the connected client
      * @param issueKey       = the issue key
-     * @return map of transition id and properties
+     * @return List of TransitionBean
      * @throws RestException
      */
-    public Map<Long, TransitionBean> getIssueTransitionsByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException;
+    public List<TransitionBean> getIssueTransitionsByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException;
 
     /**
      * Returns the logged in remote user.
