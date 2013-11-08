@@ -118,6 +118,8 @@ public enum EFieldType {
      */
     CUSTOM_TYPE;
 
+
+
     /**
      * List of supported operators for a type of field.
      */

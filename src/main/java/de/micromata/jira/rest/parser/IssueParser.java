@@ -249,6 +249,14 @@ public class IssueParser extends BaseParser {
                 IssueBasicBean parent = IssueBasicParser.parse(parentObject);
                 issueBean.setParent(parent);
             }
+
+        }
+        JsonElement transitionElement = jsonObject.get(PROP_TRANSITIONS);
+        if (checkNotNull(transitionElement)) {
+            List<JsonObject> list = GsonParserUtil.parseJsonArray(transitionElement.getAsJsonArray());
+            List<TransitionBean> parse = TransitionParser.parse(list);
+            issueBean.setTransitions(parse);
+
         }
         return issueBean;
     }

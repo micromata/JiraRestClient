@@ -20,6 +20,7 @@ import de.micromata.jira.rest.util.RestException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
@@ -31,8 +32,6 @@ public class TestIssueTransition {
     private static RestWrapper restWrapper;
 
     private static final String ISSUE_KEY = "DEMO-1";
-
-    private static Map<Long, TransitionBean> currentIssueTransitions;
 
     public static void main(String[] args) throws URISyntaxException, RestException {
         URI uri = new URI("http://localhost:2990/jira");
@@ -57,27 +56,25 @@ public class TestIssueTransition {
     }
 
     public static void initAvailableTransitionStates() throws RestException {
-        currentIssueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, ISSUE_KEY);
+        List<TransitionBean> issueTransitionsByKey = restWrapper.getIssueTransitionsByKey(jiraRestClient, ISSUE_KEY);
 
         System.out.println("---------------------------------------------------------------------------------------------------");
         System.out.println("Mögliche Transitions für das Issue: " + ISSUE_KEY);
         System.out.println("---------------------------------------------------------------------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------------------");
-        for (Long id : currentIssueTransitions.keySet()) {
-            TransitionBean tb = currentIssueTransitions.get(id);
-            System.out.println("Transition ID: " + id + " Name: " + tb.getName() + " Assignee: " + tb.isAssigneeRequired());
+        for (TransitionBean tb : issueTransitionsByKey) {
+            System.out.println("Transition ID: " + tb.getId() + " Name: " + tb.getName() + " Assignee: " + tb.isAssigneeRequired());
         }
         System.out.println("---------------------------------------------------------------------------------------------------");
     }
 
     public static void showAvailableTransitionStates() throws RestException {
-        currentIssueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, ISSUE_KEY);
+        List<TransitionBean> issueTransitionsByKey = restWrapper.getIssueTransitionsByKey(jiraRestClient, ISSUE_KEY);
 
         System.out.println("---------------------------------------------------------------------------------------------------");
         System.out.println("Mögliche Transitions für den nächsten Test:\n");
-        for (Long id : currentIssueTransitions.keySet()) {
-            TransitionBean tb = currentIssueTransitions.get(id);
-            System.out.println("Transition ID: " + id + " Name: " + tb.getName() + " Assignee: " + tb.isAssigneeRequired());
+        for (TransitionBean tb : issueTransitionsByKey) {
+            System.out.println("Transition ID: " + tb + " Name: " + tb.getName() + " Assignee: " + tb.isAssigneeRequired());
         }
         System.out.println("---------------------------------------------------------------------------------------------------");
     }

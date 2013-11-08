@@ -63,12 +63,12 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testGetProjectVersions();
 //        testGetProjectComponents();
 //        testGetIssuesForProject();
-//        testSearchIssuesForProject();
+        testSearchIssuesForProject();
 //        testExtendedSearchIssuesForProject();
 //        testGetIssueByKey();
 //        testGetCommentsByIssue();
 //        testGetIssueTypes();
-        testGetIssueTransitionsByKey();
+//        testGetIssueTransitionsByKey();
 //        testUpdateIssueTransitionByKey();
 //        testAggregateTimeOriginalEstimate();
 //        testPutWorklogsInIssue();
@@ -122,6 +122,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
                 .orderBy(SortOrder.ASC, EField.CREATED);
         jsb.setJql(jql);
         jsb.addField(EField.ALL);
+        jsb.addExpand(EField.TRANSITIONS);
 
         JqlSearchResultBean jqlSearchResultBean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
 
@@ -164,9 +165,9 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 
     public void testGetIssueTransitionsByKey() throws RestException {
         String issueKey = "DEMO-1";
-        Map<Long, TransitionBean> issueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
+        List<TransitionBean> issueTransitionsByKey = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
 
-        System.out.println("testGetIssueTransitions: " + !issueTransitions.isEmpty());
+        System.out.println("testGetIssueTransitions: " + !issueTransitionsByKey.isEmpty());
     }
 
     public void testUpdateIssueTransitionByKey() throws RestException {
@@ -187,31 +188,30 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         System.out.println("Aktueller Status: " + status);
 
         //zufällige Auswahl einer möglichen Transition
-        Map<Long, TransitionBean> availableIssueTransitions = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
+        List<TransitionBean> issueTransitionsByKey = restWrapper.getIssueTransitionsByKey(jiraRestClient, issueKey);
 
         System.out.println("Mögliche Transitions für das Issue: " + issueKey);
         System.out.println("---------------------------------------------------------------------------------------------------");
-        for (Long id : availableIssueTransitions.keySet()) {
-            TransitionBean tb = availableIssueTransitions.get(id);
-            System.out.println("Transition ID: " + id + " Name: " + tb.getName());
+        for (TransitionBean transitionBean : issueTransitionsByKey) {
+            System.out.println("Transition ID: " + transitionBean.getId() + " Name: " + transitionBean.getName());
         }
         System.out.println("---------------------------------------------------------------------------------------------------");
 
-        Object[] transitions = availableIssueTransitions.keySet().toArray();
-        int choice = (int) (Math.random() * transitions.length);
-        int transitionId = Integer.parseInt(transitions[choice].toString());
-        String transitionName = availableIssueTransitions.get(transitionId).getName();
-        System.out.println("Folgende Transition gewählt: ID=" + transitionId + " Name=" + transitionName);
-
-        boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, issueKey, transitionId);
-
-        //Status vom Issue nach Update
-        bean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
-        status = bean.getIssueBeans().iterator().next().getStatus().getName();
-        System.out.println("Status nach Update: " + status);
-        System.out.println("---------------------------------------------------------------------------------------------------");
-        System.out.println("testUpdateIssueTransitionByKey: " + update);
-        System.out.println("---------------------------------------------------------------------------------------------------");
+//        Object[] transitions = transitionBean.keySet().toArray();
+//        int choice = (int) (Math.random() * transitions.length);
+//        int transitionId = Integer.parseInt(transitions[choice].toString());
+//        String transitionName = availableIssueTransitions.get(transitionId).getName();
+//        System.out.println("Folgende Transition gewählt: ID=" + transitionId + " Name=" + transitionName);
+//
+//        boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, issueKey, transitionId);
+//
+//        //Status vom Issue nach Update
+//        bean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
+//        status = bean.getIssueBeans().iterator().next().getStatus().getName();
+//        System.out.println("Status nach Update: " + status);
+//        System.out.println("---------------------------------------------------------------------------------------------------");
+//        System.out.println("testUpdateIssueTransitionByKey: " + update);
+//        System.out.println("---------------------------------------------------------------------------------------------------");
     }
 
     public void testAggregateTimeOriginalEstimate() throws RestException {

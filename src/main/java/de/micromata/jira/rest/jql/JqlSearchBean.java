@@ -45,6 +45,8 @@ public class JqlSearchBean {
 
     private String jql = StringUtils.EMPTY;
 
+    private List<String> expand = new ArrayList<String>();
+
     /**
      * Adds fields which should be returned after the request.
      *
@@ -53,6 +55,12 @@ public class JqlSearchBean {
     public void addField(EField... fields) {
         for (EField f : fields) {
             getFields().add(f.toString());
+        }
+    }
+
+    public void addExpand(EField... fields){
+        for (EField field : fields) {
+            getExpand().add(field.toString());
         }
     }
 
@@ -110,5 +118,12 @@ public class JqlSearchBean {
 
     public void setJql(String jql) {
         this.jql = jql;
+    }
+
+    public List<String> getExpand() {
+        if(expand == null){
+            expand = new ArrayList<String>();
+        }
+        return expand;
     }
 }

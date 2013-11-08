@@ -102,6 +102,8 @@ public class IssueBean extends BaseBean {
 
     private List<IssueBasicBean> subtasks = null;
 
+    private List<TransitionBean> transitions = null;
+
     public String getExpand() {
         return expand;
     }
@@ -405,5 +407,109 @@ public class IssueBean extends BaseBean {
 
     public void setSubtasks(List<IssueBasicBean> subtasks) {
         this.subtasks = subtasks;
+    }
+
+    public List<TransitionBean> getTransitions() {
+        return transitions;
+    }
+
+    public void setTransitions(List<TransitionBean> transitions) {
+        this.transitions = transitions;
+    }
+
+    public ProgressBean getProgressBean() {
+        return progressBean;
+    }
+
+    public void setProgressBean(ProgressBean progressBean) {
+        this.progressBean = progressBean;
+    }
+
+    public TimetrackingBean getTimetrackingBean() {
+        return timetrackingBean;
+    }
+
+    public void setTimetrackingBean(TimetrackingBean timetrackingBean) {
+        this.timetrackingBean = timetrackingBean;
+    }
+
+    public VotesBean getVotesBean() {
+        return votesBean;
+    }
+
+    public void setVotesBean(VotesBean votesBean) {
+        this.votesBean = votesBean;
+    }
+
+    public UserBean getReporterBean() {
+        return reporterBean;
+    }
+
+    public void setReporterBean(UserBean reporterBean) {
+        this.reporterBean = reporterBean;
+    }
+
+    public PriorityBean getPriorityBean() {
+        return priorityBean;
+    }
+
+    public void setPriorityBean(PriorityBean priorityBean) {
+        this.priorityBean = priorityBean;
+    }
+
+    public WatchesBean getWatchesBean() {
+        return watchesBean;
+    }
+
+    public void setWatchesBean(WatchesBean watchesBean) {
+        this.watchesBean = watchesBean;
+    }
+
+    public UserBean getAssigneeBean() {
+        return assigneeBean;
+    }
+
+    public void setAssigneeBean(UserBean assigneeBean) {
+        this.assigneeBean = assigneeBean;
+    }
+
+    public ProjectBean getProjectBean() {
+        return projectBean;
+    }
+
+    public void setProjectBean(ProjectBean projectBean) {
+        this.projectBean = projectBean;
+    }
+
+    public AggregateprogressBean getAggregateprogressBean() {
+        return aggregateprogressBean;
+    }
+
+    public void setAggregateprogressBean(AggregateprogressBean aggregateprogressBean) {
+        this.aggregateprogressBean = aggregateprogressBean;
+    }
+
+    public CommentSummaryBean getCommentSummaryBean() {
+        return commentSummaryBean;
+    }
+
+    public void setCommentSummaryBean(CommentSummaryBean commentSummaryBean) {
+        this.commentSummaryBean = commentSummaryBean;
+    }
+
+    public StatusBean getStatusBean() {
+        return statusBean;
+    }
+
+    public void setStatusBean(StatusBean statusBean) {
+        this.statusBean = statusBean;
+    }
+
+    public IssueBasicBean getParentBean() {
+        return parentBean;
+    }
+
+    public void setParentBean(IssueBasicBean parentBean) {
+        this.parentBean = parentBean;
     }
 }
