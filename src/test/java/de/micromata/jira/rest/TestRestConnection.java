@@ -20,6 +20,7 @@ import de.micromata.jira.rest.jql.*;
 import de.micromata.jira.rest.util.RestConstants;
 import de.micromata.jira.rest.util.RestException;
 import junit.framework.Assert;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testGetProjectVersions();
 //        testGetProjectComponents();
 //        testGetIssuesForProject();
-        testSearchIssuesForProject();
+//        testSearchIssuesForProject();
 //        testExtendedSearchIssuesForProject();
 //        testGetIssueByKey();
 //        testGetCommentsByIssue();
@@ -73,7 +74,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testAggregateTimeOriginalEstimate();
 //        testPutWorklogsInIssue();
 //        testGetAttachment();
-//        testGetPriorities();
+        testGetPriorityChangelog();
     }
 
 
@@ -290,9 +291,39 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         System.out.println("testGetAttachment: " + (bytes.length > 0));
     }
 
-    private void testGetPriorities() throws RestException {
-        List<PriorityBean> priorities = restWrapper.getPriorities(jiraRestClient);
-        System.out.println("testGetPriorities: " + !priorities.isEmpty());
+    public void testGetPriorityChangelog() throws RestException {
+    	JqlSearchBean jsb = new JqlSearchBean();
+        JqlBuilder builder = new JqlBuilder();
+        String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "DEMO")
+                .or().addCondition(EField.PRIORITY, EOperator.GREATER_THAN, PRIORITY_MAJOR)
+                .orderBy(SortOrder.DESC, EField.PRIORITY, EField.LAST_VIEWED);
+        jsb.setJql(jql);
+        jsb.addField(EField.ALL);
+        jsb.addExpand(EField.CHANGELOG);
+
+        JqlSearchResultBean jqlSearchResultBean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
+        List<IssueBean> issueBeans = jqlSearchResultBean.getIssueBeans();
+        for(IssueBean bean : issueBeans) {
+        	ChangelogBean changelog = bean.getChangelog();
+        	int total = changelog.getTotal();
+        	
+        	if(total == 0) {
+        		continue;
+        	}
+        	
+        	List<IssueHistoryBean> histories = changelog.getHistories();
+        	System.out.print("----------------------------------------------------------------");
+        	for(IssueHistoryBean i : histories) {
+        		System.out.println("\nVorgang: " + bean.getKey() + " Datum: " + i.getCreated());
+        		for(HistoryItemBean h : i.getItems()) {
+        			System.out.println("Feld: " + h.getField() + " geändert von " + h.getFromString() + " zu " + h.getToString());
+        		}
+        	}
+        	System.out.println("-----------------------------------------------------------------\n");
+        }
+        
+
+        System.out.println("testSearchIssuesForProject: " + !jqlSearchResultBean.getIssueBeans().isEmpty());
     }
 
 

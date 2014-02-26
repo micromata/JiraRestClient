@@ -16,6 +16,18 @@
 package de.micromata.jira.rest;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.util.Collections;
+import java.util.List;
+
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
+
+import org.apache.commons.httpclient.auth.AuthScope;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,21 +39,43 @@ import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.client.apache.ApacheHttpClient;
 import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
-import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.jql.*;
-import de.micromata.jira.rest.parser.*;
-import de.micromata.jira.rest.util.*;
-import org.apache.commons.httpclient.auth.AuthScope;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import de.micromata.jira.rest.domain.BasicProjectBean;
+import de.micromata.jira.rest.domain.CommentSummaryBean;
+import de.micromata.jira.rest.domain.ComponentBean;
+import de.micromata.jira.rest.domain.IssueBean;
+import de.micromata.jira.rest.domain.IssueTypeBean;
+import de.micromata.jira.rest.domain.JqlSearchResultBean;
+import de.micromata.jira.rest.domain.PriorityBean;
+import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.StatusBean;
+import de.micromata.jira.rest.domain.TransitionBean;
+import de.micromata.jira.rest.domain.UserBean;
+import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.domain.WorklogBean;
+import de.micromata.jira.rest.jql.EField;
+import de.micromata.jira.rest.jql.EOperator;
+import de.micromata.jira.rest.jql.JqlBuilder;
+import de.micromata.jira.rest.jql.JqlConstants;
+import de.micromata.jira.rest.jql.JqlSearchBean;
+import de.micromata.jira.rest.parser.BasicProjectParser;
+import de.micromata.jira.rest.parser.CommentSummaryParser;
+import de.micromata.jira.rest.parser.ComponentParser;
+import de.micromata.jira.rest.parser.IssueParser;
+import de.micromata.jira.rest.parser.IssueTypeParser;
+import de.micromata.jira.rest.parser.JqlSearchParser;
+import de.micromata.jira.rest.parser.PriorityParser;
+import de.micromata.jira.rest.parser.ProjectParser;
+import de.micromata.jira.rest.parser.StatusParser;
+import de.micromata.jira.rest.parser.TransitionParser;
+import de.micromata.jira.rest.parser.UserParser;
+import de.micromata.jira.rest.parser.VersionParser;
+import de.micromata.jira.rest.util.GsonParserUtil;
+import de.micromata.jira.rest.util.JsonConstants;
+import de.micromata.jira.rest.util.JsonElementUtil;
+import de.micromata.jira.rest.util.RestConstants;
+import de.micromata.jira.rest.util.RestException;
+import de.micromata.jira.rest.util.RestURIBuilder;
 
 
 /**
@@ -443,7 +477,5 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         } finally {
             clientResponse.close();
         }
-
-
     }
 }

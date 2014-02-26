@@ -103,6 +103,8 @@ public class IssueBean extends BaseBean {
     private List<IssueBasicBean> subtasks = null;
 
     private List<TransitionBean> transitions = null;
+    
+    private ChangelogBean changelog = null;
 
     public String getExpand() {
         return expand;
@@ -512,4 +514,12 @@ public class IssueBean extends BaseBean {
     public void setParentBean(IssueBasicBean parentBean) {
         this.parentBean = parentBean;
     }
+
+	public ChangelogBean getChangelog() {
+		return changelog;
+	}
+
+	public void setChangelog(ChangelogBean changelog) {
+		this.changelog = changelog;
+	}
 }

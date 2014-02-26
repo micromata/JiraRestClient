@@ -162,6 +162,16 @@ public interface JsonConstants {
 
     public static final String PROP_REQUIRED = "required";
 
+    public static final String PROP_FROM = "from";
+    
+    public static final String PROP_FROM_STRING = "fromString";
+    
+    public static final String PROP_TO_STRING = "toString";
+    
+    public static final String PROP_FIELDTYPE = "fieldtype";
+
+    public static final String PROP_FIELD = "field";
+    
     // Properties und Elemente der JQL-Suche
 
     public static final String PROP_EXPAND = "expand";
@@ -235,6 +245,12 @@ public interface JsonConstants {
     public static final String ELEM_PARENT = "parent";
 
     public static final String ELEM_TRANSITION = "transition";
+
+    public static final String ELEM_CHANGELOG = "changelog";
+
+    public static final String ELEM_ITEMS = "items";
+    
+    public static final String ELEM_HISTORIES = "histories";
 
     // Rollen
 

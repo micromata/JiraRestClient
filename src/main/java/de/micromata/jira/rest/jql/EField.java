@@ -380,12 +380,15 @@ public enum EField {
      */
     WORK_RATIO("workRatio", EFieldType.NUMBER),
 
-
-
     /** <i>Avaiable Transitions for the Issue</i>
      *  <p>an Issue has several Transition to which the status can change.</p>
      */
-    TRANSITIONS("transitions", EFieldType.CUSTOM_TYPE);
+    TRANSITIONS("transitions", EFieldType.CUSTOM_TYPE),
+    
+    
+    /** <i>Avaiable changelog for an Issue</i>
+     */
+    CHANGELOG("changelog", EFieldType.CUSTOM_TYPE);
 
     /**
      * The name of the field.

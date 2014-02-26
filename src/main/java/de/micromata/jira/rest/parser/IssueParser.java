@@ -17,6 +17,7 @@ package de.micromata.jira.rest.parser;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.util.DateParser;
 import de.micromata.jira.rest.util.GsonParserUtil;
@@ -258,6 +259,13 @@ public class IssueParser extends BaseParser {
             issueBean.setTransitions(parse);
 
         }
+
+        JsonElement changelogElement = jsonObject.get(ELEM_CHANGELOG);
+        if (checkNotNull(changelogElement)) {
+        	ChangelogBean changelogBean = ChangelogParser.parse(changelogElement.getAsJsonObject());
+        	issueBean.setChangelog(changelogBean);
+        }
+        
         return issueBean;
     }
 
