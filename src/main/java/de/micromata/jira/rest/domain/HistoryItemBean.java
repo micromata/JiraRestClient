@@ -5,15 +5,15 @@ import org.apache.commons.lang3.StringUtils;
 public class HistoryItemBean {
 
 	private String field = StringUtils.EMPTY;
-	
+
 	private String fieldType = StringUtils.EMPTY;
-	
-	private int from = 0;
-	
+
+	private String from = StringUtils.EMPTY;
+
 	private String fromString = StringUtils.EMPTY;
-	
-	private int to = 0;
-	
+
+	private String to = StringUtils.EMPTY;
+
 	private String toString = StringUtils.EMPTY;
 
 	public String getField() {
@@ -32,11 +32,11 @@ public class HistoryItemBean {
 		this.fieldType = fieldType;
 	}
 
-	public int getFrom() {
+	public String getFrom() {
 		return from;
 	}
 
-	public void setFrom(int from) {
+	public void setFrom(String from) {
 		this.from = from;
 	}
 
@@ -48,11 +48,11 @@ public class HistoryItemBean {
 		this.fromString = fromString;
 	}
 
-	public int getTo() {
+	public String getTo() {
 		return to;
 	}
 
-	public void setTo(int to) {
+	public void setTo(String to) {
 		this.to = to;
 	}
 

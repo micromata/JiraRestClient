@@ -30,7 +30,7 @@ public class HistoryItemParser implements JsonConstants {
 		
 		JsonElement fromElement = object.get(PROP_FROM);
 		if(checkNotNull(fromElement)) {
-			int from = fromElement.getAsInt();
+			String from = fromElement.getAsString();
 			bean.setFrom(from);
 		}
 		
@@ -42,7 +42,7 @@ public class HistoryItemParser implements JsonConstants {
 		
 		JsonElement toElement = object.get(PROP_TO);
 		if(checkNotNull(toElement)) {
-			int to = toElement.getAsInt();
+			String to = toElement.getAsString();
 			bean.setTo(to);
 		}
 		
