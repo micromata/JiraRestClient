@@ -16,20 +16,33 @@
 package de.micromata.jira.rest;
 
 
-import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.jql.JqlSearchBean;
-import de.micromata.jira.rest.util.RestException;
-
 import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
+
+import de.micromata.jira.rest.domain.BasicProjectBean;
+import de.micromata.jira.rest.domain.CommentSummaryBean;
+import de.micromata.jira.rest.domain.ComponentBean;
+import de.micromata.jira.rest.domain.IssueBean;
+import de.micromata.jira.rest.domain.IssueTypeBean;
+import de.micromata.jira.rest.domain.JqlSearchResultBean;
+import de.micromata.jira.rest.domain.PriorityBean;
+import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.StatusBean;
+import de.micromata.jira.rest.domain.TransitionBean;
+import de.micromata.jira.rest.domain.UserBean;
+import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.domain.WorklogBean;
+import de.micromata.jira.rest.jql.JqlSearchBean;
+import de.micromata.jira.rest.util.RestException;
 
 /**
  * @author Christian Schulze
  * @author Vitali Filippow
  */
 public interface RestWrapper {
+	
+	public String createIssue(IssueBean issue, JiraRestClient jiraRestClient) throws RestException;
 
     public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException;
 

@@ -259,4 +259,28 @@ public interface JsonConstants {
     public static final String ROLE_USERS = "Users";
 
     public static final String ROLE_DEVELOPERS = "Developers";
+
+    //Issue Type für die JQL Suche
+    
+    public static final String ISSUETYPE_IMPROVEMENT = "Improvement"; 
+
+    public static final String ISSUETYPE_BUG = "Bug"; 
+
+    public static final String ISSUETYPE_NEW_FEATURE = "New Feature"; 
+
+    public static final String ISSUETYPE_SUBTASK = "Sub-Task"; 
+
+    public static final String ISSUETYPE_TASK = "Task"; 
+    
+    //Priority für die JQL Suche
+    
+    public static final String PRIORITY_MAJOR = "Major";
+    
+    public static final String PRIORITY_BLOCKER = "Blocker";
+    
+    public static final String PRIORITY_CRITICAL = "Critical";
+    
+    public static final String PRIORITY_MINOR = "Minor";
+    
+    public static final String PRIORITY_TRIVIAL = "Trivial";
 }

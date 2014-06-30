@@ -71,6 +71,7 @@ import de.micromata.jira.rest.parser.TransitionParser;
 import de.micromata.jira.rest.parser.UserParser;
 import de.micromata.jira.rest.parser.VersionParser;
 import de.micromata.jira.rest.util.GsonParserUtil;
+import de.micromata.jira.rest.util.IssueResponse;
 import de.micromata.jira.rest.util.JsonConstants;
 import de.micromata.jira.rest.util.JsonElementUtil;
 import de.micromata.jira.rest.util.RestConstants;
@@ -84,6 +85,24 @@ import de.micromata.jira.rest.util.RestURIBuilder;
  */
 public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
 
+	@Override
+	public String createIssue(IssueBean issue, JiraRestClient jiraRestClient)
+			throws RestException {
+
+		Client client = jiraRestClient.getClient();
+		URI baseUri = jiraRestClient.getBaseUri();
+
+		String json = GsonParserUtil.parseIssueToJson(issue);
+		URI uri = RestURIBuilder.buildIssueURI(baseUri);
+		WebResource webResource = client.resource(uri);
+		IssueResponse response = webResource.entity(json)
+				.accept(MediaType.APPLICATION_JSON_TYPE)
+				.type(MediaType.APPLICATION_JSON_TYPE)
+				.post(IssueResponse.class);
+
+		return response != null ? response.getKey() : "";
+	}
+	
     @Override
     public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException {
         Client client = jiraRestClient.getClient();

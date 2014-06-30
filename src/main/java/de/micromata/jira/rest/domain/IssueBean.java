@@ -26,6 +26,12 @@ import java.util.List;
  */
 public class IssueBean extends BaseBean {
 
+	private String projectKey = StringUtils.EMPTY;
+	
+	private String componentName = StringUtils.EMPTY;
+	
+    private String issueTypeName = StringUtils.EMPTY;
+
     private String expand = StringUtils.EMPTY;
 
     private String summary = StringUtils.EMPTY;
@@ -47,6 +53,8 @@ public class IssueBean extends BaseBean {
     private String description = StringUtils.EMPTY;
 
     private PriorityBean priorityBean = null;
+    
+    private String priorityName = StringUtils.EMPTY;
 
     private List<IssueLinkBean> issueLinks = null;
 
@@ -521,5 +529,37 @@ public class IssueBean extends BaseBean {
 
 	public void setChangelog(ChangelogBean changelog) {
 		this.changelog = changelog;
+	}
+
+	public String getPriorityName() {
+		return priorityName;
+	}
+
+	public void setPriorityName(String priorityName) {
+		this.priorityName = priorityName;
+	}
+
+	public String getProjectKey() {
+		return projectKey;
+	}
+
+	public void setProjectKey(String projectKey) {
+		this.projectKey = projectKey;
+	}
+
+	public String getComponentName() {
+		return componentName;
+	}
+
+	public void setComponentName(String componentName) {
+		this.componentName = componentName;
+	}
+
+	public String getIssueTypeName() {
+		return issueTypeName;
+	}
+
+	public void setIssueTypeName(String issueTypeName) {
+		this.issueTypeName = issueTypeName;
 	}
 }

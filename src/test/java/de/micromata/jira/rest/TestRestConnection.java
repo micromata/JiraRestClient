@@ -15,14 +15,6 @@
 
 package de.micromata.jira.rest;
 
-import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.jql.*;
-import de.micromata.jira.rest.util.RestConstants;
-import de.micromata.jira.rest.util.RestException;
-import junit.framework.Assert;
-
-import org.apache.commons.io.IOUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -30,7 +22,33 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+
+import junit.framework.Assert;
+
+import org.apache.commons.io.IOUtils;
+
+import de.micromata.jira.rest.domain.BasicProjectBean;
+import de.micromata.jira.rest.domain.ChangelogBean;
+import de.micromata.jira.rest.domain.CommentSummaryBean;
+import de.micromata.jira.rest.domain.ComponentBean;
+import de.micromata.jira.rest.domain.HistoryItemBean;
+import de.micromata.jira.rest.domain.IssueBean;
+import de.micromata.jira.rest.domain.IssueHistoryBean;
+import de.micromata.jira.rest.domain.IssueTypeBean;
+import de.micromata.jira.rest.domain.JqlSearchResultBean;
+import de.micromata.jira.rest.domain.ProjectBean;
+import de.micromata.jira.rest.domain.TransitionBean;
+import de.micromata.jira.rest.domain.VersionBean;
+import de.micromata.jira.rest.domain.WorklogBean;
+import de.micromata.jira.rest.jql.EField;
+import de.micromata.jira.rest.jql.EOperator;
+import de.micromata.jira.rest.jql.JqlBuilder;
+import de.micromata.jira.rest.jql.JqlConstants;
+import de.micromata.jira.rest.jql.JqlSearchBean;
+import de.micromata.jira.rest.jql.SortOrder;
+import de.micromata.jira.rest.util.JsonConstants;
+import de.micromata.jira.rest.util.RestConstants;
+import de.micromata.jira.rest.util.RestException;
 
 /**
  * User: Christian
@@ -74,7 +92,8 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testAggregateTimeOriginalEstimate();
 //        testPutWorklogsInIssue();
 //        testGetAttachment();
-        testGetPriorityChangelog();
+//        testGetPriorityChangelog();
+        testCreateIssue();
     }
 
 
@@ -326,5 +345,16 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         System.out.println("testSearchIssuesForProject: " + !jqlSearchResultBean.getIssueBeans().isEmpty());
     }
 
+    public void testCreateIssue() throws RestException {
+    	
+    	IssueBean issue = new IssueBean();
+		issue.setDescription("Test Description");
+		issue.setSummary("Test Title");
+		issue.setProjectKey("DEMO");
+		issue.setComponentName("TEST");
+		issue.setPriorityName(JsonConstants.PRIORITY_CRITICAL);
+		String issueKey = restWrapper.createIssue(issue, jiraRestClient);
+		System.out.println(!issueKey.isEmpty());
+    }
 
 }

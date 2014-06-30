@@ -15,17 +15,23 @@
 
 package de.micromata.jira.rest.util;
 
-import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
-import de.micromata.jira.rest.domain.VisibilityBean;
-import de.micromata.jira.rest.domain.WorklogBean;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+
+import de.micromata.jira.rest.domain.IssueBean;
+import de.micromata.jira.rest.domain.VisibilityBean;
+import de.micromata.jira.rest.domain.WorklogBean;
 
 /**
  * @author Christian Schulze
@@ -111,5 +117,36 @@ public class GsonParserUtil {
 
         String jsonString = new Gson().toJson(parent);
         return jsonString;
+    }
+    
+    public static String parseIssueToJson(IssueBean issue) {
+    	JsonObject parent = new JsonObject();
+    	JsonObject fieldObject = new JsonObject();
+    	
+    	fieldObject.addProperty(JsonConstants.PROP_SUMMARY, issue.getSummary());
+    	fieldObject.addProperty(JsonConstants.PROP_DESCRIPTION, issue.getDescription());
+    	
+    	JsonObject projectObject = new JsonObject();
+    	projectObject.addProperty(JsonConstants.PROP_KEY, issue.getProjectKey());
+    	fieldObject.add(JsonConstants.ELEM_PROJECT, projectObject);
+    	
+    	JsonObject priorityObject = new JsonObject();
+    	priorityObject.addProperty(JsonConstants.PROP_NAME, JsonConstants.PRIORITY_MAJOR);
+    	fieldObject.add(JsonConstants.ELEM_PRIORITY, priorityObject);
+    	
+    	JsonObject issueTypeObject = new JsonObject();
+    	issueTypeObject.addProperty(JsonConstants.PROP_NAME, JsonConstants.ISSUETYPE_TASK);
+    	fieldObject.add(JsonConstants.ELEM_ISSUETYPE, issueTypeObject);
+    	
+    	JsonArray componentArray = new JsonArray();
+    	JsonObject componentObject = new JsonObject();
+    	componentObject.addProperty(JsonConstants.PROP_NAME, issue.getComponentName());
+    	componentArray.add(componentObject);
+    	fieldObject.add(JsonConstants.ELEM_COMPONENTS, componentArray);
+    	
+    	parent.add(JsonConstants.ELEM_FIELDS, fieldObject);
+    	
+    	String jsonString = new Gson().toJson(parent);
+    	return jsonString;
     }
 }
