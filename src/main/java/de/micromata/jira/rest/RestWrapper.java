@@ -41,9 +41,25 @@ import de.micromata.jira.rest.util.RestException;
  * @author Vitali Filippow
  */
 public interface RestWrapper {
-	
+
+    /**
+     * Create a new issue
+     *
+     * @param issue = the issue
+     * @param jiraRestClient = = the connected client
+     * @return the key of the created issue, or an empty string when creation failed
+     * @throws RestException
+     */
 	public String createIssue(IssueBean issue, JiraRestClient jiraRestClient) throws RestException;
 
+    /**
+     * Get Attachement as InputStream
+     *
+     * @param jiraRestClient = = the connected client
+     * @param uri = the uri of the resource
+     * @return
+     * @throws RestException
+     */
     public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException;
 
     /**
