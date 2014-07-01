@@ -138,11 +138,11 @@ public class GsonParserUtil {
     	issueTypeObject.addProperty(JsonConstants.PROP_NAME, JsonConstants.ISSUETYPE_TASK);
     	fieldObject.add(JsonConstants.ELEM_ISSUETYPE, issueTypeObject);
     	
-    	JsonArray componentArray = new JsonArray();
-    	JsonObject componentObject = new JsonObject();
-    	componentObject.addProperty(JsonConstants.PROP_NAME, issue.getComponentName());
-    	componentArray.add(componentObject);
-    	fieldObject.add(JsonConstants.ELEM_COMPONENTS, componentArray);
+//    	JsonArray componentArray = new JsonArray();
+//    	JsonObject componentObject = new JsonObject();
+//    	componentObject.addProperty(JsonConstants.PROP_NAME, issue.getComponentName());
+//    	componentArray.add(componentObject);
+//    	fieldObject.add(JsonConstants.ELEM_COMPONENTS, componentArray);
     	
     	parent.add(JsonConstants.ELEM_FIELDS, fieldObject);
     	
