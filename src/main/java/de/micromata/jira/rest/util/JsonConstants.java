@@ -160,6 +160,8 @@ public interface JsonConstants {
 
     public static final String PROP_ERROR_MESSAGES = "errorMessages";
 
+    public static final String PROP_ERRORS = "errors";
+
     public static final String PROP_REQUIRED = "required";
 
     public static final String PROP_FROM = "from";

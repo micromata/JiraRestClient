@@ -20,19 +20,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
-import de.micromata.jira.rest.domain.BasicProjectBean;
-import de.micromata.jira.rest.domain.CommentSummaryBean;
-import de.micromata.jira.rest.domain.ComponentBean;
-import de.micromata.jira.rest.domain.IssueBean;
-import de.micromata.jira.rest.domain.IssueTypeBean;
-import de.micromata.jira.rest.domain.JqlSearchResultBean;
-import de.micromata.jira.rest.domain.PriorityBean;
-import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.StatusBean;
-import de.micromata.jira.rest.domain.TransitionBean;
-import de.micromata.jira.rest.domain.UserBean;
-import de.micromata.jira.rest.domain.VersionBean;
-import de.micromata.jira.rest.domain.WorklogBean;
+import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.jql.JqlSearchBean;
 import de.micromata.jira.rest.util.RestException;
 
@@ -50,7 +38,7 @@ public interface RestWrapper {
      * @return the key of the created issue, or an empty string when creation failed
      * @throws RestException
      */
-	public String createIssue(IssueBean issue, JiraRestClient jiraRestClient) throws RestException;
+	public IssueResponse createIssue(IssueBean issue, JiraRestClient jiraRestClient) throws RestException;
 
     /**
      * Get Attachement as InputStream

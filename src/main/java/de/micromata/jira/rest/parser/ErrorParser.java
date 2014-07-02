@@ -18,11 +18,14 @@ package de.micromata.jira.rest.parser;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import de.micromata.jira.rest.domain.ErrorBean;
 import de.micromata.jira.rest.util.GsonParserUtil;
 import de.micromata.jira.rest.util.JsonConstants;
 import de.micromata.jira.rest.util.JsonElementUtil;
 
 import java.io.InputStream;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -31,16 +34,20 @@ import java.io.InputStream;
  */
 public class ErrorParser {
 
-    public static String parse(InputStream inputStream) {
-        StringBuffer sb = new StringBuffer();
+    public static ErrorBean parse(InputStream inputStream) {
+        ErrorBean errorBean = new ErrorBean();
         JsonObject object = GsonParserUtil.parseJsonObject(inputStream);
-        JsonArray array = object.getAsJsonArray(JsonConstants.PROP_ERROR_MESSAGES);
-        if (JsonElementUtil.checkNotNull(array)) {
-            for (JsonElement je : array) {
-                sb.append(" => " + je.getAsString());
-            }
-        }
+        JsonArray errorMessages = object.getAsJsonArray(JsonConstants.PROP_ERROR_MESSAGES);
+        for (JsonElement jsonElement : errorMessages) {
 
-        return sb.toString();
+        }
+        JsonObject errors = object.getAsJsonObject(JsonConstants.PROP_ERRORS);
+        Set<Map.Entry<String, JsonElement>> entries = errors.entrySet();
+        for (Map.Entry<String, JsonElement> entry : entries) {
+            String field = entry.getKey();
+            String message = entry.getValue().getAsString();
+            errorBean.getErrors().put(field, message);
+        }
+        return errorBean;
     }
 }

@@ -16,6 +16,7 @@
 package de.micromata.jira.rest.util;
 
 import com.sun.jersey.api.client.ClientResponse;
+import de.micromata.jira.rest.domain.ErrorBean;
 import de.micromata.jira.rest.parser.ErrorParser;
 
 /**
@@ -29,7 +30,7 @@ public class RestException extends Exception {
 
     private String reasonPhrase;
 
-    private String restErrorMessage;
+    private ErrorBean restErrorMessage;
 
     /**
      * Instantiates a new REST exception.
@@ -41,7 +42,7 @@ public class RestException extends Exception {
                 ErrorParser.parse(response.getEntityInputStream()));
     }
 
-    public RestException(int statusCode, String reasonPhrase, String restErrorMessage) {
+    public RestException(int statusCode, String reasonPhrase, ErrorBean restErrorMessage) {
         super(statusCode + " " + reasonPhrase + " " + restErrorMessage);
         this.statusCode = statusCode;
         this.reasonPhrase = reasonPhrase;
@@ -64,11 +65,11 @@ public class RestException extends Exception {
         this.reasonPhrase = reasonPhrase;
     }
 
-    public String getRestErrorMessage() {
+    public ErrorBean getRestErrorMessage() {
         return restErrorMessage;
     }
 
-    public void setRestErrorMessage(String restErrorMessage) {
+    public void setRestErrorMessage(ErrorBean restErrorMessage) {
         this.restErrorMessage = restErrorMessage;
     }
 }

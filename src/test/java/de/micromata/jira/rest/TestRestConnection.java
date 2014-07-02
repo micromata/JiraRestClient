@@ -23,23 +23,11 @@ import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
 
+import de.micromata.jira.rest.domain.*;
 import junit.framework.Assert;
 
 import org.apache.commons.io.IOUtils;
 
-import de.micromata.jira.rest.domain.BasicProjectBean;
-import de.micromata.jira.rest.domain.ChangelogBean;
-import de.micromata.jira.rest.domain.CommentSummaryBean;
-import de.micromata.jira.rest.domain.ComponentBean;
-import de.micromata.jira.rest.domain.HistoryItemBean;
-import de.micromata.jira.rest.domain.IssueBean;
-import de.micromata.jira.rest.domain.IssueHistoryBean;
-import de.micromata.jira.rest.domain.IssueTypeBean;
-import de.micromata.jira.rest.domain.JqlSearchResultBean;
-import de.micromata.jira.rest.domain.ProjectBean;
-import de.micromata.jira.rest.domain.TransitionBean;
-import de.micromata.jira.rest.domain.VersionBean;
-import de.micromata.jira.rest.domain.WorklogBean;
 import de.micromata.jira.rest.jql.EField;
 import de.micromata.jira.rest.jql.EOperator;
 import de.micromata.jira.rest.jql.JqlBuilder;
@@ -346,15 +334,15 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     }
 
     public void testCreateIssue() throws RestException {
-    	
     	IssueBean issue = new IssueBean();
 		issue.setDescription("Test Description");
 		issue.setSummary("Test Title");
-		issue.setProjectKey("DEMO");
+		issue.setProjectKey("DEM");
 		issue.setComponentName("TEST");
 		issue.setPriorityName(JsonConstants.PRIORITY_CRITICAL);
-		String issueKey = restWrapper.createIssue(issue, jiraRestClient);
-		System.out.println(!issueKey.isEmpty());
+        IssueResponse issueResponse = restWrapper.createIssue(issue, jiraRestClient);
+        String issueKey = issueResponse.getKey();
+        System.out.println(!issueKey.isEmpty());
     }
 
 }
