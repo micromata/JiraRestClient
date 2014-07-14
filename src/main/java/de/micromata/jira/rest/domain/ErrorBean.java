@@ -1,24 +1,23 @@
 package de.micromata.jira.rest.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import java.util.*;
 
 /**
  * Created by Christian on 02.07.2014.
  */
 public class ErrorBean {
 
-    private Collection<String> errorMessages = new ArrayList<String>();
+    private List<String> errorMessages = new ArrayList<String>();
 
     private Map<String, String> errors = new HashMap<String, String>();
 
-    public Collection<String> getErrorMessages() {
+    public List<String> getErrorMessages() {
         return errorMessages;
     }
 
-    public void setErrorMessages(Collection<String> errorMessages) {
+    public void setErrorMessages(List<String> errorMessages) {
         this.errorMessages = errorMessages;
     }
 
@@ -28,5 +27,10 @@ public class ErrorBean {
 
     public void setErrors(Map<String, String> errors) {
         this.errors = errors;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

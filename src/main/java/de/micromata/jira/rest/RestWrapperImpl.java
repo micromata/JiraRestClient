@@ -74,7 +74,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
 				.type(MediaType.APPLICATION_JSON_TYPE)
 				.post(ClientResponse.class);
         int status = response.getStatus();
-        if(status == HttpURLConnection.HTTP_OK){
+        if(status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_CREATED){
             InputStream inputStream = response.getEntityInputStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             return IssueResponseParser.parse(jsonObject);
@@ -82,9 +82,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         if(status == HttpURLConnection.HTTP_BAD_REQUEST){
             InputStream entityInputStream = response.getEntityInputStream();
             ErrorBean parse = ErrorParser.parse(entityInputStream);
-            System.out.println(parse);
+            return new IssueResponse(parse);
         }
-
         return null;
 	}
 	
@@ -421,6 +420,27 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = RestURIBuilder.buildIssueByKeyURI(baseUri, issueKey);
 
+        ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
+            return IssueParser.parse(jsonObject);
+        } else {
+            throw new RestException(clientResponse);
+        }
+    }
+
+    @Override
+    public IssueBean getIssueByKeyWithRenderedField(JiraRestClient jiraRestClient, String issueKey) throws RestException {
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = RestURIBuilder.buildIssueByKeyURIWithExpandRenderedFields(baseUri, issueKey);
         ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();

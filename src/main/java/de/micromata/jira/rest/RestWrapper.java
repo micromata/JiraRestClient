@@ -142,6 +142,18 @@ public interface RestWrapper {
      */
     public IssueBean getIssueByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException;
 
+
+    /**
+     * Returns a full representation of the issue for the given issue key.
+     * Inklusive the RenderedField, if you need the Description of the Issue as HTML
+     *
+     * @param jiraRestClient = the connected client
+     * @param issueKey       = issue key
+     * @return all informations for the issue
+     * @throws RestException
+     */
+    public IssueBean getIssueByKeyWithRenderedField(JiraRestClient jiraRestClient, String issueKey) throws RestException;
+
     /**
      * Test the REST connection with login data.
      *

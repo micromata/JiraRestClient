@@ -254,6 +254,8 @@ public interface JsonConstants {
     
     public static final String ELEM_HISTORIES = "histories";
 
+    public static final String ELEM_RENDERED_FIELDS = "renderedFields";
+
     // Rollen
 
     public static final String ROLE_ADMINISTRATORS = "Administrator";

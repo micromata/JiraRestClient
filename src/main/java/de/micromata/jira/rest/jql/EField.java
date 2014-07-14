@@ -388,7 +388,11 @@ public enum EField {
     
     /** <i>Avaiable changelog for an Issue</i>
      */
-    CHANGELOG("changelog", EFieldType.CUSTOM_TYPE);
+    CHANGELOG("changelog", EFieldType.CUSTOM_TYPE),
+
+    /** <i>Renders the Description Markup to HTML</i>
+     */
+    RENDEREDFIELDS("renderedFields", EFieldType.CUSTOM_TYPE);
 
     /**
      * The name of the field.

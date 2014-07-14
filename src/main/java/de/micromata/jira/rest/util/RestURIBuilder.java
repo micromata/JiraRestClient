@@ -45,6 +45,12 @@ public class RestURIBuilder implements RestConstants {
         return UriBuilder.fromUri(baseURI).path(ISSUE).path(issueKey).build();
     }
 
+    public static URI buildIssueByKeyURIWithExpandRenderedFields(URI baseURI, String issueKey) {
+        UriBuilder path = UriBuilder.fromUri(baseURI).path(ISSUE).path(issueKey);
+        path.queryParam(EXPAND, RENDERED_FIELD);
+        return path.build();
+    }
+
     public static URI buildCommentByIssueURI(URI baseURI, String issueKey) {
         return UriBuilder.fromUri(baseURI).path(ISSUE).path(issueKey).path(COMMENT).build();
     }
@@ -84,8 +90,8 @@ public class RestURIBuilder implements RestConstants {
     public static URI buildIssueWorklogByKeyURI(URI baseUri, String issueKey) {
         return UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(WORKLOG).build();
     }
-    
+
     public static URI buildIssueURI(URI baseURI) {
-    	return UriBuilder.fromUri(baseURI).path(ISSUE).build();
+        return UriBuilder.fromUri(baseURI).path(ISSUE).build();
     }
 }

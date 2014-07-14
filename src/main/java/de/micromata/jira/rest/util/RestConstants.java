@@ -70,4 +70,6 @@ public interface RestConstants {
     public static final String EXPAND = "expand";
 
     public static final String TRANSITIONS_FIELDS = "transitions.fields";
+
+    public static final String RENDERED_FIELD = "renderedFields";
 }

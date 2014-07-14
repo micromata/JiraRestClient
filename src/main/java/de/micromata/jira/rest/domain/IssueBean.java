@@ -26,10 +26,10 @@ import java.util.List;
  */
 public class IssueBean extends BaseBean {
 
-	private String projectKey = StringUtils.EMPTY;
-	
-	private String componentName = StringUtils.EMPTY;
-	
+    private String projectKey = StringUtils.EMPTY;
+
+    private String componentName = StringUtils.EMPTY;
+
     private String issueTypeName = StringUtils.EMPTY;
 
     private String expand = StringUtils.EMPTY;
@@ -53,7 +53,7 @@ public class IssueBean extends BaseBean {
     private String description = StringUtils.EMPTY;
 
     private PriorityBean priorityBean = null;
-    
+
     private String priorityName = StringUtils.EMPTY;
 
     private List<IssueLinkBean> issueLinks = null;
@@ -111,8 +111,10 @@ public class IssueBean extends BaseBean {
     private List<IssueBasicBean> subtasks = null;
 
     private List<TransitionBean> transitions = null;
-    
+
     private ChangelogBean changelog = null;
+
+    private RenderedFieldsBean renderedFieldsBean = null;
 
     public String getExpand() {
         return expand;
@@ -523,43 +525,51 @@ public class IssueBean extends BaseBean {
         this.parentBean = parentBean;
     }
 
-	public ChangelogBean getChangelog() {
-		return changelog;
-	}
+    public ChangelogBean getChangelog() {
+        return changelog;
+    }
 
-	public void setChangelog(ChangelogBean changelog) {
-		this.changelog = changelog;
-	}
+    public void setChangelog(ChangelogBean changelog) {
+        this.changelog = changelog;
+    }
 
-	public String getPriorityName() {
-		return priorityName;
-	}
+    public String getPriorityName() {
+        return priorityName;
+    }
 
-	public void setPriorityName(String priorityName) {
-		this.priorityName = priorityName;
-	}
+    public void setPriorityName(String priorityName) {
+        this.priorityName = priorityName;
+    }
 
-	public String getProjectKey() {
-		return projectKey;
-	}
+    public String getProjectKey() {
+        return projectKey;
+    }
 
-	public void setProjectKey(String projectKey) {
-		this.projectKey = projectKey;
-	}
+    public void setProjectKey(String projectKey) {
+        this.projectKey = projectKey;
+    }
 
-	public String getComponentName() {
-		return componentName;
-	}
+    public String getComponentName() {
+        return componentName;
+    }
 
-	public void setComponentName(String componentName) {
-		this.componentName = componentName;
-	}
+    public void setComponentName(String componentName) {
+        this.componentName = componentName;
+    }
 
-	public String getIssueTypeName() {
-		return issueTypeName;
-	}
+    public String getIssueTypeName() {
+        return issueTypeName;
+    }
 
-	public void setIssueTypeName(String issueTypeName) {
-		this.issueTypeName = issueTypeName;
-	}
+    public void setIssueTypeName(String issueTypeName) {
+        this.issueTypeName = issueTypeName;
+    }
+
+    public RenderedFieldsBean getRenderedFieldsBean() {
+        return renderedFieldsBean;
+    }
+
+    public void setRenderedFieldsBean(RenderedFieldsBean renderedFieldsBean) {
+        this.renderedFieldsBean = renderedFieldsBean;
+    }
 }

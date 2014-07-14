@@ -6,6 +6,14 @@ public class IssueResponse extends BaseBean {
 
     private ErrorBean errorBean = null;
 
+    public IssueResponse() {
+        super();
+    }
+
+    public IssueResponse(ErrorBean errorBean) {
+        this.errorBean = errorBean;
+    }
+
     public String getKey() {
         return key;
     }

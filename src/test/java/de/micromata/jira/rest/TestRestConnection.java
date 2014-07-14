@@ -44,10 +44,7 @@ import de.micromata.jira.rest.util.RestException;
  * Time: 17:17
  */
 
-public class TestRestConnection implements JqlConstants, RestConstants {
-
-    private JiraRestClient jiraRestClient;
-    private RestWrapper restWrapper;
+public class TestRestConnection extends BaseTest {
 
 
     public static void main(String[] args) throws URISyntaxException, RestException, IOException {
@@ -55,15 +52,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
     }
 
     public void run() throws URISyntaxException, RestException, IOException {
-        URI uri = new URI("http://localhost:2990/jira");
-        String username = "admin";
-        String password = "admin";
-        restWrapper = new RestWrapperImpl();
-        jiraRestClient = new JiraRestClient();
-        int status = jiraRestClient.connect(uri, username, password);
-        if (status != HttpURLConnection.HTTP_OK) {
-            System.out.println("FehlerStatus: " + status);
-        }
+        connect();
 //        testRestConnection();
 //        testGetAllProjects();
 //        testGetProjectByKey();
@@ -81,12 +70,15 @@ public class TestRestConnection implements JqlConstants, RestConstants {
 //        testPutWorklogsInIssue();
 //        testGetAttachment();
 //        testGetPriorityChangelog();
-        testCreateIssue();
+          testGetIssueWithRenderedFields();
+
     }
 
 
+
+
     public void testRestConnection() throws URISyntaxException, RestException {
-        URI uri = new URI("http://localhost:2990/jira");
+        URI uri = new URI(TEST_SYSTEM_URL);
         String username = "admin";
         String password = "admin";
         boolean test = restWrapper.testRestConnection(uri, username, password);
@@ -126,7 +118,7 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         JqlSearchBean jsb = new JqlSearchBean();
         JqlBuilder builder = new JqlBuilder();
         String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "DEMO")
-                .or().addCondition(EField.STATUS, EOperator.EQUALS, STATUS_OPEN)
+                .and().addCondition(EField.STATUS, EOperator.EQUALS, STATUS_OPEN)
                 .orderBy(SortOrder.ASC, EField.CREATED);
         jsb.setJql(jql);
         jsb.addField(EField.ALL);
@@ -333,16 +325,12 @@ public class TestRestConnection implements JqlConstants, RestConstants {
         System.out.println("testSearchIssuesForProject: " + !jqlSearchResultBean.getIssueBeans().isEmpty());
     }
 
-    public void testCreateIssue() throws RestException {
-    	IssueBean issue = new IssueBean();
-		issue.setDescription("Test Description");
-		issue.setSummary("Test Title");
-		issue.setProjectKey("DEM");
-		issue.setComponentName("TEST");
-		issue.setPriorityName(JsonConstants.PRIORITY_CRITICAL);
-        IssueResponse issueResponse = restWrapper.createIssue(issue, jiraRestClient);
-        String issueKey = issueResponse.getKey();
-        System.out.println(!issueKey.isEmpty());
+
+    private void testGetIssueWithRenderedFields() throws RestException {
+        IssueBean issueBean = restWrapper.getIssueByKeyWithRenderedField(jiraRestClient, "DEMO-6");
+        System.out.println("testGetIssueByKey: " + issueBean.getRenderedFieldsBean().getDescription());
     }
+
+
 
 }

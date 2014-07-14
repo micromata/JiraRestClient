@@ -265,7 +265,11 @@ public class IssueParser extends BaseParser {
         	ChangelogBean changelogBean = ChangelogParser.parse(changelogElement.getAsJsonObject());
         	issueBean.setChangelog(changelogBean);
         }
-        
+        JsonElement jsonElement = jsonObject.get(ELEM_RENDERED_FIELDS);
+        if(checkNotNull(jsonElement)){
+            RenderedFieldsBean renderedFieldsBean = RenderedFieldsParser.parse(jsonElement.getAsJsonObject());
+            issueBean.setRenderedFieldsBean(renderedFieldsBean);
+        }
         return issueBean;
     }
 
