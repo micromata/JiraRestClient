@@ -371,9 +371,9 @@ public class IssueParser extends BaseParser {
 
         // timeesteimate
         TimetrackingBean timetrackingBean = issue.getTimetrackingBean();
-        if (timetrackingBean != null && timetrackingBean.getOriginalEstimateSeconds() > 0) {
+        if (timetrackingBean != null) {
             JsonObject timeTrackingObject = new JsonObject();
-            timeTrackingObject.addProperty(PROP_ORIGINALESTIMATE, timetrackingBean.getOriginalEstimateSeconds());
+            timeTrackingObject.addProperty(PROP_ORIGINALESTIMATE, timetrackingBean.getOriginalEstimate());
             fieldObject.add(ELEM_TIMETRACKING, timeTrackingObject);
         }
 

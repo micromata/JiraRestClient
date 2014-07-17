@@ -68,7 +68,7 @@ public class TestCreateStuff extends BaseTest {
         issue.getTags().add("inubit");
 
         TimetrackingBean timetrackingBean = new TimetrackingBean();
-        timetrackingBean.setOriginalEstimateSeconds(480l);
+        timetrackingBean.setOriginalEstimate("480");
         issue.setTimetrackingBean(timetrackingBean);
 
         IssueResponse issueResponse = restWrapper.createIssue(issue, jiraRestClient);
