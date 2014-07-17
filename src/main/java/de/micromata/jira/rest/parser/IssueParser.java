@@ -15,13 +15,15 @@
 
 package de.micromata.jira.rest.parser;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
+import com.google.gson.*;
 import de.micromata.jira.rest.domain.*;
 import de.micromata.jira.rest.util.DateParser;
 import de.micromata.jira.rest.util.GsonParserUtil;
+import de.micromata.jira.rest.util.JsonConstants;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,9 @@ import static de.micromata.jira.rest.util.JsonElementUtil.checkNotNull;
  */
 public class IssueParser extends BaseParser {
 
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    private static Gson gson = new Gson();
 
     public static IssueBean parse(JsonObject jsonObject) {
         IssueBean issueBean = new IssueBean();
@@ -262,11 +267,11 @@ public class IssueParser extends BaseParser {
 
         JsonElement changelogElement = jsonObject.get(ELEM_CHANGELOG);
         if (checkNotNull(changelogElement)) {
-        	ChangelogBean changelogBean = ChangelogParser.parse(changelogElement.getAsJsonObject());
-        	issueBean.setChangelog(changelogBean);
+            ChangelogBean changelogBean = ChangelogParser.parse(changelogElement.getAsJsonObject());
+            issueBean.setChangelog(changelogBean);
         }
         JsonElement jsonElement = jsonObject.get(ELEM_RENDERED_FIELDS);
-        if(checkNotNull(jsonElement)){
+        if (checkNotNull(jsonElement)) {
             RenderedFieldsBean renderedFieldsBean = RenderedFieldsParser.parse(jsonElement.getAsJsonObject());
             issueBean.setRenderedFieldsBean(renderedFieldsBean);
         }
@@ -280,5 +285,109 @@ public class IssueParser extends BaseParser {
             retval.add(parse(jsonObject));
         }
         return retval;
+    }
+
+    public static String parseIssueToJson(IssueBean issue) {
+        JsonObject parent = new JsonObject();
+        JsonObject fieldObject = new JsonObject();
+
+        // project
+        JsonObject projectObject = new JsonObject();
+        projectObject.addProperty(PROP_KEY, issue.getProjectKey());
+        fieldObject.add(ELEM_PROJECT, projectObject);
+
+        // issueType
+        JsonObject issueTypeObject = new JsonObject();
+        issueTypeObject.addProperty(PROP_NAME, ISSUETYPE_TASK);
+        fieldObject.add(ELEM_ISSUETYPE, issueTypeObject);
+
+        // summary
+        fieldObject.addProperty(PROP_SUMMARY, issue.getSummary());
+
+        // priority
+        JsonObject priorityObject = new JsonObject();
+        priorityObject.addProperty(PROP_NAME, PRIORITY_MAJOR);
+        fieldObject.add(ELEM_PRIORITY, priorityObject);
+
+        // duedate
+        Date dueDate = issue.getDueDate();
+        if (dueDate != null) {
+            String formatDueDate = sdf.format(dueDate);
+            fieldObject.addProperty(PROP_DUEDATE, formatDueDate);
+        }
+
+        // Components
+        JsonArray componentArray = new JsonArray();
+        List<ComponentBean> components = issue.getComponents();
+        for (ComponentBean component : components) {
+            JsonObject componentObject = new JsonObject();
+            componentObject.addProperty(PROP_NAME, component.getName());
+            componentArray.add(componentObject);
+        }
+        fieldObject.add(ELEM_COMPONENTS, componentArray);
+
+        // versions
+        JsonArray versionArray = new JsonArray();
+        List<VersionBean> versions = issue.getVersions();
+        for (VersionBean version : versions) {
+            JsonObject componentObject = new JsonObject();
+            componentObject.addProperty(PROP_NAME, version.getName());
+            versionArray.add(componentObject);
+        }
+        fieldObject.add(ELEM_VERSIONS, versionArray);
+
+
+        // fixversions
+        JsonArray fixVersionArray = new JsonArray();
+        List<VersionBean> fixVersions = issue.getFixVersions();
+        for (VersionBean version : fixVersions) {
+            JsonObject componentObject = new JsonObject();
+            componentObject.addProperty(PROP_NAME, version.getName());
+            fixVersionArray.add(componentObject);
+        }
+        fieldObject.add(ELEM_FIX_VERSIONS, fixVersionArray);
+
+        // assignee
+        UserBean assignee = issue.getAssignee();
+        if (assignee != null && StringUtils.trimToNull(assignee.getName()) != null) {
+            JsonObject assigneeObject = new JsonObject();
+            assigneeObject.addProperty(PROP_NAME, assignee.getName());
+            fieldObject.add(ELEM_ASSIGNEE, assigneeObject);
+        }
+
+        // reporter
+        UserBean reporter = issue.getReporter();
+        if (reporter != null && StringUtils.trimToNull(reporter.getName()) != null) {
+            JsonObject assigneeObject = new JsonObject();
+            assigneeObject.addProperty(PROP_NAME, reporter.getName());
+            fieldObject.add(ELEM_REPORTER, assigneeObject);
+        }
+
+        // enviroment
+        fieldObject.addProperty(PROP_ENVIRONMENT, issue.getEnvironment());
+
+        // description
+        fieldObject.addProperty(PROP_DESCRIPTION, issue.getDescription());
+
+        // timeesteimate
+        TimetrackingBean timetrackingBean = issue.getTimetrackingBean();
+        if (timetrackingBean != null && timetrackingBean.getOriginalEstimateSeconds() > 0) {
+            JsonObject timeTrackingObject = new JsonObject();
+            timeTrackingObject.addProperty(PROP_ORIGINALESTIMATE, timetrackingBean.getOriginalEstimateSeconds());
+            fieldObject.add(ELEM_TIMETRACKING, timeTrackingObject);
+        }
+
+        List<String> tags = issue.getTags();
+        JsonArray tagsObject = new JsonArray();
+        for (String tag : tags) {
+            JsonPrimitive jsonPrimitive = new JsonPrimitive(tag);
+            tagsObject.add(jsonPrimitive);
+        }
+        fieldObject.add(PROP_LABELS, tagsObject);
+
+
+        parent.add(JsonConstants.ELEM_FIELDS, fieldObject);
+        String jsonString = gson.toJson(parent);
+        return jsonString;
     }
 }

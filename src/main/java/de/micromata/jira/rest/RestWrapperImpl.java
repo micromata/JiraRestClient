@@ -16,6 +16,7 @@
 package de.micromata.jira.rest;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -66,7 +67,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
 			throws RestException {
 		Client client = jiraRestClient.getClient();
 		URI baseUri = jiraRestClient.getBaseUri();
-		String json = GsonParserUtil.parseIssueToJson(issue);
+		String json = IssueParser.parseIssueToJson(issue);
 		URI uri = RestURIBuilder.buildIssueURI(baseUri);
 		WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.entity(json)
@@ -93,6 +94,16 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         ClientResponse clientResponse = client.resource(uri).accept(MediaType.APPLICATION_OCTET_STREAM).get(ClientResponse.class);
         InputStream inputStream = clientResponse.getEntity(InputStream.class);
         return inputStream;
+    }
+
+    @Override
+    public void saveAttachmentToIssue(JiraRestClient jiraRestClient, File file, String issuekey) {
+        ApacheHttpClient client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = RestURIBuilder.buildAddAttachmentURI(baseUri, issuekey);
+        WebResource resource = client.resource(uri);
+        resource.getRequestBuilder().header("X-Atlassian-Token", "nocheck");
+        resource.type(MediaType.MULTIPART_FORM_DATA_TYPE);
     }
 
     @Override

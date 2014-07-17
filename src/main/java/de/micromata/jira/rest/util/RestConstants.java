@@ -55,6 +55,8 @@ public interface RestConstants {
 
     public static final String WORKLOG = "/worklog";
 
+    public static final String ATTACHMENTS = "/attachments";
+
     // Parameternames
 
     public static final String PARAM_USERNAME = "username";

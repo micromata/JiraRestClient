@@ -94,4 +94,8 @@ public class RestURIBuilder implements RestConstants {
     public static URI buildIssueURI(URI baseURI) {
         return UriBuilder.fromUri(baseURI).path(ISSUE).build();
     }
+
+    public static URI buildAddAttachmentURI(URI baseUri, String issueKey){
+        return UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(ATTACHMENTS).build();
+    }
 }

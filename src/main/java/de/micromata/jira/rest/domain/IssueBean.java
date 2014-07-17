@@ -17,6 +17,7 @@ package de.micromata.jira.rest.domain;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -115,6 +116,8 @@ public class IssueBean extends BaseBean {
     private ChangelogBean changelog = null;
 
     private RenderedFieldsBean renderedFieldsBean = null;
+
+    private List<String> tags = null;
 
     public String getExpand() {
         return expand;
@@ -246,6 +249,7 @@ public class IssueBean extends BaseBean {
     }
 
     public List<VersionBean> getFixVersions() {
+        if(fixVersions == null) fixVersions = new ArrayList<VersionBean>();
         return fixVersions;
     }
 
@@ -310,6 +314,7 @@ public class IssueBean extends BaseBean {
     }
 
     public List<VersionBean> getVersions() {
+        if(versions == null) versions = new ArrayList<VersionBean>();
         return versions;
     }
 
@@ -350,6 +355,7 @@ public class IssueBean extends BaseBean {
     }
 
     public List<ComponentBean> getComponents() {
+        if(components == null) components = new ArrayList<ComponentBean>();
         return components;
     }
 
@@ -451,14 +457,6 @@ public class IssueBean extends BaseBean {
 
     public void setVotesBean(VotesBean votesBean) {
         this.votesBean = votesBean;
-    }
-
-    public UserBean getReporterBean() {
-        return reporterBean;
-    }
-
-    public void setReporterBean(UserBean reporterBean) {
-        this.reporterBean = reporterBean;
     }
 
     public PriorityBean getPriorityBean() {
@@ -571,5 +569,16 @@ public class IssueBean extends BaseBean {
 
     public void setRenderedFieldsBean(RenderedFieldsBean renderedFieldsBean) {
         this.renderedFieldsBean = renderedFieldsBean;
+    }
+
+    public List<String> getTags() {
+        if(tags == null){
+            tags = new ArrayList<String>();
+        }
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }

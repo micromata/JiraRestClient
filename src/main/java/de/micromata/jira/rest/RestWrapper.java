@@ -16,6 +16,7 @@
 package de.micromata.jira.rest;
 
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
@@ -49,6 +50,13 @@ public interface RestWrapper {
      * @throws RestException
      */
     public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException;
+
+
+    /**
+     * Save Attachment to Issue
+     */
+    public void saveAttachmentToIssue(JiraRestClient jiraRestClient, File file, String issuekey);
+
 
     /**
      * Returns true if the worklog is successfully transfered to the Issue.
