@@ -324,8 +324,9 @@ public class IssueParser extends BaseParser {
             componentObject.addProperty(PROP_NAME, component.getName());
             componentArray.add(componentObject);
         }
-        fieldObject.add(ELEM_COMPONENTS, componentArray);
-
+        if(componentArray.size() > 0) {
+            fieldObject.add(ELEM_COMPONENTS, componentArray);
+        }
         // versions
         JsonArray versionArray = new JsonArray();
         List<VersionBean> versions = issue.getVersions();
@@ -334,7 +335,9 @@ public class IssueParser extends BaseParser {
             componentObject.addProperty(PROP_NAME, version.getName());
             versionArray.add(componentObject);
         }
-        fieldObject.add(ELEM_VERSIONS, versionArray);
+        if(versionArray.size() > 0) {
+            fieldObject.add(ELEM_VERSIONS, versionArray);
+        }
 
 
         // fixversions
@@ -345,8 +348,9 @@ public class IssueParser extends BaseParser {
             componentObject.addProperty(PROP_NAME, version.getName());
             fixVersionArray.add(componentObject);
         }
-        fieldObject.add(ELEM_FIX_VERSIONS, fixVersionArray);
-
+        if(fixVersionArray.size() > 0){
+            fieldObject.add(ELEM_FIX_VERSIONS, fixVersionArray);
+        }
         // assignee
         UserBean assignee = issue.getAssignee();
         if (assignee != null && StringUtils.trimToNull(assignee.getName()) != null) {
