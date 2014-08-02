@@ -27,8 +27,8 @@ import java.util.List;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
-import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.parser.*;
+import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.parser.*;
 import org.apache.commons.httpclient.auth.AuthScope;
 
 import com.google.gson.JsonArray;
@@ -43,23 +43,24 @@ import com.sun.jersey.client.apache.ApacheHttpClient;
 import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 
-import de.micromata.jira.rest.jql.EField;
-import de.micromata.jira.rest.jql.EOperator;
-import de.micromata.jira.rest.jql.JqlBuilder;
-import de.micromata.jira.rest.jql.JqlConstants;
-import de.micromata.jira.rest.jql.JqlSearchBean;
-import de.micromata.jira.rest.util.GsonParserUtil;
-import de.micromata.jira.rest.util.JsonConstants;
-import de.micromata.jira.rest.util.JsonElementUtil;
-import de.micromata.jira.rest.util.RestConstants;
-import de.micromata.jira.rest.util.RestException;
-import de.micromata.jira.rest.util.RestURIBuilder;
+import de.micromata.jira.rest.core.jql.EField;
+import de.micromata.jira.rest.core.jql.EOperator;
+import de.micromata.jira.rest.core.jql.JqlBuilder;
+import de.micromata.jira.rest.core.jql.JqlConstants;
+import de.micromata.jira.rest.core.jql.JqlSearchBean;
+import de.micromata.jira.rest.core.util.GsonParserUtil;
+import de.micromata.jira.rest.core.util.JsonConstants;
+import de.micromata.jira.rest.core.util.JsonElementUtil;
+import de.micromata.jira.rest.core.util.RestConstants;
+import de.micromata.jira.rest.core.util.RestException;
+import de.micromata.jira.rest.core.util.RestURIBuilder;
 
 
 /**
  * @author Christian Schulze
  * @author Vitali Filippow
  */
+@Deprecated
 public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
 
 	@Override
@@ -394,7 +395,6 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         } else {
             throw new RestException(clientResponse);
         }
-
     }
 
     @Override

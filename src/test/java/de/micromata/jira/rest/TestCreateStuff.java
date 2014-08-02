@@ -1,15 +1,13 @@
 package de.micromata.jira.rest;
 
-import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.util.JsonConstants;
-import de.micromata.jira.rest.util.RestException;
+import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.util.JsonConstants;
+import de.micromata.jira.rest.core.util.RestException;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Christian on 02.07.2014.

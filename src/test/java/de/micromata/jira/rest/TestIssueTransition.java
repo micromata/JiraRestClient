@@ -15,8 +15,8 @@
 
 package de.micromata.jira.rest;
 
-import de.micromata.jira.rest.domain.TransitionBean;
-import de.micromata.jira.rest.util.RestException;
+import de.micromata.jira.rest.core.domain.TransitionBean;
+import de.micromata.jira.rest.core.util.RestException;
 
 import java.net.URISyntaxException;
 import java.util.List;

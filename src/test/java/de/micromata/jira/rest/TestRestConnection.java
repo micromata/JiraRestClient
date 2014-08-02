@@ -17,26 +17,22 @@ package de.micromata.jira.rest;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
 
-import de.micromata.jira.rest.domain.*;
+import de.micromata.jira.rest.core.domain.*;
 import junit.framework.Assert;
 
 import org.apache.commons.io.IOUtils;
 
-import de.micromata.jira.rest.jql.EField;
-import de.micromata.jira.rest.jql.EOperator;
-import de.micromata.jira.rest.jql.JqlBuilder;
-import de.micromata.jira.rest.jql.JqlConstants;
-import de.micromata.jira.rest.jql.JqlSearchBean;
-import de.micromata.jira.rest.jql.SortOrder;
-import de.micromata.jira.rest.util.JsonConstants;
-import de.micromata.jira.rest.util.RestConstants;
-import de.micromata.jira.rest.util.RestException;
+import de.micromata.jira.rest.core.jql.EField;
+import de.micromata.jira.rest.core.jql.EOperator;
+import de.micromata.jira.rest.core.jql.JqlBuilder;
+import de.micromata.jira.rest.core.jql.JqlSearchBean;
+import de.micromata.jira.rest.core.jql.SortOrder;
+import de.micromata.jira.rest.core.util.RestException;
 
 /**
  * User: Christian

@@ -22,16 +22,23 @@ import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.client.apache.ApacheHttpClient;
 import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
-import de.micromata.jira.rest.util.RestConstants;
-import de.micromata.jira.rest.util.RestException;
-import de.micromata.jira.rest.util.RestURIBuilder;
+import de.micromata.jira.rest.client.IssueClient;
+import de.micromata.jira.rest.client.ProjectClient;
+import de.micromata.jira.rest.client.SearchClient;
+import de.micromata.jira.rest.client.SystemClient;
+import de.micromata.jira.rest.core.IssueClientImpl;
+import de.micromata.jira.rest.core.ProjectClientImpl;
+import de.micromata.jira.rest.core.SearchClientImpl;
+import de.micromata.jira.rest.core.SystemClientImpl;
+import de.micromata.jira.rest.core.util.RestConstants;
+import de.micromata.jira.rest.core.util.RestException;
+import de.micromata.jira.rest.core.util.RestURIBuilder;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.lang3.StringUtils;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.UriBuilder;
-import java.net.HttpURLConnection;
 import java.net.URI;
 
 /**
@@ -50,8 +57,16 @@ public class JiraRestClient {
     private String username = StringUtils.EMPTY;
 
 
-    public JiraRestClient() {
+    private JiraRestClient() {
     }
+
+
+    public static JiraRestClient create(URI uri, String username, String password) {
+        JiraRestClient retval = new JiraRestClient();
+        retval.connect(uri, username, password);
+        return retval;
+    }
+
 
     /**
      * Builds and configures a new client connection to JIRA.
@@ -88,6 +103,23 @@ public class JiraRestClient {
         }
         clientResponse.close();
         return status.getStatusCode();
+    }
+
+
+    public IssueClient getIssueClient() {
+        return new IssueClientImpl(this);
+    }
+
+    public ProjectClient getProjectClient() {
+        return new ProjectClientImpl(this);
+    }
+
+    public SearchClient getSearchClient() {
+        return new SearchClientImpl(this);
+    }
+
+    public SystemClient getSystemClient() {
+        return new SystemClientImpl(this);
     }
 
     /**

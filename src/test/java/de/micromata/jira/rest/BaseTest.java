@@ -1,10 +1,8 @@
 package de.micromata.jira.rest;
 
-import de.micromata.jira.rest.jql.JqlConstants;
-import de.micromata.jira.rest.util.RestConstants;
+import de.micromata.jira.rest.core.jql.JqlConstants;
+import de.micromata.jira.rest.core.util.RestConstants;
 
-import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
@@ -20,13 +18,13 @@ public class BaseTest implements JqlConstants, RestConstants {
     RestWrapper restWrapper;
 
     void connect() throws URISyntaxException {
-        URI uri = new URI(TEST_SYSTEM_URL);
-        restWrapper = new RestWrapperImpl();
-        jiraRestClient = new JiraRestClient();
-        int status = jiraRestClient.connect(uri, username, password);
-        if (status != HttpURLConnection.HTTP_OK) {
-            System.out.println("FehlerStatus: " + status);
-        }
+//        URI uri = new URI(TEST_SYSTEM_URL);
+//        restWrapper = new RestWrapperImpl();
+//        jiraRestClient = new JiraRestClient();
+//        int status = jiraRestClient.connect(uri, username, password);
+//        if (status != HttpURLConnection.HTTP_OK) {
+//            System.out.println("FehlerStatus: " + status);
+//        }
     }
 
 }

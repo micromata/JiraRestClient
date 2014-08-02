@@ -21,14 +21,15 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
-import de.micromata.jira.rest.domain.*;
-import de.micromata.jira.rest.jql.JqlSearchBean;
-import de.micromata.jira.rest.util.RestException;
+import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.jql.JqlSearchBean;
+import de.micromata.jira.rest.core.util.RestException;
 
 /**
  * @author Christian Schulze
  * @author Vitali Filippow
  */
+@Deprecated
 public interface RestWrapper {
 
     /**
