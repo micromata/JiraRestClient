@@ -29,6 +29,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import de.micromata.jira.rest.core.domain.*;
 import de.micromata.jira.rest.core.parser.*;
+import de.micromata.jira.rest.core.util.*;
 import org.apache.commons.httpclient.auth.AuthScope;
 
 import com.google.gson.JsonArray;
@@ -48,12 +49,7 @@ import de.micromata.jira.rest.core.jql.EOperator;
 import de.micromata.jira.rest.core.jql.JqlBuilder;
 import de.micromata.jira.rest.core.jql.JqlConstants;
 import de.micromata.jira.rest.core.jql.JqlSearchBean;
-import de.micromata.jira.rest.core.util.GsonParserUtil;
-import de.micromata.jira.rest.core.util.JsonConstants;
-import de.micromata.jira.rest.core.util.JsonElementUtil;
-import de.micromata.jira.rest.core.util.RestConstants;
-import de.micromata.jira.rest.core.util.RestException;
-import de.micromata.jira.rest.core.util.RestURIBuilder;
+import de.micromata.jira.rest.core.util.RestPathConstants;
 
 
 /**
@@ -61,8 +57,9 @@ import de.micromata.jira.rest.core.util.RestURIBuilder;
  * @author Vitali Filippow
  */
 @Deprecated
-public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants {
+public class RestWrapperImpl implements RestWrapper, RestPathConstants, JqlConstants, RestParamConstants {
 
+    @Deprecated
 	@Override
 	public IssueResponse createIssue(IssueBean issue, JiraRestClient jiraRestClient)
 			throws RestException {
@@ -88,7 +85,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         }
         return null;
 	}
-	
+
+    @Deprecated
     @Override
     public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException {
         Client client = jiraRestClient.getClient();
@@ -97,6 +95,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         return inputStream;
     }
 
+    @Deprecated
     @Override
     public void saveAttachmentToIssue(JiraRestClient jiraRestClient, File file, String issuekey) {
         ApacheHttpClient client = jiraRestClient.getClient();
@@ -397,6 +396,7 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         }
     }
 
+    @Deprecated
     @Override
     public JqlSearchResultBean searchIssuesForProject(JiraRestClient jiraRestClient, JqlSearchBean jsb) throws RestException {
 
@@ -500,8 +500,8 @@ public class RestWrapperImpl implements RestWrapper, RestConstants, JqlConstants
         clientConfig.getState().setCredentials(AuthScope.ANY_REALM, uri.getHost(), uri.getPort(), username, password);
         ApacheHttpClient client = ApacheHttpClient.create(clientConfig);
 
-        URI userUri = UriBuilder.fromUri(uri).path(RestConstants.BASE_REST_PATH).path(USER).build();
-        WebResource webResource = client.resource(userUri).queryParam(PARAM_USERNAME, username);
+        URI userUri = UriBuilder.fromUri(uri).path(RestPathConstants.BASE_REST_PATH).path(USER).build();
+        WebResource webResource = client.resource(userUri).queryParam(USERNAME, username);
 
         ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {

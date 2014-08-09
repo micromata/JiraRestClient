@@ -22,7 +22,8 @@ import java.net.URI;
  * @author Christian Schulze
  * @author Vitali Filippow
  */
-public class RestURIBuilder implements RestConstants {
+@Deprecated
+public class RestURIBuilder implements RestPathConstants, RestParamConstants {
 
 
     public static URI buildAllProjectURI(URI baseUri) {
@@ -47,7 +48,7 @@ public class RestURIBuilder implements RestConstants {
 
     public static URI buildIssueByKeyURIWithExpandRenderedFields(URI baseURI, String issueKey) {
         UriBuilder path = UriBuilder.fromUri(baseURI).path(ISSUE).path(issueKey);
-        path.queryParam(EXPAND, RENDERED_FIELD);
+        path.queryParam(EXPAND, RENDERED_FIELDS);
         return path.build();
     }
 
@@ -73,7 +74,7 @@ public class RestURIBuilder implements RestConstants {
 
     public static URI buildGetUserByUsername(URI baseUri, String username) {
         UriBuilder path = UriBuilder.fromUri(baseUri).path(USER);
-        path.queryParam(PARAM_USERNAME, username);
+        path.queryParam(USERNAME, username);
         return path.build();
     }
 

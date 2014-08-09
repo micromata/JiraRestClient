@@ -1,14 +1,14 @@
 package de.micromata.jira.rest;
 
 import de.micromata.jira.rest.core.jql.JqlConstants;
-import de.micromata.jira.rest.core.util.RestConstants;
+import de.micromata.jira.rest.core.util.RestPathConstants;
 
 import java.net.URISyntaxException;
 
 /**
  * Created by Christian on 02.07.2014.
  */
-public class BaseTest implements JqlConstants, RestConstants {
+public class BaseTest implements JqlConstants, RestPathConstants {
     static final String TEST_SYSTEM_URL = "http://localhost:2990/jira";
     static final String username = "admin";
     static final String password = "admin";

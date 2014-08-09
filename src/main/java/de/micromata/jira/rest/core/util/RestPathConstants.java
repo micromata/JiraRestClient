@@ -19,16 +19,15 @@ package de.micromata.jira.rest.core.util;
  * @author Christian Schulze
  * @author Vitali Filippow
  */
-public interface RestConstants {
+public interface RestPathConstants {
 
     // Common Stuff for Jersey Client
 
     public static final String AUTHORIZATION = "Authorization";
 
-    public static final String BASIC = "Basic ";
+    public static final String BASIC = "Basic";
 
     // REST Paths
-
     public static final String BASE_REST_PATH = "/rest/api/2";
 
     public static final String PROJECT = "/project";
@@ -57,21 +56,6 @@ public interface RestConstants {
 
     public static final String ATTACHMENTS = "/attachments";
 
-    // Parameternames
+    public static final String ASSIGNABLE = "/assignable";
 
-    public static final String PARAM_USERNAME = "username";
-
-    public static final String JQL = "jql";
-
-    public static final String START_AT = "startAt";
-
-    public static final String MAX_RESULTS = "maxResults";
-
-    public static final String FIELDS = "fields";
-
-    public static final String EXPAND = "expand";
-
-    public static final String TRANSITIONS_FIELDS = "transitions.fields";
-
-    public static final String RENDERED_FIELD = "renderedFields";
 }

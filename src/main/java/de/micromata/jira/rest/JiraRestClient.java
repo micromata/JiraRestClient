@@ -22,20 +22,13 @@ import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.client.apache.ApacheHttpClient;
 import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
-import de.micromata.jira.rest.client.IssueClient;
-import de.micromata.jira.rest.client.ProjectClient;
-import de.micromata.jira.rest.client.SearchClient;
-import de.micromata.jira.rest.client.SystemClient;
-import de.micromata.jira.rest.core.IssueClientImpl;
-import de.micromata.jira.rest.core.ProjectClientImpl;
-import de.micromata.jira.rest.core.SearchClientImpl;
-import de.micromata.jira.rest.core.SystemClientImpl;
-import de.micromata.jira.rest.core.util.RestConstants;
+import de.micromata.jira.rest.client.*;
+import de.micromata.jira.rest.core.*;
+import de.micromata.jira.rest.core.util.RestPathConstants;
 import de.micromata.jira.rest.core.util.RestException;
 import de.micromata.jira.rest.core.util.RestURIBuilder;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.lang3.StringUtils;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.UriBuilder;
@@ -94,7 +87,7 @@ public class JiraRestClient {
             return status.getStatusCode();
         }
         // Prüfen ob der Nutzer sich anmelden kann indem wir seine nutzerdaten abrufen
-        this.baseUri = UriBuilder.fromUri(uri).path(RestConstants.BASE_REST_PATH).build();
+        this.baseUri = UriBuilder.fromUri(uri).path(RestPathConstants.BASE_REST_PATH).build();
         URI uri1 = RestURIBuilder.buildGetUserByUsername(baseUri, username);
         clientResponse = this.client.resource(uri1).get(ClientResponse.class);
         status = clientResponse.getClientResponseStatus();
@@ -120,6 +113,10 @@ public class JiraRestClient {
 
     public SystemClient getSystemClient() {
         return new SystemClientImpl(this);
+    }
+
+    public UserClient getUserClient(){
+        return new UserClientImpl(this);
     }
 
     /**
