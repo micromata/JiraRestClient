@@ -11,10 +11,9 @@ import de.micromata.jira.rest.core.parser.BasicProjectParser;
 import de.micromata.jira.rest.core.parser.ComponentParser;
 import de.micromata.jira.rest.core.parser.ProjectParser;
 import de.micromata.jira.rest.core.parser.VersionParser;
-import de.micromata.jira.rest.core.util.GsonParserUtil;
-import de.micromata.jira.rest.core.util.RestException;
-import de.micromata.jira.rest.core.util.RestURIBuilder;
+import de.micromata.jira.rest.core.util.*;
 
+import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -26,7 +25,7 @@ import java.util.List;
  * Author: Christian
  * Date: 31.07.2014
  */
-public class ProjectClientImpl implements ProjectClient{
+public class ProjectClientImpl implements ProjectClient, RestParamConstants, RestPathConstants {
 
 
     private JiraRestClient jiraRestClient = null;
@@ -34,7 +33,7 @@ public class ProjectClientImpl implements ProjectClient{
     private ProjectClientImpl() {
     }
 
-    public ProjectClientImpl(JiraRestClient jiraRestClient){
+    public ProjectClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;
     }
 
@@ -43,7 +42,7 @@ public class ProjectClientImpl implements ProjectClient{
     public ProjectBean getProjectByKey(String projectKey) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = RestURIBuilder.buildProjectByKeyURI(baseUri, projectKey);
+        URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).path(projectKey).build();
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
         if (response.getStatus() == HttpURLConnection.HTTP_OK) {
@@ -65,7 +64,7 @@ public class ProjectClientImpl implements ProjectClient{
     public List<BasicProjectBean> getAllProjects() throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = RestURIBuilder.buildAllProjectURI(baseUri);
+        URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).build();
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
         if (response.getStatus() == HttpURLConnection.HTTP_OK) {
@@ -85,11 +84,12 @@ public class ProjectClientImpl implements ProjectClient{
         }
     }
 
+
     @Override
     public List<VersionBean> getProjectVersions(String projectKey) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = RestURIBuilder.buildProjectVersionsByKeyURI(baseUri, projectKey);
+        URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).path(projectKey).path(VERSIONS).build();
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
@@ -108,15 +108,13 @@ public class ProjectClientImpl implements ProjectClient{
             clientResponse.close();
             throw new RestException(clientResponse);
         }
-
-
     }
 
     @Override
-    public List<ComponentBean> getProjectComponents( String projectKey) throws RestException {
+    public List<ComponentBean> getProjectComponents(String projectKey) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = RestURIBuilder.buildProjectComponentsByKeyURI(baseUri, projectKey);
+        URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).path(projectKey).path(COMPONENTS).build();
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {

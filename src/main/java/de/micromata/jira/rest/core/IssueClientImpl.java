@@ -69,12 +69,22 @@ public class IssueClientImpl implements IssueClient {
     }
 
     @Override
+    public JqlSearchResultBean getIssuesForProject(String projectKey) throws RestException {
+        return null;
+    }
+
+    @Override
+    public IssueBean getIssueByKey(String issueKey) throws RestException {
+        return null;
+    }
+
+    @Override
     public CommentSummaryBean getCommentsByIssue(String issueKey) throws RestException {
         return null;
     }
 
     @Override
-    public InputStream getAttachment(JiraRestClient jiraRestClient, URI uri) throws RestException {
+    public InputStream getAttachment(URI uri) throws RestException {
         Client client = jiraRestClient.getClient();
         ClientResponse clientResponse = client.resource(uri).accept(MediaType.APPLICATION_OCTET_STREAM).get(ClientResponse.class);
         InputStream inputStream = clientResponse.getEntity(InputStream.class);
@@ -83,7 +93,7 @@ public class IssueClientImpl implements IssueClient {
 
 
     @Override
-    public void saveAttachmentToIssue(JiraRestClient jiraRestClient, File file, String issuekey) {
+    public void saveAttachmentToIssue(File file, String issuekey) {
         throw new NotImplementedException();
 
 //        ApacheHttpClient client = jiraRestClient.getClient();
@@ -95,7 +105,7 @@ public class IssueClientImpl implements IssueClient {
     }
 
     @Override
-    public boolean transferWorklogInIssue(JiraRestClient jiraRestClient, String issueKey, WorklogBean worklog) throws RestException {
+    public boolean transferWorklogInIssue(String issueKey, WorklogBean worklog) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         String json = GsonParserUtil.parseWorklogToJson(worklog);
@@ -112,7 +122,7 @@ public class IssueClientImpl implements IssueClient {
     }
 
     @Override
-    public boolean updateIssueTransitionByKey(JiraRestClient jiraRestClient, String issueKey, int transitionId) throws RestException {
+    public boolean updateIssueTransitionByKey(String issueKey, int transitionId) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
 
@@ -130,7 +140,7 @@ public class IssueClientImpl implements IssueClient {
     }
 
     @Override
-    public List<TransitionBean> getIssueTransitionsByKey(JiraRestClient jiraRestClient, String issueKey) throws RestException {
+    public List<TransitionBean> getIssueTransitionsByKey(String issueKey) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = RestURIBuilder.buildIssueTransitionsByKeyExpandFields(baseUri, issueKey);

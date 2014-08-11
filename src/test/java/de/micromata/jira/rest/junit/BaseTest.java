@@ -20,14 +20,17 @@ import java.net.URISyntaxException;
 public class BaseTest implements JqlConstants, RestPathConstants {
 
     static final String TEST_SYSTEM_URL = "http://localhost:2990/jira";
-    static final String username = "admin";
-    static final String password = "admin";
+    static final String USERNAME = "admin";
+    static final String PASSWORD = "admin";
+    static final String USERNAME_TO_SEARCH = "admin";
+    static final String ISSUEKEY_TO_SEARCH = "DEMO-1";
+    static final String PROJECT_TO_SEARCH = "DEMO";
 
     JiraRestClient jiraRestClient;
 
     @Before
     public void connect() throws URISyntaxException {
         URI uri = new URI(TEST_SYSTEM_URL);
-        jiraRestClient = JiraRestClient.create(uri, username, password);
+        jiraRestClient = JiraRestClient.create(uri, USERNAME, PASSWORD);
     }
 }

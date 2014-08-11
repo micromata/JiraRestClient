@@ -15,12 +15,6 @@ import java.util.List;
 public class TestUserClient extends BaseTest {
 
 
-    static final String USERNAME_TO_SEARCH = "admin";
-
-    static final String ISSUEKEY_TO_SEARCH = "DEMO-1";
-
-    static final String PROJECT_TO_SEARCH = "DEMO";
-
     @Test
     public void testGetUserByUsername() throws RestException {
         UserBean userBean = jiraRestClient.getUserClient().getUserByUsername(USERNAME_TO_SEARCH);
