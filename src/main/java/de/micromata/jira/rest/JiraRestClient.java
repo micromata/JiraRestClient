@@ -24,6 +24,7 @@ import com.sun.jersey.client.apache.config.ApacheHttpClientConfig;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import de.micromata.jira.rest.client.*;
 import de.micromata.jira.rest.core.*;
+import de.micromata.jira.rest.core.util.RestParamConstants;
 import de.micromata.jira.rest.core.util.RestPathConstants;
 import de.micromata.jira.rest.core.util.RestException;
 import de.micromata.jira.rest.core.util.RestURIBuilder;
@@ -38,7 +39,7 @@ import java.net.URI;
  * @author Christian Schulze
  * @author Vitali Filippow
  */
-public class JiraRestClient {
+public class JiraRestClient implements RestParamConstants, RestPathConstants {
 
     private ApacheHttpClient client;
 
@@ -88,7 +89,9 @@ public class JiraRestClient {
         }
         // Prüfen ob der Nutzer sich anmelden kann indem wir seine nutzerdaten abrufen
         this.baseUri = UriBuilder.fromUri(uri).path(RestPathConstants.BASE_REST_PATH).build();
-        URI uri1 = RestURIBuilder.buildGetUserByUsername(baseUri, username);
+        UriBuilder path = UriBuilder.fromUri(baseUri).path(USER);
+        path.queryParam(USERNAME, username);
+        URI uri1 = path.build();
         clientResponse = this.client.resource(uri1).get(ClientResponse.class);
         status = clientResponse.getClientResponseStatus();
         if (status == Status.UNAUTHORIZED) {
@@ -115,7 +118,7 @@ public class JiraRestClient {
         return new SystemClientImpl(this);
     }
 
-    public UserClient getUserClient(){
+    public UserClient getUserClient() {
         return new UserClientImpl(this);
     }
 

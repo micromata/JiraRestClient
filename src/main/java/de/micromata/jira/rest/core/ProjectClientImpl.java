@@ -133,4 +133,24 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
             throw new RestException(clientResponse);
         }
     }
+
+    @Override
+    public ComponentBean getComponentById(long id) throws RestException {
+        return null;
+    }
+
+    @Override
+    public VersionBean getVersionById(long id) throws RestException {
+        return null;
+    }
+
+    @Override
+    public ComponentBean updateComponent(ComponentBean componentBean) throws RestException {
+        return null;
+    }
+
+    @Override
+    public VersionBean updateVersion(VersionBean versionBean) throws RestException {
+        return null;
+    }
 }

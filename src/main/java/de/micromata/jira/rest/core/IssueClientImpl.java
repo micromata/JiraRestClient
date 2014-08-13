@@ -10,14 +10,12 @@ import com.sun.jersey.client.apache.ApacheHttpClient;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.IssueClient;
 import de.micromata.jira.rest.core.domain.*;
-import de.micromata.jira.rest.core.parser.ErrorParser;
-import de.micromata.jira.rest.core.parser.IssueParser;
-import de.micromata.jira.rest.core.parser.IssueResponseParser;
-import de.micromata.jira.rest.core.parser.TransitionParser;
+import de.micromata.jira.rest.core.parser.*;
 import de.micromata.jira.rest.core.util.*;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +28,7 @@ import java.util.List;
  * Author: Christian
  * Date: ${Date}
  */
-public class IssueClientImpl implements IssueClient {
+public class IssueClientImpl implements IssueClient, RestParamConstants, RestPathConstants{
 
     private JiraRestClient jiraRestClient = null;
 
@@ -48,7 +46,7 @@ public class IssueClientImpl implements IssueClient {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         String json = IssueParser.parseIssueToJson(issue);
-        URI uri = RestURIBuilder.buildIssueURI(baseUri);
+        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).build();
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.entity(json)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
@@ -75,12 +73,43 @@ public class IssueClientImpl implements IssueClient {
 
     @Override
     public IssueBean getIssueByKey(String issueKey) throws RestException {
-        return null;
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
+        ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
+            return IssueParser.parse(jsonObject);
+        } else {
+            throw new RestException(clientResponse);
+        }
     }
 
     @Override
     public CommentSummaryBean getCommentsByIssue(String issueKey) throws RestException {
-        return null;
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(COMMENT).build();
+        ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return CommentSummaryParser.parse(jsonObject);
+        } else {
+            throw new RestException(clientResponse);
+        }
     }
 
     @Override
@@ -109,14 +138,13 @@ public class IssueClientImpl implements IssueClient {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         String json = GsonParserUtil.parseWorklogToJson(worklog);
-        URI uri = RestURIBuilder.buildIssueWorklogByKeyURI(baseUri, issueKey);
+        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(WORKLOG).build();
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_CREATED) {
             clientResponse.close();
             return true;
         } else {
-            clientResponse.close();
             throw new RestException(clientResponse);
         }
     }
@@ -127,14 +155,13 @@ public class IssueClientImpl implements IssueClient {
         URI baseUri = jiraRestClient.getBaseUri();
 
         String json = GsonParserUtil.parseTransitionToJson(transitionId);
-        URI uri = RestURIBuilder.buildIssueTransitionsByKeyURI(baseUri, issueKey);
+        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(TRANSITIONS).build();
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(json).post(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_NO_CONTENT) {
             clientResponse.close();
             return true;
         } else {
-            clientResponse.close();
             throw new RestException(clientResponse);
         }
     }
@@ -143,7 +170,9 @@ public class IssueClientImpl implements IssueClient {
     public List<TransitionBean> getIssueTransitionsByKey(String issueKey) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = RestURIBuilder.buildIssueTransitionsByKeyExpandFields(baseUri, issueKey);
+        UriBuilder path = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(TRANSITIONS);
+        path.queryParam(EXPAND, TRANSITIONS_FIELDS);
+        URI uri = path.build();
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.get(ClientResponse.class);
         if (response.getStatus() == HttpURLConnection.HTTP_OK) {

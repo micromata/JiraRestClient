@@ -14,6 +14,7 @@ import de.micromata.jira.rest.core.parser.PriorityParser;
 import de.micromata.jira.rest.core.parser.StatusParser;
 import de.micromata.jira.rest.core.util.*;
 
+import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -42,7 +43,7 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
     public List<IssueTypeBean> getIssueTypes() throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = RestURIBuilder.buildIssueTypeURI(baseUri);
+        URI uri = UriBuilder.fromUri(baseUri).path(ISSUETPYES).build();
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
@@ -66,7 +67,7 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
     public List<StatusBean> getStates() throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = RestURIBuilder.buildStateURI(baseUri);
+        URI uri = UriBuilder.fromUri(baseUri).path(STATUS).build();
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
@@ -90,7 +91,7 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
     public List<PriorityBean> getPriorities() throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = RestURIBuilder.buildStateURI(baseUri);
+        URI uri = UriBuilder.fromUri(baseUri).path(STATUS).build();
         WebResource webResource = client.resource(uri);
         ClientResponse clientResponse = webResource.get(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {

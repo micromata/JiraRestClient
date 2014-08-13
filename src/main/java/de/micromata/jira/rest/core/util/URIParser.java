@@ -15,6 +15,8 @@
 
 package de.micromata.jira.rest.core.util;
 
+import org.apache.commons.validator.routines.UrlValidator;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -25,10 +27,14 @@ import java.net.URISyntaxException;
 public class URIParser {
 
     public static URI parseStringToURI(String uri) {
-        try {
-            return new URI(uri);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+        String[] schemes = {"http","https"};
+        UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.ALLOW_LOCAL_URLS);
+        if(urlValidator.isValid(uri)){
+            try {
+                return new URI(uri);
+            } catch (URISyntaxException e) {
+                return null;
+            }
         }
         return null;
     }

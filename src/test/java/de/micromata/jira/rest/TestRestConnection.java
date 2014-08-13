@@ -55,8 +55,8 @@ public class TestRestConnection extends BaseTest {
 //        testGetProjectVersions();
 //        testGetProjectComponents();
 //        testGetIssuesForProject();
-//        testSearchIssuesForProject();
-//        testExtendedSearchIssuesForProject();
+        testSearchIssuesForProject();
+        testExtendedSearchIssuesForProject();
 //        testGetIssueByKey();
 //        testGetCommentsByIssue();
 //        testGetIssueTypes();
@@ -202,7 +202,7 @@ public class TestRestConnection extends BaseTest {
 //        boolean update = restWrapper.updateIssueTransitionByKey(jiraRestClient, issueKey, transitionId);
 //
 //        //Status vom Issue nach Update
-//        bean = restWrapper.searchIssuesForProject(jiraRestClient, jsb);
+//        bean = restWrapper.searchIssues(jiraRestClient, jsb);
 //        status = bean.getIssueBeans().iterator().next().getStatus().getName();
 //        System.out.println("Status nach Update: " + status);
 //        System.out.println("---------------------------------------------------------------------------------------------------");

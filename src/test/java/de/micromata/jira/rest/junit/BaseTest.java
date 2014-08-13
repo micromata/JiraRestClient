@@ -7,6 +7,7 @@ import org.junit.Before;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 
 /**
  * Junit-Test for JiraRestClient.
@@ -25,6 +26,8 @@ public class BaseTest implements JqlConstants, RestPathConstants {
     static final String USERNAME_TO_SEARCH = "admin";
     static final String ISSUEKEY_TO_SEARCH = "DEMO-1";
     static final String PROJECT_TO_SEARCH = "DEMO";
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     JiraRestClient jiraRestClient;
 

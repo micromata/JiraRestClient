@@ -17,5 +17,5 @@ public interface SearchClient {
      * @return list of issues
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public JqlSearchResultBean searchIssuesForProject(JqlSearchBean jsb) throws RestException;
+    public JqlSearchResultBean searchIssues(JqlSearchBean jsb) throws RestException;
 }
