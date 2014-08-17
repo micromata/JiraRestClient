@@ -92,10 +92,14 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         UriBuilder path = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey);
-        String fieldsParam = StringUtils.join(fields, SEPARATOR);
-        path.queryParam(FIELDS, fieldsParam);
-        String expandParam = StringUtils.join(expand, SEPARATOR);
-        path.queryParam(EXPAND, expandParam);
+        if(fields != null && fields.isEmpty() == false){
+            String fieldsParam = StringUtils.join(fields, SEPARATOR);
+            path.queryParam(FIELDS, fieldsParam);
+        }
+        if(expand != null && expand.isEmpty() == false){
+            String expandParam = StringUtils.join(expand, SEPARATOR);
+            path.queryParam(EXPAND, expandParam);
+        }
         URI uri = path.build();
         ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
