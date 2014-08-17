@@ -1,12 +1,14 @@
 package de.micromata.jira.rest.junit;
 
 import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.jql.EField;
 import de.micromata.jira.rest.core.util.JsonConstants;
 import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
 import org.junit.Test;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +29,22 @@ public class TestIssueClient extends BaseTest {
         Assert.assertNotNull(issueByKey);
         Assert.assertEquals(ISSUE_KEY, issueByKey.getKey());
     }
+
+
+    @Test
+    public void testGetIssueKeyWithFields() throws RestException {
+        List<String> field = new ArrayList<String>();
+        field.add(EField.SUMMARY.getField());
+        field.add(EField.DESCRIPTION.getField());
+        List<String> expand = new ArrayList<String>();
+        expand.add(EField.RENDEREDFIELDS.getField());
+        IssueBean issueByKey = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY, field, expand);
+        Assert.assertNotNull(issueByKey);
+        Assert.assertNotNull(issueByKey.getSummary());
+        Assert.assertNotNull(issueByKey.getDescription());
+        Assert.assertNotNull(issueByKey.getRenderedFieldsBean());
+    }
+
 
     @Test
     public void testCreateIssue() throws ParseException, RestException {

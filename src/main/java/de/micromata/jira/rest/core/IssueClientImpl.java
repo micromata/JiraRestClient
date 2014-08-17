@@ -6,13 +6,12 @@ import com.google.gson.JsonObject;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.client.apache.ApacheHttpClient;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.IssueClient;
 import de.micromata.jira.rest.core.domain.*;
 import de.micromata.jira.rest.core.parser.*;
 import de.micromata.jira.rest.core.util.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
@@ -28,8 +27,9 @@ import java.util.List;
  * Author: Christian
  * Date: ${Date}
  */
-public class IssueClientImpl implements IssueClient, RestParamConstants, RestPathConstants{
+public class IssueClientImpl implements IssueClient, RestParamConstants, RestPathConstants {
 
+    private static final String SEPARATOR = ",";
     private JiraRestClient jiraRestClient = null;
 
     private IssueClientImpl() {
@@ -67,15 +67,36 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
     }
 
     @Override
-    public JqlSearchResultBean getIssuesForProject(String projectKey) throws RestException {
-        return null;
-    }
-
-    @Override
     public IssueBean getIssueByKey(String issueKey) throws RestException {
         Client client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
+        ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
+        if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            clientResponse.close();
+            return IssueParser.parse(jsonObject);
+        } else {
+            throw new RestException(clientResponse);
+        }
+    }
+
+    @Override
+    public IssueBean getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException {
+        Client client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        UriBuilder path = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey);
+        String fieldsParam = StringUtils.join(fields, SEPARATOR);
+        path.queryParam(FIELDS, fieldsParam);
+        String expandParam = StringUtils.join(expand, SEPARATOR);
+        path.queryParam(EXPAND, expandParam);
+        URI uri = path.build();
         ClientResponse clientResponse = client.resource(uri).get(ClientResponse.class);
         if (clientResponse.getStatus() == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = clientResponse.getEntityInputStream();
@@ -123,7 +144,6 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
 
     @Override
     public void saveAttachmentToIssue(File file, String issuekey) {
-        throw new NotImplementedException();
 
 //        ApacheHttpClient client = jiraRestClient.getClient();
 //        URI baseUri = jiraRestClient.getBaseUri();

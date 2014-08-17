@@ -27,7 +27,6 @@ import de.micromata.jira.rest.core.*;
 import de.micromata.jira.rest.core.util.RestParamConstants;
 import de.micromata.jira.rest.core.util.RestPathConstants;
 import de.micromata.jira.rest.core.util.RestException;
-import de.micromata.jira.rest.core.util.RestURIBuilder;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.lang3.StringUtils;
 
@@ -51,7 +50,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
     private String username = StringUtils.EMPTY;
 
 
-    private JiraRestClient() {
+    public JiraRestClient() {
     }
 
 
@@ -100,7 +99,6 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         clientResponse.close();
         return status.getStatusCode();
     }
-
 
     public IssueClient getIssueClient() {
         return new IssueClientImpl(this);

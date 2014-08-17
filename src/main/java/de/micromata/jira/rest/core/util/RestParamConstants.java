@@ -23,4 +23,6 @@ public interface RestParamConstants {
     static final String MAX_RESULTS = "maxResults";
 
     static final String PROJECTKEY = "project";
+
+    static final String FIELDS = "fields";
 }

@@ -22,70 +22,71 @@ public interface IssueClient {
     public IssueResponse createIssue(IssueBean issue) throws RestException;
 
 
-
-    /**
-     * Returns a list of all issues for the given project.
-     *
-     * @param projectKey     = the project key
-     * @return JQL search results
-     * @throws RestException
-     */
-    public JqlSearchResultBean getIssuesForProject( String projectKey) throws RestException;
-
     /**
      * Returns a full representation of the issue for the given issue key.
      *
-     * @param issueKey       = issue key
+     * @param issueKey = issue key
      * @return all informations for the issue
      * @throws RestException
      */
-    public IssueBean getIssueByKey( String issueKey) throws RestException;
+    public IssueBean getIssueByKey(String issueKey) throws RestException;
+
+
+    /**
+     * Return a Issue with the given Field and Expand Fields.
+     *
+     * @param issueKey The IssueKey
+     * @param fields The field you want to return.
+     * @param expand The Field which must expand.
+     * @return IssueBean
+     */
+    public IssueBean getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException;
 
     /**
      * Get Attachement as InputStream
      *
-     * @param uri            = the uri of the resource
+     * @param uri = the uri of the resource
      * @return
      * @throws RestException
      */
-    public InputStream getAttachment( URI uri) throws RestException;
+    public InputStream getAttachment(URI uri) throws RestException;
 
     /**
      * Save Attachment to Issue
      */
-    public void saveAttachmentToIssue( File file, String issuekey);
+    public void saveAttachmentToIssue(File file, String issuekey);
 
     /**
      * Returns true if the worklog is successfully transfered to the Issue.
      * <p/>
      * <p>This method is for merging log time for an Issue.
      *
-     * @param issueKey       = the issue key
-     * @param worklog        = the one which would be transfered
+     * @param issueKey = the issue key
+     * @param worklog  = the one which would be transfered
      * @return created state
      * @throws RestException
      */
-    public boolean transferWorklogInIssue( String issueKey,
+    public boolean transferWorklogInIssue(String issueKey,
                                           WorklogBean worklog) throws RestException;
 
     /**
      * Returns true if the transition update on an Issue success.
      *
-     * @param issueKey       = the issue key
-     * @param transitionId   = the transition id
+     * @param issueKey     = the issue key
+     * @param transitionId = the transition id
      * @return success state
      * @throws RestException
      */
-    public boolean updateIssueTransitionByKey( String issueKey, int transitionId) throws RestException;
+    public boolean updateIssueTransitionByKey(String issueKey, int transitionId) throws RestException;
 
     /**
      * Returns available transitions for an Issue in a map with transition id and properties.
      *
-     * @param issueKey       = the issue key
+     * @param issueKey = the issue key
      * @return List of TransitionBean
      * @throws RestException
      */
-    public List<TransitionBean> getIssueTransitionsByKey( String issueKey) throws RestException;
+    public List<TransitionBean> getIssueTransitionsByKey(String issueKey) throws RestException;
 
     /**
      * Returns a summarized representation of all comments for the given issue.
