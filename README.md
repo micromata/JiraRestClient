@@ -13,7 +13,7 @@ Before you build the Client you can test the Connection with the following Code:
     String password = "password";
     Jira RestClient jiraRestClient = JiraRestClient.create(uri, username, password);
 
-Then you can get the Client yo need with:
+Then you can get the Client you need with:
 
     jiraRestClient.getIssueClient();
     jiraRestClient.getProjectClient();
