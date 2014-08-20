@@ -6,26 +6,22 @@ This is a simple JiraRestClient to use the RestAPI V2.0 of Jira.
 
 Download and build the jar.
 
-
-Bevor you build the Client you can test the Connection with the following Code:
+Before you build the Client you can test the Connection with the following Code:
 
     URI uri = new URI("https://team.micromata.de/jira");
     String username = "username";
     String password = "password";
-    boolean success = restWrapper.testRestConnection(uri, username, password);
+    Jira RestClient jiraRestClient = JiraRestClient.create(uri, username, password);
+
+Then you can get the Client yo need with:
+
+    jiraRestClient.getIssueClient();
+    jiraRestClient.getProjectClient();
+    jiraRestClient.getSearchClient();
+    jiraRestClient.getUserClient();
 
 
-After that you can create a JiraRestClient like this:
-
-    JiraRestClient jiraRestClient = new JiraRestClient(uri, username, password);
-
-With this Client you can use the RestWrapper:
-
-    RestWrapper restWrapper = new RestWrapperImpl();
-
-Every single Methode of the RestWrapper needs the JiraRestClient to get the Informations from the Jira.
-
-Enjoy an has fun!
+Enjoy 
 
 
 ### Usage inside a Jira Plugin
