@@ -126,26 +126,20 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
     @Override
     public InputStream getAttachment(URI uri) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
-        GetMethod method = new GetMethod();
+        GetMethod method = new GetMethod(uri.getPath());
+        method.setQueryString(uri.getQuery());
         method.setRequestHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_OCTET_STREAM);
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
             return method.getResponseBodyAsStream();
-        } else {
-            throw new RestException(method);
         }
+        return null;
     }
 
 
     @Override
     public void saveAttachmentToIssue(File file, String issuekey) {
 
-//        ApacheHttpClient client = jiraRestClient.getClient();
-//        URI baseUri = jiraRestClient.getBaseUri();
-//        URI uri = RestURIBuilder.buildAddAttachmentURI(baseUri, issuekey);
-//        WebResource resource = client.resource(uri);
-//        resource.getRequestBuilder().header("X-Atlassian-Token", "nocheck");
-//        resource.type(MediaType.MULTIPART_FORM_DATA_TYPE);
     }
 
     @Override

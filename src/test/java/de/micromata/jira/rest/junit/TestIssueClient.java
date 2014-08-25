@@ -7,7 +7,8 @@ import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +45,35 @@ public class TestIssueClient extends BaseTest {
         Assert.assertNotNull(issueByKey.getSummary());
         Assert.assertNotNull(issueByKey.getDescription());
         Assert.assertNotNull(issueByKey.getRenderedFieldsBean());
+    }
+
+
+    @Test
+    public void testGetAttachment() throws IOException, RestException {
+        IssueBean issueByKey = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
+        List<AttachmentBean> attachments = issueByKey.getAttachments();
+        Assert.assertNotNull(attachments);
+        Assert.assertFalse(attachments.isEmpty());
+        AttachmentBean attachmentBean = attachments.get(0);
+        String fileName = attachmentBean.getFileName();
+        URI uri = attachmentBean.getContent();
+        InputStream inputStream = jiraRestClient.getIssueClient().getAttachment(uri);
+        Assert.assertNotNull(inputStream);
+        try {
+            byte[] buffer = new byte[8 * 1024];
+            OutputStream output = new FileOutputStream(fileName);
+            try {
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    output.write(buffer, 0, bytesRead);
+                }
+            } finally {
+                output.close();
+            }
+        } finally {
+            inputStream.close();
+        }
+
     }
 
 
