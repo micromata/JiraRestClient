@@ -7,6 +7,7 @@ import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +25,7 @@ public class TestIssueClient extends BaseTest {
 
 
     @Test
-    public void testGetIssueByKey() throws RestException {
+    public void testGetIssueByKey() throws RestException, IOException {
         IssueBean issueByKey = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
         Assert.assertNotNull(issueByKey);
         Assert.assertEquals(ISSUE_KEY, issueByKey.getKey());
@@ -32,7 +33,7 @@ public class TestIssueClient extends BaseTest {
 
 
     @Test
-    public void testGetIssueKeyWithFields() throws RestException {
+    public void testGetIssueKeyWithFields() throws RestException, IOException {
         List<String> field = new ArrayList<String>();
         field.add(EField.SUMMARY.getField());
         field.add(EField.DESCRIPTION.getField());
@@ -47,7 +48,7 @@ public class TestIssueClient extends BaseTest {
 
 
     @Test
-    public void testCreateIssue() throws ParseException, RestException {
+    public void testCreateIssue() throws ParseException, RestException, IOException {
         IssueBean issue = new IssueBean();
         issue.setDescription("Test Description");
         issue.setSummary("Test Title");
@@ -76,7 +77,7 @@ public class TestIssueClient extends BaseTest {
 //        issue.getFixVersions().add(versionBean2);
 
         UserBean userBean = new UserBean();
-        userBean.setName("christians");
+        userBean.setName("admin");
         issue.setAssignee(userBean);
 
         issue.getTags().add("foobar");

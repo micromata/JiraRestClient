@@ -4,7 +4,9 @@ import de.micromata.jira.rest.core.domain.*;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public interface IssueClient {
      * @return IssueResponse
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public IssueResponse createIssue(IssueBean issue) throws RestException;
+    public IssueResponse createIssue(IssueBean issue) throws RestException, IOException;
 
 
     /**
@@ -29,7 +31,7 @@ public interface IssueClient {
      * @return all informations for the issue
      * @throws RestException
      */
-    public IssueBean getIssueByKey(String issueKey) throws RestException;
+    public IssueBean getIssueByKey(String issueKey) throws RestException, IOException;
 
 
     /**
@@ -40,7 +42,7 @@ public interface IssueClient {
      * @param expand The Field which must expand.
      * @return IssueBean
      */
-    public IssueBean getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException;
+    public IssueBean getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException;
 
     /**
      * Get Attachement as InputStream
@@ -49,7 +51,7 @@ public interface IssueClient {
      * @return
      * @throws RestException
      */
-    public InputStream getAttachment(URI uri) throws RestException;
+    public InputStream getAttachment(URI uri) throws RestException, IOException;
 
     /**
      * Save Attachment to Issue
@@ -67,7 +69,7 @@ public interface IssueClient {
      * @throws RestException
      */
     public boolean transferWorklogInIssue(String issueKey,
-                                          WorklogBean worklog) throws RestException;
+                                          WorklogBean worklog) throws RestException, IOException;
 
     /**
      * Returns true if the transition update on an Issue success.
@@ -77,7 +79,7 @@ public interface IssueClient {
      * @return success state
      * @throws RestException
      */
-    public boolean updateIssueTransitionByKey(String issueKey, int transitionId) throws RestException;
+    public boolean updateIssueTransitionByKey(String issueKey, int transitionId) throws RestException, IOException;
 
     /**
      * Returns available transitions for an Issue in a map with transition id and properties.
@@ -86,7 +88,7 @@ public interface IssueClient {
      * @return List of TransitionBean
      * @throws RestException
      */
-    public List<TransitionBean> getIssueTransitionsByKey(String issueKey) throws RestException;
+    public List<TransitionBean> getIssueTransitionsByKey(String issueKey) throws RestException, IOException;
 
     /**
      * Returns a summarized representation of all comments for the given issue.
@@ -95,6 +97,6 @@ public interface IssueClient {
      * @return summarized representation of all comments
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public CommentSummaryBean getCommentsByIssue(String issueKey) throws RestException;
+    public CommentSummaryBean getCommentsByIssue(String issueKey) throws RestException, IOException;
 
 }

@@ -5,6 +5,7 @@ import de.micromata.jira.rest.core.jql.JqlConstants;
 import de.micromata.jira.rest.core.util.RestPathConstants;
 import org.junit.Before;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -32,7 +33,7 @@ public class BaseTest implements JqlConstants, RestPathConstants {
     JiraRestClient jiraRestClient;
 
     @Before
-    public void connect() throws URISyntaxException {
+    public void connect() throws URISyntaxException, IOException {
         URI uri = new URI(TEST_SYSTEM_URL);
         jiraRestClient = JiraRestClient.create(uri, USERNAME, PASSWORD);
     }
