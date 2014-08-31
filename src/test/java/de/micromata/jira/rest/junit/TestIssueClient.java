@@ -57,23 +57,12 @@ public class TestIssueClient extends BaseTest {
         AttachmentBean attachmentBean = attachments.get(0);
         String fileName = attachmentBean.getFileName();
         URI uri = attachmentBean.getContent();
-        InputStream inputStream = jiraRestClient.getIssueClient().getAttachment(uri);
-        Assert.assertNotNull(inputStream);
-        try {
-            byte[] buffer = new byte[8 * 1024];
-            OutputStream output = new FileOutputStream(fileName);
-            try {
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    output.write(buffer, 0, bytesRead);
-                }
-            } finally {
-                output.close();
-            }
-        } finally {
-            inputStream.close();
-        }
-
+        byte[] attachment = jiraRestClient.getIssueClient().getAttachment(uri);
+        Assert.assertNotNull(attachment);
+        OutputStream output = new FileOutputStream(fileName);
+        output.write(attachment);
+        output.flush();
+        output.close();
     }
 
 

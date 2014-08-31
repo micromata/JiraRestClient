@@ -58,6 +58,7 @@ public class UserClientImpl implements UserClient, RestPathConstants, RestParamC
             method.releaseConnection();
             return UserParser.parse(jsonObject);
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -99,6 +100,7 @@ public class UserClientImpl implements UserClient, RestPathConstants, RestParamC
             return UserParser.parse(jsonObjects);
         }
         else{
+            method.releaseConnection();
             throw new RestException(method);
         }
     }

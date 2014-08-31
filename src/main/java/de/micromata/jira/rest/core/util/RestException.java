@@ -50,8 +50,10 @@ public class RestException extends Exception {
             this.restErrorMessage = ErrorParser.parse(inputStream);
         } catch (IOException e) {
             // nothing to say
+        } finally {
+            method.releaseConnection();
         }
-        method.releaseConnection();
+
     }
 
     public int getStatusCode() {

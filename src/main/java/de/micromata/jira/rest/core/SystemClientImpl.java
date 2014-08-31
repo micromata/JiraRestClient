@@ -55,6 +55,7 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
             Collections.sort(parse);
             return parse;
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -73,6 +74,7 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
             Collections.sort(parse);
             return parse;
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -91,6 +93,7 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
             Collections.sort(parse);
             return parse;
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }

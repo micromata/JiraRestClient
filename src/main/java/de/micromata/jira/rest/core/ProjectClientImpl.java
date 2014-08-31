@@ -53,6 +53,7 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
             method.releaseConnection();
             return ProjectParser.parse(jsonObject);
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -72,6 +73,7 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
             Collections.sort(beans);
             return beans;
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -92,6 +94,7 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
             Collections.sort(parse);
             return parse;
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -112,6 +115,7 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
             Collections.sort(parse);
             return parse;
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }

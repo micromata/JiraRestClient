@@ -11,6 +11,7 @@ import de.micromata.jira.rest.core.util.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -53,12 +54,15 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
         if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_CREATED) {
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            method.releaseConnection();
             return IssueResponseParser.parse(jsonObject);
         } else if (status == HttpURLConnection.HTTP_BAD_REQUEST) {
             InputStream entityInputStream = method.getResponseBodyAsStream();
             ErrorBean parse = ErrorParser.parse(entityInputStream);
+            method.releaseConnection();
             return new IssueResponse(parse);
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -74,8 +78,10 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
             method.getResponseBodyAsStream();
+            method.releaseConnection();
             return IssueParser.parse(jsonObject);
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -119,19 +125,23 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
             method.releaseConnection();
             return CommentSummaryParser.parse(jsonObject);
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
 
     @Override
-    public InputStream getAttachment(URI uri) throws RestException, IOException {
+    public byte[] getAttachment(URI uri) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         GetMethod method = new GetMethod(uri.getPath());
         method.setQueryString(uri.getQuery());
         method.setRequestHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_OCTET_STREAM);
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
-            return method.getResponseBodyAsStream();
+            InputStream inputStream = method.getResponseBodyAsStream();
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            method.releaseConnection();
+            return bytes;
         }
         return null;
     }
@@ -154,6 +164,7 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
             method.releaseConnection();
             return true;
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -171,6 +182,7 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
             method.releaseConnection();
             return true;
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -198,6 +210,7 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
             method.releaseConnection();
             return Collections.emptyList();
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }

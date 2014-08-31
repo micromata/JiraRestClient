@@ -45,13 +45,13 @@ public interface IssueClient {
     public IssueBean getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException;
 
     /**
-     * Get Attachement as InputStream
+     * Get Attachement as byte Array, or null
      *
      * @param uri = the uri of the resource
-     * @return
+     * @return byte[] or null
      * @throws RestException
      */
-    public InputStream getAttachment(URI uri) throws RestException, IOException;
+    public byte[] getAttachment(URI uri) throws RestException, IOException;
 
     /**
      * Save Attachment to Issue

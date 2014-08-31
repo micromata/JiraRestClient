@@ -48,6 +48,7 @@ public class SearchClientImpl implements SearchClient, RestPathConstants, RestPa
             method.releaseConnection();
             return jqlSearchResultBean;
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
