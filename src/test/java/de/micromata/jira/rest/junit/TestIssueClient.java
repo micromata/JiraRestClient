@@ -7,6 +7,8 @@ import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import java.io.*;
+import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +26,7 @@ public class TestIssueClient extends BaseTest {
 
 
     @Test
-    public void testGetIssueByKey() throws RestException {
+    public void testGetIssueByKey() throws RestException, IOException {
         IssueBean issueByKey = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
         Assert.assertNotNull(issueByKey);
         Assert.assertEquals(ISSUE_KEY, issueByKey.getKey());
@@ -32,7 +34,7 @@ public class TestIssueClient extends BaseTest {
 
 
     @Test
-    public void testGetIssueKeyWithFields() throws RestException {
+    public void testGetIssueKeyWithFields() throws RestException, IOException {
         List<String> field = new ArrayList<String>();
         field.add(EField.SUMMARY.getField());
         field.add(EField.DESCRIPTION.getField());
@@ -47,7 +49,25 @@ public class TestIssueClient extends BaseTest {
 
 
     @Test
-    public void testCreateIssue() throws ParseException, RestException {
+    public void testGetAttachment() throws IOException, RestException {
+        IssueBean issueByKey = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
+        List<AttachmentBean> attachments = issueByKey.getAttachments();
+        Assert.assertNotNull(attachments);
+        Assert.assertFalse(attachments.isEmpty());
+        AttachmentBean attachmentBean = attachments.get(0);
+        String fileName = attachmentBean.getFileName();
+        URI uri = attachmentBean.getContent();
+        byte[] attachment = jiraRestClient.getIssueClient().getAttachment(uri);
+        Assert.assertNotNull(attachment);
+        OutputStream output = new FileOutputStream(fileName);
+        output.write(attachment);
+        output.flush();
+        output.close();
+    }
+
+
+    @Test
+    public void testCreateIssue() throws ParseException, RestException, IOException {
         IssueBean issue = new IssueBean();
         issue.setDescription("Test Description");
         issue.setSummary("Test Title");
@@ -76,7 +96,7 @@ public class TestIssueClient extends BaseTest {
 //        issue.getFixVersions().add(versionBean2);
 
         UserBean userBean = new UserBean();
-        userBean.setName("christians");
+        userBean.setName("admin");
         issue.setAssignee(userBean);
 
         issue.getTags().add("foobar");

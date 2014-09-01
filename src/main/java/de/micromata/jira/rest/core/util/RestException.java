@@ -15,15 +15,17 @@
 
 package de.micromata.jira.rest.core.util;
 
-import com.sun.jersey.api.client.ClientResponse;
 import de.micromata.jira.rest.core.domain.ErrorBean;
 import de.micromata.jira.rest.core.parser.ErrorParser;
+import org.apache.commons.httpclient.HttpMethod;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Christian Schulze
  * @author Vitali Filippow
  */
-@SuppressWarnings("serial")
 public class RestException extends Exception {
 
     private int statusCode;
@@ -32,21 +34,26 @@ public class RestException extends Exception {
 
     private ErrorBean restErrorMessage;
 
-    /**
-     * Instantiates a new REST exception.
-     *
-     * @param response the response of the client
-     */
-    public RestException(ClientResponse response) {
-        this(response.getStatus(), response.getClientResponseStatus().getReasonPhrase(),
-                ErrorParser.parse(response.getEntityInputStream()));
-    }
 
     public RestException(int statusCode, String reasonPhrase, ErrorBean restErrorMessage) {
         super(statusCode + " " + reasonPhrase + " " + restErrorMessage);
         this.statusCode = statusCode;
         this.reasonPhrase = reasonPhrase;
         this.restErrorMessage = restErrorMessage;
+    }
+
+    public RestException(HttpMethod method) {
+        this.statusCode = method.getStatusCode();
+        this.reasonPhrase = method.getStatusText();
+        try {
+            InputStream inputStream = method.getResponseBodyAsStream();
+            this.restErrorMessage = ErrorParser.parse(inputStream);
+        } catch (IOException e) {
+            // nothing to say
+        } finally {
+            method.releaseConnection();
+        }
+
     }
 
     public int getStatusCode() {

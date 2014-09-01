@@ -6,6 +6,8 @@ import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+
 /**
  * Author: Christian Schulze
  * Email: c.schulze@micromata.de
@@ -14,7 +16,7 @@ import org.junit.Test;
 public class TestSearchClient extends BaseTest{
 
     @Test
-    public void testSearchIssues() throws RestException {
+    public void testSearchIssues() throws RestException, IOException {
         JqlSearchBean jsb = new JqlSearchBean();
         JqlBuilder builder = new JqlBuilder();
         String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "DEMO")

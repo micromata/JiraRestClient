@@ -1,17 +1,13 @@
 package de.micromata.jira.rest.core;
 
 import com.google.gson.JsonObject;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.UserClient;
 import de.micromata.jira.rest.core.domain.UserBean;
 import de.micromata.jira.rest.core.parser.UserParser;
-import de.micromata.jira.rest.core.util.GsonParserUtil;
-import de.micromata.jira.rest.core.util.RestParamConstants;
-import de.micromata.jira.rest.core.util.RestPathConstants;
-import de.micromata.jira.rest.core.util.RestException;
+import de.micromata.jira.rest.core.util.*;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ws.rs.core.UriBuilder;
@@ -38,49 +34,45 @@ public class UserClientImpl implements UserClient, RestPathConstants, RestParamC
     }
 
     @Override
-    public List<UserBean> getAssignableUserForProject(String projectKey, Integer startAt, Integer maxResults) throws RestException {
+    public List<UserBean> getAssignableUserForProject(String projectKey, Integer startAt, Integer maxResults) throws RestException, IOException {
         return getAssignableSearch(null, null, projectKey, startAt, maxResults);
     }
 
     @Override
-    public List<UserBean> getAssignableUsersForIssue(String issueKey, Integer startAt, Integer maxResults) throws RestException {
+    public List<UserBean> getAssignableUsersForIssue(String issueKey, Integer startAt, Integer maxResults) throws RestException, IOException {
         return getAssignableSearch(null, issueKey, null, startAt, maxResults);
     }
 
     @Override
-    public UserBean getUserByUsername(String username) throws RestException {
-        Client client = jiraRestClient.getClient();
+    public UserBean getUserByUsername(String username) throws RestException, IOException {
+        HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         UriBuilder path = UriBuilder.fromUri(baseUri).path(USER);
         path.queryParam(USERNAME, username);
         URI uri = path.build();
-        WebResource webResource = client.resource(uri);
-        ClientResponse response = webResource.get(ClientResponse.class);
-        if (response.getStatus() == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = response.getEntityInputStream();
+        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+        int status = client.executeMethod(method);
+        if (status == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = method.getResponseBodyAsStream();
             JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            response.close();
+            method.releaseConnection();
             return UserParser.parse(jsonObject);
         } else {
-            throw new RestException(response);
+            method.releaseConnection();
+            throw new RestException(method);
         }
     }
 
 
     @Override
-    public UserBean getLoggedInRemoteUser() throws RestException {
+    public UserBean getLoggedInRemoteUser() throws RestException, IOException {
         String username = jiraRestClient.getUsername();
         return getUserByUsername(username);
     }
 
 
-    private List<UserBean> getAssignableSearch(String username, String issueKey, String projectKey, Integer startAt, Integer maxResults) throws RestException {
-        Client client = jiraRestClient.getClient();
+    private List<UserBean> getAssignableSearch(String username, String issueKey, String projectKey, Integer startAt, Integer maxResults) throws RestException, IOException {
+        HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         UriBuilder path = UriBuilder.fromUri(baseUri).path(USER).path(ASSIGNABLE).path(SEARCH);
         if(StringUtils.trimToNull(username) != null){
@@ -99,21 +91,17 @@ public class UserClientImpl implements UserClient, RestPathConstants, RestParamC
             path.queryParam(MAX_RESULTS, maxResults.intValue());
         }
         URI uri = path.build();
-        WebResource webResource = client.resource(uri);
-        ClientResponse response = webResource.get(ClientResponse.class);
-        if(response != null && response.getStatus() == HttpURLConnection.HTTP_OK){
-            InputStream inputStream = response.getEntityInputStream();
+        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+        int status = client.executeMethod(method);
+        if(status == HttpURLConnection.HTTP_OK){
+            InputStream inputStream = method.getResponseBodyAsStream();
             List<JsonObject> jsonObjects = GsonParserUtil.parseJsonObjects(inputStream);
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            response.close();
+            method.releaseConnection();
             return UserParser.parse(jsonObjects);
         }
         else{
-            throw new RestException(response);
+            method.releaseConnection();
+            throw new RestException(method);
         }
     }
 }

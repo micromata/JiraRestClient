@@ -8,6 +8,7 @@ import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class TestSystemClient extends BaseTest {
     private static final int STANDARD_NUMBER_OF_PRIORITIES = 5;
 
     @Test
-    public void testGetIssueType() throws RestException {
+    public void testGetIssueType() throws RestException, IOException {
         List<IssueTypeBean> issueTypes = jiraRestClient.getSystemClient().getIssueTypes();
         Assert.assertNotNull(issueTypes);
         Assert.assertFalse(issueTypes.isEmpty());
@@ -30,7 +31,7 @@ public class TestSystemClient extends BaseTest {
     }
 
     @Test
-    public void testGetPriorities() throws RestException {
+    public void testGetPriorities() throws RestException, IOException  {
         List<PriorityBean> priorities = jiraRestClient.getSystemClient().getPriorities();
         Assert.assertNotNull(priorities);
         Assert.assertFalse(priorities.isEmpty());
@@ -38,7 +39,7 @@ public class TestSystemClient extends BaseTest {
     }
 
     @Test
-    public void testGetStates() throws RestException {
+    public void testGetStates() throws RestException, IOException  {
         List<StatusBean> states = jiraRestClient.getSystemClient().getStates();
         Assert.assertNotNull(states);
         Assert.assertFalse(states.isEmpty());
