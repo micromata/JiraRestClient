@@ -108,6 +108,7 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
             method.releaseConnection();
             return IssueParser.parse(jsonObject);
         } else {
+            method.releaseConnection();
             throw new RestException(method);
         }
     }
@@ -143,6 +144,7 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
             method.releaseConnection();
             return bytes;
         }
+        method.releaseConnection();
         return null;
     }
 
