@@ -38,6 +38,8 @@ public class AttachmentBean extends BaseBean {
 
     private URI thumbnail;
 
+    private byte[] data;
+
     public String getFileName() {
         return fileName;
     }
@@ -92,5 +94,13 @@ public class AttachmentBean extends BaseBean {
 
     public void setThumbnail(URI thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }
