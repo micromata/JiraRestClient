@@ -22,9 +22,9 @@ import java.text.SimpleDateFormat;
  */
 public class BaseTest implements JqlConstants, RestPathConstants {
 
-    static final String TEST_SYSTEM_URL = "https://customer.micromata.de/bbraun-vibz/jira";
-    static final String USERNAME = "christians";
-    static final String PASSWORD = "tacwetorEbr0";
+    static final String TEST_SYSTEM_URL = "http://localhost:2990";
+    static final String USERNAME = "admin";
+    static final String PASSWORD = "admin";
     static final String USERNAME_TO_SEARCH = "admin";
     static final String ISSUEKEY_TO_SEARCH = "DEMO-1";
     static final String PROJECT_TO_SEARCH = "DEMO";
