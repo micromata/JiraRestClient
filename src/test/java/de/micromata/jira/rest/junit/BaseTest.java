@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
  */
 public class BaseTest implements JqlConstants, RestPathConstants {
 
-    static final String TEST_SYSTEM_URL = "http://localhost:2990";
+    static final String TEST_SYSTEM_URL = "http://localhost:2990/jira";
     static final String USERNAME = "admin";
     static final String PASSWORD = "admin";
     static final String USERNAME_TO_SEARCH = "admin";
@@ -36,8 +36,8 @@ public class BaseTest implements JqlConstants, RestPathConstants {
     @Before
     public void connect() throws URISyntaxException, IOException {
 
-        ProxyHost proxy = new ProxyHost("proxy", 3128);
+//        ProxyHost proxy = new ProxyHost("proxy", 3128);
         URI uri = new URI(TEST_SYSTEM_URL);
-        jiraRestClient = JiraRestClient.create(uri, USERNAME, PASSWORD, proxy);
+        jiraRestClient = JiraRestClient.create(uri, USERNAME, PASSWORD, null);
     }
 }
