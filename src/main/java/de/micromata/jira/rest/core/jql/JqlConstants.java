@@ -53,7 +53,7 @@ public interface JqlConstants {
 
     public static final String STATUS_RESOLVED = "resolved";
 
-    public static final String STATUS_IN_PROGRESS = "in progress";
+    public static final String STATUS_IN_PROGRESS = "\"in progress\"";
 
     public static final String STATUS_REOPENED = "reopened";
 
@@ -63,7 +63,7 @@ public interface JqlConstants {
 
     public static final String ISSUETYPE_BUG = "bug";
 
-    public static final String ISSUETYPE_NEW_FEATURE = "new feature";
+    public static final String ISSUETYPE_NEW_FEATURE = "\"new feature\"";
 
     public static final String ISSUETYPE_SUBTASK = "sub-task";
 

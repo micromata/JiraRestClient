@@ -192,6 +192,8 @@ public interface JsonConstants {
 
     public static final String ELEM_ISSUETYPE = "issuetype";
 
+    public static final String ELEM_ISSUETYPES = "issueTypes";
+
     public static final String ELEM_VERSIONS = "versions";
 
     public static final String ELEM_FIX_VERSIONS = "fixVersions";

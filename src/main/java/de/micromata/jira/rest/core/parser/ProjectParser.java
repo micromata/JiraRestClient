@@ -66,7 +66,7 @@ public class ProjectParser extends BasicProjectParser {
             bean.setVersions(connectVersionBeans);
         }
 
-        JsonArray issuetypesJsonArray = object.getAsJsonArray(ELEM_ISSUETYPE);
+        JsonArray issuetypesJsonArray = object.getAsJsonArray(ELEM_ISSUETYPES);
         if (checkNotNull(issuetypesJsonArray)) {
             List<JsonObject> issuetypeJsonObjects = GsonParserUtil.parseJsonArray(issuetypesJsonArray);
             List<IssueTypeBean> issueTypeBeans = IssueTypeParser.parse(issuetypeJsonObjects);

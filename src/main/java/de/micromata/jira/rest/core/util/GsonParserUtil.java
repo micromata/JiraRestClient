@@ -17,6 +17,7 @@ package de.micromata.jira.rest.core.util;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,8 +41,8 @@ public class GsonParserUtil {
 
     private static final JsonParser parser = new JsonParser();
 
-    public static List<JsonObject> parseJsonObjects(InputStream inputStream) {
-        InputStreamReader reader = new InputStreamReader(inputStream);
+    public static List<JsonObject> parseJsonObjects(InputStream inputStream) throws UnsupportedEncodingException {
+        InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
         JsonReader jsonReader = new JsonReader(reader);
         jsonReader.setLenient(true);
         JsonElement parse = parser.parse(jsonReader);
@@ -49,8 +50,8 @@ public class GsonParserUtil {
         return parseJsonArray(asJsonArray);
     }
 
-    public static JsonObject parseJsonObject(InputStream inputStream) {
-        InputStreamReader reader = new InputStreamReader(inputStream);
+    public static JsonObject parseJsonObject(InputStream inputStream) throws UnsupportedEncodingException {
+        InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
         JsonReader jsonReader = new JsonReader(reader);
         jsonReader.setLenient(true);
         JsonElement parse = parser.parse(jsonReader);

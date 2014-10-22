@@ -32,4 +32,22 @@ public class TestSearchClient extends BaseTest{
         Assert.assertEquals(6, jqlSearchResultBean.getTotal());
         Assert.assertEquals(6, jqlSearchResultBean.getIssueBeans().size());
     }
+
+    @Test
+    public void testSearchIssueWithMultipleValues() throws  IOException, RestException {
+        JqlSearchBean jsb = new JqlSearchBean();
+        JqlBuilder builder = new JqlBuilder();
+        String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "DEMO")
+                .and().addCondition(EField.STATUS, EOperator.IN, STATUS_OPEN, STATUS_IN_PROGRESS)
+                .orderBy(SortOrder.ASC, EField.CREATED);
+        jsb.setJql(jql);
+        jsb.addField(EField.ISSUE_KEY, EField.STATUS, EField.DUE, EField.SUMMARY, EField.ISSUE_TYPE, EField.PRIORITY, EField.UPDATED, EField.TRANSITIONS);
+        jsb.addExpand(EField.TRANSITIONS);
+//        jsb.addField(EField.ALL);
+//        jsb.addExpand(EField.TRANSITIONS);
+        JqlSearchResultBean jqlSearchResultBean = jiraRestClient.getSearchClient().searchIssues(jsb);
+        Assert.assertNotNull(jqlSearchResultBean);
+        Assert.assertEquals(6, jqlSearchResultBean.getTotal());
+        Assert.assertEquals(6, jqlSearchResultBean.getIssueBeans().size());
+    }
 }

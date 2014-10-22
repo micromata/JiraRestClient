@@ -45,14 +45,14 @@ public class RestException extends Exception {
     public RestException(HttpMethod method) {
         this.statusCode = method.getStatusCode();
         this.reasonPhrase = method.getStatusText();
-        try {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            this.restErrorMessage = ErrorParser.parse(inputStream);
-        } catch (IOException e) {
-            // nothing to say
-        } finally {
+//        try {
+////            InputStream inputStream = method.getResponseBodyAsStream();
+////            this.restErrorMessage = ErrorParser.parse(inputStream);
+//        } catch (IOException e) {
+//            // nothing to say
+//        } finally {
             method.releaseConnection();
-        }
+//        }
 
     }
 

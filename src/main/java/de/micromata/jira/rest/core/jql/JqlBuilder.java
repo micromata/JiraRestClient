@@ -15,6 +15,8 @@
 
 package de.micromata.jira.rest.core.jql;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * JQL builder
  * <p/>
@@ -32,7 +34,7 @@ public class JqlBuilder {
         jql = new StringBuffer();
     }
 
-    public JqlKeyword addCondition(EField field, EOperator operator, String operand) {
+    public JqlKeyword addCondition(EField field, EOperator operator, String... operand) {
         JqlKeyword jqlKeyword = new JqlKeyword();
 
         if (field != null) {
@@ -42,7 +44,12 @@ public class JqlBuilder {
             jql.append(operator + " ");
         }
         if (operand != null) {
-            jql.append(operand + " ");
+            if(operand.length > 1){
+                String join = StringUtils.join(operand, ",");
+                jql.append("(" + join + ") ");
+            }else {
+                jql.append(operand[0] + " ");
+            }
         }
 
         return jqlKeyword;
