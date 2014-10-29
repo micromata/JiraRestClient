@@ -23,6 +23,7 @@ import de.micromata.jira.rest.core.util.GsonParserUtil;
 import de.micromata.jira.rest.core.util.JsonConstants;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ import java.util.Set;
  */
 public class ErrorParser {
 
-    public static ErrorBean parse(InputStream inputStream) {
+    public static ErrorBean parse(InputStream inputStream) throws UnsupportedEncodingException {
         ErrorBean errorBean = new ErrorBean();
         JsonObject object = GsonParserUtil.parseJsonObject(inputStream);
         JsonArray errorMessages = object.getAsJsonArray(JsonConstants.PROP_ERROR_MESSAGES);

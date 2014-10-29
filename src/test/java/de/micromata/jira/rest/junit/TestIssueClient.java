@@ -1,18 +1,24 @@
 package de.micromata.jira.rest.junit;
 
 import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.domain.update.FieldOperation;
+import de.micromata.jira.rest.core.domain.update.IssueUpdateBean;
+import de.micromata.jira.rest.core.domain.update.Operation;
 import de.micromata.jira.rest.core.jql.EField;
 import de.micromata.jira.rest.core.util.JsonConstants;
 import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -23,6 +29,7 @@ import java.util.List;
 public class TestIssueClient extends BaseTest {
 
     private static final String ISSUE_KEY = "DEMO-1";
+    private static final String NEW_LINE = System.getProperty("line.separator");
 
 
     @Test
@@ -115,6 +122,29 @@ public class TestIssueClient extends BaseTest {
                 System.out.println(issueResponse.getErrorBean());
             }
         }
+    }
+
+    @Test
+    public void testSetLinkInEviroment() throws IOException, RestException {
+        IssueBean issueByKey = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
+        Assert.assertNotNull(issueByKey);
+        Assert.assertEquals(ISSUE_KEY, issueByKey.getKey());
+        String environment = issueByKey.getEnvironment();
+        StringBuilder sb = new StringBuilder();
+        sb.append(environment);
+        sb.append(NEW_LINE).append(NEW_LINE);
+        sb.append(issueByKey.getSelf());
+        String newEnviroment = sb.toString();
+        issueByKey.setEnvironment(newEnviroment);
+        IssueUpdateBean issueUpdateBean = new IssueUpdateBean();
+        Map<String, List<FieldOperation>> update = issueUpdateBean.getUpdate();
+        List<FieldOperation> operations = new ArrayList<FieldOperation>();
+        operations.add(new FieldOperation(Operation.SET.getName(), newEnviroment));
+        update.put(JsonConstants.PROP_ENVIRONMENT, operations);
+        IssueBean issueBean = jiraRestClient.getIssueClient().updateIssue(ISSUE_KEY, issueUpdateBean);
+        String updateIssueEnvironment = issueBean.getEnvironment();
+        Assert.assertEquals(newEnviroment, updateIssueEnvironment);
+
     }
 
 }

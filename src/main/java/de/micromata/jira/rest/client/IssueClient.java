@@ -1,12 +1,11 @@
 package de.micromata.jira.rest.client;
 
 import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.domain.update.IssueUpdateBean;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.List;
 
@@ -33,6 +32,12 @@ public interface IssueClient {
      */
     public IssueBean getIssueByKey(String issueKey) throws RestException, IOException;
 
+    /**
+     * update Field of an Issue
+     *
+     *
+     */
+    public IssueBean updateIssue(String issueKey, IssueUpdateBean issueUpdateBean) throws IOException, RestException;
 
     /**
      * Return a Issue with the given Field and Expand Fields.

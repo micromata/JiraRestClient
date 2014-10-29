@@ -6,11 +6,13 @@ import com.google.gson.JsonObject;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.IssueClient;
 import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.domain.update.IssueUpdateBean;
 import de.micromata.jira.rest.core.parser.*;
 import de.micromata.jira.rest.core.util.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -80,6 +82,22 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
             method.getResponseBodyAsStream();
             method.releaseConnection();
             return IssueParser.parse(jsonObject);
+        } else {
+            method.releaseConnection();
+            throw new RestException(method);
+        }
+    }
+
+    @Override
+    public IssueBean updateIssue(String issueKey,IssueUpdateBean issueUpdateBean) throws IOException, RestException {
+        HttpClient client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
+        String json = GsonParserUtil.parseObjectToJson(issueUpdateBean);
+        PutMethod method = HttpMethodFactory.createPutMethod(uri, json);
+        int status = client.executeMethod(method);
+        if (status == HttpURLConnection.HTTP_NO_CONTENT) {
+            return getIssueByKey(issueKey);
         } else {
             method.releaseConnection();
             throw new RestException(method);

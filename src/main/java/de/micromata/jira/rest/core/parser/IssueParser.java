@@ -292,7 +292,7 @@ public class IssueParser extends BaseParser {
 
         // project
         JsonObject projectObject = new JsonObject();
-        projectObject.addProperty(PROP_KEY, issue.getProjectKey());
+        projectObject.addProperty(PROP_KEY, issue.getProject().getKey());
         fieldObject.add(ELEM_PROJECT, projectObject);
 
         // issueType

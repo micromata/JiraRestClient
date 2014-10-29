@@ -1,9 +1,6 @@
 package de.micromata.jira.rest.core.util;
 
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.methods.*;
 import org.apache.commons.lang3.CharEncoding;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -32,6 +29,16 @@ public class HttpMethodFactory {
     public static PostMethod createPostMethod(URI uri, String body) throws UnsupportedEncodingException {
         if(uri == null) return null;
         PostMethod method = new PostMethod(uri.getPath());
+        method.setRequestHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
+        method.setRequestHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
+        RequestEntity entity = new StringRequestEntity(body, MediaType.APPLICATION_JSON, CharEncoding.UTF_8);
+        method.setRequestEntity(entity);
+        return method;
+    }
+
+    public static PutMethod createPutMethod(URI uri, String body) throws UnsupportedEncodingException {
+        if(uri == null) return null;
+        PutMethod method = new PutMethod(uri.getPath());
         method.setRequestHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
         method.setRequestHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
         RequestEntity entity = new StringRequestEntity(body, MediaType.APPLICATION_JSON, CharEncoding.UTF_8);

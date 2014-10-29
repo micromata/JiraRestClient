@@ -82,7 +82,7 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
     @Override
     public List<PriorityBean> getPriorities() throws RestException, IOException {
         URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = UriBuilder.fromUri(baseUri).path(STATUS).build();
+        URI uri = UriBuilder.fromUri(baseUri).path(PRIORITY).build();
         GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
