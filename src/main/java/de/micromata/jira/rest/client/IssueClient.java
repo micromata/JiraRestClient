@@ -1,11 +1,12 @@
 package de.micromata.jira.rest.client;
 
 import de.micromata.jira.rest.core.domain.*;
-import de.micromata.jira.rest.core.domain.update.IssueUpdateBean;
+import de.micromata.jira.rest.core.domain.update.IssueUpdate;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public interface IssueClient {
      *
      *
      */
-    public IssueBean updateIssue(String issueKey, IssueUpdateBean issueUpdateBean) throws IOException, RestException;
+    public IssueBean updateIssue(String issueKey, IssueUpdate issueUpdate) throws IOException, RestException;
 
     /**
      * Return a Issue with the given Field and Expand Fields.
@@ -57,6 +58,24 @@ public interface IssueClient {
      * @throws RestException
      */
     public byte[] getAttachment(URI uri) throws RestException, IOException;
+
+
+    /**
+     * Get Attachment as InputStream
+     *
+     * @param id the Id of the Attachment
+     * @return
+     */
+    public InputStream getAttachmentAsStream(long id);
+
+
+    /**
+     * Get Attachment Information for an attachment by id
+     *
+     * @param id the id of the attachment
+     * @return
+     */
+    public AttachmentBean getAttachment(long id) throws IOException, RestException;
 
     /**
      * Save Attachment to Issue

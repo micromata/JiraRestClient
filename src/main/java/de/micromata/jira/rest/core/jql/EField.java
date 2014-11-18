@@ -392,7 +392,12 @@ public enum EField {
 
     /** <i>Renders the Description Markup to HTML</i>
      */
-    RENDEREDFIELDS("renderedFields", EFieldType.CUSTOM_TYPE);
+    RENDEREDFIELDS("renderedFields", EFieldType.CUSTOM_TYPE),
+
+    /**
+     * <i>Attachment Informations</i>
+     */
+    ATTACHMENT("attachment", EFieldType.CUSTOM_TYPE);
 
     /**
      * The name of the field.

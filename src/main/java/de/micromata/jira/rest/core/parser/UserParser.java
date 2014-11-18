@@ -36,6 +36,12 @@ public class UserParser extends BaseParser {
         UserBean bean = new UserBean();
         parseBaseProperties(bean, object);
 
+        JsonElement keyElement = object.get(PROP_KEY);
+        if(checkNotNull(keyElement)){
+            String key = keyElement.getAsString();
+            bean.setKey(key);
+        }
+
         JsonElement activeElement = object.get(PROP_ACTIVE);
         if (checkNotNull(activeElement)) {
             boolean active = activeElement.getAsBoolean();

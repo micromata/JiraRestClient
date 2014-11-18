@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.IssueClient;
 import de.micromata.jira.rest.core.domain.*;
-import de.micromata.jira.rest.core.domain.update.IssueUpdateBean;
+import de.micromata.jira.rest.core.domain.update.IssueUpdate;
 import de.micromata.jira.rest.core.parser.*;
 import de.micromata.jira.rest.core.util.*;
 import org.apache.commons.httpclient.HttpClient;
@@ -89,11 +89,11 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
     }
 
     @Override
-    public IssueBean updateIssue(String issueKey,IssueUpdateBean issueUpdateBean) throws IOException, RestException {
+    public IssueBean updateIssue(String issueKey,IssueUpdate issueUpdate) throws IOException, RestException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
-        String json = GsonParserUtil.parseObjectToJson(issueUpdateBean);
+        String json = GsonParserUtil.parseObjectToJson(issueUpdate);
         PutMethod method = HttpMethodFactory.createPutMethod(uri, json);
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_NO_CONTENT) {
@@ -166,6 +166,29 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
         return null;
     }
 
+    @Override
+    public InputStream getAttachmentAsStream(long id) {
+        return null;
+    }
+
+    @Override
+    public AttachmentBean getAttachment(long id) throws IOException, RestException {
+        HttpClient client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = UriBuilder.fromUri(baseUri).path(ATTACHMENT).path(String.valueOf(id)).build();
+        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+        int status = client.executeMethod(method);
+        if (status == HttpURLConnection.HTTP_OK) {
+            InputStream inputStream = method.getResponseBodyAsStream();
+            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            method.releaseConnection();
+            return AttachmentParser.parse(jsonObject);
+        } else {
+            method.releaseConnection();
+            throw new RestException(method);
+        }
+    }
+
 
     @Override
     public void saveAttachmentToIssue(File file, String issuekey) {
@@ -193,7 +216,6 @@ public class IssueClientImpl implements IssueClient, RestParamConstants, RestPat
     public boolean updateIssueTransitionByKey(String issueKey, int transitionId) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
-
         String json = GsonParserUtil.parseTransitionToJson(transitionId);
         URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(TRANSITIONS).build();
         PostMethod method = HttpMethodFactory.createPostMethod(uri, json);

@@ -56,6 +56,8 @@ public interface RestPathConstants {
 
     public static final String ATTACHMENTS = "/attachments";
 
+    public static final String ATTACHMENT = "/attachment";
+
     public static final String ASSIGNABLE = "/assignable";
 
 }

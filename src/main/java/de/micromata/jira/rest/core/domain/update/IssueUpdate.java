@@ -9,7 +9,7 @@ import java.util.Map;
  * Email: c.schulze@micromata.de
  * Date: 29.10.2014
  */
-public class IssueUpdateBean {
+public class IssueUpdate {
 
     private Map<String, Object> fields = new HashMap<String, Object>();
 

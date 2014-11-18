@@ -2,7 +2,7 @@ package de.micromata.jira.rest.junit;
 
 import de.micromata.jira.rest.core.domain.*;
 import de.micromata.jira.rest.core.domain.update.FieldOperation;
-import de.micromata.jira.rest.core.domain.update.IssueUpdateBean;
+import de.micromata.jira.rest.core.domain.update.IssueUpdate;
 import de.micromata.jira.rest.core.domain.update.Operation;
 import de.micromata.jira.rest.core.jql.EField;
 import de.micromata.jira.rest.core.util.JsonConstants;
@@ -136,12 +136,12 @@ public class TestIssueClient extends BaseTest {
         sb.append(issueByKey.getSelf());
         String newEnviroment = sb.toString();
         issueByKey.setEnvironment(newEnviroment);
-        IssueUpdateBean issueUpdateBean = new IssueUpdateBean();
-        Map<String, List<FieldOperation>> update = issueUpdateBean.getUpdate();
+        IssueUpdate issueUpdate = new IssueUpdate();
+        Map<String, List<FieldOperation>> update = issueUpdate.getUpdate();
         List<FieldOperation> operations = new ArrayList<FieldOperation>();
         operations.add(new FieldOperation(Operation.SET.getName(), newEnviroment));
         update.put(JsonConstants.PROP_ENVIRONMENT, operations);
-        IssueBean issueBean = jiraRestClient.getIssueClient().updateIssue(ISSUE_KEY, issueUpdateBean);
+        IssueBean issueBean = jiraRestClient.getIssueClient().updateIssue(ISSUE_KEY, issueUpdate);
         String updateIssueEnvironment = issueBean.getEnvironment();
         Assert.assertEquals(newEnviroment, updateIssueEnvironment);
 

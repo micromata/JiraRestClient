@@ -24,6 +24,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class UserBean extends BaseBean {
 
+    private String key = StringUtils.EMPTY;
+
     private AvatarURLBean avatarUrl = null;
 
     private String displayName = StringUtils.EMPTY;
@@ -31,6 +33,14 @@ public class UserBean extends BaseBean {
     private boolean active = true;
 
     private String emailAddress = StringUtils.EMPTY;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public AvatarURLBean getAvatarUrl() {
         return avatarUrl;
