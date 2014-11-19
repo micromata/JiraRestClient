@@ -1,0 +1,419 @@
+{
+    "expand": "renderedFields,names,schema,transitions,operations,editmeta,changelog",
+    "fields": {
+        "aggregateprogress": {
+            "percent": 0,
+            "progress": 0,
+            "total": 144000
+        },
+        "aggregatetimeestimate": 144000,
+        "aggregatetimeoriginalestimate": 144000,
+        "aggregatetimespent": null,
+        "assignee": {
+            "active": true,
+            "avatarUrls": {
+                "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+            },
+            "displayName": "admin",
+            "emailAddress": "admin@example.com",
+            "name": "admin",
+            "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+        },
+        "attachment": [
+            {
+                "author": {
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                        "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                        "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                        "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                    },
+                    "displayName": "admin",
+                    "emailAddress": "admin@example.com",
+                    "name": "admin",
+                    "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                },
+                "content": "http://localhost:2990/jira/secure/attachment/10101/14002.jpg",
+                "created": "2014-11-18T09:54:39.048+0100",
+                "filename": "14002.jpg",
+                "id": "10101",
+                "mimeType": "image/jpeg",
+                "self": "http://localhost:2990/jira/rest/api/2/attachment/10101",
+                "size": 436926,
+                "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10101/_thumb_10101.png"
+            },
+            {
+                "author": {
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                        "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                        "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                        "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                    },
+                    "displayName": "admin",
+                    "emailAddress": "admin@example.com",
+                    "name": "admin",
+                    "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                },
+                "content": "http://localhost:2990/jira/secure/attachment/10102/14004.jpg",
+                "created": "2014-11-18T09:54:39.053+0100",
+                "filename": "14004.jpg",
+                "id": "10102",
+                "mimeType": "image/jpeg",
+                "self": "http://localhost:2990/jira/rest/api/2/attachment/10102",
+                "size": 179470,
+                "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10102/_thumb_10102.png"
+            },
+            {
+                "author": {
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                        "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                        "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                        "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                    },
+                    "displayName": "admin",
+                    "emailAddress": "admin@example.com",
+                    "name": "admin",
+                    "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                },
+                "content": "http://localhost:2990/jira/secure/attachment/10103/14005.jpg",
+                "created": "2014-11-18T09:54:39.057+0100",
+                "filename": "14005.jpg",
+                "id": "10103",
+                "mimeType": "image/jpeg",
+                "self": "http://localhost:2990/jira/rest/api/2/attachment/10103",
+                "size": 168581,
+                "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10103/_thumb_10103.png"
+            },
+            {
+                "author": {
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                        "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                        "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                        "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                    },
+                    "displayName": "admin",
+                    "emailAddress": "admin@example.com",
+                    "name": "admin",
+                    "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                },
+                "content": "http://localhost:2990/jira/secure/attachment/10104/14006.gif",
+                "created": "2014-11-18T09:54:39.061+0100",
+                "filename": "14006.gif",
+                "id": "10104",
+                "mimeType": "image/gif",
+                "self": "http://localhost:2990/jira/rest/api/2/attachment/10104",
+                "size": 41055,
+                "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10104/_thumb_10104.png"
+            },
+            {
+                "author": {
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                        "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                        "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                        "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                    },
+                    "displayName": "admin",
+                    "emailAddress": "admin@example.com",
+                    "name": "admin",
+                    "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                },
+                "content": "http://localhost:2990/jira/secure/attachment/10105/14007.jpg",
+                "created": "2014-11-18T09:54:39.065+0100",
+                "filename": "14007.jpg",
+                "id": "10105",
+                "mimeType": "image/jpeg",
+                "self": "http://localhost:2990/jira/rest/api/2/attachment/10105",
+                "size": 309550,
+                "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10105/_thumb_10105.png"
+            },
+            {
+                "author": {
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                        "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                        "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                        "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                    },
+                    "displayName": "admin",
+                    "emailAddress": "admin@example.com",
+                    "name": "admin",
+                    "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                },
+                "content": "http://localhost:2990/jira/secure/attachment/10106/14008.jpg",
+                "created": "2014-11-18T09:54:39.069+0100",
+                "filename": "14008.jpg",
+                "id": "10106",
+                "mimeType": "image/jpeg",
+                "self": "http://localhost:2990/jira/rest/api/2/attachment/10106",
+                "size": 242736,
+                "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10106/_thumb_10106.png"
+            },
+            {
+                "author": {
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                        "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                        "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                        "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                    },
+                    "displayName": "admin",
+                    "emailAddress": "admin@example.com",
+                    "name": "admin",
+                    "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                },
+                "content": "http://localhost:2990/jira/secure/attachment/10107/14010.jpg",
+                "created": "2014-11-18T09:54:39.075+0100",
+                "filename": "14010.jpg",
+                "id": "10107",
+                "mimeType": "image/jpeg",
+                "self": "http://localhost:2990/jira/rest/api/2/attachment/10107",
+                "size": 154917,
+                "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10107/_thumb_10107.png"
+            },
+            {
+                "author": {
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                        "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                        "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                        "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                    },
+                    "displayName": "admin",
+                    "emailAddress": "admin@example.com",
+                    "name": "admin",
+                    "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                },
+                "content": "http://localhost:2990/jira/secure/attachment/10108/14011.jpg",
+                "created": "2014-11-18T09:54:39.077+0100",
+                "filename": "14011.jpg",
+                "id": "10108",
+                "mimeType": "image/jpeg",
+                "self": "http://localhost:2990/jira/rest/api/2/attachment/10108",
+                "size": 94946,
+                "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10108/_thumb_10108.png"
+            },
+            {
+                "author": {
+                    "active": true,
+                    "avatarUrls": {
+                        "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                        "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                        "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                        "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                    },
+                    "displayName": "admin",
+                    "emailAddress": "admin@example.com",
+                    "name": "admin",
+                    "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                },
+                "content": "http://localhost:2990/jira/secure/attachment/10000/IssueTypes.png",
+                "created": "2013-03-08T10:45:40.433+0100",
+                "filename": "IssueTypes.png",
+                "id": "10000",
+                "mimeType": "image/png",
+                "self": "http://localhost:2990/jira/rest/api/2/attachment/10000",
+                "size": 17689,
+                "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10000/_thumb_10000.png"
+            }
+        ],
+        "comment": {
+            "comments": [
+                {
+                    "author": {
+                        "active": true,
+                        "avatarUrls": {
+                            "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                            "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                            "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                            "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                        },
+                        "displayName": "admin",
+                        "emailAddress": "admin@example.com",
+                        "name": "admin",
+                        "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                    },
+                    "body": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                    "created": "2014-11-18T09:54:53.441+0100",
+                    "id": "10101",
+                    "self": "http://localhost:2990/jira/rest/api/2/issue/10000/comment/10101",
+                    "updateAuthor": {
+                        "active": true,
+                        "avatarUrls": {
+                            "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                            "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                            "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                            "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+                        },
+                        "displayName": "admin",
+                        "emailAddress": "admin@example.com",
+                        "name": "admin",
+                        "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+                    },
+                    "updated": "2014-11-18T09:54:53.441+0100"
+                }
+            ],
+            "maxResults": 1,
+            "startAt": 0,
+            "total": 1
+        },
+        "components": [
+            {
+                "description": "foobar",
+                "id": "10100",
+                "name": "Frontend",
+                "self": "http://localhost:2990/jira/rest/api/2/component/10100"
+            }
+        ],
+        "created": "2013-03-08T10:45:40.431+0100",
+        "creator": {
+            "active": true,
+            "avatarUrls": {
+                "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+            },
+            "displayName": "admin",
+            "emailAddress": "admin@example.com",
+            "name": "admin",
+            "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+        },
+        "description": "h2. Welcome to your first issue\r\n{color:#707070}An issue is an item you want to track in a specific JIRA project. You can use JIRA to track all kinds of things.{color}\r\n\r\nh4. Types of issues\r\n{color:#707070}An issue could represent a software bug, a user story, a project task, a helpdesk ticket, or a leave request form, the list is endless!{color}\r\n\r\n!IssueTypes.png!\r\n\r\nh4. Issue attributes\r\n{color:#707070}You may have noticed that an issue has some system fields such as: type, priority and status. These fields are there to help you categorise and track the progress of each issue.{color}\r\n\r\nNext: [Changing an issue's status|DEMO-2]\r\n\r\n\\\\\r\n\r\n----\r\n\r\n[Learn more about issues|https://confluence.atlassian.com/display/JIRA/What+is+an+Issue]\r\n\r\n\\\\\r\n\r\n\r\n\r\nh3. I need to change something \r\n\r\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+        "duedate": "2015-11-19",
+        "environment": "http://DarkSouls:2990/jira/browse/CONNECT-1",
+        "fixVersions": [
+            {
+                "archived": false,
+                "description": "zweite Version",
+                "id": "10101",
+                "name": "Version 2.0",
+                "releaseDate": "2020-10-15",
+                "released": false,
+                "self": "http://localhost:2990/jira/rest/api/2/version/10101"
+            }
+        ],
+        "issuelinks": [],
+        "issuetype": {
+            "description": "Eine Aufgabe, die erledigt werden muss.",
+            "iconUrl": "http://localhost:2990/jira/images/icons/issuetypes/task.png",
+            "id": "3",
+            "name": "Aufgabe",
+            "self": "http://localhost:2990/jira/rest/api/2/issuetype/3",
+            "subtask": false
+        },
+        "labels": [
+            "Foobar"
+        ],
+        "lastViewed": "2014-11-19T09:17:37.245+0100",
+        "priority": {
+            "iconUrl": "http://localhost:2990/jira/images/icons/priorities/critical.png",
+            "id": "2",
+            "name": "Kritisch",
+            "self": "http://localhost:2990/jira/rest/api/2/priority/2"
+        },
+        "progress": {
+            "percent": 0,
+            "progress": 0,
+            "total": 144000
+        },
+        "project": {
+            "avatarUrls": {
+                "16x16": "http://localhost:2990/jira/secure/projectavatar?size=xsmall&pid=10000&avatarId=10200",
+                "24x24": "http://localhost:2990/jira/secure/projectavatar?size=small&pid=10000&avatarId=10200",
+                "32x32": "http://localhost:2990/jira/secure/projectavatar?size=medium&pid=10000&avatarId=10200",
+                "48x48": "http://localhost:2990/jira/secure/projectavatar?pid=10000&avatarId=10200"
+            },
+            "id": "10000",
+            "key": "DEMO",
+            "name": "Demonstration",
+            "self": "http://localhost:2990/jira/rest/api/2/project/10000"
+        },
+        "reporter": {
+            "active": true,
+            "avatarUrls": {
+                "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122",
+                "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122"
+            },
+            "displayName": "admin",
+            "emailAddress": "admin@example.com",
+            "name": "admin",
+            "self": "http://localhost:2990/jira/rest/api/2/user?username=admin"
+        },
+        "resolution": null,
+        "resolutiondate": null,
+        "status": {
+            "description": "Der Vorgang ist offen und bereit, dass der Bearbeiter mit der Arbeit daran beginnen kann.",
+            "iconUrl": "http://localhost:2990/jira/images/icons/statuses/open.png",
+            "id": "1",
+            "name": "Offen",
+            "self": "http://localhost:2990/jira/rest/api/2/status/1",
+            "statusCategory": {
+                "colorName": "blue-gray",
+                "id": 2,
+                "key": "new",
+                "name": "Neu",
+                "self": "http://localhost:2990/jira/rest/api/2/statuscategory/2"
+            }
+        },
+        "subtasks": [],
+        "summary": "What is an issue? I don't know it....",
+        "timeestimate": 144000,
+        "timeoriginalestimate": 144000,
+        "timespent": null,
+        "timetracking": {
+            "originalEstimate": "1w",
+            "originalEstimateSeconds": 144000,
+            "remainingEstimate": "1w",
+            "remainingEstimateSeconds": 144000
+        },
+        "updated": "2014-11-19T09:17:37.145+0100",
+        "versions": [
+            {
+                "archived": false,
+                "description": "erste Version",
+                "id": "10100",
+                "name": "Version 1.0",
+                "releaseDate": "2014-11-29",
+                "released": false,
+                "self": "http://localhost:2990/jira/rest/api/2/version/10100"
+            }
+        ],
+        "votes": {
+            "hasVoted": false,
+            "self": "http://localhost:2990/jira/rest/api/2/issue/DEMO-1/votes",
+            "votes": 0
+        },
+        "watches": {
+            "isWatching": true,
+            "self": "http://localhost:2990/jira/rest/api/2/issue/DEMO-1/watchers",
+            "watchCount": 1
+        },
+        "worklog": {
+            "maxResults": 20,
+            "startAt": 0,
+            "total": 0,
+            "worklogs": []
+        },
+        "workratio": 0
+    },
+    "id": "10000",
+    "key": "DEMO-1",
+    "self": "http://localhost:2990/jira/rest/api/2/issue/10000"
+}
