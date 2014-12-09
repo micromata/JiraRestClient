@@ -3,14 +3,14 @@ package de.micromata.jira.rest.junit.domain;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
-import de.micromata.jira.rest.core.domain2.Issue;
+import de.micromata.jira.rest.core.domain.Issue;
 import junit.framework.Assert;
 import org.junit.Test;
 
 import java.io.*;
 
 /**
- * Author: Christian Schulze
+ * User: Christian Schulze
  * Email: c.schulze@micromata.de
  * Date: 19.11.2014
  */

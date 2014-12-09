@@ -1,7 +1,7 @@
 package de.micromata.jira.rest.core.util;
 
 /**
- * Author: Christian Schulze
+ * User: Christian Schulze
  * Email: c.schulze@micromata.de
  * Date: 09.08.2014
  */

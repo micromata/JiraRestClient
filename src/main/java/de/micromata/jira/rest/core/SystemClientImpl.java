@@ -1,32 +1,34 @@
 package de.micromata.jira.rest.core;
 
-import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.SystemClient;
-import de.micromata.jira.rest.core.domain.IssueTypeBean;
-import de.micromata.jira.rest.core.domain.PriorityBean;
-import de.micromata.jira.rest.core.domain.StatusBean;
-import de.micromata.jira.rest.core.parser.IssueTypeParser;
-import de.micromata.jira.rest.core.parser.PriorityParser;
-import de.micromata.jira.rest.core.parser.StatusParser;
-import de.micromata.jira.rest.core.util.*;
+import de.micromata.jira.rest.core.domain.Issuetype;
+import de.micromata.jira.rest.core.domain.Priority;
+import de.micromata.jira.rest.core.domain.Status;
+import de.micromata.jira.rest.core.util.HttpMethodFactory;
+import de.micromata.jira.rest.core.util.RestException;
+import de.micromata.jira.rest.core.util.RestParamConstants;
+import de.micromata.jira.rest.core.util.RestPathConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Christian Schulze
+ * User: Christian Schulze
  * Email: c.schulze@micromata.de
  * Date: 31.07.2014
  */
-public class SystemClientImpl implements SystemClient, RestParamConstants, RestPathConstants {
+public class SystemClientImpl extends BaseClient implements SystemClient, RestParamConstants, RestPathConstants {
 
 
     private JiraRestClient jiraRestClient = null;
@@ -42,18 +44,18 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
     }
 
     @Override
-    public List<IssueTypeBean> getIssueTypes() throws RestException, IOException {
+    public List<Issuetype> getIssueTypes() throws RestException, IOException {
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(ISSUETPYES).build();
         GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
-            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
-            List<IssueTypeBean> parse = IssueTypeParser.parse(objects);
+            JsonReader jsonReader = toJsonReader(inputStream);
+            Type listType = new TypeToken<ArrayList<Issuetype>>(){}.getType();
+            List<Issuetype> issuetypes = gson.fromJson(jsonReader, listType);
             method.releaseConnection();
-            Collections.sort(parse);
-            return parse;
+            return issuetypes;
         } else {
             method.releaseConnection();
             throw new RestException(method);
@@ -61,18 +63,18 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
     }
 
     @Override
-    public List<StatusBean> getStates() throws RestException, IOException {
+    public List<Status> getStates() throws RestException, IOException {
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(STATUS).build();
         GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
-            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
-            List<StatusBean> parse = StatusParser.parse(objects);
+            JsonReader jsonReader = toJsonReader(inputStream);
+            Type listType = new TypeToken<ArrayList<Status>>(){}.getType();
+            List<Status> states = gson.fromJson(jsonReader, listType);
             method.releaseConnection();
-            Collections.sort(parse);
-            return parse;
+            return states;
         } else {
             method.releaseConnection();
             throw new RestException(method);
@@ -80,18 +82,18 @@ public class SystemClientImpl implements SystemClient, RestParamConstants, RestP
     }
 
     @Override
-    public List<PriorityBean> getPriorities() throws RestException, IOException {
+    public List<Priority> getPriorities() throws RestException, IOException {
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(PRIORITY).build();
         GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
-            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
-            List<PriorityBean> parse = PriorityParser.parse(objects);
+            JsonReader jsonReader = toJsonReader(inputStream);
+            Type listType = new TypeToken<ArrayList<Priority>>(){}.getType();
+            List<Priority> priorities = gson.fromJson(jsonReader, listType);
             method.releaseConnection();
-            Collections.sort(parse);
-            return parse;
+            return priorities;
         } else {
             method.releaseConnection();
             throw new RestException(method);

@@ -22,7 +22,7 @@ import java.net.URI;
 import java.net.URL;
 
 /**
- * Author: Christian Schulze
+ * User: Christian Schulze
  * Email: c.schulze@micromata.de
  * Date: 22.08.2014
  */

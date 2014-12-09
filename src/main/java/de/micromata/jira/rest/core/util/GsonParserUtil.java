@@ -15,23 +15,14 @@
 
 package de.micromata.jira.rest.core.util;
 
+import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-
-import de.micromata.jira.rest.core.domain.VisibilityBean;
-import de.micromata.jira.rest.core.domain.WorklogBean;
 
 /**
  * @author Christian Schulze
@@ -89,35 +80,6 @@ public class GsonParserUtil {
         return jsonString;
     }
 
-    public static String parseWorklogToJson(WorklogBean worklog) {
-        JsonObject parent = new JsonObject();
-
-        JsonObject authorObject = new JsonObject();
-        authorObject.addProperty(JsonConstants.PROP_NAME, worklog.getAuthor().getName());
-        parent.add(JsonConstants.ELEM_AUTHOR, authorObject);
-
-        JsonObject updateAuthorObject = new JsonObject();
-        updateAuthorObject.addProperty(JsonConstants.PROP_NAME, worklog.getUpdateAuthor().getName());
-        parent.add(JsonConstants.ELEM_UPDATE_AUTHOR, updateAuthorObject);
-
-        parent.addProperty(JsonConstants.PROP_COMMENT, worklog.getComment());
-        parent.addProperty(JsonConstants.PROP_TIME_SPENT_SECONDS, worklog.getTimeSpentSeconds());
-
-        SimpleDateFormat simpleDateFormat = DateParser.Format.YYYY_MM_DD_T_HH_MM_SS_SSSZ.getSimpleDateFormat();
-        Date date = worklog.getStarted();
-        parent.addProperty(JsonConstants.PROP_STARTED, simpleDateFormat.format(date));
-
-        VisibilityBean visibilityBean = worklog.getVisibility();
-        if (visibilityBean != null) {
-            JsonObject visbilityObject = new JsonObject();
-            visbilityObject.addProperty(JsonConstants.PROP_TYPE, visibilityBean.getType());
-            visbilityObject.addProperty(JsonConstants.PROP_VALUE, visibilityBean.getValue());
-            parent.add(JsonConstants.ELEM_VISIBILITY, visbilityObject);
-        }
-
-        String jsonString = new Gson().toJson(parent);
-        return jsonString;
-    }
     
 
 }

@@ -1,11 +1,10 @@
 package de.micromata.jira.rest.core;
 
-import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.SearchClient;
-import de.micromata.jira.rest.core.domain.JqlSearchResultBean;
+import de.micromata.jira.rest.core.domain.JqlSearchResult;
 import de.micromata.jira.rest.core.jql.JqlSearchBean;
-import de.micromata.jira.rest.core.parser.JqlSearchParser;
 import de.micromata.jira.rest.core.util.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -17,11 +16,11 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 
 /**
- * Author: Christian Schulze
+ * User: Christian Schulze
  * Email: c.schulze@micromata.de
  * Date: 01.08.2014
  */
-public class SearchClientImpl implements SearchClient, RestPathConstants, RestParamConstants {
+public class SearchClientImpl extends BaseClient implements SearchClient, RestPathConstants, RestParamConstants {
 
 
     private JiraRestClient jiraRestClient = null;
@@ -34,7 +33,7 @@ public class SearchClientImpl implements SearchClient, RestPathConstants, RestPa
     }
 
     @Override
-    public JqlSearchResultBean searchIssues(JqlSearchBean jsb) throws RestException, IOException {
+    public JqlSearchResult searchIssues(JqlSearchBean jsb) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         String json = GsonParserUtil.parseObjectToJson(jsb);
@@ -43,10 +42,10 @@ public class SearchClientImpl implements SearchClient, RestPathConstants, RestPa
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
-            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
-            JqlSearchResultBean jqlSearchResultBean = JqlSearchParser.parse(jsonObject);
+            JsonReader jsonReader = toJsonReader(inputStream);
+            JqlSearchResult jqlSearchResult = gson.fromJson(jsonReader, JqlSearchResult.class);
             method.releaseConnection();
-            return jqlSearchResultBean;
+            return jqlSearchResult;
         } else {
             method.releaseConnection();
             throw new RestException(method);

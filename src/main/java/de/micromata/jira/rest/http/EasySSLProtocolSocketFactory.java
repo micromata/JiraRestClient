@@ -2,7 +2,7 @@
 //
 // Project   Micromata Genome Core
 //
-// Author    roger@micromata.de
+// User    roger@micromata.de
 // Created   29.03.2008
 // Copyright Micromata 29.03.2008
 //

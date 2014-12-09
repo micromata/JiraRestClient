@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
  * You need a running Jira-Instance with the TEST_SYSTEM_URL.
  * Best use is the atlassian-plugin-sdk
  *
- * Author: Christian Schulze
+ * User: Christian Schulze
  * Email: c.schulze@micromata.de
  * Date: 09.08.2014
  */

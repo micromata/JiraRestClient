@@ -1,16 +1,16 @@
 package de.micromata.jira.rest.core.domain;
 
-public class IssueResponse extends BaseBean {
+public class IssueResponse  {
 
     private String key;
 
-    private ErrorBean errorBean = null;
+    private Error errorBean = null;
 
     public IssueResponse() {
         super();
     }
 
-    public IssueResponse(ErrorBean errorBean) {
+    public IssueResponse(Error errorBean) {
         this.errorBean = errorBean;
     }
 
@@ -22,11 +22,11 @@ public class IssueResponse extends BaseBean {
         this.key = key;
     }
 
-    public ErrorBean getErrorBean() {
+    public Error getErrorBean() {
         return errorBean;
     }
 
-    public void setErrorBean(ErrorBean errorBean) {
+    public void setErrorBean(Error errorBean) {
         this.errorBean = errorBean;
     }
 }

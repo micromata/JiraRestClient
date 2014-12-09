@@ -1,6 +1,6 @@
 package de.micromata.jira.rest.junit;
 
-import de.micromata.jira.rest.core.domain.JqlSearchResultBean;
+import de.micromata.jira.rest.core.domain.JqlSearchResult;
 import de.micromata.jira.rest.core.jql.*;
 import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 /**
- * Author: Christian Schulze
+ * User: Christian Schulze
  * Email: c.schulze@micromata.de
  * Date: 11.08.2014
  */
@@ -27,10 +27,10 @@ public class TestSearchClient extends BaseTest{
         jsb.addExpand(EField.TRANSITIONS);
 //        jsb.addField(EField.ALL);
 //        jsb.addExpand(EField.TRANSITIONS);
-        JqlSearchResultBean jqlSearchResultBean = jiraRestClient.getSearchClient().searchIssues(jsb);
-        Assert.assertNotNull(jqlSearchResultBean);
-        Assert.assertEquals(6, jqlSearchResultBean.getTotal());
-        Assert.assertEquals(6, jqlSearchResultBean.getIssueBeans().size());
+        JqlSearchResult jqlSearchResult = jiraRestClient.getSearchClient().searchIssues(jsb);
+        Assert.assertNotNull(jqlSearchResult);
+        Assert.assertEquals(6, jqlSearchResult.getTotal());
+        Assert.assertEquals(6, jqlSearchResult.getIssues().size());
     }
 
     @Test
@@ -45,9 +45,9 @@ public class TestSearchClient extends BaseTest{
         jsb.addExpand(EField.TRANSITIONS);
 //        jsb.addField(EField.ALL);
 //        jsb.addExpand(EField.TRANSITIONS);
-        JqlSearchResultBean jqlSearchResultBean = jiraRestClient.getSearchClient().searchIssues(jsb);
-        Assert.assertNotNull(jqlSearchResultBean);
-        Assert.assertEquals(6, jqlSearchResultBean.getTotal());
-        Assert.assertEquals(6, jqlSearchResultBean.getIssueBeans().size());
+        JqlSearchResult jqlSearchResult = jiraRestClient.getSearchClient().searchIssues(jsb);
+        Assert.assertNotNull(jqlSearchResult);
+        Assert.assertEquals(6, jqlSearchResult.getTotal());
+        Assert.assertEquals(6, jqlSearchResult.getIssues().size());
     }
 }

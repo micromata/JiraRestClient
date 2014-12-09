@@ -1,33 +1,31 @@
 package de.micromata.jira.rest.core;
 
-import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.ProjectClient;
-import de.micromata.jira.rest.core.domain.BasicProjectBean;
-import de.micromata.jira.rest.core.domain.ComponentBean;
-import de.micromata.jira.rest.core.domain.ProjectBean;
-import de.micromata.jira.rest.core.domain.VersionBean;
-import de.micromata.jira.rest.core.parser.BasicProjectParser;
-import de.micromata.jira.rest.core.parser.ComponentParser;
-import de.micromata.jira.rest.core.parser.ProjectParser;
-import de.micromata.jira.rest.core.parser.VersionParser;
-import de.micromata.jira.rest.core.util.*;
+import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.util.HttpMethodFactory;
+import de.micromata.jira.rest.core.util.RestException;
+import de.micromata.jira.rest.core.util.RestParamConstants;
+import de.micromata.jira.rest.core.util.RestPathConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Christian
+ * User: Christian
  * Date: 31.07.2014
  */
-public class ProjectClientImpl implements ProjectClient, RestParamConstants, RestPathConstants {
+public class ProjectClientImpl extends BaseClient implements ProjectClient, RestParamConstants, RestPathConstants {
 
 
     private JiraRestClient jiraRestClient = null;
@@ -41,7 +39,7 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
 
 
     @Override
-    public ProjectBean getProjectByKey(String projectKey) throws RestException, IOException {
+    public Project getProjectByKey(String projectKey) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).path(projectKey).build();
@@ -49,9 +47,10 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
-            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+            JsonReader jsonReader = toJsonReader(inputStream);
+            Project project = gson.fromJson(jsonReader, Project.class);
             method.releaseConnection();
-            return ProjectParser.parse(jsonObject);
+            return project;
         } else {
             method.releaseConnection();
             throw new RestException(method);
@@ -59,7 +58,7 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
     }
 
     @Override
-    public List<BasicProjectBean> getAllProjects() throws RestException, IOException {
+    public List<Project> getAllProjects() throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).build();
@@ -67,11 +66,11 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
-            List<JsonObject> jsonObjects = GsonParserUtil.parseJsonObjects(inputStream);
-            List<BasicProjectBean> beans = BasicProjectParser.parseBasicProject(jsonObjects);
+            JsonReader jsonReader = toJsonReader(inputStream);
+            Type listType = new TypeToken<ArrayList<Project>>(){}.getType();
+            List<Project> projects = gson.fromJson(jsonReader, listType);
             method.releaseConnection();
-            Collections.sort(beans);
-            return beans;
+            return projects;
         } else {
             method.releaseConnection();
             throw new RestException(method);
@@ -80,7 +79,7 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
 
 
     @Override
-    public List<VersionBean> getProjectVersions(String projectKey) throws RestException, IOException {
+    public List<Version> getProjectVersions(String projectKey) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).path(projectKey).path(VERSIONS).build();
@@ -88,11 +87,11 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
-            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
-            List<VersionBean> parse = VersionParser.parse(objects);
+            JsonReader jsonReader = toJsonReader(inputStream);
+            Type listType = new TypeToken<ArrayList<Version>>(){}.getType();
+            List<Version> versions = gson.fromJson(jsonReader, listType);
             method.releaseConnection();
-            Collections.sort(parse);
-            return parse;
+            return versions;
         } else {
             method.releaseConnection();
             throw new RestException(method);
@@ -100,7 +99,7 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
     }
 
     @Override
-    public List<ComponentBean> getProjectComponents(String projectKey) throws RestException, IOException {
+    public List<Component> getProjectComponents(String projectKey) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).path(projectKey).path(COMPONENTS).build();
@@ -109,34 +108,15 @@ public class ProjectClientImpl implements ProjectClient, RestParamConstants, Res
 
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
-            List<JsonObject> objects = GsonParserUtil.parseJsonObjects(inputStream);
-            List<ComponentBean> parse = ComponentParser.parse(objects);
+            JsonReader jsonReader = toJsonReader(inputStream);
+            Type listType = new TypeToken<ArrayList<Component>>(){}.getType();
+            List<Component> components = gson.fromJson(jsonReader, listType);
             method.releaseConnection();
-            Collections.sort(parse);
-            return parse;
+            return components;
         } else {
             method.releaseConnection();
             throw new RestException(method);
         }
     }
 
-    @Override
-    public ComponentBean getComponentById(long id) throws RestException {
-        return null;
-    }
-
-    @Override
-    public VersionBean getVersionById(long id) throws RestException {
-        return null;
-    }
-
-    @Override
-    public ComponentBean updateComponent(ComponentBean componentBean) throws RestException {
-        return null;
-    }
-
-    @Override
-    public VersionBean updateVersion(VersionBean versionBean) throws RestException {
-        return null;
-    }
 }

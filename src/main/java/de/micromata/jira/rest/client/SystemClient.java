@@ -1,8 +1,8 @@
 package de.micromata.jira.rest.client;
 
-import de.micromata.jira.rest.core.domain.IssueTypeBean;
-import de.micromata.jira.rest.core.domain.PriorityBean;
-import de.micromata.jira.rest.core.domain.StatusBean;
+import de.micromata.jira.rest.core.domain.Issuetype;
+import de.micromata.jira.rest.core.domain.Priority;
+import de.micromata.jira.rest.core.domain.Status;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public interface SystemClient {
      * @return list of issue types
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public List<IssueTypeBean> getIssueTypes() throws RestException, IOException;
+    public List<Issuetype> getIssueTypes() throws RestException, IOException;
 
     /**
      * Returns a list of all statuses.
@@ -28,7 +28,7 @@ public interface SystemClient {
      * @return list of statuses
      * @throws RestException
      */
-    public List<StatusBean> getStates() throws RestException, IOException;
+    public List<Status> getStates() throws RestException, IOException;
 
 
     /**
@@ -37,6 +37,6 @@ public interface SystemClient {
      * @return
      * @throws RestException
      */
-    public List<PriorityBean> getPriorities() throws RestException, IOException;
+    public List<Priority> getPriorities() throws RestException, IOException;
 
 }

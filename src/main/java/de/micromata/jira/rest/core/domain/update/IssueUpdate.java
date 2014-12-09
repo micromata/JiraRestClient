@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Christian Schulze
+ * User: Christian Schulze
  * Email: c.schulze@micromata.de
  * Date: 29.10.2014
  */

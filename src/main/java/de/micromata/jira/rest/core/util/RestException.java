@@ -15,12 +15,8 @@
 
 package de.micromata.jira.rest.core.util;
 
-import de.micromata.jira.rest.core.domain.ErrorBean;
-import de.micromata.jira.rest.core.parser.ErrorParser;
+import de.micromata.jira.rest.core.domain.Error;
 import org.apache.commons.httpclient.HttpMethod;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author Christian Schulze
@@ -32,10 +28,10 @@ public class RestException extends Exception {
 
     private String reasonPhrase;
 
-    private ErrorBean restErrorMessage;
+    private Error restErrorMessage;
 
 
-    public RestException(int statusCode, String reasonPhrase, ErrorBean restErrorMessage) {
+    public RestException(int statusCode, String reasonPhrase, Error restErrorMessage) {
         super(statusCode + " " + reasonPhrase + " " + restErrorMessage);
         this.statusCode = statusCode;
         this.reasonPhrase = reasonPhrase;
@@ -72,11 +68,11 @@ public class RestException extends Exception {
         this.reasonPhrase = reasonPhrase;
     }
 
-    public ErrorBean getRestErrorMessage() {
+    public Error getRestErrorMessage() {
         return restErrorMessage;
     }
 
-    public void setRestErrorMessage(ErrorBean restErrorMessage) {
+    public void setRestErrorMessage(Error restErrorMessage) {
         this.restErrorMessage = restErrorMessage;
     }
 }
