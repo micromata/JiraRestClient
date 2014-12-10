@@ -7,6 +7,8 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * User: Christian Schulze
@@ -16,7 +18,7 @@ import java.io.IOException;
 public class TestSearchClient extends BaseTest{
 
     @Test
-    public void testSearchIssues() throws RestException, IOException {
+    public void testSearchIssues() throws RestException, IOException, ExecutionException, InterruptedException {
         JqlSearchBean jsb = new JqlSearchBean();
         JqlBuilder builder = new JqlBuilder();
         String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "DEMO")
@@ -25,16 +27,18 @@ public class TestSearchClient extends BaseTest{
         jsb.setJql(jql);
         jsb.addField(EField.ISSUE_KEY, EField.STATUS, EField.DUE, EField.SUMMARY, EField.ISSUE_TYPE, EField.PRIORITY, EField.UPDATED, EField.TRANSITIONS);
         jsb.addExpand(EField.TRANSITIONS);
-//        jsb.addField(EField.ALL);
-//        jsb.addExpand(EField.TRANSITIONS);
-        JqlSearchResult jqlSearchResult = jiraRestClient.getSearchClient().searchIssues(jsb);
-        Assert.assertNotNull(jqlSearchResult);
-        Assert.assertEquals(6, jqlSearchResult.getTotal());
-        Assert.assertEquals(6, jqlSearchResult.getIssues().size());
+        Future<JqlSearchResult> future = jiraRestClient.getSearchClient().searchIssues(jsb);
+        while(future.isDone()){
+            JqlSearchResult jqlSearchResult = future.get();
+            Assert.assertNotNull(jqlSearchResult);
+            Assert.assertEquals(6, jqlSearchResult.getTotal());
+            Assert.assertEquals(6, jqlSearchResult.getIssues().size());
+        }
+
     }
 
     @Test
-    public void testSearchIssueWithMultipleValues() throws  IOException, RestException {
+    public void testSearchIssueWithMultipleValues() throws IOException, RestException, ExecutionException, InterruptedException {
         JqlSearchBean jsb = new JqlSearchBean();
         JqlBuilder builder = new JqlBuilder();
         String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "DEMO")
@@ -43,11 +47,12 @@ public class TestSearchClient extends BaseTest{
         jsb.setJql(jql);
         jsb.addField(EField.ISSUE_KEY, EField.STATUS, EField.DUE, EField.SUMMARY, EField.ISSUE_TYPE, EField.PRIORITY, EField.UPDATED, EField.TRANSITIONS);
         jsb.addExpand(EField.TRANSITIONS);
-//        jsb.addField(EField.ALL);
-//        jsb.addExpand(EField.TRANSITIONS);
-        JqlSearchResult jqlSearchResult = jiraRestClient.getSearchClient().searchIssues(jsb);
-        Assert.assertNotNull(jqlSearchResult);
-        Assert.assertEquals(6, jqlSearchResult.getTotal());
-        Assert.assertEquals(6, jqlSearchResult.getIssues().size());
+        Future<JqlSearchResult> future = jiraRestClient.getSearchClient().searchIssues(jsb);
+        while(future.isDone()){
+            JqlSearchResult jqlSearchResult = future.get();
+            Assert.assertNotNull(jqlSearchResult);
+            Assert.assertEquals(6, jqlSearchResult.getTotal());
+            Assert.assertEquals(6, jqlSearchResult.getIssues().size());
+        }
     }
 }

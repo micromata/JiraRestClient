@@ -17,6 +17,7 @@ package de.micromata.jira.rest.core.util;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import de.micromata.jira.rest.core.misc.JsonConstants;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

@@ -1,12 +1,11 @@
 package de.micromata.jira.rest.junit;
 
+import de.micromata.jira.rest.core.domain.*;
 import de.micromata.jira.rest.core.domain.update.FieldOperation;
 import de.micromata.jira.rest.core.domain.update.IssueUpdate;
 import de.micromata.jira.rest.core.domain.update.Operation;
-import de.micromata.jira.rest.core.domain.Attachment;
-import de.micromata.jira.rest.core.domain.Issue;
 import de.micromata.jira.rest.core.jql.EField;
-import de.micromata.jira.rest.core.util.JsonConstants;
+import de.micromata.jira.rest.core.misc.JsonConstants;
 import de.micromata.jira.rest.core.util.RestException;
 import de.micromata.jira.rest.core.util.URIParser;
 import junit.framework.Assert;
@@ -51,7 +50,7 @@ public class TestIssueClient extends BaseTest {
         Assert.assertNotNull(issue);
         Assert.assertNotNull(issue.getFields().getSummary());
         Assert.assertNotNull(issue.getFields().getDescription());
-//        Assert.assertNotNull(issue.getExpand().getRenderedFieldsBean());
+        Assert.assertNotNull(issue.getRenderedFields().getDescription());
     }
 
 
@@ -74,56 +73,57 @@ public class TestIssueClient extends BaseTest {
     }
 
 
-//    @Test
-//    public void testCreateIssue() throws ParseException, RestException, IOException {
-//        IssueBean issue = new IssueBean();
-//        issue.setDescription("Test Description");
-//        issue.setSummary("Test Title");
-//        issue.setProjectKey("REMOTE");
-//        issue.setIssueTypeName("Bug");
-//        issue.setPriorityName(JsonConstants.PRIORITY_CRITICAL);
+    @Test
+    public void testCreateIssue() throws RestException, IOException {
+        Issue issue = new Issue();
+        Fields fields = new Fields();
+        fields.setDescription("Test Description");
+        fields.setSummary("Test Title");
+        Project project = new Project();
+        project.setKey("REMOTE");
+        fields.setProject(project);
+        Issuetype issueType = new Issuetype();
+        issueType.setName("Bug");
+        fields.setIssuetype(issueType);
+        Priority priority = new Priority();
+        priority.setName(JsonConstants.PRIORITY_MAJOR);
+        fields.setPriority(priority);
+        fields.setDuedate("2015-08-01");
+
+//        ComponentBean componentBean1 = new ComponentBean();
+//        componentBean1.setName("Backend");
+//        issue.getComponents().add(componentBean1);
+//        ComponentBean componentBean2 = new ComponentBean();
+//        componentBean2.setName("Frontend");
+//        issue.getComponents().add(componentBean2);
 //
-//        String dueDateString = "2015-08-01";
-//        Date dueDate = sdf.parse(dueDateString);
-//        issue.setDueDate(dueDate);
-//
-////        ComponentBean componentBean1 = new ComponentBean();
-////        componentBean1.setName("Backend");
-////        issue.getComponents().add(componentBean1);
-////        ComponentBean componentBean2 = new ComponentBean();
-////        componentBean2.setName("Frontend");
-////        issue.getComponents().add(componentBean2);
-////
-////        VersionBean versionBean1 = new VersionBean();
-////        versionBean1.setName("1.1");
-////        VersionBean versionBean2 = new VersionBean();
-////        versionBean2.setName("1.0");
-////        issue.getVersions().add(versionBean1);
-////        issue.getVersions().add(versionBean2);
-////        issue.getFixVersions().add(versionBean1);
-////        issue.getFixVersions().add(versionBean2);
-//
-//        UserBean userBean = new UserBean();
-//        userBean.setName("admin");
-//        issue.setAssignee(userBean);
-//
-//        issue.getTags().add("foobar");
-//        issue.getTags().add("inubit");
-//
-//        TimetrackingBean timetrackingBean = new TimetrackingBean();
-//        timetrackingBean.setOriginalEstimate("480");
-//        issue.setTimetrackingBean(timetrackingBean);
-//
-//        IssueResponse issueResponse = jiraRestClient.getIssueClient().createIssue(issue);
-//        if (issueResponse != null) {
-//            String issueKey = issueResponse.getKey();
-//            if (issueKey != null) {
-//                System.out.println(issueKey);
-//            } else {
-//                System.out.println(issueResponse.getErrorBean());
-//            }
-//        }
-//    }
+//        VersionBean versionBean1 = new VersionBean();
+//        versionBean1.setName("1.1");
+//        VersionBean versionBean2 = new VersionBean();
+//        versionBean2.setName("1.0");
+//        issue.getVersions().add(versionBean1);
+//        issue.getVersions().add(versionBean2);
+//        issue.getFixVersions().add(versionBean1);
+//        issue.getFixVersions().add(versionBean2);
+
+        User userBean = new User();
+        userBean.setName("admin");
+        fields.setAssignee(userBean);
+
+        fields.getLabels().add("foobar");
+        fields.getLabels().add("inubit");
+        issue.setFields(fields);
+
+        IssueResponse issueResponse = jiraRestClient.getIssueClient().createIssue(issue);
+        if (issueResponse != null) {
+            String issueKey = issueResponse.getKey();
+            if (issueKey != null) {
+                System.out.println(issueKey);
+            } else {
+                System.out.println(issueResponse.getError());
+            }
+        }
+    }
 
     @Test
     public void testSetLinkInEviroment() throws IOException, RestException {

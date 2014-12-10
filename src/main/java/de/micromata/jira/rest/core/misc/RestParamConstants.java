@@ -1,4 +1,4 @@
-package de.micromata.jira.rest.core.util;
+package de.micromata.jira.rest.core.misc;
 
 /**
  * User: Christian Schulze

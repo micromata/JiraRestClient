@@ -7,8 +7,8 @@ import de.micromata.jira.rest.client.ProjectClient;
 import de.micromata.jira.rest.core.domain.*;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.util.RestException;
-import de.micromata.jira.rest.core.util.RestParamConstants;
-import de.micromata.jira.rest.core.util.RestPathConstants;
+import de.micromata.jira.rest.core.misc.RestParamConstants;
+import de.micromata.jira.rest.core.misc.RestPathConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 

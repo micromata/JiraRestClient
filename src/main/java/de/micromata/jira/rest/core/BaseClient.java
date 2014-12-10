@@ -7,11 +7,15 @@ import com.google.gson.stream.JsonReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Christian on 09.12.2014.
  */
 public abstract class BaseClient {
+
+    protected final ExecutorService executorService = Executors.newFixedThreadPool(100);
 
     protected Gson gson = new GsonBuilder().create();
 

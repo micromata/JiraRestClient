@@ -2,8 +2,7 @@ package de.micromata.jira.rest.junit;
 
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.core.jql.JqlConstants;
-import de.micromata.jira.rest.core.util.RestPathConstants;
-import org.apache.commons.httpclient.ProxyHost;
+import de.micromata.jira.rest.core.misc.RestPathConstants;
 import org.junit.Before;
 
 import java.io.IOException;

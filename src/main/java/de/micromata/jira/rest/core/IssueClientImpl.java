@@ -8,7 +8,11 @@ import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.IssueClient;
 import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.domain.Error;
 import de.micromata.jira.rest.core.domain.update.IssueUpdate;
+import de.micromata.jira.rest.core.misc.JsonConstants;
+import de.micromata.jira.rest.core.misc.RestParamConstants;
+import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -50,27 +54,27 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     @Override
     public IssueResponse createIssue(Issue issue)
             throws RestException, IOException {
-//        HttpClient client = jiraRestClient.getClient();
-//        URI baseUri = jiraRestClient.getBaseUri();
-//        String json = IssueParser.parseIssueToJson(issue);
-//        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).build();
-//        PostMethod method = HttpMethodFactory.createPostMethod(uri, json);
-//        int status = client.executeMethod(method);
-//        if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_CREATED) {
-//            InputStream inputStream = method.getResponseBodyAsStream();
-//            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
-//            method.releaseConnection();
-//            return IssueResponseParser.parse(jsonObject);
-//        } else if (status == HttpURLConnection.HTTP_BAD_REQUEST) {
-//            InputStream entityInputStream = method.getResponseBodyAsStream();
-//            ErrorBean parse = ErrorParser.parse(entityInputStream);
-//            method.releaseConnection();
-//            return new IssueResponse(parse);
-//        } else {
-//            method.releaseConnection();
-//            throw new RestException(method);
-//        }
-        return null;
+        HttpClient client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        String json = gson.toJson(issue);
+        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).build();
+        PostMethod method = HttpMethodFactory.createPostMethod(uri, json);
+        int status = client.executeMethod(method);
+        if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_CREATED) {
+            System.out.println(method.getResponseBodyAsString());
+            return null;
+        } else if (status == HttpURLConnection.HTTP_BAD_REQUEST) {
+            System.out.println(method.getResponseBodyAsString());
+            InputStream inputStream = method.getResponseBodyAsStream();
+            JsonReader jsonReader = toJsonReader(inputStream);
+            Error error = gson.fromJson(jsonReader, Error.class);
+            method.releaseConnection();
+            IssueResponse response = new IssueResponse(error);
+            return response;
+        } else {
+            method.releaseConnection();
+            throw new RestException(method);
+        }
     }
 
     @Override

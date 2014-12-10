@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package de.micromata.jira.rest.core.util;
+package de.micromata.jira.rest.core.misc;
 
 /**
  * @author Christian Schulze
