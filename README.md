@@ -20,9 +20,6 @@ With the Client you can use the seperated Clients for Issues, Projects, Users, S
 ### Version 1.4
 
 * adding concurrency.Future Support to the jql Search
-
-### Version 1.3
-
 * change domain to the json form which is deliverd by the API
 * change unmarshaling to use gson.fromJson
 
