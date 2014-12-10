@@ -2,12 +2,12 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class Issue {
+public class IssueBean {
 
     @Expose
     private String expand;
     @Expose
-    private Fields fields;
+    private FieldsBean fields;
     @Expose
     private String id;
     @Expose
@@ -15,7 +15,7 @@ public class Issue {
     @Expose
     private String self;
     @Expose
-    private RenderedFields renderedFields;
+    private RenderedFieldsBean renderedFields;
 
     public String getExpand() {
         return expand;
@@ -25,11 +25,11 @@ public class Issue {
         this.expand = expand;
     }
 
-    public Fields getFields() {
+    public FieldsBean getFields() {
         return fields;
     }
 
-    public void setFields(Fields fields) {
+    public void setFields(FieldsBean fields) {
         this.fields = fields;
     }
 
@@ -57,11 +57,11 @@ public class Issue {
         this.self = self;
     }
 
-    public RenderedFields getRenderedFields() {
+    public RenderedFieldsBean getRenderedFields() {
         return renderedFields;
     }
 
-    public void setRenderedFields(RenderedFields renderedFields) {
+    public void setRenderedFields(RenderedFieldsBean renderedFields) {
         this.renderedFields = renderedFields;
     }
 }

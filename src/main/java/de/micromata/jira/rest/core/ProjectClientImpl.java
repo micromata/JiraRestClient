@@ -39,7 +39,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
 
     @Override
-    public Project getProjectByKey(String projectKey) throws RestException, IOException {
+    public ProjectBean getProjectByKey(String projectKey) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).path(projectKey).build();
@@ -48,7 +48,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonReader jsonReader = toJsonReader(inputStream);
-            Project project = gson.fromJson(jsonReader, Project.class);
+            ProjectBean project = gson.fromJson(jsonReader, ProjectBean.class);
             method.releaseConnection();
             return project;
         } else {
@@ -58,7 +58,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
     }
 
     @Override
-    public List<Project> getAllProjects() throws RestException, IOException {
+    public List<ProjectBean> getAllProjects() throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).build();
@@ -67,8 +67,8 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonReader jsonReader = toJsonReader(inputStream);
-            Type listType = new TypeToken<ArrayList<Project>>(){}.getType();
-            List<Project> projects = gson.fromJson(jsonReader, listType);
+            Type listType = new TypeToken<ArrayList<ProjectBean>>(){}.getType();
+            List<ProjectBean> projects = gson.fromJson(jsonReader, listType);
             method.releaseConnection();
             return projects;
         } else {
@@ -79,7 +79,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
 
     @Override
-    public List<Version> getProjectVersions(String projectKey) throws RestException, IOException {
+    public List<VersionBean> getProjectVersions(String projectKey) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).path(projectKey).path(VERSIONS).build();
@@ -88,8 +88,8 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonReader jsonReader = toJsonReader(inputStream);
-            Type listType = new TypeToken<ArrayList<Version>>(){}.getType();
-            List<Version> versions = gson.fromJson(jsonReader, listType);
+            Type listType = new TypeToken<ArrayList<VersionBean>>(){}.getType();
+            List<VersionBean> versions = gson.fromJson(jsonReader, listType);
             method.releaseConnection();
             return versions;
         } else {
@@ -99,7 +99,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
     }
 
     @Override
-    public List<Component> getProjectComponents(String projectKey) throws RestException, IOException {
+    public List<ComponentBean> getProjectComponents(String projectKey) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(PROJECT).path(projectKey).path(COMPONENTS).build();
@@ -109,8 +109,8 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonReader jsonReader = toJsonReader(inputStream);
-            Type listType = new TypeToken<ArrayList<Component>>(){}.getType();
-            List<Component> components = gson.fromJson(jsonReader, listType);
+            Type listType = new TypeToken<ArrayList<ComponentBean>>(){}.getType();
+            List<ComponentBean> components = gson.fromJson(jsonReader, listType);
             method.releaseConnection();
             return components;
         } else {

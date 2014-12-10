@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Worklog {
+public class WorklogBean {
 
     @Expose
     private Integer maxResults;

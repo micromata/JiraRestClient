@@ -2,12 +2,12 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class User {
+public class UserBean {
 
     @Expose
     private Boolean active;
     @Expose
-    private AvatarUrls avatarUrls;
+    private AvatarUrlsBean avatarUrls;
     @Expose
     private String displayName;
     @Expose
@@ -25,11 +25,11 @@ public class User {
         this.active = active;
     }
 
-    public AvatarUrls getAvatarUrls() {
+    public AvatarUrlsBean getAvatarUrls() {
         return avatarUrls;
     }
 
-    public void setAvatarUrls(AvatarUrls avatarUrls) {
+    public void setAvatarUrls(AvatarUrlsBean avatarUrls) {
         this.avatarUrls = avatarUrls;
     }
 

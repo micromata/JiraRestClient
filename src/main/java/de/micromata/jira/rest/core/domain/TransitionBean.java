@@ -2,24 +2,17 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class Component {
+/**
+ * Created by Christian on 09.12.2014.
+ */
+public class TransitionBean {
 
-    @Expose
-    private String description;
     @Expose
     private String id;
     @Expose
     private String name;
     @Expose
-    private String self;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private StatusBean to;
 
     public String getId() {
         return id;
@@ -37,11 +30,11 @@ public class Component {
         this.name = name;
     }
 
-    public String getSelf() {
-        return self;
+    public StatusBean getTo() {
+        return to;
     }
 
-    public void setSelf(String self) {
-        this.self = self;
+    public void setTo(StatusBean to) {
+        this.to = to;
     }
 }

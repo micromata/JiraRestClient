@@ -2,7 +2,7 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class FixVersion {
+public class VersionBean {
 
     @Expose
     private Boolean archived;

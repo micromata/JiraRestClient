@@ -5,18 +5,18 @@ import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Error {
+public class ErrorBean {
 
     @Expose
     private List<Object> errorMessages = new ArrayList<Object>();
     @Expose
-    private Errors errors;
+    private ErrorsBean errors;
 
-    public Errors getErrors() {
+    public ErrorsBean getErrors() {
         return errors;
     }
 
-    public void setErrors(Errors errors) {
+    public void setErrors(ErrorsBean errors) {
         this.errors = errors;
     }
 

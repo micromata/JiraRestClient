@@ -3,7 +3,7 @@ package de.micromata.jira.rest.core.domain;
 import com.google.gson.annotations.Expose;
 
 
-public class Errors {
+public class ErrorsBean {
 
     @Expose
     private String project;

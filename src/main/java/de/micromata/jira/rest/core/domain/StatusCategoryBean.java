@@ -3,12 +3,13 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class Project {
+
+public class StatusCategoryBean {
 
     @Expose
-    private AvatarUrls avatarUrls;
+    private String colorName;
     @Expose
-    private String id;
+    private Integer id;
     @Expose
     private String key;
     @Expose
@@ -16,19 +17,19 @@ public class Project {
     @Expose
     private String self;
 
-    public AvatarUrls getAvatarUrls() {
-        return avatarUrls;
+    public String getColorName() {
+        return colorName;
     }
 
-    public void setAvatarUrls(AvatarUrls avatarUrls) {
-        this.avatarUrls = avatarUrls;
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

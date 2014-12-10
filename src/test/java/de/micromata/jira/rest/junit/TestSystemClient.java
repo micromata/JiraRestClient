@@ -1,9 +1,9 @@
 package de.micromata.jira.rest.junit;
 
 
-import de.micromata.jira.rest.core.domain.Issuetype;
-import de.micromata.jira.rest.core.domain.Priority;
-import de.micromata.jira.rest.core.domain.Status;
+import de.micromata.jira.rest.core.domain.IssuetypeBean;
+import de.micromata.jira.rest.core.domain.PriorityBean;
+import de.micromata.jira.rest.core.domain.StatusBean;
 import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class TestSystemClient extends BaseTest {
 
     @Test
     public void testGetIssueType() throws RestException, IOException {
-        List<Issuetype> issueTypes = jiraRestClient.getSystemClient().getIssueTypes();
+        List<IssuetypeBean> issueTypes = jiraRestClient.getSystemClient().getIssueTypes();
         Assert.assertNotNull(issueTypes);
         Assert.assertFalse(issueTypes.isEmpty());
         Assert.assertEquals(STANDARD_NUMBER_OF_ISSUETYPES, issueTypes.size());
@@ -32,7 +32,7 @@ public class TestSystemClient extends BaseTest {
 
     @Test
     public void testGetPriorities() throws RestException, IOException  {
-        List<Priority> priorities = jiraRestClient.getSystemClient().getPriorities();
+        List<PriorityBean> priorities = jiraRestClient.getSystemClient().getPriorities();
         Assert.assertNotNull(priorities);
         Assert.assertFalse(priorities.isEmpty());
         Assert.assertEquals(STANDARD_NUMBER_OF_PRIORITIES, priorities.size());
@@ -40,7 +40,7 @@ public class TestSystemClient extends BaseTest {
 
     @Test
     public void testGetStates() throws RestException, IOException  {
-        List<Status> states = jiraRestClient.getSystemClient().getStates();
+        List<StatusBean> states = jiraRestClient.getSystemClient().getStates();
         Assert.assertNotNull(states);
         Assert.assertFalse(states.isEmpty());
         Assert.assertEquals(STANDARD_NUMBER_OF_STATES, states.size());

@@ -1,44 +1,33 @@
-
 package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
 
-public class StatusCategory {
+public class PriorityBean {
 
     @Expose
-    private String colorName;
+    private String iconUrl;
     @Expose
-    private Integer id;
-    @Expose
-    private String key;
+    private String id;
     @Expose
     private String name;
     @Expose
     private String self;
 
-    public String getColorName() {
-        return colorName;
+    public String getIconUrl() {
+        return iconUrl;
     }
 
-    public void setColorName(String colorName) {
-        this.colorName = colorName;
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     public String getName() {

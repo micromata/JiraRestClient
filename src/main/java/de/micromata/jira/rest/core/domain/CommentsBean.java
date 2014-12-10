@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Comments {
+public class CommentsBean {
 
     @Expose
-    private List<Comment> comments = new ArrayList<Comment>();
+    private List<CommentBean> comments = new ArrayList<CommentBean>();
     @Expose
     private Integer maxResults;
     @Expose
@@ -17,11 +17,11 @@ public class Comments {
     @Expose
     private Integer total;
 
-    public List<Comment> getComments() {
+    public List<CommentBean> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<CommentBean> comments) {
         this.comments = comments;
     }
 

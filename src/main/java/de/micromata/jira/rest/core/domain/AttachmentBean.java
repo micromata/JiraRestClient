@@ -2,10 +2,10 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class Attachment {
+public class AttachmentBean {
 
     @Expose
-    private User author;
+    private UserBean author;
     @Expose
     private String content;
     @Expose
@@ -23,11 +23,11 @@ public class Attachment {
     @Expose
     private String thumbnail;
 
-    public User getAuthor() {
+    public UserBean getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserBean author) {
         this.author = author;
     }
 

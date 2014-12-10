@@ -2,25 +2,16 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
+public class OutwardIssueBean {
 
-public class Priority {
-
-    @Expose
-    private String iconUrl;
     @Expose
     private String id;
     @Expose
-    private String name;
+    private String key;
     @Expose
     private String self;
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
-    }
+    @Expose
+    private OutwardIssueFieldsBean fields;
 
     public String getId() {
         return id;
@@ -30,12 +21,12 @@ public class Priority {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getKey() {
+        return key;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getSelf() {
@@ -44,5 +35,13 @@ public class Priority {
 
     public void setSelf(String self) {
         this.self = self;
+    }
+
+    public OutwardIssueFieldsBean getFields() {
+        return fields;
+    }
+
+    public void setFields(OutwardIssueFieldsBean fields) {
+        this.fields = fields;
     }
 }

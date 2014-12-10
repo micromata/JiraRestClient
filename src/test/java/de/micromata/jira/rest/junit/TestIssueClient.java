@@ -33,7 +33,7 @@ public class TestIssueClient extends BaseTest {
 
     @Test
     public void testGetIssueByKey() throws RestException, IOException {
-        Issue issue = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
+        IssueBean issue = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
         Assert.assertNotNull(issue);
         Assert.assertEquals(ISSUE_KEY, issue.getKey());
     }
@@ -46,7 +46,7 @@ public class TestIssueClient extends BaseTest {
         field.add(EField.DESCRIPTION.getField());
         List<String> expand = new ArrayList<String>();
         expand.add(EField.RENDEREDFIELDS.getField());
-        Issue issue = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY, field, expand);
+        IssueBean issue = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY, field, expand);
         Assert.assertNotNull(issue);
         Assert.assertNotNull(issue.getFields().getSummary());
         Assert.assertNotNull(issue.getFields().getDescription());
@@ -56,11 +56,11 @@ public class TestIssueClient extends BaseTest {
 
     @Test
     public void testGetAttachment() throws IOException, RestException {
-        Issue issue = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
-        List<Attachment> attachments = issue.getFields().getAttachment();
+        IssueBean issue = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
+        List<AttachmentBean> attachments = issue.getFields().getAttachment();
         Assert.assertNotNull(attachments);
         Assert.assertFalse(attachments.isEmpty());
-        Attachment attachment = attachments.get(0);
+        AttachmentBean attachment = attachments.get(0);
         String fileName = attachment.getFilename();
         String contentURI = attachment.getContent();
         URI uri = URIParser.parseStringToURI(contentURI);
@@ -75,17 +75,17 @@ public class TestIssueClient extends BaseTest {
 
     @Test
     public void testCreateIssue() throws RestException, IOException {
-        Issue issue = new Issue();
-        Fields fields = new Fields();
+        IssueBean issue = new IssueBean();
+        FieldsBean fields = new FieldsBean();
         fields.setDescription("Test Description");
         fields.setSummary("Test Title");
-        Project project = new Project();
+        ProjectBean project = new ProjectBean();
         project.setKey("REMOTE");
         fields.setProject(project);
-        Issuetype issueType = new Issuetype();
+        IssuetypeBean issueType = new IssuetypeBean();
         issueType.setName("Bug");
         fields.setIssuetype(issueType);
-        Priority priority = new Priority();
+        PriorityBean priority = new PriorityBean();
         priority.setName(JsonConstants.PRIORITY_MAJOR);
         fields.setPriority(priority);
         fields.setDuedate("2015-08-01");
@@ -106,12 +106,13 @@ public class TestIssueClient extends BaseTest {
 //        issue.getFixVersions().add(versionBean1);
 //        issue.getFixVersions().add(versionBean2);
 
-        User userBean = new User();
+        UserBean userBean = new UserBean();
         userBean.setName("admin");
         fields.setAssignee(userBean);
-
-        fields.getLabels().add("foobar");
-        fields.getLabels().add("inubit");
+        List<String> labels = new ArrayList<String>();
+        labels.add("foobar");
+        labels.add("inubit");
+        fields.setLabels(labels);
         issue.setFields(fields);
 
         IssueResponse issueResponse = jiraRestClient.getIssueClient().createIssue(issue);
@@ -127,7 +128,7 @@ public class TestIssueClient extends BaseTest {
 
     @Test
     public void testSetLinkInEviroment() throws IOException, RestException {
-        Issue issue = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
+        IssueBean issue = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY);
         Assert.assertNotNull(issue);
         Assert.assertEquals(ISSUE_KEY, issue.getKey());
         String environment = issue.getFields().getEnvironment();
@@ -141,7 +142,7 @@ public class TestIssueClient extends BaseTest {
         List<FieldOperation> operations = new ArrayList<FieldOperation>();
         operations.add(new FieldOperation(Operation.SET.getName(), newEnviroment));
         update.put(JsonConstants.PROP_ENVIRONMENT, operations);
-        Issue issueBean = jiraRestClient.getIssueClient().updateIssue(ISSUE_KEY, issueUpdate);
+        IssueBean issueBean = jiraRestClient.getIssueClient().updateIssue(ISSUE_KEY, issueUpdate);
         String updateIssueEnvironment = issueBean.getFields().getEnvironment();
         Assert.assertEquals(newEnviroment, updateIssueEnvironment);
 

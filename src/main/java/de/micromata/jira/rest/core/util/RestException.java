@@ -15,7 +15,7 @@
 
 package de.micromata.jira.rest.core.util;
 
-import de.micromata.jira.rest.core.domain.Error;
+import de.micromata.jira.rest.core.domain.ErrorBean;
 import org.apache.commons.httpclient.HttpMethod;
 
 /**
@@ -28,10 +28,10 @@ public class RestException extends Exception {
 
     private String reasonPhrase;
 
-    private Error restErrorMessage;
+    private ErrorBean restErrorMessage;
 
 
-    public RestException(int statusCode, String reasonPhrase, Error restErrorMessage) {
+    public RestException(int statusCode, String reasonPhrase, ErrorBean restErrorMessage) {
         super(statusCode + " " + reasonPhrase + " " + restErrorMessage);
         this.statusCode = statusCode;
         this.reasonPhrase = reasonPhrase;
@@ -68,11 +68,11 @@ public class RestException extends Exception {
         this.reasonPhrase = reasonPhrase;
     }
 
-    public Error getRestErrorMessage() {
+    public ErrorBean getRestErrorMessage() {
         return restErrorMessage;
     }
 
-    public void setRestErrorMessage(Error restErrorMessage) {
+    public void setRestErrorMessage(ErrorBean restErrorMessage) {
         this.restErrorMessage = restErrorMessage;
     }
 }

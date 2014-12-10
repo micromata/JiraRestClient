@@ -2,7 +2,7 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class Aggregateprogress {
+public class AggregateprogressBean {
 
     @Expose
     private Integer percent;

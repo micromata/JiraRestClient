@@ -2,20 +2,16 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class Issuetype {
+public class ComponentBean {
 
     @Expose
     private String description;
-    @Expose
-    private String iconUrl;
     @Expose
     private String id;
     @Expose
     private String name;
     @Expose
     private String self;
-    @Expose
-    private Boolean subtask;
 
     public String getDescription() {
         return description;
@@ -23,14 +19,6 @@ public class Issuetype {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
     }
 
     public String getId() {
@@ -55,13 +43,5 @@ public class Issuetype {
 
     public void setSelf(String self) {
         this.self = self;
-    }
-
-    public Boolean getSubtask() {
-        return subtask;
-    }
-
-    public void setSubtask(Boolean subtask) {
-        this.subtask = subtask;
     }
 }

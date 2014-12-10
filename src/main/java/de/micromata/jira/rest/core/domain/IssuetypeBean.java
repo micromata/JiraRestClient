@@ -2,7 +2,7 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class Status {
+public class IssuetypeBean {
 
     @Expose
     private String description;
@@ -15,7 +15,7 @@ public class Status {
     @Expose
     private String self;
     @Expose
-    private StatusCategory statusCategory;
+    private Boolean subtask;
 
     public String getDescription() {
         return description;
@@ -57,11 +57,11 @@ public class Status {
         this.self = self;
     }
 
-    public StatusCategory getStatusCategory() {
-        return statusCategory;
+    public Boolean getSubtask() {
+        return subtask;
     }
 
-    public void setStatusCategory(StatusCategory statusCategory) {
-        this.statusCategory = statusCategory;
+    public void setSubtask(Boolean subtask) {
+        this.subtask = subtask;
     }
 }

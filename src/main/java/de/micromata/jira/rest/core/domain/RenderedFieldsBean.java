@@ -5,14 +5,14 @@ import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RenderedFields {
+public class RenderedFieldsBean {
 
     @Expose
     private String aggregatetimeestimate;
     @Expose
     private String aggregatetimeoriginalestimate;
     @Expose
-    private Timetracking timetracking;
+    private TimetrackingBean timetracking;
     @Expose
     private String environment;
     @Expose
@@ -28,15 +28,15 @@ public class RenderedFields {
     @Expose
     private String lastViewed;
     @Expose
-    private List<Attachment> attachment = new ArrayList<Attachment>();
+    private List<AttachmentBean> attachment = new ArrayList<AttachmentBean>();
     @Expose
-    private Comments comment;
+    private CommentsBean comment;
     @Expose
     private String timeoriginalestimate;
     @Expose
     private Object timespent;
     @Expose
-    private Worklog worklog;
+    private WorklogBean worklog;
     @Expose
     private Object aggregatetimespent;
 
@@ -56,11 +56,11 @@ public class RenderedFields {
         this.aggregatetimeoriginalestimate = aggregatetimeoriginalestimate;
     }
 
-    public Timetracking getTimetracking() {
+    public TimetrackingBean getTimetracking() {
         return timetracking;
     }
 
-    public void setTimetracking(Timetracking timetracking) {
+    public void setTimetracking(TimetrackingBean timetracking) {
         this.timetracking = timetracking;
     }
 
@@ -120,19 +120,19 @@ public class RenderedFields {
         this.lastViewed = lastViewed;
     }
 
-    public List<Attachment> getAttachment() {
+    public List<AttachmentBean> getAttachment() {
         return attachment;
     }
 
-    public void setAttachment(List<Attachment> attachment) {
+    public void setAttachment(List<AttachmentBean> attachment) {
         this.attachment = attachment;
     }
 
-    public Comments getComment() {
+    public CommentsBean getComment() {
         return comment;
     }
 
-    public void setComment(Comments comment) {
+    public void setComment(CommentsBean comment) {
         this.comment = comment;
     }
 
@@ -152,11 +152,11 @@ public class RenderedFields {
         this.timespent = timespent;
     }
 
-    public Worklog getWorklog() {
+    public WorklogBean getWorklog() {
         return worklog;
     }
 
-    public void setWorklog(Worklog worklog) {
+    public void setWorklog(WorklogBean worklog) {
         this.worklog = worklog;
     }
 

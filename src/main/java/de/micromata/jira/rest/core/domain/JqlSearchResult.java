@@ -34,7 +34,7 @@ public class JqlSearchResult {
 
     private int total = 0;
 
-    private List<Issue> issues;
+    private List<IssueBean> issues;
 
     public String getExpand() {
         return expand;
@@ -68,14 +68,14 @@ public class JqlSearchResult {
         this.total = total;
     }
 
-    public List<Issue> getIssues() {
+    public List<IssueBean> getIssues() {
         if (issues == null) {
-            issues = new ArrayList<Issue>();
+            issues = new ArrayList<IssueBean>();
         }
         return issues;
     }
 
-    public void setIssues(List<Issue> issues) {
+    public void setIssues(List<IssueBean> issues) {
         this.issues = issues;
     }
 }

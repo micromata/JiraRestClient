@@ -3,7 +3,7 @@ package de.micromata.jira.rest.core.domain;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AvatarUrls {
+public class AvatarUrlsBean {
 
     @SerializedName("16x16")
     @Expose

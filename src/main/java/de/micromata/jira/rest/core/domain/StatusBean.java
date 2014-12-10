@@ -2,30 +2,20 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class Version {
+public class StatusBean {
 
     @Expose
-    private Boolean archived;
-    @Expose
     private String description;
+    @Expose
+    private String iconUrl;
     @Expose
     private String id;
     @Expose
     private String name;
     @Expose
-    private String releaseDate;
-    @Expose
-    private Boolean released;
-    @Expose
     private String self;
-
-    public Boolean getArchived() {
-        return archived;
-    }
-
-    public void setArchived(Boolean archived) {
-        this.archived = archived;
-    }
+    @Expose
+    private StatusCategoryBean statusCategory;
 
     public String getDescription() {
         return description;
@@ -33,6 +23,14 @@ public class Version {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 
     public String getId() {
@@ -51,27 +49,19 @@ public class Version {
         this.name = name;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public Boolean getReleased() {
-        return released;
-    }
-
-    public void setReleased(Boolean released) {
-        this.released = released;
-    }
-
     public String getSelf() {
         return self;
     }
 
     public void setSelf(String self) {
         this.self = self;
+    }
+
+    public StatusCategoryBean getStatusCategory() {
+        return statusCategory;
+    }
+
+    public void setStatusCategory(StatusCategoryBean statusCategory) {
+        this.statusCategory = statusCategory;
     }
 }

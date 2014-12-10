@@ -4,13 +4,17 @@ public class IssueResponse  {
 
     private String key;
 
-    private Error error = null;
+    private ErrorBean error = null;
 
     public IssueResponse() {
         super();
     }
 
-    public IssueResponse(Error error) {
+    public IssueResponse(String key) {
+        this.key = key;
+    }
+
+    public IssueResponse(ErrorBean error) {
         this.error = error;
     }
 
@@ -22,11 +26,11 @@ public class IssueResponse  {
         this.key = key;
     }
 
-    public Error getError() {
+    public ErrorBean getError() {
         return error;
     }
 
-    public void setError(Error error) {
+    public void setError(ErrorBean error) {
         this.error = error;
     }
 }

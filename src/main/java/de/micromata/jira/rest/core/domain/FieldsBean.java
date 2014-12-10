@@ -2,31 +2,30 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Fields {
+public class FieldsBean {
 
     @Expose
-    private Aggregateprogress aggregateprogress;
+    private AggregateprogressBean aggregateprogress;
     @Expose
     private Integer aggregatetimeestimate;
     @Expose
     private Integer aggregatetimeoriginalestimate;
     @Expose
-    private Object aggregatetimespent;
+    private Integer aggregatetimespent;
     @Expose
-    private User assignee;
+    private UserBean assignee;
     @Expose
-    private List<Attachment> attachment = new ArrayList<Attachment>();
+    private List<AttachmentBean> attachment;
     @Expose
-    private Comments comment;
+    private CommentsBean comment;
     @Expose
-    private List<Component> components = new ArrayList<Component>();
+    private List<ComponentBean> components;
     @Expose
     private String created;
     @Expose
-    private Creator creator;
+    private UserBean creator;
     @Expose
     private String description;
     @Expose
@@ -34,31 +33,31 @@ public class Fields {
     @Expose
     private String environment;
     @Expose
-    private List<FixVersion> fixVersions = new ArrayList<FixVersion>();
+    private List<VersionBean> fixVersions;
     @Expose
-    private List<Object> issuelinks = new ArrayList<Object>();
+    private List<IssuelinkBean> issuelinks;
     @Expose
-    private Issuetype issuetype;
+    private IssuetypeBean issuetype;
     @Expose
-    private List<String> labels = new ArrayList<String>();
+    private List<String> labels;
     @Expose
     private String lastViewed;
     @Expose
-    private Priority priority;
+    private PriorityBean priority;
     @Expose
-    private Progress progress;
+    private ProgressBean progress;
     @Expose
-    private Project project;
+    private ProjectBean project;
     @Expose
-    private User reporter;
+    private UserBean reporter;
     @Expose
-    private Object resolution;
+    private ResolutionBean resolution;
     @Expose
     private Object resolutiondate;
     @Expose
-    private Status status;
+    private StatusBean status;
     @Expose
-    private List<Object> subtasks = new ArrayList<Object>();
+    private List<IssueBean> subtasks;
     @Expose
     private String summary;
     @Expose
@@ -68,25 +67,25 @@ public class Fields {
     @Expose
     private Object timespent;
     @Expose
-    private Timetracking timetracking;
+    private TimetrackingBean timetracking;
     @Expose
     private String updated;
     @Expose
-    private List<Version> versions = new ArrayList<Version>();
+    private List<VersionBean> versions;
     @Expose
-    private Votes votes;
+    private VotesBean votes;
     @Expose
-    private Watches watches;
+    private WatchesBean watches;
     @Expose
-    private Worklog worklog;
+    private WorklogBean worklog;
     @Expose
     private Integer workratio;
 
-    public Aggregateprogress getAggregateprogress() {
+    public AggregateprogressBean getAggregateprogress() {
         return aggregateprogress;
     }
 
-    public void setAggregateprogress(Aggregateprogress aggregateprogress) {
+    public void setAggregateprogress(AggregateprogressBean aggregateprogress) {
         this.aggregateprogress = aggregateprogress;
     }
 
@@ -106,43 +105,43 @@ public class Fields {
         this.aggregatetimeoriginalestimate = aggregatetimeoriginalestimate;
     }
 
-    public Object getAggregatetimespent() {
+    public Integer getAggregatetimespent() {
         return aggregatetimespent;
     }
 
-    public void setAggregatetimespent(Object aggregatetimespent) {
+    public void setAggregatetimespent(Integer aggregatetimespent) {
         this.aggregatetimespent = aggregatetimespent;
     }
 
-    public User getAssignee() {
+    public UserBean getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(User assignee) {
+    public void setAssignee(UserBean assignee) {
         this.assignee = assignee;
     }
 
-    public List<Attachment> getAttachment() {
+    public List<AttachmentBean> getAttachment() {
         return attachment;
     }
 
-    public void setAttachment(List<Attachment> attachment) {
+    public void setAttachment(List<AttachmentBean> attachment) {
         this.attachment = attachment;
     }
 
-    public Comments getComment() {
+    public CommentsBean getComment() {
         return comment;
     }
 
-    public void setComment(Comments comment) {
+    public void setComment(CommentsBean comment) {
         this.comment = comment;
     }
 
-    public List<Component> getComponents() {
+    public List<ComponentBean> getComponents() {
         return components;
     }
 
-    public void setComponents(List<Component> components) {
+    public void setComponents(List<ComponentBean> components) {
         this.components = components;
     }
 
@@ -154,11 +153,11 @@ public class Fields {
         this.created = created;
     }
 
-    public Creator getCreator() {
+    public UserBean getCreator() {
         return creator;
     }
 
-    public void setCreator(Creator creator) {
+    public void setCreator(UserBean creator) {
         this.creator = creator;
     }
 
@@ -186,31 +185,31 @@ public class Fields {
         this.environment = environment;
     }
 
-    public List<FixVersion> getFixVersions() {
+    public List<VersionBean> getFixVersions() {
         return fixVersions;
     }
 
-    public void setFixVersions(List<FixVersion> fixVersions) {
+    public void setFixVersions(List<VersionBean> fixVersions) {
         this.fixVersions = fixVersions;
     }
 
-    public List<Object> getIssuelinks() {
+    public List<IssuelinkBean> getIssuelinks() {
         return issuelinks;
     }
 
-    public void setIssuelinks(List<Object> issuelinks) {
+    public void setIssuelinks(List<IssuelinkBean> issuelinks) {
         this.issuelinks = issuelinks;
     }
 
-    public Issuetype getIssuetype() {
+    public IssuetypeBean getIssuetype() {
         return issuetype;
     }
 
-    public void setIssuetype(Issuetype issuetype) {
+    public void setIssuetype(IssuetypeBean issuetype) {
         this.issuetype = issuetype;
     }
 
-    public List<String> getLabels() {
+    public List<String> getLabels(){
         return labels;
     }
 
@@ -226,43 +225,43 @@ public class Fields {
         this.lastViewed = lastViewed;
     }
 
-    public Priority getPriority() {
+    public PriorityBean getPriority() {
         return priority;
     }
 
-    public void setPriority(Priority priority) {
+    public void setPriority(PriorityBean priority) {
         this.priority = priority;
     }
 
-    public Progress getProgress() {
+    public ProgressBean getProgress() {
         return progress;
     }
 
-    public void setProgress(Progress progress) {
+    public void setProgress(ProgressBean progress) {
         this.progress = progress;
     }
 
-    public Project getProject() {
+    public ProjectBean getProject() {
         return project;
     }
 
-    public void setProject(Project project) {
+    public void setProject(ProjectBean project) {
         this.project = project;
     }
 
-    public User getReporter() {
+    public UserBean getReporter() {
         return reporter;
     }
 
-    public void setReporter(User reporter) {
+    public void setReporter(UserBean reporter) {
         this.reporter = reporter;
     }
 
-    public Object getResolution() {
+    public ResolutionBean getResolution() {
         return resolution;
     }
 
-    public void setResolution(Object resolution) {
+    public void setResolution(ResolutionBean resolution) {
         this.resolution = resolution;
     }
 
@@ -274,19 +273,19 @@ public class Fields {
         this.resolutiondate = resolutiondate;
     }
 
-    public Status getStatus() {
+    public StatusBean getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusBean status) {
         this.status = status;
     }
 
-    public List<Object> getSubtasks() {
+    public List<IssueBean> getSubtasks() {
         return subtasks;
     }
 
-    public void setSubtasks(List<Object> subtasks) {
+    public void setSubtasks(List<IssueBean> subtasks) {
         this.subtasks = subtasks;
     }
 
@@ -322,11 +321,11 @@ public class Fields {
         this.timespent = timespent;
     }
 
-    public Timetracking getTimetracking() {
+    public TimetrackingBean getTimetracking() {
         return timetracking;
     }
 
-    public void setTimetracking(Timetracking timetracking) {
+    public void setTimetracking(TimetrackingBean timetracking) {
         this.timetracking = timetracking;
     }
 
@@ -338,35 +337,35 @@ public class Fields {
         this.updated = updated;
     }
 
-    public List<Version> getVersions() {
+    public List<VersionBean> getVersions() {
         return versions;
     }
 
-    public void setVersions(List<Version> versions) {
+    public void setVersions(List<VersionBean> versions) {
         this.versions = versions;
     }
 
-    public Votes getVotes() {
+    public VotesBean getVotes() {
         return votes;
     }
 
-    public void setVotes(Votes votes) {
+    public void setVotes(VotesBean votes) {
         this.votes = votes;
     }
 
-    public Watches getWatches() {
+    public WatchesBean getWatches() {
         return watches;
     }
 
-    public void setWatches(Watches watches) {
+    public void setWatches(WatchesBean watches) {
         this.watches = watches;
     }
 
-    public Worklog getWorklog() {
+    public WorklogBean getWorklog() {
         return worklog;
     }
 
-    public void setWorklog(Worklog worklog) {
+    public void setWorklog(WorklogBean worklog) {
         this.worklog = worklog;
     }
 

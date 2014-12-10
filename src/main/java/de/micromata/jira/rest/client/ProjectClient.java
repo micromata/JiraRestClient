@@ -1,8 +1,8 @@
 package de.micromata.jira.rest.client;
 
-import de.micromata.jira.rest.core.domain.Component;
-import de.micromata.jira.rest.core.domain.Project;
-import de.micromata.jira.rest.core.domain.Version;
+import de.micromata.jira.rest.core.domain.ComponentBean;
+import de.micromata.jira.rest.core.domain.ProjectBean;
+import de.micromata.jira.rest.core.domain.VersionBean;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public interface ProjectClient {
      * @return list of projects
      * @throws RestException
      */
-    public List<Project> getAllProjects() throws RestException, IOException;
+    public List<ProjectBean> getAllProjects() throws RestException, IOException;
 
     /**
      * Returns a full representation of the project for the given key.
@@ -31,7 +31,7 @@ public interface ProjectClient {
      * @return all informations for the project
      * @throws RestException
      */
-    public Project getProjectByKey(String projectKey) throws RestException, IOException;
+    public ProjectBean getProjectByKey(String projectKey) throws RestException, IOException;
 
     /**
      * Returns a list of all versions for a project.
@@ -40,7 +40,7 @@ public interface ProjectClient {
      * @return list of versions
      * @throws RestException
      */
-    public List<Version> getProjectVersions(String projectKey) throws RestException, IOException;
+    public List<VersionBean> getProjectVersions(String projectKey) throws RestException, IOException;
 
 
     /**
@@ -50,6 +50,6 @@ public interface ProjectClient {
      * @return list of components
      * @throws RestException
      */
-    public List<Component> getProjectComponents(String projectKey) throws RestException, IOException;
+    public List<ComponentBean> getProjectComponents(String projectKey) throws RestException, IOException;
 
 }

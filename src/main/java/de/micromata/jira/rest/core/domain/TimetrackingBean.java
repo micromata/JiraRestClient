@@ -4,7 +4,7 @@ package de.micromata.jira.rest.core.domain;
 import com.google.gson.annotations.Expose;
 
 
-public class Timetracking {
+public class TimetrackingBean {
 
     @Expose
     private String originalEstimate;

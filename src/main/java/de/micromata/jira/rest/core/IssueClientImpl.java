@@ -8,12 +8,14 @@ import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.IssueClient;
 import de.micromata.jira.rest.core.domain.*;
-import de.micromata.jira.rest.core.domain.Error;
 import de.micromata.jira.rest.core.domain.update.IssueUpdate;
 import de.micromata.jira.rest.core.misc.JsonConstants;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
-import de.micromata.jira.rest.core.util.*;
+import de.micromata.jira.rest.core.util.GsonParserUtil;
+import de.micromata.jira.rest.core.util.HttpMethodFactory;
+import de.micromata.jira.rest.core.util.JsonElementUtil;
+import de.micromata.jira.rest.core.util.RestException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -52,7 +54,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
 
     @Override
-    public IssueResponse createIssue(Issue issue)
+    public IssueResponse createIssue(IssueBean issue)
             throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
@@ -61,16 +63,16 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
         PostMethod method = HttpMethodFactory.createPostMethod(uri, json);
         int status = client.executeMethod(method);
         if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_CREATED) {
-            System.out.println(method.getResponseBodyAsString());
-            return null;
-        } else if (status == HttpURLConnection.HTTP_BAD_REQUEST) {
-            System.out.println(method.getResponseBodyAsString());
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonReader jsonReader = toJsonReader(inputStream);
-            Error error = gson.fromJson(jsonReader, Error.class);
+            IssueBean issuebean = gson.fromJson(jsonReader, IssueBean.class);
+            return new IssueResponse(issuebean.getKey());
+        } else if (status == HttpURLConnection.HTTP_BAD_REQUEST) {
+            InputStream inputStream = method.getResponseBodyAsStream();
+            JsonReader jsonReader = toJsonReader(inputStream);
+            ErrorBean error = gson.fromJson(jsonReader, ErrorBean.class);
             method.releaseConnection();
-            IssueResponse response = new IssueResponse(error);
-            return response;
+            return new IssueResponse(error);
         } else {
             method.releaseConnection();
             throw new RestException(method);
@@ -78,7 +80,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     }
 
     @Override
-    public Issue getIssueByKey(String issueKey) throws RestException, IOException {
+    public IssueBean getIssueByKey(String issueKey) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
@@ -87,7 +89,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonReader jsonReader = toJsonReader(inputStream);
-            return (Issue) gson.fromJson(jsonReader, Issue.class);
+            return (IssueBean) gson.fromJson(jsonReader, IssueBean.class);
         } else {
             method.releaseConnection();
             throw new RestException(method);
@@ -95,7 +97,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     }
 
     @Override
-    public Issue updateIssue(String issueKey,IssueUpdate issueUpdate) throws IOException, RestException {
+    public IssueBean updateIssue(String issueKey, IssueUpdate issueUpdate) throws IOException, RestException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
@@ -111,7 +113,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     }
 
     @Override
-    public Issue getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException {
+    public IssueBean getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         UriBuilder path = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey);
@@ -129,7 +131,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonReader jsonReader = toJsonReader(inputStream);
-            return (Issue) gson.fromJson(jsonReader, Issue.class);
+            return (IssueBean) gson.fromJson(jsonReader, IssueBean.class);
         } else {
             method.releaseConnection();
             throw new RestException(method);
@@ -137,7 +139,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     }
 
     @Override
-    public Comments getCommentsByIssue(String issueKey) throws RestException, IOException {
+    public CommentsBean getCommentsByIssue(String issueKey) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(COMMENT).build();
@@ -146,7 +148,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonReader jsonReader = toJsonReader(inputStream);
-            Comments comments = gson.fromJson(jsonReader, Comments.class);
+            CommentsBean comments = gson.fromJson(jsonReader, CommentsBean.class);
             method.releaseConnection();
             return comments;
         } else {
@@ -178,7 +180,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     }
 
     @Override
-    public Attachment getAttachment(long id) throws IOException, RestException {
+    public AttachmentBean getAttachment(long id) throws IOException, RestException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         URI uri = UriBuilder.fromUri(baseUri).path(ATTACHMENT).path(String.valueOf(id)).build();
@@ -187,7 +189,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
         if (status == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = method.getResponseBodyAsStream();
             JsonReader jsonReader = toJsonReader(inputStream);
-            Attachment attachment = gson.fromJson(jsonReader, Attachment.class);
+            AttachmentBean attachment = gson.fromJson(jsonReader, AttachmentBean.class);
             method.releaseConnection();
             return attachment;
         } else {
@@ -203,7 +205,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     }
 
     @Override
-    public boolean transferWorklogInIssue(String issueKey, Worklog worklog) throws RestException, IOException {
+    public boolean transferWorklogInIssue(String issueKey, WorklogBean worklog) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         String json = gson.toJson(worklog);
@@ -237,7 +239,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     }
 
     @Override
-    public List<Transition> getIssueTransitionsByKey(String issueKey) throws RestException, IOException {
+    public List<TransitionBean> getIssueTransitionsByKey(String issueKey) throws RestException, IOException {
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         UriBuilder path = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(TRANSITIONS);
@@ -251,8 +253,9 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
             JsonElement transitionsElement = jsonObject.get(JsonConstants.PROP_TRANSITIONS);
             if (JsonElementUtil.checkNotNull(transitionsElement)) {
                 JsonArray array = transitionsElement.getAsJsonArray();
-                Type listType = new TypeToken<ArrayList<Transition>>(){}.getType();
-                List<Transition> transitions = gson.fromJson(array, listType);
+                Type listType = new TypeToken<ArrayList<TransitionBean>>() {
+                }.getType();
+                List<TransitionBean> transitions = gson.fromJson(array, listType);
                 method.releaseConnection();
                 return transitions;
             }

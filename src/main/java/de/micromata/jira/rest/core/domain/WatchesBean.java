@@ -3,7 +3,7 @@ package de.micromata.jira.rest.core.domain;
 import com.google.gson.annotations.Expose;
 
 
-public class Watches {
+public class WatchesBean {
 
     @Expose
     private Boolean isWatching;

@@ -3,10 +3,10 @@ package de.micromata.jira.rest.core.domain;
 import com.google.gson.annotations.Expose;
 
 
-public class Comment {
+public class CommentBean {
 
     @Expose
-    private User author;
+    private UserBean author;
     @Expose
     private String body;
     @Expose
@@ -16,15 +16,15 @@ public class Comment {
     @Expose
     private String self;
     @Expose
-    private UpdateAuthor updateAuthor;
+    private UserBean updateAuthor;
     @Expose
     private String updated;
 
-    public User getAuthor() {
+    public UserBean getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserBean author) {
         this.author = author;
     }
 
@@ -60,11 +60,11 @@ public class Comment {
         this.self = self;
     }
 
-    public UpdateAuthor getUpdateAuthor() {
+    public UserBean getUpdateAuthor() {
         return updateAuthor;
     }
 
-    public void setUpdateAuthor(UpdateAuthor updateAuthor) {
+    public void setUpdateAuthor(UserBean updateAuthor) {
         this.updateAuthor = updateAuthor;
     }
 
