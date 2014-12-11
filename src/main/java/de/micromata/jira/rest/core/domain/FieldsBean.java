@@ -53,7 +53,7 @@ public class FieldsBean {
     @Expose
     private ResolutionBean resolution;
     @Expose
-    private Object resolutiondate;
+    private String resolutiondate;
     @Expose
     private StatusBean status;
     @Expose
@@ -65,7 +65,7 @@ public class FieldsBean {
     @Expose
     private Integer timeoriginalestimate;
     @Expose
-    private Object timespent;
+    private Integer timespent;
     @Expose
     private TimetrackingBean timetracking;
     @Expose
@@ -265,11 +265,11 @@ public class FieldsBean {
         this.resolution = resolution;
     }
 
-    public Object getResolutiondate() {
+    public String getResolutiondate() {
         return resolutiondate;
     }
 
-    public void setResolutiondate(Object resolutiondate) {
+    public void setResolutiondate(String resolutiondate) {
         this.resolutiondate = resolutiondate;
     }
 
@@ -313,11 +313,11 @@ public class FieldsBean {
         this.timeoriginalestimate = timeoriginalestimate;
     }
 
-    public Object getTimespent() {
+    public Integer getTimespent() {
         return timespent;
     }
 
-    public void setTimespent(Object timespent) {
+    public void setTimespent(Integer timespent) {
         this.timespent = timespent;
     }
 
