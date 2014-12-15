@@ -8,7 +8,7 @@ import java.util.List;
 public class ErrorBean {
 
     @Expose
-    private List<Object> errorMessages = new ArrayList<Object>();
+    private List<String> errorMessages = new ArrayList<String>();
     @Expose
     private ErrorsBean errors;
 
@@ -20,11 +20,11 @@ public class ErrorBean {
         this.errors = errors;
     }
 
-    public List<Object> getErrorMessages() {
+    public List<String> getErrorMessages() {
         return errorMessages;
     }
 
-    public void setErrorMessages(List<Object> errorMessages) {
+    public void setErrorMessages(List<String> errorMessages) {
         this.errorMessages = errorMessages;
     }
 }

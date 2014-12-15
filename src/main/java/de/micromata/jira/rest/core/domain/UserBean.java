@@ -2,7 +2,7 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-public class UserBean {
+public class UserBean extends BaseBean{
 
     @Expose
     private Boolean active;
@@ -12,10 +12,6 @@ public class UserBean {
     private String displayName;
     @Expose
     private String emailAddress;
-    @Expose
-    private String name;
-    @Expose
-    private String self;
 
     public Boolean getActive() {
         return active;
@@ -47,22 +43,6 @@ public class UserBean {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSelf() {
-        return self;
-    }
-
-    public void setSelf(String self) {
-        this.self = self;
     }
 
 }

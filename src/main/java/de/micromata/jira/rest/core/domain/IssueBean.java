@@ -2,6 +2,8 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
+
 public class IssueBean {
 
     @Expose
@@ -16,6 +18,8 @@ public class IssueBean {
     private String self;
     @Expose
     private RenderedFieldsBean renderedFields;
+    @Expose
+    private List<TransitionBean> transitions;
 
     public String getExpand() {
         return expand;
@@ -63,5 +67,13 @@ public class IssueBean {
 
     public void setRenderedFields(RenderedFieldsBean renderedFields) {
         this.renderedFields = renderedFields;
+    }
+
+    public List<TransitionBean> getTransitions() {
+        return transitions;
+    }
+
+    public void setTransitions(List<TransitionBean> transitions) {
+        this.transitions = transitions;
     }
 }

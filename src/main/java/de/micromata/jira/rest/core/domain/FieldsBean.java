@@ -39,6 +39,8 @@ public class FieldsBean {
     @Expose
     private IssuetypeBean issuetype;
     @Expose
+    private IssueBean parent;
+    @Expose
     private List<String> labels;
     @Expose
     private String lastViewed;
@@ -209,7 +211,15 @@ public class FieldsBean {
         this.issuetype = issuetype;
     }
 
-    public List<String> getLabels(){
+    public IssueBean getParent() {
+        return parent;
+    }
+
+    public void setParent(IssueBean parent) {
+        this.parent = parent;
+    }
+
+    public List<String> getLabels() {
         return labels;
     }
 

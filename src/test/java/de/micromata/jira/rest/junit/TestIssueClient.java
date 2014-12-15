@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class TestIssueClient extends BaseTest {
 
-    private static final String ISSUE_KEY = "DEMO-1";
+    private static final String ISSUE_KEY = "DEMO-2";
     private static final String NEW_LINE = System.getProperty("line.separator");
 
 
@@ -46,6 +46,7 @@ public class TestIssueClient extends BaseTest {
         field.add(EField.DESCRIPTION.getField());
         List<String> expand = new ArrayList<String>();
         expand.add(EField.RENDEREDFIELDS.getField());
+        expand.add(EField.TRANSITIONS.getField());
         IssueBean issue = jiraRestClient.getIssueClient().getIssueByKey(ISSUE_KEY, field, expand);
         Assert.assertNotNull(issue);
         Assert.assertNotNull(issue.getFields().getSummary());

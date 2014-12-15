@@ -1,7 +1,8 @@
-
 package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
+
+import java.util.List;
 
 public class ProjectBean {
 
@@ -15,6 +16,12 @@ public class ProjectBean {
     private String name;
     @Expose
     private String self;
+    @Expose
+    private List<ComponentBean> components;
+    @Expose
+    private List<VersionBean> versions;
+    @Expose
+    private List<IssuetypeBean> issueTypes;
 
     public AvatarUrlsBean getAvatarUrls() {
         return avatarUrls;
@@ -54,5 +61,29 @@ public class ProjectBean {
 
     public void setSelf(String self) {
         this.self = self;
+    }
+
+    public List<ComponentBean> getComponents() {
+        return components;
+    }
+
+    public void setComponents(List<ComponentBean> components) {
+        this.components = components;
+    }
+
+    public List<VersionBean> getVersions() {
+        return versions;
+    }
+
+    public void setVersions(List<VersionBean> versions) {
+        this.versions = versions;
+    }
+
+    public List<IssuetypeBean> getIssueTypes() {
+        return issueTypes;
+    }
+
+    public void setIssueTypes(List<IssuetypeBean> issueTypes) {
+        this.issueTypes = issueTypes;
     }
 }

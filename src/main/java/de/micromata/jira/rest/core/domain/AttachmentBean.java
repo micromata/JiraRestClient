@@ -23,6 +23,8 @@ public class AttachmentBean {
     @Expose
     private String thumbnail;
 
+    private byte[] data;
+
     public UserBean getAuthor() {
         return author;
     }
@@ -93,5 +95,13 @@ public class AttachmentBean {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }
