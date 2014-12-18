@@ -42,7 +42,7 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
             public JqlSearchResult call() throws Exception {
                 HttpClient client = jiraRestClient.getClient();
                 URI baseUri = jiraRestClient.getBaseUri();
-                String json = GsonParserUtil.parseObjectToJson(jsb);
+                String json = gson.toJson(jsb);
                 URI uri = UriBuilder.fromUri(baseUri).path(SEARCH).build();
                 PostMethod method = HttpMethodFactory.createPostMethod(uri, json);
                 int status = client.executeMethod(method);

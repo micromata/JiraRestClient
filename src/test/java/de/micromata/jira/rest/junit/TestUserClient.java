@@ -21,40 +21,34 @@ public class TestUserClient extends BaseTest {
     @Test
     public void testGetUserByUsername() throws RestException, IOException, ExecutionException, InterruptedException {
         Future<UserBean> future = jiraRestClient.getUserClient().getUserByUsername(USERNAME_TO_SEARCH);
-        while (future.isDone()) {
-            final UserBean userBean = future.get();
-            Assert.assertNotNull(userBean);
-        }
-
+        while (future.isDone() == false) ;
+        final UserBean userBean = future.get();
+        Assert.assertNotNull(userBean);
     }
 
     @Test
     public void testGetLoggedInUser() throws RestException, IOException, ExecutionException, InterruptedException {
         Future<UserBean> future = jiraRestClient.getUserClient().getLoggedInRemoteUser();
-        while (future.isDone()) {
-            final UserBean userBean = future.get();
-            Assert.assertNotNull(userBean);
-        }
+        while (future.isDone() == false) ;
+        final UserBean userBean = future.get();
+        Assert.assertNotNull(userBean);
     }
 
     @Test
     public void testGetAssignableUserForProject() throws RestException, IOException, ExecutionException, InterruptedException {
         Future<List<UserBean>> future = jiraRestClient.getUserClient().getAssignableUserForProject(PROJECT_TO_SEARCH, null, null);
-        while (future.isDone()) {
-            final List<UserBean> userBeans = future.get();
-            Assert.assertNotNull(userBeans);
-            Assert.assertEquals(1, userBeans.size());
-        }
-
+        while (future.isDone() == false) ;
+        final List<UserBean> userBeans = future.get();
+        Assert.assertNotNull(userBeans);
+        Assert.assertEquals(1, userBeans.size());
     }
 
     @Test
     public void testGetAssignableUsersForIssue() throws RestException, IOException, ExecutionException, InterruptedException {
         Future<List<UserBean>> future = jiraRestClient.getUserClient().getAssignableUsersForIssue(ISSUEKEY_TO_SEARCH, null, null);
-        while (future.isDone()) {
-            final List<UserBean> userBeans = future.get();
-            Assert.assertNotNull(userBeans);
-            Assert.assertEquals(1, userBeans.size());
-        }
+        while (future.isDone() == false) ;
+        final List<UserBean> userBeans = future.get();
+        Assert.assertNotNull(userBeans);
+        Assert.assertEquals(1, userBeans.size());
     }
 }

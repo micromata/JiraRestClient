@@ -1,20 +1,14 @@
 package de.micromata.jira.rest.core;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.IssueClient;
 import de.micromata.jira.rest.core.domain.*;
 import de.micromata.jira.rest.core.domain.update.IssueUpdate;
-import de.micromata.jira.rest.core.misc.JsonConstants;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.GsonParserUtil;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
-import de.micromata.jira.rest.core.util.JsonElementUtil;
 import de.micromata.jira.rest.core.util.RestException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -30,11 +24,8 @@ import javax.ws.rs.core.UriBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -119,7 +110,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
                 HttpClient client = jiraRestClient.getClient();
                 URI baseUri = jiraRestClient.getBaseUri();
                 URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
-                String json = GsonParserUtil.parseObjectToJson(issueUpdate);
+                String json = gson.toJson(issueUpdate);
                 PutMethod method = HttpMethodFactory.createPutMethod(uri, json);
                 int status = client.executeMethod(method);
                 if (status == HttpURLConnection.HTTP_NO_CONTENT) {
@@ -297,18 +288,10 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
                 int status = client.executeMethod(method);
                 if (status == HttpURLConnection.HTTP_OK) {
                     InputStream inputStream = method.getResponseBodyAsStream();
-                    JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
-                    JsonElement transitionsElement = jsonObject.get(JsonConstants.PROP_TRANSITIONS);
-                    if (JsonElementUtil.checkNotNull(transitionsElement)) {
-                        JsonArray array = transitionsElement.getAsJsonArray();
-                        Type listType = new TypeToken<ArrayList<TransitionBean>>() {
-                        }.getType();
-                        List<TransitionBean> transitions = gson.fromJson(array, listType);
-                        method.releaseConnection();
-                        return transitions;
-                    }
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    final IssueBean issueBean = gson.fromJson(jsonReader, IssueBean.class);
                     method.releaseConnection();
-                    return Collections.emptyList();
+                    return issueBean.getTransitions();
                 } else {
                     method.releaseConnection();
                     throw new RestException(method);

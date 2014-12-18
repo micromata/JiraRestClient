@@ -20,6 +20,8 @@ public class IssueBean {
     private RenderedFieldsBean renderedFields;
     @Expose
     private List<TransitionBean> transitions;
+    @Expose
+    private Changelog changelog;
 
     public String getExpand() {
         return expand;
@@ -75,5 +77,13 @@ public class IssueBean {
 
     public void setTransitions(List<TransitionBean> transitions) {
         this.transitions = transitions;
+    }
+
+    public Changelog getChangelog() {
+        return changelog;
+    }
+
+    public void setChangelog(Changelog changelog) {
+        this.changelog = changelog;
     }
 }

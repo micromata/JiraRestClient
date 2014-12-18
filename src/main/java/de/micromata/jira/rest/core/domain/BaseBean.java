@@ -1,11 +1,15 @@
 package de.micromata.jira.rest.core.domain;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
 /**
  * Created by Christian on 12.12.2014.
  */
 public class BaseBean implements Comparable<BaseBean> {
+
+    protected Gson gson = new GsonBuilder().create();
 
     @Expose
     private String id;
@@ -43,4 +47,8 @@ public class BaseBean implements Comparable<BaseBean> {
         return this.name.compareTo(o.getName());
     }
 
+    @Override
+    public String toString() {
+        return gson.toJson(this);
+    }
 }
