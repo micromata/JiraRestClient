@@ -5,6 +5,7 @@ import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * User: Christian Schulze
@@ -22,7 +23,7 @@ public interface UserClient {
      * @param maxResults Number of Results (default 50) can be null then default (50)
      * @return
      */
-    public List<UserBean> getAssignableUserForProject(String projectKey, Integer startAt, Integer maxResults) throws RestException, IOException;
+    public Future<List<UserBean>> getAssignableUserForProject(String projectKey, Integer startAt, Integer maxResults) throws RestException, IOException;
 
 
     /**
@@ -33,7 +34,7 @@ public interface UserClient {
      * @param maxResults Number of Results (default 50) can be null then default (50)
      * @return
      */
-    public List<UserBean> getAssignableUsersForIssue(String issueKey, Integer startAt, Integer maxResults) throws RestException, IOException;
+    public Future<List<UserBean>> getAssignableUsersForIssue(String issueKey, Integer startAt, Integer maxResults) throws RestException, IOException;
 
     /**
      * Returns a User by his username
@@ -41,7 +42,7 @@ public interface UserClient {
      * @param username The username of the User
      * @return UserBean
      */
-    public UserBean getUserByUsername(String username) throws RestException, IOException;
+    public Future<UserBean> getUserByUsername(String username) throws RestException, IOException;
 
     /**
      * Returns the logged in remote user.
@@ -49,5 +50,5 @@ public interface UserClient {
      * @return logged in user
      * @throws RestException
      */
-    public UserBean getLoggedInRemoteUser() throws RestException, IOException;
+    public Future<UserBean> getLoggedInRemoteUser() throws RestException, IOException;
 }

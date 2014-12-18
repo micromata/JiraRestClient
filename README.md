@@ -17,6 +17,10 @@ With the Client you can use the seperated Clients for Issues, Projects, Users, S
 
 ## Changelog
 
+### Version 1.5
+
+* adding concurrency.Future to all Client Methods
+
 ### Version 1.4
 
 * adding concurrency.Future Support to the jql Search

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * The IssueClient provides all Informations for Jira Issues
@@ -21,7 +22,7 @@ public interface IssueClient {
      * @return IssueResponse
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public IssueResponse createIssue(IssueBean issue) throws RestException, IOException;
+    public Future<IssueResponse> createIssue(IssueBean issue) throws RestException, IOException;
 
 
     /**
@@ -31,14 +32,14 @@ public interface IssueClient {
      * @return all informations for the issue
      * @throws RestException
      */
-    public IssueBean getIssueByKey(String issueKey) throws RestException, IOException;
+    public Future<IssueBean> getIssueByKey(String issueKey) throws RestException, IOException;
 
     /**
      * update Field of an Issue
      *
      *
      */
-    public IssueBean updateIssue(String issueKey, IssueUpdate issueUpdate) throws IOException, RestException;
+    public Future<IssueBean> updateIssue(String issueKey, IssueUpdate issueUpdate) throws IOException, RestException;
 
     /**
      * Return a Issue with the given Field and Expand Fields.
@@ -48,7 +49,7 @@ public interface IssueClient {
      * @param expand The Field which must expand.
      * @return IssueBean
      */
-    public IssueBean getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException;
+    public Future<IssueBean> getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException;
 
     /**
      * Get Attachement as byte Array, or null
@@ -57,7 +58,7 @@ public interface IssueClient {
      * @return byte[] or null
      * @throws RestException
      */
-    public byte[] getAttachment(URI uri) throws RestException, IOException;
+    public Future<Byte[]> getAttachment(URI uri) throws RestException, IOException;
 
 
     /**
@@ -75,7 +76,7 @@ public interface IssueClient {
      * @param id the id of the attachment
      * @return
      */
-    public AttachmentBean getAttachment(long id) throws IOException, RestException;
+    public Future<AttachmentBean> getAttachment(long id) throws IOException, RestException;
 
     /**
      * Save Attachment to Issue
@@ -112,7 +113,7 @@ public interface IssueClient {
      * @return List of TransitionBean
      * @throws RestException
      */
-    public List<TransitionBean> getIssueTransitionsByKey(String issueKey) throws RestException, IOException;
+    public Future<List<TransitionBean>> getIssueTransitionsByKey(String issueKey) throws RestException, IOException;
 
     /**
      * Returns a summarized representation of all comments for the given issue.
@@ -121,6 +122,6 @@ public interface IssueClient {
      * @return summarized representation of all comments
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public CommentsBean getCommentsByIssue(String issueKey) throws RestException, IOException;
+    public Future<CommentsBean> getCommentsByIssue(String issueKey) throws RestException, IOException;
 
 }

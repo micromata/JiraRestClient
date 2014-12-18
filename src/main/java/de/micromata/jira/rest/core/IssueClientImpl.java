@@ -21,6 +21,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -35,6 +36,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 /**
  * User: Christian
@@ -54,124 +57,160 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
 
     @Override
-    public IssueResponse createIssue(IssueBean issue)
+    public Future<IssueResponse> createIssue(final IssueBean issue)
             throws RestException, IOException {
-        HttpClient client = jiraRestClient.getClient();
-        URI baseUri = jiraRestClient.getBaseUri();
-        String json = gson.toJson(issue);
-        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).build();
-        PostMethod method = HttpMethodFactory.createPostMethod(uri, json);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_CREATED) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonReader jsonReader = toJsonReader(inputStream);
-            IssueBean issuebean = gson.fromJson(jsonReader, IssueBean.class);
-            return new IssueResponse(issuebean.getKey());
-        } else if (status == HttpURLConnection.HTTP_BAD_REQUEST) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonReader jsonReader = toJsonReader(inputStream);
-            ErrorBean error = gson.fromJson(jsonReader, ErrorBean.class);
-            method.releaseConnection();
-            return new IssueResponse(error);
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+        return executorService.submit(new Callable<IssueResponse>() {
+            @Override
+            public IssueResponse call() throws Exception {
+                HttpClient client = jiraRestClient.getClient();
+                URI baseUri = jiraRestClient.getBaseUri();
+                String json = gson.toJson(issue);
+                URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).build();
+                PostMethod method = HttpMethodFactory.createPostMethod(uri, json);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_CREATED) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    IssueBean issuebean = gson.fromJson(jsonReader, IssueBean.class);
+                    return new IssueResponse(issuebean.getKey());
+                } else if (status == HttpURLConnection.HTTP_BAD_REQUEST) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    ErrorBean error = gson.fromJson(jsonReader, ErrorBean.class);
+                    method.releaseConnection();
+                    return new IssueResponse(error);
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
+            }
+        });
+
     }
 
     @Override
-    public IssueBean getIssueByKey(String issueKey) throws RestException, IOException {
-        HttpClient client = jiraRestClient.getClient();
-        URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
-        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonReader jsonReader = toJsonReader(inputStream);
-            return (IssueBean) gson.fromJson(jsonReader, IssueBean.class);
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+    public Future<IssueBean> getIssueByKey(final String issueKey) throws RestException, IOException {
+        return executorService.submit(new Callable<IssueBean>() {
+            @Override
+            public IssueBean call() throws Exception {
+                HttpClient client = jiraRestClient.getClient();
+                URI baseUri = jiraRestClient.getBaseUri();
+                URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
+                GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    return (IssueBean) gson.fromJson(jsonReader, IssueBean.class);
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
+            }
+        });
+
     }
 
     @Override
-    public IssueBean updateIssue(String issueKey, IssueUpdate issueUpdate) throws IOException, RestException {
-        HttpClient client = jiraRestClient.getClient();
-        URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
-        String json = GsonParserUtil.parseObjectToJson(issueUpdate);
-        PutMethod method = HttpMethodFactory.createPutMethod(uri, json);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_NO_CONTENT) {
-            return getIssueByKey(issueKey);
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+    public Future<IssueBean> updateIssue(final String issueKey, final IssueUpdate issueUpdate) throws IOException, RestException {
+        return executorService.submit(new Callable<IssueBean>() {
+            @Override
+            public IssueBean call() throws Exception {
+                HttpClient client = jiraRestClient.getClient();
+                URI baseUri = jiraRestClient.getBaseUri();
+                URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).build();
+                String json = GsonParserUtil.parseObjectToJson(issueUpdate);
+                PutMethod method = HttpMethodFactory.createPutMethod(uri, json);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_NO_CONTENT) {
+                    final Future<IssueBean> issueByKey = getIssueByKey(issueKey);
+                    while(issueByKey.isDone()){
+                        return issueByKey.get();
+                    }
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
+                return null;
+            }
+        });
     }
 
     @Override
-    public IssueBean getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException {
-        HttpClient client = jiraRestClient.getClient();
-        URI baseUri = jiraRestClient.getBaseUri();
-        UriBuilder path = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey);
-        if (fields != null && fields.isEmpty() == false) {
-            String fieldsParam = StringUtils.join(fields, SEPARATOR);
-            path.queryParam(FIELDS, fieldsParam);
-        }
-        if (expand != null && expand.isEmpty() == false) {
-            String expandParam = StringUtils.join(expand, SEPARATOR);
-            path.queryParam(EXPAND, expandParam);
-        }
-        URI uri = path.build();
-        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonReader jsonReader = toJsonReader(inputStream);
-            return (IssueBean) gson.fromJson(jsonReader, IssueBean.class);
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+    public Future<IssueBean> getIssueByKey(final String issueKey, final List<String> fields, final List<String> expand) throws RestException, IOException {
+        return executorService.submit(new Callable<IssueBean>() {
+            @Override
+            public IssueBean call() throws Exception {
+                HttpClient client = jiraRestClient.getClient();
+                URI baseUri = jiraRestClient.getBaseUri();
+                UriBuilder path = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey);
+                if (fields != null && fields.isEmpty() == false) {
+                    String fieldsParam = StringUtils.join(fields, SEPARATOR);
+                    path.queryParam(FIELDS, fieldsParam);
+                }
+                if (expand != null && expand.isEmpty() == false) {
+                    String expandParam = StringUtils.join(expand, SEPARATOR);
+                    path.queryParam(EXPAND, expandParam);
+                }
+                URI uri = path.build();
+                GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    return (IssueBean) gson.fromJson(jsonReader, IssueBean.class);
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
+            }
+        });
     }
 
     @Override
-    public CommentsBean getCommentsByIssue(String issueKey) throws RestException, IOException {
-        HttpClient client = jiraRestClient.getClient();
-        URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(COMMENT).build();
-        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonReader jsonReader = toJsonReader(inputStream);
-            CommentsBean comments = gson.fromJson(jsonReader, CommentsBean.class);
-            method.releaseConnection();
-            return comments;
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+    public Future<CommentsBean> getCommentsByIssue(final String issueKey) throws RestException, IOException {
+        return executorService.submit(new Callable<CommentsBean>() {
+            @Override
+            public CommentsBean call() throws Exception {
+                HttpClient client = jiraRestClient.getClient();
+                URI baseUri = jiraRestClient.getBaseUri();
+                URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(COMMENT).build();
+                GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    CommentsBean comments = gson.fromJson(jsonReader, CommentsBean.class);
+                    method.releaseConnection();
+                    return comments;
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
+            }
+        });
     }
 
     @Override
-    public byte[] getAttachment(URI uri) throws RestException, IOException {
-        HttpClient client = jiraRestClient.getClient();
-        GetMethod method = new GetMethod(uri.getPath());
-        method.setQueryString(uri.getQuery());
-        method.setRequestHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_OCTET_STREAM);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            byte[] bytes = IOUtils.toByteArray(inputStream);
-            method.releaseConnection();
-            return bytes;
-        }
-        method.releaseConnection();
-        return null;
+    public Future<Byte[]> getAttachment(final URI uri) throws RestException, IOException {
+        return executorService.submit(new Callable<Byte[]>() {
+            @Override
+            public Byte[] call() throws Exception {
+                HttpClient client = jiraRestClient.getClient();
+                GetMethod method = new GetMethod(uri.getPath());
+                method.setQueryString(uri.getQuery());
+                method.setRequestHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_OCTET_STREAM);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    byte[] bytes = IOUtils.toByteArray(inputStream);
+                    method.releaseConnection();
+                    return ArrayUtils.toObject(bytes);
+                }
+                method.releaseConnection();
+                return null;
+            }
+        });
     }
 
     @Override
@@ -180,22 +219,28 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     }
 
     @Override
-    public AttachmentBean getAttachment(long id) throws IOException, RestException {
-        HttpClient client = jiraRestClient.getClient();
-        URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = UriBuilder.fromUri(baseUri).path(ATTACHMENT).path(String.valueOf(id)).build();
-        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonReader jsonReader = toJsonReader(inputStream);
-            AttachmentBean attachment = gson.fromJson(jsonReader, AttachmentBean.class);
-            method.releaseConnection();
-            return attachment;
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+    public Future<AttachmentBean> getAttachment(final long id) throws IOException, RestException {
+        return executorService.submit(new Callable<AttachmentBean>() {
+            @Override
+            public AttachmentBean call() throws Exception {
+                HttpClient client = jiraRestClient.getClient();
+                URI baseUri = jiraRestClient.getBaseUri();
+                URI uri = UriBuilder.fromUri(baseUri).path(ATTACHMENT).path(String.valueOf(id)).build();
+                GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    AttachmentBean attachment = gson.fromJson(jsonReader, AttachmentBean.class);
+                    method.releaseConnection();
+                    return attachment;
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
+            }
+        });
+
     }
 
 
@@ -239,32 +284,36 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     }
 
     @Override
-    public List<TransitionBean> getIssueTransitionsByKey(String issueKey) throws RestException, IOException {
-        HttpClient client = jiraRestClient.getClient();
-        URI baseUri = jiraRestClient.getBaseUri();
-        UriBuilder path = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(TRANSITIONS);
-        path.queryParam(EXPAND, TRANSITIONS_FIELDS);
-        URI uri = path.build();
-        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
-            JsonElement transitionsElement = jsonObject.get(JsonConstants.PROP_TRANSITIONS);
-            if (JsonElementUtil.checkNotNull(transitionsElement)) {
-                JsonArray array = transitionsElement.getAsJsonArray();
-                Type listType = new TypeToken<ArrayList<TransitionBean>>() {
-                }.getType();
-                List<TransitionBean> transitions = gson.fromJson(array, listType);
-                method.releaseConnection();
-                return transitions;
+    public Future<List<TransitionBean>> getIssueTransitionsByKey(final String issueKey) throws RestException, IOException {
+        return executorService.submit(new Callable<List<TransitionBean>>() {
+            @Override
+            public List<TransitionBean> call() throws Exception {
+                HttpClient client = jiraRestClient.getClient();
+                URI baseUri = jiraRestClient.getBaseUri();
+                UriBuilder path = UriBuilder.fromUri(baseUri).path(ISSUE).path(issueKey).path(TRANSITIONS);
+                path.queryParam(EXPAND, TRANSITIONS_FIELDS);
+                URI uri = path.build();
+                GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonObject jsonObject = GsonParserUtil.parseJsonObject(inputStream);
+                    JsonElement transitionsElement = jsonObject.get(JsonConstants.PROP_TRANSITIONS);
+                    if (JsonElementUtil.checkNotNull(transitionsElement)) {
+                        JsonArray array = transitionsElement.getAsJsonArray();
+                        Type listType = new TypeToken<ArrayList<TransitionBean>>() {
+                        }.getType();
+                        List<TransitionBean> transitions = gson.fromJson(array, listType);
+                        method.releaseConnection();
+                        return transitions;
+                    }
+                    method.releaseConnection();
+                    return Collections.emptyList();
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
             }
-            method.releaseConnection();
-            return Collections.emptyList();
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+        });
     }
-
 }

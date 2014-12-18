@@ -22,6 +22,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 /**
  * User: Christian Schulze
@@ -44,59 +46,76 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
     }
 
     @Override
-    public List<IssuetypeBean> getIssueTypes() throws RestException, IOException {
-        URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = UriBuilder.fromUri(baseUri).path(ISSUETPYES).build();
-        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonReader jsonReader = toJsonReader(inputStream);
-            Type listType = new TypeToken<ArrayList<IssuetypeBean>>(){}.getType();
-            List<IssuetypeBean> issuetypes = gson.fromJson(jsonReader, listType);
-            method.releaseConnection();
-            return issuetypes;
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+    public Future<List<IssuetypeBean>> getIssueTypes() throws RestException, IOException {
+        return executorService.submit(new Callable<List<IssuetypeBean>>() {
+            @Override
+            public List<IssuetypeBean> call() throws Exception {
+                URI baseUri = jiraRestClient.getBaseUri();
+                URI uri = UriBuilder.fromUri(baseUri).path(ISSUETPYES).build();
+                GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    Type listType = new TypeToken<ArrayList<IssuetypeBean>>(){}.getType();
+                    List<IssuetypeBean> issuetypes = gson.fromJson(jsonReader, listType);
+                    method.releaseConnection();
+                    return issuetypes;
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
+            }
+        });
+
     }
 
     @Override
-    public List<StatusBean> getStates() throws RestException, IOException {
-        URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = UriBuilder.fromUri(baseUri).path(STATUS).build();
-        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonReader jsonReader = toJsonReader(inputStream);
-            Type listType = new TypeToken<ArrayList<StatusBean>>(){}.getType();
-            List<StatusBean> states = gson.fromJson(jsonReader, listType);
-            method.releaseConnection();
-            return states;
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+    public Future<List<StatusBean>> getStates() throws RestException, IOException {
+        return executorService.submit(new Callable<List<StatusBean>>() {
+            @Override
+            public List<StatusBean> call() throws Exception {
+                URI baseUri = jiraRestClient.getBaseUri();
+                URI uri = UriBuilder.fromUri(baseUri).path(STATUS).build();
+                GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    Type listType = new TypeToken<ArrayList<StatusBean>>(){}.getType();
+                    List<StatusBean> states = gson.fromJson(jsonReader, listType);
+                    method.releaseConnection();
+                    return states;
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
+            }
+        });
+
     }
 
     @Override
-    public List<PriorityBean> getPriorities() throws RestException, IOException {
-        URI baseUri = jiraRestClient.getBaseUri();
-        URI uri = UriBuilder.fromUri(baseUri).path(PRIORITY).build();
-        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
-        int status = client.executeMethod(method);
-        if (status == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = method.getResponseBodyAsStream();
-            JsonReader jsonReader = toJsonReader(inputStream);
-            Type listType = new TypeToken<ArrayList<PriorityBean>>(){}.getType();
-            List<PriorityBean> priorities = gson.fromJson(jsonReader, listType);
-            method.releaseConnection();
-            return priorities;
-        } else {
-            method.releaseConnection();
-            throw new RestException(method);
-        }
+    public Future<List<PriorityBean>> getPriorities() throws RestException, IOException {
+        return executorService.submit(new Callable<List<PriorityBean>>() {
+            @Override
+            public List<PriorityBean> call() throws Exception {
+                URI baseUri = jiraRestClient.getBaseUri();
+                URI uri = UriBuilder.fromUri(baseUri).path(PRIORITY).build();
+                GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);
+                int status = client.executeMethod(method);
+                if (status == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = method.getResponseBodyAsStream();
+                    JsonReader jsonReader = toJsonReader(inputStream);
+                    Type listType = new TypeToken<ArrayList<PriorityBean>>(){}.getType();
+                    List<PriorityBean> priorities = gson.fromJson(jsonReader, listType);
+                    method.releaseConnection();
+                    return priorities;
+                } else {
+                    method.releaseConnection();
+                    throw new RestException(method);
+                }
+            }
+        });
     }
 }

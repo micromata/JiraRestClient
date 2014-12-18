@@ -7,6 +7,7 @@ import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * The SystemClient provides all Information about the Jira System Configuration
@@ -20,7 +21,7 @@ public interface SystemClient {
      * @return list of issue types
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public List<IssuetypeBean> getIssueTypes() throws RestException, IOException;
+    public Future<List<IssuetypeBean>> getIssueTypes() throws RestException, IOException;
 
     /**
      * Returns a list of all statuses.
@@ -28,7 +29,7 @@ public interface SystemClient {
      * @return list of statuses
      * @throws RestException
      */
-    public List<StatusBean> getStates() throws RestException, IOException;
+    public Future<List<StatusBean>> getStates() throws RestException, IOException;
 
 
     /**
@@ -37,6 +38,6 @@ public interface SystemClient {
      * @return
      * @throws RestException
      */
-    public List<PriorityBean> getPriorities() throws RestException, IOException;
+    public Future<List<PriorityBean>> getPriorities() throws RestException, IOException;
 
 }

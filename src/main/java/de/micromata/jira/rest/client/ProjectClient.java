@@ -7,6 +7,7 @@ import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * The IssueClient provides all Informations for Jira Issues
@@ -22,7 +23,7 @@ public interface ProjectClient {
      * @return list of projects
      * @throws RestException
      */
-    public List<ProjectBean> getAllProjects() throws RestException, IOException;
+    public Future<List<ProjectBean>> getAllProjects() throws RestException, IOException;
 
     /**
      * Returns a full representation of the project for the given key.
@@ -31,7 +32,7 @@ public interface ProjectClient {
      * @return all informations for the project
      * @throws RestException
      */
-    public ProjectBean getProjectByKey(String projectKey) throws RestException, IOException;
+    public Future<ProjectBean> getProjectByKey(final String projectKey) throws RestException, IOException;
 
     /**
      * Returns a list of all versions for a project.
@@ -40,7 +41,7 @@ public interface ProjectClient {
      * @return list of versions
      * @throws RestException
      */
-    public List<VersionBean> getProjectVersions(String projectKey) throws RestException, IOException;
+    public Future<List<VersionBean>> getProjectVersions(final String projectKey) throws RestException, IOException;
 
 
     /**
@@ -50,6 +51,6 @@ public interface ProjectClient {
      * @return list of components
      * @throws RestException
      */
-    public List<ComponentBean> getProjectComponents(String projectKey) throws RestException, IOException;
+    public Future<List<ComponentBean>> getProjectComponents(final String projectKey) throws RestException, IOException;
 
 }
