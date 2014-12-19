@@ -4,15 +4,18 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.SystemClient;
+import de.micromata.jira.rest.core.domain.AttachmentMetaBean;
 import de.micromata.jira.rest.core.domain.IssuetypeBean;
 import de.micromata.jira.rest.core.domain.PriorityBean;
 import de.micromata.jira.rest.core.domain.StatusBean;
+import de.micromata.jira.rest.core.domain.field.FieldBean;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.util.RestException;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -117,5 +120,25 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                 }
             }
         });
+    }
+
+    @Override
+    public Future<List<FieldBean>> getAllFields() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Future<List<FieldBean>> getAllCustomFields() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Future<FieldBean> getCustomFieldById(String id) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Future<AttachmentMetaBean> getAttachmentMeta() {
+        throw new NotImplementedException();
     }
 }

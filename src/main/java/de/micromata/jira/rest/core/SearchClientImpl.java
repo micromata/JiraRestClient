@@ -4,18 +4,21 @@ import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.SearchClient;
 import de.micromata.jira.rest.core.domain.JqlSearchResult;
+import de.micromata.jira.rest.core.domain.filter.FilterBean;
 import de.micromata.jira.rest.core.jql.JqlSearchBean;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
@@ -59,5 +62,15 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
             }
         });
 
+    }
+
+    @Override
+    public Future<List<FilterBean>> getFavoriteFilter() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Future<FilterBean> getFilterById(String id) {
+        throw new NotImplementedException();
     }
 }

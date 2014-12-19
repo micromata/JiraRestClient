@@ -1,8 +1,10 @@
 package de.micromata.jira.rest.client;
 
+import de.micromata.jira.rest.core.domain.AttachmentMetaBean;
 import de.micromata.jira.rest.core.domain.IssuetypeBean;
 import de.micromata.jira.rest.core.domain.PriorityBean;
 import de.micromata.jira.rest.core.domain.StatusBean;
+import de.micromata.jira.rest.core.domain.field.FieldBean;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
@@ -39,5 +41,35 @@ public interface SystemClient {
      * @throws RestException
      */
     public Future<List<PriorityBean>> getPriorities() throws RestException, IOException;
+
+
+    /**
+     * Return a List of all Field configure in Jira, standard and custom
+     *
+     * @return a List of FieldBean
+     */
+    public Future<List<FieldBean>> getAllFields();
+
+
+    /**
+     * Return all Custom Field configure in the Jira
+     *
+     * @return a List of FieldBean
+     */
+    public Future<List<FieldBean>> getAllCustomFields();
+
+    /**
+     * Return a Custom Field by Id
+     *
+     */
+    public Future<FieldBean> getCustomFieldById(String id);
+
+
+    /**
+     * Get the Attachment Meta Information for the jira instanz
+     *
+     * @return AttachmentMetaBean
+     */
+    public Future<AttachmentMetaBean> getAttachmentMeta();
 
 }
