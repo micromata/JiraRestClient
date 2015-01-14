@@ -28,7 +28,7 @@ public class FilterBean {
     @Expose
     private Boolean favourite;
     @Expose
-    private List<Object> sharePermissions = new ArrayList<Object>();
+    private List<Object> sharePermissions;
     @Expose
     private SharedUsers sharedUsers;
     @Expose

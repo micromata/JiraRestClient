@@ -133,8 +133,8 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         return retval;
     }
 
-    private void closeIdleConnections() {
-
+    public void closeIdleConnections() {
+        connectionManager.closeIdleConnections(30000l);
     }
 
 

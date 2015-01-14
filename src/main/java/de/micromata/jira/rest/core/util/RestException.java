@@ -15,8 +15,14 @@
 
 package de.micromata.jira.rest.core.util;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.core.domain.ErrorBean;
 import org.apache.commons.httpclient.HttpMethod;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @author Christian Schulze
@@ -41,14 +47,20 @@ public class RestException extends Exception {
     public RestException(HttpMethod method) {
         this.statusCode = method.getStatusCode();
         this.reasonPhrase = method.getStatusText();
-//        try {
-////            InputStream inputStream = method.getResponseBodyAsStream();
-////            this.restErrorMessage = ErrorParser.parse(inputStream);
-//        } catch (IOException e) {
-//            // nothing to say
-//        } finally {
+        try {
+            InputStream inputStream = method.getResponseBodyAsStream();
+            if(inputStream != null) {
+                InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
+                JsonReader jsonReader = new JsonReader(reader);
+                jsonReader.setLenient(true);
+                Gson gson = new Gson();
+                restErrorMessage = gson.fromJson(jsonReader, ErrorBean.class);
+            }
+        } catch (IOException e) {
+            // nothing to say
+        } finally {
             method.releaseConnection();
-//        }
+        }
 
     }
 

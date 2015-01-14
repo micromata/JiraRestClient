@@ -13,6 +13,8 @@ public class ErrorsBean {
     private String attachment;
     @Expose
     private String issuelinks;
+    @Expose
+    private String filterName;
 
     public String getProject() {
         return project;
@@ -44,5 +46,13 @@ public class ErrorsBean {
 
     public void setIssuelinks(String issuelinks) {
         this.issuelinks = issuelinks;
+    }
+
+    public String getFilterName() {
+        return filterName;
+    }
+
+    public void setFilterName(String filterName) {
+        this.filterName = filterName;
     }
 }

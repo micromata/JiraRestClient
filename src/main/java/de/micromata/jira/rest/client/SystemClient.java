@@ -4,10 +4,12 @@ import de.micromata.jira.rest.core.domain.AttachmentMetaBean;
 import de.micromata.jira.rest.core.domain.IssuetypeBean;
 import de.micromata.jira.rest.core.domain.PriorityBean;
 import de.micromata.jira.rest.core.domain.StatusBean;
+import de.micromata.jira.rest.core.domain.field.CreateFieldBean;
 import de.micromata.jira.rest.core.domain.field.FieldBean;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -50,6 +52,14 @@ public interface SystemClient {
      */
     public Future<List<FieldBean>> getAllFields();
 
+
+    /**
+     * Creates a new CustomField
+     *
+     * @param customfield The Customfield to create
+     * @return true if the customfield was created
+     */
+    public Future<FieldBean> createCustomField(CreateFieldBean customfield);
 
     /**
      * Return all Custom Field configure in the Jira

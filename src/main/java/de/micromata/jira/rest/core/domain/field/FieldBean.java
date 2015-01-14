@@ -21,15 +21,15 @@ public class FieldBean {
     @Expose
     private Boolean searchable;
     @Expose
-    private List<Object> clauseNames = new ArrayList<Object>();
+    private List<String> clauseNames = new ArrayList<String>();
     @Expose
     private Schema schema;
 
-    public List<Object> getClauseNames() {
+    public List<String> getClauseNames() {
         return clauseNames;
     }
 
-    public void setClauseNames(List<Object> clauseNames) {
+    public void setClauseNames(List<String> clauseNames) {
         this.clauseNames = clauseNames;
     }
 

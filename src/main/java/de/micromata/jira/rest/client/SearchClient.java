@@ -24,13 +24,22 @@ public interface SearchClient {
      */
     public Future<JqlSearchResult> searchIssues(JqlSearchBean jsb) throws RestException, IOException;
 
+
+    /**
+     * Create a new Search Filter for the logged in User
+     *
+     * @param filter
+     * @return
+     */
+    public Future<FilterBean> createSearchFilter(FilterBean filter);
+
+
     /**
      * Get favorite Filter for JqlSearch for hte logged in User
      *
      * @return List of FilterBeans
      */
     public Future<List<FilterBean>> getFavoriteFilter();
-
 
     /**
      * Get Filter by Id

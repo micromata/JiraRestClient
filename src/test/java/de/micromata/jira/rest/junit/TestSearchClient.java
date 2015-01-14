@@ -1,12 +1,15 @@
 package de.micromata.jira.rest.junit;
 
 import de.micromata.jira.rest.core.domain.JqlSearchResult;
+import de.micromata.jira.rest.core.domain.filter.FilterBean;
 import de.micromata.jira.rest.core.jql.*;
 import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -54,5 +57,38 @@ public class TestSearchClient extends BaseTest {
         Assert.assertEquals(6, jqlSearchResult.getTotal());
         Assert.assertEquals(6, jqlSearchResult.getIssues().size());
 
+    }
+
+
+    @Test
+    public void testCreateFilter() {
+        FilterBean filter = new FilterBean();
+        filter.setName("Filter_".concat(new Date().toString()));
+        filter.setDescription("foobar");
+        filter.setFavourite(Boolean.TRUE);
+        filter.setJql("project = DEMO");
+        final Future<FilterBean> future = jiraRestClient.getSearchClient().createSearchFilter(filter);
+        while (future.isDone() == false);
+        final FilterBean filterBean;
+        try {
+            filterBean = future.get();
+            Assert.assertNotNull(filterBean);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            final Throwable cause = e.getCause();
+            cause.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void testGetFilterForLoggedInUser() throws ExecutionException, InterruptedException {
+        final Future<List<FilterBean>> future = jiraRestClient.getSearchClient().getFavoriteFilter();
+        while(future.isDone() == false);
+        final List<FilterBean> filterBeans = future.get();
+        Assert.assertNotNull(filterBeans);
+        Assert.assertFalse(filterBeans.isEmpty());
     }
 }

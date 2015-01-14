@@ -60,4 +60,11 @@ public interface RestPathConstants {
 
     public static final String ASSIGNABLE = "/assignable";
 
+    public static final String FILTER = "/filter";
+
+    public static final String FAVORITE = "/favourite";
+
+    public static final String FIELD = "/field";
+
+    public static final String META = "/meta";
 }
