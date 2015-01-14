@@ -2,9 +2,6 @@ package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
 
-/**
- * Created by Christian on 09.12.2014.
- */
 public class TransitionBean {
 
     @Expose

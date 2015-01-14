@@ -33,7 +33,6 @@ public class TestSystemClient extends BaseTest {
     @Test
     public void testGetIssueType() throws RestException, IOException, ExecutionException, InterruptedException {
         final Future<List<IssuetypeBean>> future = jiraRestClient.getSystemClient().getIssueTypes();
-        while (future.isDone() == false) ;
         final List<IssuetypeBean> issuetypeBeans = future.get();
         Assert.assertNotNull(issuetypeBeans);
         Assert.assertFalse(issuetypeBeans.isEmpty());
@@ -43,7 +42,6 @@ public class TestSystemClient extends BaseTest {
     @Test
     public void testGetPriorities() throws RestException, IOException, ExecutionException, InterruptedException {
         final Future<List<PriorityBean>> future = jiraRestClient.getSystemClient().getPriorities();
-        while (future.isDone() == false) ;
         final List<PriorityBean> priorities = future.get();
         Assert.assertNotNull(priorities);
         Assert.assertFalse(priorities.isEmpty());
@@ -53,7 +51,6 @@ public class TestSystemClient extends BaseTest {
     @Test
     public void testGetStates() throws RestException, IOException, ExecutionException, InterruptedException {
         final Future<List<StatusBean>> future = jiraRestClient.getSystemClient().getStates();
-        while (future.isDone() == false) ;
         final List<StatusBean> statusBeans = future.get();
         Assert.assertNotNull(statusBeans);
         Assert.assertFalse(statusBeans.isEmpty());
@@ -64,7 +61,6 @@ public class TestSystemClient extends BaseTest {
     @Test
     public void testGetFields() throws ExecutionException, InterruptedException {
         final Future<List<FieldBean>> future = jiraRestClient.getSystemClient().getAllFields();
-        while(future.isDone() == false);
         final List<FieldBean> fieldBeans = future.get();
         Assert.assertNotNull(fieldBeans);
         Assert.assertFalse(fieldBeans.isEmpty());
@@ -79,7 +75,6 @@ public class TestSystemClient extends BaseTest {
         createFieldBean.setType("com.atlassian.jira.plugin.system.customfieldtypes:grouppicker");
         createFieldBean.setSearcherKey("com.atlassian.jira.plugin.system.customfieldtypes:grouppickersearcher");
         final Future<FieldBean> future = jiraRestClient.getSystemClient().createCustomField(createFieldBean);
-        while(future.isDone() == false);
         final FieldBean fieldBean = future.get();
         Assert.assertNotNull(fieldBean);
     }
@@ -87,7 +82,6 @@ public class TestSystemClient extends BaseTest {
     @Test
     public void testGetCustomFields() throws ExecutionException, InterruptedException {
         final Future<List<FieldBean>> future = jiraRestClient.getSystemClient().getAllCustomFields();
-        while(future.isDone() == false);
         final List<FieldBean> fieldBeans = future.get();
         Assert.assertNotNull(fieldBeans);
     }
@@ -95,7 +89,6 @@ public class TestSystemClient extends BaseTest {
     @Test
     public void testGetAttachmentMeta() throws ExecutionException, InterruptedException {
         final Future<AttachmentMetaBean> future = jiraRestClient.getSystemClient().getAttachmentMeta();
-        while(future.isDone() == false);
         final AttachmentMetaBean attachmentMetaBean = future.get();
         Assert.assertNotNull(attachmentMetaBean);
         Assert.assertEquals(DEFAULT_UPLOAD_LIMIT, attachmentMetaBean.getUploadLimit());

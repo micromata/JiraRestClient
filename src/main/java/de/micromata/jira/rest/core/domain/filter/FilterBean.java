@@ -4,7 +4,6 @@ package de.micromata.jira.rest.core.domain.filter;
 import com.google.gson.annotations.Expose;
 import de.micromata.jira.rest.core.domain.UserBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FilterBean {

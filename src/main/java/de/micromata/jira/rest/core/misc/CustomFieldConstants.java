@@ -1,8 +1,5 @@
 package de.micromata.jira.rest.core.misc;
 
-/**
- * Created by Christian on 13.01.2015.
- */
 public interface CustomFieldConstants {
 
     /**

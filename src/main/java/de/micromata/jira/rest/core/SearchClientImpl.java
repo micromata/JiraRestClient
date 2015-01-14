@@ -14,7 +14,6 @@ import de.micromata.jira.rest.core.util.RestException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.InputStream;
@@ -119,6 +118,6 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
 
     @Override
     public Future<FilterBean> getFilterById(String id) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 }

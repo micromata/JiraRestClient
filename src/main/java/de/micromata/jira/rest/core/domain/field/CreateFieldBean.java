@@ -2,9 +2,6 @@ package de.micromata.jira.rest.core.domain.field;
 
 import com.google.gson.annotations.Expose;
 
-/**
- * Created by Christian on 12.01.2015.
- */
 public class CreateFieldBean {
 
     @Expose

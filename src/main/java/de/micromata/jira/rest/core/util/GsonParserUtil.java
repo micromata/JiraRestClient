@@ -31,8 +31,7 @@ public class GsonParserUtil {
         JsonObject transitionObject = new JsonObject();
         transitionObject.addProperty(JsonConstants.PROP_ID, transitionId);
         parent.add(JsonConstants.ELEM_TRANSITION, transitionObject);
-        String jsonString = new Gson().toJson(parent);
-        return jsonString;
+        return new Gson().toJson(parent);
     }
 
     
