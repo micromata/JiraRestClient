@@ -5,19 +5,18 @@ import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.SearchClient;
 import de.micromata.jira.rest.core.domain.JqlSearchResult;
-import de.micromata.jira.rest.core.domain.PriorityBean;
 import de.micromata.jira.rest.core.domain.filter.FilterBean;
 import de.micromata.jira.rest.core.jql.JqlSearchBean;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
-import de.micromata.jira.rest.core.util.*;
+import de.micromata.jira.rest.core.util.HttpMethodFactory;
+import de.micromata.jira.rest.core.util.RestException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ws.rs.core.UriBuilder;
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
-import java.util.logging.Filter;
 
 /**
  * User: Christian Schulze
@@ -37,8 +35,6 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
 
     private JiraRestClient jiraRestClient = null;
 
-    private SearchClientImpl() {
-    }
 
     public SearchClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;

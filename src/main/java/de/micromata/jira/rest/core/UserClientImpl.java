@@ -33,9 +33,6 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
 
     private JiraRestClient jiraRestClient;
 
-    private UserClientImpl() {
-    }
-
     public UserClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;
     }

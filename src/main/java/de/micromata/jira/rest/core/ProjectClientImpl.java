@@ -34,8 +34,6 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
     private JiraRestClient jiraRestClient = null;
 
-    private ProjectClientImpl() {
-    }
 
     public ProjectClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;

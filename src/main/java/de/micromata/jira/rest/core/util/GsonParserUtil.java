@@ -15,15 +15,9 @@
 
 package de.micromata.jira.rest.core.util;
 
-import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import de.micromata.jira.rest.core.misc.JsonConstants;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Christian Schulze
@@ -31,7 +25,6 @@ import java.util.List;
  */
 public class GsonParserUtil {
 
-    private static final JsonParser parser = new JsonParser();
 
     public static String parseTransitionToJson(int transitionId) {
         JsonObject parent = new JsonObject();

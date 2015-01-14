@@ -39,9 +39,6 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     private static final String SEPARATOR = ",";
     private JiraRestClient jiraRestClient = null;
 
-    private IssueClientImpl() {
-    }
-
     public IssueClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;
     }

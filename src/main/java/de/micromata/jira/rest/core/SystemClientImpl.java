@@ -10,14 +10,13 @@ import de.micromata.jira.rest.core.domain.PriorityBean;
 import de.micromata.jira.rest.core.domain.StatusBean;
 import de.micromata.jira.rest.core.domain.field.CreateFieldBean;
 import de.micromata.jira.rest.core.domain.field.FieldBean;
-import de.micromata.jira.rest.core.util.HttpMethodFactory;
-import de.micromata.jira.rest.core.util.RestException;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
+import de.micromata.jira.rest.core.util.HttpMethodFactory;
+import de.micromata.jira.rest.core.util.RestException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -42,8 +41,6 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
 
     private HttpClient client = null;
 
-    private SystemClientImpl() {
-    }
 
     public SystemClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;
