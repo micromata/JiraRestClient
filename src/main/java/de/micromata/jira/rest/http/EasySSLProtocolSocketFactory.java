@@ -110,8 +110,7 @@ public class EasySSLProtocolSocketFactory implements SecureProtocolSocketFactory
   /**
    * @see SecureProtocolSocketFactory#createSocket(String,int,java.net.InetAddress,int)
    */
-  public Socket createSocket(String host, int port, InetAddress clientHost, int clientPort) throws IOException, UnknownHostException
-  {
+  public Socket createSocket(String host, int port, InetAddress clientHost, int clientPort) throws IOException {
 
     return getSSLContext().getSocketFactory().createSocket(host, port, clientHost, clientPort);
   }
@@ -134,7 +133,7 @@ public class EasySSLProtocolSocketFactory implements SecureProtocolSocketFactory
    * @throws java.net.UnknownHostException if the IP address of the host cannot be determined
    */
   public Socket createSocket(final String host, final int port, final InetAddress localAddress, final int localPort,
-      final HttpConnectionParams params) throws IOException, UnknownHostException, ConnectTimeoutException
+      final HttpConnectionParams params) throws IOException, ConnectTimeoutException
       {
     if (params == null) {
       throw new IllegalArgumentException("Parameters may not be null");
@@ -156,16 +155,14 @@ public class EasySSLProtocolSocketFactory implements SecureProtocolSocketFactory
   /**
    * @see SecureProtocolSocketFactory#createSocket(String,int)
    */
-  public Socket createSocket(String host, int port) throws IOException, UnknownHostException
-  {
+  public Socket createSocket(String host, int port) throws IOException {
     return getSSLContext().getSocketFactory().createSocket(host, port);
   }
 
   /**
    * @see SecureProtocolSocketFactory#createSocket(java.net.Socket,String,int,boolean)
    */
-  public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException, UnknownHostException
-  {
+  public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException {
     return getSSLContext().getSocketFactory().createSocket(socket, host, port, autoClose);
   }
 }

@@ -81,7 +81,7 @@ public interface IssueClient {
     /**
      * Save Attachment to Issue
      */
-    public void saveAttachmentToIssue(File file, String issuekey);
+    public void saveAttachmentToIssue(File file, String issuekey) throws IOException, RestException;
 
     /**
      * Returns true if the worklog is successfully transfered to the Issue.

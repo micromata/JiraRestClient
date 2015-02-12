@@ -14,6 +14,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -233,7 +235,18 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
 
     @Override
-    public void saveAttachmentToIssue(File file, String issuekey) {
+    public void saveAttachmentToIssue(File file, String issuekey) throws IOException, RestException {
+        HttpClient client = jiraRestClient.getClient();
+        URI baseUri = jiraRestClient.getBaseUri();
+        URI uri = UriBuilder.fromUri(baseUri).path(ISSUE).path(issuekey).path(ATTACHMENTS).build();
+        final PostMethod method = HttpMethodFactory.createMultiPartPostMethod(uri, file, "image/png");
+        final int status = client.executeMethod(method);
+        if (status == HttpURLConnection.HTTP_CREATED) {
+            method.releaseConnection();
+        } else {
+            method.releaseConnection();
+            throw new RestException(method);
+        }
 
     }
 

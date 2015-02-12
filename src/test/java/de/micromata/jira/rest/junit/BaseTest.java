@@ -23,7 +23,7 @@ public class BaseTest implements JqlConstants, RestPathConstants {
 
     static final String TEST_SYSTEM_URL = "http://localhost:2990/jira";
     static final String USERNAME = "admin";
-    static final String PASSWORD = "admin";
+    static final String PASSWORD = "admin2";
     static final String USERNAME_TO_SEARCH = "admin";
     static final String ISSUEKEY_TO_SEARCH = "DEMO-1";
     static final String PROJECT_TO_SEARCH = "DEMO";

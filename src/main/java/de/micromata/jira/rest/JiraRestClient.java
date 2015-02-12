@@ -65,6 +65,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
      * @param uri      = the login mask URI where JIRA is running
      * @param username = login name
      * @param password = login password
+     * @return 200 succees, 401 for wrong credentials and 403 for captcha is needed, you have to login at the jira website
      * @throws de.micromata.jira.rest.core.util.RestException
      */
     public int connect(URI uri, String username, String password, ProxyHost proxyHost) throws IOException {

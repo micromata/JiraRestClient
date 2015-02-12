@@ -12,6 +12,7 @@ import junit.framework.Assert;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -177,4 +178,11 @@ public class TestIssueClient extends BaseTest {
         Assert.assertFalse(transitionBeans.isEmpty());
     }
 
+    @Test
+    public void testSaveAttachment() throws IOException, RestException {
+        File file = new File("c:\\cat.jpg");
+        if(file.exists() == true){
+            jiraRestClient.getIssueClient().saveAttachmentToIssue(file, ISSUEKEY_TO_SEARCH);
+        }
+    }
 }
