@@ -10,6 +10,7 @@ import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.lang3.Validate;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -28,15 +29,13 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
 
     private JiraRestClient jiraRestClient = null;
 
-    private SearchClientImpl() {
-    }
-
     public SearchClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;
     }
 
     @Override
     public Future<JqlSearchResult> searchIssues(final JqlSearchBean jsb) throws RestException, IOException {
+        Validate.notNull(jsb);
         return executorService.submit(new Callable<JqlSearchResult>() {
             @Override
             public JqlSearchResult call() throws Exception {

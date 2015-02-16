@@ -37,9 +37,6 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
 
     private HttpClient client = null;
 
-    private SystemClientImpl() {
-    }
-
     public SystemClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;
         this.client = jiraRestClient.getClient();

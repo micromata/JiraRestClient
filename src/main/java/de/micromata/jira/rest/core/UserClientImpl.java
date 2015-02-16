@@ -12,6 +12,7 @@ import de.micromata.jira.rest.core.misc.RestPathConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -33,9 +34,6 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
 
     private JiraRestClient jiraRestClient;
 
-    private UserClientImpl() {
-    }
-
     public UserClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;
     }
@@ -52,6 +50,7 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
 
     @Override
     public Future<UserBean> getUserByUsername(final String username) throws RestException, IOException {
+        Validate.notNull(username);
         return executorService.submit(new Callable<UserBean>() {
             @Override
             public UserBean call() throws Exception {

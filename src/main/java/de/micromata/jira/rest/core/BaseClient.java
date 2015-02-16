@@ -3,6 +3,7 @@ package de.micromata.jira.rest.core;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+import org.apache.commons.lang3.Validate;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,6 +21,7 @@ public abstract class BaseClient {
     protected Gson gson = new GsonBuilder().create();
 
     protected JsonReader toJsonReader(InputStream inputStream) throws UnsupportedEncodingException {
+        Validate.notNull(inputStream);
         InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
         JsonReader jsonReader = new JsonReader(reader);
         jsonReader.setLenient(true);
