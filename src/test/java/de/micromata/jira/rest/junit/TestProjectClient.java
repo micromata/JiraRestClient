@@ -23,7 +23,6 @@ public class TestProjectClient extends BaseTest {
     @Test
     public void testGetProjectByKey() throws RestException, IOException, ExecutionException, InterruptedException {
         final Future<ProjectBean> future = jiraRestClient.getProjectClient().getProjectByKey(PROJECT_TO_SEARCH);
-        while (future.isDone() == false) ;
         final ProjectBean project = future.get();
         Assert.assertNotNull(project);
         Assert.assertEquals(PROJECT_TO_SEARCH, project.getKey());
@@ -32,7 +31,6 @@ public class TestProjectClient extends BaseTest {
     @Test
     public void testGetAllProjects() throws RestException, IOException, ExecutionException, InterruptedException {
         final Future<List<ProjectBean>> future = jiraRestClient.getProjectClient().getAllProjects();
-        while (future.isDone() == false) ;
         final List<ProjectBean> projectBeans = future.get();
         Assert.assertNotNull(projectBeans);
         Assert.assertFalse(projectBeans.isEmpty());
@@ -41,18 +39,16 @@ public class TestProjectClient extends BaseTest {
     @Test
     public void testGetProjectVersions() throws RestException, IOException, ExecutionException, InterruptedException {
         final Future<List<VersionBean>> future = jiraRestClient.getProjectClient().getProjectVersions(PROJECT_TO_SEARCH);
-        while (future.isDone() == false) ;
         final List<VersionBean> versionBeans = future.get();
         Assert.assertNotNull(versionBeans);
-        Assert.assertFalse(versionBeans.isEmpty());
+        Assert.assertTrue(versionBeans.isEmpty());
     }
 
     @Test
     public void testGetProjectComponents() throws RestException, IOException, ExecutionException, InterruptedException {
         final Future<List<ComponentBean>> future = jiraRestClient.getProjectClient().getProjectComponents(PROJECT_TO_SEARCH);
-        while (future.isDone() == false) ;
         final List<ComponentBean> componentBeans = future.get();
         Assert.assertNotNull(componentBeans);
-        Assert.assertFalse(componentBeans.isEmpty());
+        Assert.assertTrue(componentBeans.isEmpty());
     }
 }

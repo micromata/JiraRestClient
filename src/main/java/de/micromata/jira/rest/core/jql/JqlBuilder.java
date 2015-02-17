@@ -38,17 +38,17 @@ public class JqlBuilder {
         JqlKeyword jqlKeyword = new JqlKeyword();
 
         if (field != null) {
-            jql.append(field + " ");
+            jql.append(field).append(" ");
         }
         if (operator != null) {
-            jql.append(operator + " ");
+            jql.append(operator).append(" ");
         }
         if (operand != null) {
             if(operand.length > 1){
                 String join = StringUtils.join(operand, ",");
-                jql.append("(" + join + ") ");
+                jql.append("(").append(join).append(") ");
             }else {
-                jql.append(operand[0] + " ");
+                jql.append(operand[0]).append(" ");
             }
         }
 
@@ -66,12 +66,12 @@ public class JqlBuilder {
     public class JqlKeyword {
 
         public JqlBuilder and() {
-            jql.append(EKeyword.AND + " ");
+            jql.append(EKeyword.AND).append(" ");
             return getJqlBuilder();
         }
 
         public JqlBuilder or() {
-            jql.append(EKeyword.OR + " ");
+            jql.append(EKeyword.OR).append(" ");
             return getJqlBuilder();
         }
 
@@ -80,7 +80,7 @@ public class JqlBuilder {
                 return build();
             }
 
-            jql.append(EKeyword.ORDER_BY + " ");
+            jql.append(EKeyword.ORDER_BY).append(" ");
             jql.append(fields[0]);
 
             for (int i = 1; i < fields.length; i++) {

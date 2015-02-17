@@ -117,14 +117,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
                 int status = client.executeMethod(method);
                 if (status == HttpURLConnection.HTTP_NO_CONTENT) {
                     final Future<IssueBean> issueByKey = getIssueByKey(issueKey);
-                    while(issueByKey.isDone()){
-                        return issueByKey.get();
-                    }
+                    return issueByKey.get();
                 } else {
                     method.releaseConnection();
                     throw new RestException(method);
                 }
-                return null;
             }
         });
     }

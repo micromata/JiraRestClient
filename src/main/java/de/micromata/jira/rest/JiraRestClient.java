@@ -117,7 +117,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         if (port != -1) {
             return port;
         }
-        if (HTTPS.equals(endpointUrl.getProtocol()) == true) {
+        if (HTTPS.equals(endpointUrl.getProtocol())) {
             return 443;
         }
         return 80;

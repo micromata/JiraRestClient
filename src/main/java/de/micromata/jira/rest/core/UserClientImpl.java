@@ -100,10 +100,10 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
                     path.queryParam(PROJECTKEY, projectKey);
                 }
                 if(startAt != null && startAt >= 0){
-                    path.queryParam(START_AT, startAt.intValue());
+                    path.queryParam(START_AT, startAt);
                 }
                 if(maxResults != null && maxResults > 0 && maxResults < 1000) {
-                    path.queryParam(MAX_RESULTS, maxResults.intValue());
+                    path.queryParam(MAX_RESULTS, maxResults);
                 }
                 URI uri = path.build();
                 GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri);

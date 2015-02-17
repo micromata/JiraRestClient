@@ -5,7 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
 /**
- * Created by Christian on 12.12.2014.
+ * Author: Christian
+ * Date: 12.12.2014.
  */
 public class BaseBean implements Comparable<BaseBean> {
 

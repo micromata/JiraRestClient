@@ -36,7 +36,6 @@ public class TestIssueClient extends BaseTest {
     @Test
     public void testGetIssueByKey() throws RestException, IOException, ExecutionException, InterruptedException {
         Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH);
-        while (future.isDone() == false) ;
         final IssueBean issueBean = future.get();
         Assert.assertNotNull(issueBean);
         Assert.assertEquals(ISSUEKEY_TO_SEARCH, issueBean.getKey());
@@ -53,7 +52,6 @@ public class TestIssueClient extends BaseTest {
         expand.add(EField.TRANSITIONS.getField());
         expand.add(EField.CHANGELOG.getField());
         final Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH, field, expand);
-        while (future.isDone() == false) ;
         IssueBean issue = future.get();
         Assert.assertNotNull(issue);
         Assert.assertNotNull(issue.getFields().getSummary());
@@ -66,7 +64,6 @@ public class TestIssueClient extends BaseTest {
     @Test
     public void testGetAttachment() throws IOException, RestException, ExecutionException, InterruptedException {
         final Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH);
-        while (future.isDone() == false) ;
         final IssueBean issue = future.get();
         List<AttachmentBean> attachments = issue.getFields().getAttachment();
         Assert.assertNotNull(attachments);
@@ -133,7 +130,6 @@ public class TestIssueClient extends BaseTest {
         issue.setFields(fields);
 
         final Future<IssueResponse> future = jiraRestClient.getIssueClient().createIssue(issue);
-        while (future.isDone() == false) ;
         final IssueResponse issueResponse = future.get();
         if (issueResponse != null) {
             String issueKey = issueResponse.getKey();
@@ -150,16 +146,11 @@ public class TestIssueClient extends BaseTest {
     @Test
     public void testSetLinkInEviroment() throws IOException, RestException, ExecutionException, InterruptedException {
         final Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH);
-        while (future.isDone() == false) ;
         final IssueBean issue = future.get();
         Assert.assertNotNull(issue);
         Assert.assertEquals(ISSUEKEY_TO_SEARCH, issue.getKey());
         String environment = issue.getFields().getEnvironment();
-        StringBuilder sb = new StringBuilder();
-        sb.append(environment);
-        sb.append(NEW_LINE).append(NEW_LINE);
-        sb.append(issue.getSelf());
-        String newEnviroment = sb.toString();
+        String newEnviroment = environment + NEW_LINE + NEW_LINE + issue.getSelf();
         IssueUpdate issueUpdate = new IssueUpdate();
         Map<String, List<FieldOperation>> update = issueUpdate.getUpdate();
         List<FieldOperation> operations = new ArrayList<FieldOperation>();
@@ -176,7 +167,6 @@ public class TestIssueClient extends BaseTest {
     @Test
     public void testGetTransitions() throws ExecutionException, InterruptedException, IOException, RestException {
         final Future<List<TransitionBean>> future = jiraRestClient.getIssueClient().getIssueTransitionsByKey(ISSUEKEY_TO_SEARCH);
-        while(future.isDone() == false);
         final List<TransitionBean> transitionBeans = future.get();
         Assert.assertNotNull(transitionBeans);
         Assert.assertFalse(transitionBeans.isEmpty());
