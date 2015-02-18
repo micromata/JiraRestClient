@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
+/**
+ * Author: Christian
+ * Date: 12.12.2014.
+ */
 public class BaseBean implements Comparable<BaseBean> {
-
-    protected Gson gson = new GsonBuilder().create();
 
     @Expose
     private String id;
@@ -46,6 +48,7 @@ public class BaseBean implements Comparable<BaseBean> {
 
     @Override
     public String toString() {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         return gson.toJson(this);
     }
 }

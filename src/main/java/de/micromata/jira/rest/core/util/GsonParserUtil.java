@@ -16,7 +16,10 @@
 package de.micromata.jira.rest.core.util;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import de.micromata.jira.rest.core.domain.BaseBean;
 import de.micromata.jira.rest.core.misc.JsonConstants;
 
 /**
@@ -25,6 +28,7 @@ import de.micromata.jira.rest.core.misc.JsonConstants;
  */
 public class GsonParserUtil {
 
+    private static final JsonParser parser = new JsonParser();
 
     public static String parseTransitionToJson(int transitionId) {
         JsonObject parent = new JsonObject();
@@ -33,7 +37,4 @@ public class GsonParserUtil {
         parent.add(JsonConstants.ELEM_TRANSITION, transitionObject);
         return new Gson().toJson(parent);
     }
-
-    
-
 }

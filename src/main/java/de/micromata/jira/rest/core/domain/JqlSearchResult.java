@@ -15,6 +15,7 @@
 
 package de.micromata.jira.rest.core.domain;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -26,14 +27,15 @@ import java.util.List;
  */
 public class JqlSearchResult {
 
+    @Expose
     private String expand = StringUtils.EMPTY;
-
+    @Expose
     private int startAt = 0;
-
+    @Expose
     private int maxResults = 0;
-
+    @Expose
     private int total = 0;
-
+    @Expose
     private List<IssueBean> issues;
 
     public String getExpand() {

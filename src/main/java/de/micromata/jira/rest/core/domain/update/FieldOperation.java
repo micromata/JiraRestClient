@@ -1,5 +1,7 @@
 package de.micromata.jira.rest.core.domain.update;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * User: Christian Schulze
  * Email: c.schulze@micromata.de
@@ -7,7 +9,9 @@ package de.micromata.jira.rest.core.domain.update;
  */
 public class FieldOperation {
 
+    @Expose
     private String operation;
+    @Expose
     private Object value;
 
     public FieldOperation()

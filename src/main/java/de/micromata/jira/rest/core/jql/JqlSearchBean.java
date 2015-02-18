@@ -15,6 +15,7 @@
 
 package de.micromata.jira.rest.core.jql;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -31,20 +32,25 @@ public class JqlSearchBean {
     /**
      * Result list start at.
      */
+    @Expose
     private Integer startAt = null;
 
     /**
      * Maximum result list size.
      */
+    @Expose
     private Integer maxResults = null;
 
     /**
      * Result fields for a query.
      */
+    @Expose
     private List<String> fields = null;
 
+    @Expose
     private String jql = StringUtils.EMPTY;
 
+    @Expose
     private List<String> expand = new ArrayList<String>();
 
     /**

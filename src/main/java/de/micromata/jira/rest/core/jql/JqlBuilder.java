@@ -66,12 +66,12 @@ public class JqlBuilder {
     public class JqlKeyword {
 
         public JqlBuilder and() {
-            jql.append(EKeyword.AND + " ");
+            jql.append(EKeyword.AND).append(" ");
             return getJqlBuilder();
         }
 
         public JqlBuilder or() {
-            jql.append(EKeyword.OR + " ");
+            jql.append(EKeyword.OR).append(" ");
             return getJqlBuilder();
         }
 
@@ -80,7 +80,7 @@ public class JqlBuilder {
                 return build();
             }
 
-            jql.append(EKeyword.ORDER_BY ).append(" ");
+            jql.append(EKeyword.ORDER_BY).append(" ");
             jql.append(fields[0]);
 
             for (int i = 1; i < fields.length; i++) {
@@ -88,7 +88,7 @@ public class JqlBuilder {
                 jql.append(fields[i]);
             }
 
-            jql.append(" ").append(order);
+            jql.append(" " + order);
 
             return build();
         }

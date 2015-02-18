@@ -19,6 +19,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -49,6 +50,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
     @Override
     public Future<IssueResponse> createIssue(final IssueBean issue)
             throws RestException, IOException {
+        Validate.notNull(issue);
         return executorService.submit(new Callable<IssueResponse>() {
             @Override
             public IssueResponse call() throws Exception {
@@ -80,6 +82,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
     @Override
     public Future<IssueBean> getIssueByKey(final String issueKey) throws RestException, IOException {
+        Validate.notNull(issueKey);
         return executorService.submit(new Callable<IssueBean>() {
             @Override
             public IssueBean call() throws Exception {
@@ -103,6 +106,8 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
     @Override
     public Future<IssueBean> updateIssue(final String issueKey, final IssueUpdate issueUpdate) throws IOException, RestException {
+        Validate.notNull(issueKey);
+        Validate.notNull(issueUpdate);
         return executorService.submit(new Callable<IssueBean>() {
             @Override
             public IssueBean call() throws Exception {
@@ -114,14 +119,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
                 int status = client.executeMethod(method);
                 if (status == HttpURLConnection.HTTP_NO_CONTENT) {
                     final Future<IssueBean> issueByKey = getIssueByKey(issueKey);
-                    while(issueByKey.isDone()){
-                        return issueByKey.get();
-                    }
+                    return issueByKey.get();
                 } else {
                     method.releaseConnection();
                     throw new RestException(method);
                 }
-                return null;
             }
         });
     }
@@ -159,6 +161,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
     @Override
     public Future<CommentsBean> getCommentsByIssue(final String issueKey) throws RestException, IOException {
+        Validate.notNull(issueKey);
         return executorService.submit(new Callable<CommentsBean>() {
             @Override
             public CommentsBean call() throws Exception {
@@ -183,6 +186,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
     @Override
     public Future<Byte[]> getAttachment(final URI uri) throws RestException, IOException {
+        Validate.notNull(uri);
         return executorService.submit(new Callable<Byte[]>() {
             @Override
             public Byte[] call() throws Exception {
@@ -252,6 +256,8 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
     @Override
     public boolean transferWorklogInIssue(String issueKey, WorklogBean worklog) throws RestException, IOException {
+        Validate.notNull(issueKey);
+        Validate.notNull(worklog);
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         String json = gson.toJson(worklog);
@@ -269,6 +275,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
     @Override
     public boolean updateIssueTransitionByKey(String issueKey, int transitionId) throws RestException, IOException {
+        Validate.notNull(issueKey);
         HttpClient client = jiraRestClient.getClient();
         URI baseUri = jiraRestClient.getBaseUri();
         String json = GsonParserUtil.parseTransitionToJson(transitionId);
@@ -286,6 +293,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient, RestPara
 
     @Override
     public Future<List<TransitionBean>> getIssueTransitionsByKey(final String issueKey) throws RestException, IOException {
+        Validate.notNull(issueKey);
         return executorService.submit(new Callable<List<TransitionBean>>() {
             @Override
             public List<TransitionBean> call() throws Exception {

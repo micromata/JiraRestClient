@@ -65,7 +65,6 @@ public class TestIssueClient extends BaseTest {
     @Test
     public void testGetAttachment() throws IOException, RestException, ExecutionException, InterruptedException {
         final Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH);
-        while (future.isDone() == false) ;
         final IssueBean issue = future.get();
         List<AttachmentBean> attachments = issue.getFields().getAttachment();
         Assert.assertNotNull(attachments);
@@ -95,7 +94,7 @@ public class TestIssueClient extends BaseTest {
         fields.setDescription("Test Description");
         fields.setSummary("Test Title");
         ProjectBean project = new ProjectBean();
-        project.setKey("REMOTE");
+        project.setKey("DEMO");
         fields.setProject(project);
         IssuetypeBean issueType = new IssuetypeBean();
         issueType.setName("Bug");
@@ -147,16 +146,11 @@ public class TestIssueClient extends BaseTest {
     @Test
     public void testSetLinkInEviroment() throws IOException, RestException, ExecutionException, InterruptedException {
         final Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH);
-        while (future.isDone() == false) ;
         final IssueBean issue = future.get();
         Assert.assertNotNull(issue);
         Assert.assertEquals(ISSUEKEY_TO_SEARCH, issue.getKey());
         String environment = issue.getFields().getEnvironment();
-        StringBuilder sb = new StringBuilder();
-        sb.append(environment);
-        sb.append(NEW_LINE).append(NEW_LINE);
-        sb.append(issue.getSelf());
-        String newEnviroment = sb.toString();
+        String newEnviroment = environment + NEW_LINE + NEW_LINE + issue.getSelf();
         IssueUpdate issueUpdate = new IssueUpdate();
         Map<String, List<FieldOperation>> update = issueUpdate.getUpdate();
         List<FieldOperation> operations = new ArrayList<FieldOperation>();

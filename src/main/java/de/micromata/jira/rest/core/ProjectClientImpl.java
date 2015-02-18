@@ -13,6 +13,7 @@ import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.util.RestException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.lang3.Validate;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -34,7 +35,6 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
     private JiraRestClient jiraRestClient = null;
 
-
     public ProjectClientImpl(JiraRestClient jiraRestClient) {
         this.jiraRestClient = jiraRestClient;
     }
@@ -42,6 +42,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
     @Override
     public Future<ProjectBean> getProjectByKey(final String projectKey) throws RestException, IOException {
+        Validate.notNull(projectKey);
         return executorService.submit(new Callable<ProjectBean>() {
             @Override
             public ProjectBean call() throws Exception {
@@ -94,6 +95,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
     @Override
     public Future<List<VersionBean>> getProjectVersions(final String projectKey) throws RestException, IOException {
+        Validate.notNull(projectKey);
         return executorService.submit(new Callable<List<VersionBean>>() {
             @Override
             public List<VersionBean> call() throws Exception {
@@ -120,6 +122,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
     @Override
     public Future<List<ComponentBean>> getProjectComponents(final String projectKey) throws RestException, IOException {
+        Validate.notNull(projectKey);
         return executorService.submit(new Callable<List<ComponentBean>>() {
             @Override
             public List<ComponentBean> call() throws Exception {

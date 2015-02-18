@@ -14,7 +14,12 @@ public class ErrorsBean {
     @Expose
     private String issuelinks;
     @Expose
-    private String filterName;
+    private String issuetype;
+    @Expose
+    private String reporter;
+    @Expose
+    private String assignee;
+
 
     public String getProject() {
         return project;
@@ -48,11 +53,27 @@ public class ErrorsBean {
         this.issuelinks = issuelinks;
     }
 
-    public String getFilterName() {
-        return filterName;
+    public String getIssuetype() {
+        return issuetype;
     }
 
-    public void setFilterName(String filterName) {
-        this.filterName = filterName;
+    public void setIssuetype(String issuetype) {
+        this.issuetype = issuetype;
+    }
+
+    public String getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
+    }
+
+    public String getReporter() {
+        return reporter;
+    }
+
+    public void setReporter(String reporter) {
+        this.reporter = reporter;
     }
 }

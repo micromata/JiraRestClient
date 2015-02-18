@@ -41,7 +41,7 @@ public class TestProjectClient extends BaseTest {
         final Future<List<VersionBean>> future = jiraRestClient.getProjectClient().getProjectVersions(PROJECT_TO_SEARCH);
         final List<VersionBean> versionBeans = future.get();
         Assert.assertNotNull(versionBeans);
-        Assert.assertFalse(versionBeans.isEmpty());
+        Assert.assertTrue(versionBeans.isEmpty());
     }
 
     @Test
@@ -49,6 +49,6 @@ public class TestProjectClient extends BaseTest {
         final Future<List<ComponentBean>> future = jiraRestClient.getProjectClient().getProjectComponents(PROJECT_TO_SEARCH);
         final List<ComponentBean> componentBeans = future.get();
         Assert.assertNotNull(componentBeans);
-        Assert.assertFalse(componentBeans.isEmpty());
+        Assert.assertTrue(componentBeans.isEmpty());
     }
 }

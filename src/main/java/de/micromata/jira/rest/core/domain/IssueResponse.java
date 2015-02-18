@@ -1,9 +1,12 @@
 package de.micromata.jira.rest.core.domain;
 
+import com.google.gson.annotations.Expose;
+
 public class IssueResponse  {
 
+    @Expose
     private String key;
-
+    @Expose
     private ErrorBean error = null;
 
     public IssueResponse() {

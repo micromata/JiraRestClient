@@ -19,7 +19,7 @@ public class AttachmentBean {
     @Expose
     private String self;
     @Expose
-    private Integer size;
+    private String size;
     @Expose
     private String thumbnail;
 
@@ -81,11 +81,11 @@ public class AttachmentBean {
         this.self = self;
     }
 
-    public Integer getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
