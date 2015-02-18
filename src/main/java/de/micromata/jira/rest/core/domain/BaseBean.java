@@ -48,8 +48,8 @@ public class BaseBean implements Comparable<BaseBean> {
         return this.name.compareTo(o.getName());
     }
 
-    @Override
-    public String toString() {
-        return gson.toJson(this);
-    }
+//    @Override
+//    public String toString() {
+//        return gson.toJson(this);
+//    }
 }

@@ -19,7 +19,7 @@ public abstract class BaseClient {
 
     protected final ExecutorService executorService = Executors.newFixedThreadPool(100);
 
-    protected Gson gson = new GsonBuilder().create();
+    protected Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
     protected JsonReader toJsonReader(InputStream inputStream) throws UnsupportedEncodingException {
         Validate.notNull(inputStream);

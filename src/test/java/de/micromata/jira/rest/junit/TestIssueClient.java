@@ -94,7 +94,7 @@ public class TestIssueClient extends BaseTest {
         fields.setDescription("Test Description");
         fields.setSummary("Test Title");
         ProjectBean project = new ProjectBean();
-        project.setKey("REMOTE");
+        project.setKey("DEMO");
         fields.setProject(project);
         IssuetypeBean issueType = new IssuetypeBean();
         issueType.setName("Bug");
