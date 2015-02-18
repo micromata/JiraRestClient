@@ -1,5 +1,7 @@
 package de.micromata.jira.rest.core.domain.update;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +13,9 @@ import java.util.Map;
  */
 public class IssueUpdate {
 
+    @Expose
     private Map<String, Object> fields = new HashMap<String, Object>();
-
+    @Expose
     private Map<String, List<FieldOperation>> update = new HashMap<String, List<FieldOperation>>();
 
     public Map<String, Object> getFields() {
