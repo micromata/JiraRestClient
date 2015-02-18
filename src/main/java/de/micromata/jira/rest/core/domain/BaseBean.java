@@ -10,8 +10,6 @@ import com.google.gson.annotations.Expose;
  */
 public class BaseBean implements Comparable<BaseBean> {
 
-    protected Gson gson = new GsonBuilder().create();
-
     @Expose
     private String id;
     @Expose
@@ -48,8 +46,9 @@ public class BaseBean implements Comparable<BaseBean> {
         return this.name.compareTo(o.getName());
     }
 
-//    @Override
-//    public String toString() {
-//        return gson.toJson(this);
-//    }
+    @Override
+    public String toString() {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        return gson.toJson(this);
+    }
 }
