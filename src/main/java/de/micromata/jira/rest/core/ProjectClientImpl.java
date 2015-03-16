@@ -24,6 +24,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
@@ -35,8 +36,12 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
     private JiraRestClient jiraRestClient = null;
 
-    public ProjectClientImpl(JiraRestClient jiraRestClient) {
+    private HttpClient client;
+
+    public ProjectClientImpl(JiraRestClient jiraRestClient, ExecutorService executorService) {
         this.jiraRestClient = jiraRestClient;
+        this.client = jiraRestClient.getClient();
+        this.executorService = executorService;
     }
 
 

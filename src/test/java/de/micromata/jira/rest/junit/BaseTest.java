@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Junit-Test for JiraRestClient.
@@ -23,7 +25,7 @@ public class BaseTest implements JqlConstants, RestPathConstants {
 
     static final String TEST_SYSTEM_URL = "http://localhost:2990/jira";
     static final String USERNAME = "admin";
-    static final String PASSWORD = "admin2";
+    static final String PASSWORD = "admin";
     static final String USERNAME_TO_SEARCH = "admin";
     static final String ISSUEKEY_TO_SEARCH = "DEMO-1";
     static final String PROJECT_TO_SEARCH = "DEMO";
@@ -34,9 +36,9 @@ public class BaseTest implements JqlConstants, RestPathConstants {
 
     @Before
     public void connect() throws URISyntaxException, IOException {
-
+        ExecutorService	executorService	= Executors.newFixedThreadPool(100);
 //        ProxyHost proxy = new ProxyHost("proxy", 3128);
         URI uri = new URI(TEST_SYSTEM_URL);
-        jiraRestClient = JiraRestClient.create(uri, USERNAME, PASSWORD, null);
+        jiraRestClient = JiraRestClient.create(uri, USERNAME, PASSWORD, null, executorService);
     }
 }

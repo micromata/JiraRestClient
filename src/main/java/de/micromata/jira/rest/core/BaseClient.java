@@ -17,12 +17,9 @@ import com.google.gson.stream.JsonReader;
  */
 public abstract class BaseClient {
 
-	protected final ExecutorService	executorService	= Executors
-															.newFixedThreadPool(100);
+    protected ExecutorService executorService;
 
-	protected Gson					gson			= new GsonBuilder()
-															.excludeFieldsWithoutExposeAnnotation()
-															.create();
+	protected Gson gson	= new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
 	protected JsonReader toJsonReader(InputStream inputStream)
 			throws UnsupportedEncodingException {
@@ -32,15 +29,5 @@ public abstract class BaseClient {
 		JsonReader jsonReader = new JsonReader(reader);
 		jsonReader.setLenient(true);
 		return jsonReader;
-	}
-
-	/**
-	 * Workaround FIX for Memory Leak: If you always create a new search client,
-	 * then you have to call this method to close the ThreadPool. Otherwise you
-	 * have a memory leak in your application.
-	 */
-	public void close() {
-
-		executorService.shutdownNow();
 	}
 }

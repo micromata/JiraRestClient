@@ -9,6 +9,7 @@ import de.micromata.jira.rest.core.domain.field.CreateFieldBean;
 import de.micromata.jira.rest.core.domain.field.FieldBean;
 import de.micromata.jira.rest.core.util.RestException;
 import junit.framework.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -59,6 +60,7 @@ public class TestSystemClient extends BaseTest {
 
 
     @Test
+    @Ignore
     public void testGetFields() throws ExecutionException, InterruptedException {
         final Future<List<FieldBean>> future = jiraRestClient.getSystemClient().getAllFields();
         final List<FieldBean> fieldBeans = future.get();
@@ -68,6 +70,7 @@ public class TestSystemClient extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void testCreateCustomField() throws ExecutionException, InterruptedException {
         CreateFieldBean createFieldBean = new CreateFieldBean();
         createFieldBean.setName("foobar_".concat(new Date().toString()));
@@ -80,6 +83,7 @@ public class TestSystemClient extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void testGetCustomFields() throws ExecutionException, InterruptedException {
         final Future<List<FieldBean>> future = jiraRestClient.getSystemClient().getAllCustomFields();
         final List<FieldBean> fieldBeans = future.get();
@@ -87,6 +91,7 @@ public class TestSystemClient extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void testGetAttachmentMeta() throws ExecutionException, InterruptedException {
         final Future<AttachmentMetaBean> future = jiraRestClient.getSystemClient().getAttachmentMeta();
         final AttachmentMetaBean attachmentMetaBean = future.get();

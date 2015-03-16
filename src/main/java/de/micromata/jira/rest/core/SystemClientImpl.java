@@ -4,9 +4,12 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.SystemClient;
+import de.micromata.jira.rest.core.domain.AttachmentMetaBean;
 import de.micromata.jira.rest.core.domain.IssuetypeBean;
 import de.micromata.jira.rest.core.domain.PriorityBean;
 import de.micromata.jira.rest.core.domain.StatusBean;
+import de.micromata.jira.rest.core.domain.field.CreateFieldBean;
+import de.micromata.jira.rest.core.domain.field.FieldBean;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.util.RestException;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
@@ -23,6 +26,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
@@ -37,9 +41,10 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
 
     private HttpClient client = null;
 
-    public SystemClientImpl(JiraRestClient jiraRestClient) {
+    public SystemClientImpl(JiraRestClient jiraRestClient, ExecutorService executorService) {
         this.jiraRestClient = jiraRestClient;
         this.client = jiraRestClient.getClient();
+        this.executorService = executorService;
     }
 
     @Override
@@ -114,5 +119,30 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                 }
             }
         });
+    }
+
+    @Override
+    public Future<List<FieldBean>> getAllFields() {
+        return null;
+    }
+
+    @Override
+    public Future<FieldBean> createCustomField(CreateFieldBean customfield) {
+        return null;
+    }
+
+    @Override
+    public Future<List<FieldBean>> getAllCustomFields() {
+        return null;
+    }
+
+    @Override
+    public Future<FieldBean> getCustomFieldById(String id) {
+        return null;
+    }
+
+    @Override
+    public Future<AttachmentMetaBean> getAttachmentMeta() {
+        return null;
     }
 }

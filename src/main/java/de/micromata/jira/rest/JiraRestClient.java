@@ -2,9 +2,9 @@ package de.micromata.jira.rest;
 
 import de.micromata.jira.rest.client.*;
 import de.micromata.jira.rest.core.*;
-import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
+import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.http.EasySSLProtocolSocketFactory;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -20,6 +20,7 @@ import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
 
 /**
  * User: Christian Schulze
@@ -32,6 +33,8 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
     private static final String HTTP = "http";
     private static final String HTTPS = "https";
 
+    protected final ExecutorService executorService;
+
     private URI baseUri;
     private String username = StringUtils.EMPTY;
     private HttpClient client;
@@ -39,23 +42,44 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
     private HttpConnectionManager connectionManager;
 
 
-    public JiraRestClient() {
+    private JiraRestClient(ExecutorService executorService) {
+        this.executorService = executorService;
     }
 
-
-    public static JiraRestClient create(URI uri, String username, String password) throws IOException {
-        JiraRestClient retval = new JiraRestClient();
+    /**
+     * Create a new Instanz
+     *
+     * @param uri the uri of the remote Jira
+     * @param username the username
+     * @param password the password for the given username
+     * @param executorService the executorService to provide a thread pool
+     * @return
+     * @throws IOException
+     */
+    public static JiraRestClient create(URI uri, String username, String password, ExecutorService executorService) throws IOException {
+        JiraRestClient retval = new JiraRestClient(executorService);
         retval.connect(uri, username, password, null);
         return retval;
     }
 
-    public static JiraRestClient create(URI uri, String username, String password, ProxyHost proxyHost) throws IOException {
-        JiraRestClient retval = new JiraRestClient();
+    /**
+     * Create a new Instanz
+     *
+     * @param uri the uri of the remote Jira
+     * @param username the username
+     * @param password the password for the given username
+     * @param proxyHost the proxy host for the connection
+     * @param executorService the executorService to provide a thread pool. cannot be null
+     * @return
+     * @throws IOException
+     */
+    public static JiraRestClient create(URI uri, String username, String password, ExecutorService executorService, ProxyHost proxyHost) throws IOException {
+        JiraRestClient retval = new JiraRestClient(executorService);
         retval.connect(uri, username, password, proxyHost);
         return retval;
     }
 
-    public int connect(URI uri, String username, String password) throws IOException {
+    private int connect(URI uri, String username, String password) throws IOException {
         return connect(uri, username, password, null);
     }
 
@@ -68,7 +92,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
      * @return 200 succees, 401 for wrong credentials and 403 for captcha is needed, you have to login at the jira website
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public int connect(URI uri, String username, String password, ProxyHost proxyHost) throws IOException {
+    private int connect(URI uri, String username, String password, ProxyHost proxyHost) throws IOException {
         this.username = username;
         HttpClientParams params = new HttpClientParams();
         params.setAuthenticationPreemptive(true);
@@ -140,23 +164,23 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
 
 
     public IssueClient getIssueClient() {
-        return new IssueClientImpl(this);
+        return new IssueClientImpl(this, executorService);
     }
 
     public ProjectClient getProjectClient() {
-        return new ProjectClientImpl(this);
+        return new ProjectClientImpl(this, executorService);
     }
 
     public SearchClient getSearchClient() {
-        return new SearchClientImpl(this);
+        return new SearchClientImpl(this, executorService);
     }
 
     public SystemClient getSystemClient() {
-        return new SystemClientImpl(this);
+        return new SystemClientImpl(this, executorService);
     }
 
     public UserClient getUserClient() {
-        return new UserClientImpl(this);
+        return new UserClientImpl(this, executorService);
     }
 
 

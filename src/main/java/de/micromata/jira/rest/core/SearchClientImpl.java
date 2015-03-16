@@ -4,6 +4,7 @@ import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.SearchClient;
 import de.micromata.jira.rest.core.domain.JqlSearchResult;
+import de.micromata.jira.rest.core.domain.filter.FilterBean;
 import de.micromata.jira.rest.core.jql.JqlSearchBean;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
@@ -17,7 +18,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
@@ -29,8 +32,12 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
 
     private JiraRestClient jiraRestClient = null;
 
-    public SearchClientImpl(JiraRestClient jiraRestClient) {
+    private HttpClient client;
+
+    public SearchClientImpl(JiraRestClient jiraRestClient, ExecutorService executorService) {
         this.jiraRestClient = jiraRestClient;
+        this.client = jiraRestClient.getClient();
+        this.executorService = executorService;
     }
 
     @Override
@@ -39,7 +46,6 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
         return executorService.submit(new Callable<JqlSearchResult>() {
             @Override
             public JqlSearchResult call() throws Exception {
-                HttpClient client = jiraRestClient.getClient();
                 URI baseUri = jiraRestClient.getBaseUri();
                 String json = gson.toJson(jsb);
                 URI uri = UriBuilder.fromUri(baseUri).path(SEARCH).build();
@@ -58,5 +64,20 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
             }
         });
 
+    }
+
+    @Override
+    public Future<FilterBean> createSearchFilter(FilterBean filter) {
+        return null;
+    }
+
+    @Override
+    public Future<List<FilterBean>> getFavoriteFilter() {
+        return null;
+    }
+
+    @Override
+    public Future<FilterBean> getFilterById(String id) {
+        return null;
     }
 }
