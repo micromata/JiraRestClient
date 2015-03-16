@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Future;
 
+
 /**
- * User: Christian Schulze
- * Email: c.schulze@micromata.de
- * Date: 31.07.2014
+ * User: Christian Schulze Email: c.schulze@micromata.de Date: 31.07.2014
  */
 public interface SearchClient {
+
 
     /**
      * Performs an extended search for issues given by the project.
@@ -48,4 +48,7 @@ public interface SearchClient {
      * @return FilterBean
      */
     public Future<FilterBean> getFilterById(String id);
+
+
+
 }
