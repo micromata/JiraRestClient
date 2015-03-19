@@ -39,6 +39,7 @@ public class BaseTest implements JqlConstants, RestPathConstants {
         ExecutorService	executorService	= Executors.newFixedThreadPool(100);
 //        ProxyHost proxy = new ProxyHost("proxy", 3128);
         URI uri = new URI(TEST_SYSTEM_URL);
-        jiraRestClient = JiraRestClient.create(uri, USERNAME, PASSWORD, null, executorService);
+        jiraRestClient = new JiraRestClient(executorService);
+        jiraRestClient.connect(uri, USERNAME, PASSWORD);
     }
 }

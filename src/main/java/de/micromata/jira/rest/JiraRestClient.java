@@ -42,44 +42,11 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
     private HttpConnectionManager connectionManager;
 
 
-    private JiraRestClient(ExecutorService executorService) {
+    public JiraRestClient(ExecutorService executorService) {
         this.executorService = executorService;
     }
 
-    /**
-     * Create a new Instanz
-     *
-     * @param uri the uri of the remote Jira
-     * @param username the username
-     * @param password the password for the given username
-     * @param executorService the executorService to provide a thread pool
-     * @return
-     * @throws IOException
-     */
-    public static JiraRestClient create(URI uri, String username, String password, ExecutorService executorService) throws IOException {
-        JiraRestClient retval = new JiraRestClient(executorService);
-        retval.connect(uri, username, password, null);
-        return retval;
-    }
-
-    /**
-     * Create a new Instanz
-     *
-     * @param uri the uri of the remote Jira
-     * @param username the username
-     * @param password the password for the given username
-     * @param proxyHost the proxy host for the connection
-     * @param executorService the executorService to provide a thread pool. cannot be null
-     * @return
-     * @throws IOException
-     */
-    public static JiraRestClient create(URI uri, String username, String password, ExecutorService executorService, ProxyHost proxyHost) throws IOException {
-        JiraRestClient retval = new JiraRestClient(executorService);
-        retval.connect(uri, username, password, proxyHost);
-        return retval;
-    }
-
-    private int connect(URI uri, String username, String password) throws IOException {
+    public int connect(URI uri, String username, String password) throws IOException {
         return connect(uri, username, password, null);
     }
 
@@ -92,7 +59,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
      * @return 200 succees, 401 for wrong credentials and 403 for captcha is needed, you have to login at the jira website
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    private int connect(URI uri, String username, String password, ProxyHost proxyHost) throws IOException {
+    public int connect(URI uri, String username, String password, ProxyHost proxyHost) throws IOException {
         this.username = username;
         HttpClientParams params = new HttpClientParams();
         params.setAuthenticationPreemptive(true);
