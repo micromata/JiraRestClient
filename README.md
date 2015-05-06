@@ -15,15 +15,5 @@ With the Client you can use the seperated Clients for Issues, Projects, Users, S
 * SearchClient - for jql search
 * SystemClient - every global Info form the Jira. You can get Status, Priority, IssueTypes Informations.
 
-## Changelog
 
-### Version 1.5
-
-* adding concurrency.Future to all Client Methods
-
-### Version 1.4
-
-* adding concurrency.Future Support to the jql Search
-* change domain to the json form which is deliverd by the API
-* change unmarshaling to use gson.fromJson
 

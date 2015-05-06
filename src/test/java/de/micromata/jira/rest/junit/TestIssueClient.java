@@ -35,7 +35,7 @@ public class TestIssueClient extends BaseTest {
 
 
     @Test
-    public void testGetIssueByKey() throws RestException, IOException, ExecutionException, InterruptedException {
+    public void testGetIssueByKey() throws IOException, RestException, ExecutionException, InterruptedException {
         Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH);
         final IssueBean issueBean = future.get();
         Assert.assertNotNull(issueBean);

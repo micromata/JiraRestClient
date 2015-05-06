@@ -22,7 +22,7 @@ public interface SearchClient {
      * @return list of issues
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public Future<JqlSearchResult> searchIssues(JqlSearchBean jsb) throws RestException, IOException;
+    Future<JqlSearchResult> searchIssues(JqlSearchBean jsb) throws RestException, IOException;
 
 
     /**
@@ -31,7 +31,7 @@ public interface SearchClient {
      * @param filter
      * @return
      */
-    public Future<FilterBean> createSearchFilter(FilterBean filter);
+    Future<FilterBean> createSearchFilter(FilterBean filter);
 
 
     /**
@@ -39,7 +39,7 @@ public interface SearchClient {
      *
      * @return List of FilterBeans
      */
-    public Future<List<FilterBean>> getFavoriteFilter();
+    Future<List<FilterBean>> getFavoriteFilter();
 
     /**
      * Get Filter by Id
@@ -47,7 +47,7 @@ public interface SearchClient {
      * @param id the id of the filter
      * @return FilterBean
      */
-    public Future<FilterBean> getFilterById(String id);
+    Future<FilterBean> getFilterById(String id);
 
 
 

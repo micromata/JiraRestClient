@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -22,7 +23,7 @@ public interface IssueClient {
      * @return IssueResponse
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public Future<IssueResponse> createIssue(IssueBean issue) throws RestException, IOException;
+    Future<IssueResponse> createIssue(IssueBean issue) throws RestException, IOException;
 
 
     /**
@@ -32,14 +33,14 @@ public interface IssueClient {
      * @return all informations for the issue
      * @throws RestException
      */
-    public Future<IssueBean> getIssueByKey(String issueKey) throws RestException, IOException;
+    Future<IssueBean> getIssueByKey(String issueKey) throws RestException, IOException;
 
     /**
      * update Field of an Issue
      *
      *
      */
-    public Future<IssueBean> updateIssue(String issueKey, IssueUpdate issueUpdate) throws IOException, RestException;
+    Future<IssueBean> updateIssue(String issueKey, IssueUpdate issueUpdate) throws IOException, RestException;
 
     /**
      * Return a Issue with the given Field and Expand Fields.
@@ -49,7 +50,7 @@ public interface IssueClient {
      * @param expand The Field which must expand.
      * @return IssueBean
      */
-    public Future<IssueBean> getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException;
+    Future<IssueBean> getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException;
 
     /**
      * Get Attachement as byte Array, or null
@@ -58,7 +59,7 @@ public interface IssueClient {
      * @return byte[] or null
      * @throws RestException
      */
-    public Future<Byte[]> getAttachment(URI uri) throws RestException, IOException;
+    Future<Byte[]> getAttachment(URI uri) throws RestException, IOException;
 
 
     /**
@@ -67,7 +68,7 @@ public interface IssueClient {
      * @param id the Id of the Attachment
      * @return
      */
-    public InputStream getAttachmentAsStream(long id);
+    InputStream getAttachmentAsStream(long id);
 
 
     /**
@@ -76,12 +77,12 @@ public interface IssueClient {
      * @param id the id of the attachment
      * @return
      */
-    public Future<AttachmentBean> getAttachment(long id) throws IOException, RestException;
+    Future<AttachmentBean> getAttachment(long id) throws IOException, RestException;
 
     /**
      * Save Attachment to Issue
      */
-    public void saveAttachmentToIssue(File file, String issuekey) throws IOException, RestException;
+    void saveAttachmentToIssue(File file, String issuekey) throws IOException, RestException;
 
     /**
      * Returns true if the worklog is successfully transfered to the Issue.
@@ -93,8 +94,8 @@ public interface IssueClient {
      * @return created state
      * @throws RestException
      */
-    public boolean transferWorklogInIssue(String issueKey,
-                                          WorklogBean worklog) throws RestException, IOException;
+    boolean transferWorklogInIssue(String issueKey,
+                                          WorklogBean worklog) throws RestException, IOException, URISyntaxException;
 
     /**
      * Returns true if the transition update on an Issue success.
@@ -104,7 +105,7 @@ public interface IssueClient {
      * @return success state
      * @throws RestException
      */
-    public boolean updateIssueTransitionByKey(String issueKey, int transitionId) throws RestException, IOException;
+    boolean updateIssueTransitionByKey(String issueKey, int transitionId) throws RestException, IOException, URISyntaxException;
 
     /**
      * Returns available transitions for an Issue in a map with transition id and properties.
@@ -113,7 +114,7 @@ public interface IssueClient {
      * @return List of TransitionBean
      * @throws RestException
      */
-    public Future<List<TransitionBean>> getIssueTransitionsByKey(String issueKey) throws RestException, IOException;
+    Future<List<TransitionBean>> getIssueTransitionsByKey(String issueKey) throws RestException, IOException;
 
     /**
      * Returns a summarized representation of all comments for the given issue.
@@ -122,6 +123,6 @@ public interface IssueClient {
      * @return summarized representation of all comments
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public Future<CommentsBean> getCommentsByIssue(String issueKey) throws RestException, IOException;
+    Future<CommentsBean> getCommentsByIssue(String issueKey) throws RestException, IOException;
 
 }

@@ -24,7 +24,7 @@ public interface SystemClient {
      * @return list of issue types
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public Future<List<IssuetypeBean>> getIssueTypes() throws RestException, IOException;
+    Future<List<IssuetypeBean>> getIssueTypes() throws RestException, IOException;
 
     /**
      * Returns a list of all statuses.
@@ -32,7 +32,7 @@ public interface SystemClient {
      * @return list of statuses
      * @throws RestException
      */
-    public Future<List<StatusBean>> getStates() throws RestException, IOException;
+    Future<List<StatusBean>> getStates() throws RestException, IOException;
 
 
     /**
@@ -41,7 +41,7 @@ public interface SystemClient {
      * @return
      * @throws RestException
      */
-    public Future<List<PriorityBean>> getPriorities() throws RestException, IOException;
+    Future<List<PriorityBean>> getPriorities() throws RestException, IOException;
 
 
     /**
@@ -49,7 +49,7 @@ public interface SystemClient {
      *
      * @return a List of FieldBean
      */
-    public Future<List<FieldBean>> getAllFields();
+    Future<List<FieldBean>> getAllFields();
 
 
     /**
@@ -58,20 +58,20 @@ public interface SystemClient {
      * @param customfield The Customfield to create
      * @return true if the customfield was created
      */
-    public Future<FieldBean> createCustomField(CreateFieldBean customfield);
+    Future<FieldBean> createCustomField(CreateFieldBean customfield);
 
     /**
      * Return all Custom Field configure in the Jira
      *
      * @return a List of FieldBean
      */
-    public Future<List<FieldBean>> getAllCustomFields();
+    Future<List<FieldBean>> getAllCustomFields();
 
     /**
      * Return a Custom Field by Id
      *
      */
-    public Future<FieldBean> getCustomFieldById(String id);
+    Future<FieldBean> getCustomFieldById(String id);
 
 
     /**
@@ -79,6 +79,6 @@ public interface SystemClient {
      *
      * @return AttachmentMetaBean
      */
-    public Future<AttachmentMetaBean> getAttachmentMeta();
+    Future<AttachmentMetaBean> getAttachmentMeta();
 
 }

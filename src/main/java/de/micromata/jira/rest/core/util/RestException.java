@@ -18,7 +18,9 @@ package de.micromata.jira.rest.core.util;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.core.domain.ErrorBean;
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpEntity;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,11 +46,13 @@ public class RestException extends Exception {
         this.restErrorMessage = restErrorMessage;
     }
 
-    public RestException(HttpMethod method) {
-        this.statusCode = method.getStatusCode();
-        this.reasonPhrase = method.getStatusText();
+    public RestException(CloseableHttpResponse response) throws IOException {
+        StatusLine statusLine = response.getStatusLine();
+        this.statusCode = statusLine.getStatusCode();
+        this.reasonPhrase = statusLine.getReasonPhrase();
         try {
-            InputStream inputStream = method.getResponseBodyAsStream();
+            HttpEntity entity = response.getEntity();
+            InputStream inputStream = entity.getContent();
             if(inputStream != null) {
                 InputStreamReader reader = new InputStreamReader(inputStream, "UTF-8");
                 JsonReader jsonReader = new JsonReader(reader);
@@ -59,7 +63,7 @@ public class RestException extends Exception {
         } catch (IOException e) {
             // nothing to say
         } finally {
-            method.releaseConnection();
+            response.close();
         }
 
     }

@@ -4,21 +4,22 @@ import de.micromata.jira.rest.client.*;
 import de.micromata.jira.rest.core.*;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
-import de.micromata.jira.rest.core.util.HttpMethodFactory;
-import de.micromata.jira.rest.http.EasySSLProtocolSocketFactory;
-import org.apache.commons.httpclient.*;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
-import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.*;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 
@@ -37,16 +38,17 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
 
     private URI baseUri;
     private String username = StringUtils.EMPTY;
-    private HttpClient client;
-    private ProxyHost proxy;
-    private HttpConnectionManager connectionManager;
+    private CloseableHttpClient httpclient;
+    private HttpHost proxy;
+    private CookieStore cookieStore = new BasicCookieStore();
+    private HttpClientContext clientContext;
 
 
     public JiraRestClient(ExecutorService executorService) {
         this.executorService = executorService;
     }
 
-    public int connect(URI uri, String username, String password) throws IOException {
+    public int connect(URI uri, String username, String password) throws IOException, URISyntaxException {
         return connect(uri, username, password, null);
     }
 
@@ -59,42 +61,31 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
      * @return 200 succees, 401 for wrong credentials and 403 for captcha is needed, you have to login at the jira website
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public int connect(URI uri, String username, String password, ProxyHost proxyHost) throws IOException {
+    public int connect(URI uri, String username, String password, HttpHost proxyHost) throws IOException, URISyntaxException {
         this.username = username;
-        HttpClientParams params = new HttpClientParams();
-        params.setAuthenticationPreemptive(true);
-        params.setCookiePolicy(CookiePolicy.RFC_2109);
-        HostConfiguration hostConfiguration = new HostConfiguration();
-        String protocol = uri.toURL().getProtocol();
-        if (HTTP.equals(protocol)) {
-            hostConfiguration.setHost(uri.getHost(), uri.getPort());
-        }
-        if (HTTPS.equals(protocol)) {
-            int port = getPort(uri.toURL());
-            ProtocolSocketFactory psf = new EasySSLProtocolSocketFactory();
-            Protocol easyhttps = new Protocol(protocol, psf, port);
-            hostConfiguration.setHost(uri.getHost(), port, easyhttps);
-        }
-        connectionManager = createHttpConnectionManager(hostConfiguration);
-        client = new HttpClient(params, connectionManager);
-        client.setHostConfiguration(hostConfiguration);
-        AuthScope authScope = new AuthScope(uri.getHost(), uri.getPort(), AuthScope.ANY_REALM);
-        Credentials defaultcreds = new UsernamePasswordCredentials(username, password);
-        client.getState().setCredentials(authScope, defaultcreds);
-        if (proxyHost != null) {
-            this.proxy = proxyHost;
-            hostConfiguration.setProxyHost(proxyHost);
-            client.getState().setProxyCredentials(AuthScope.ANY, defaultcreds);
-        }
-        this.baseUri = UriBuilder.fromUri(uri).path(RestPathConstants.BASE_REST_PATH).build();
-        UriBuilder path = UriBuilder.fromUri(baseUri).path(USER);
-        path.queryParam(USERNAME, username);
-        URI uri1 = path.build();
-        GetMethod method = HttpMethodFactory.createGetMtGetMethod(uri1);
-        client.executeMethod(method);
-        int statusCode = method.getStatusCode();
-        method.releaseConnection();
-        return statusCode;
+        String host = uri.getHost();
+        int port = getPort(uri.toURL());
+        String scheme = "http";
+        if(port == 443) scheme = "https";
+        HttpHost target = new HttpHost(host, port, scheme);
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(
+                new AuthScope(target.getHostName(), target.getPort()),
+                new UsernamePasswordCredentials(username, password));
+        httpclient = HttpClients.custom()
+                .setDefaultCredentialsProvider(credsProvider)
+                .build();
+        // Create AuthCache instance
+        AuthCache authCache = new BasicAuthCache();
+        // Generate BASIC scheme object and add it to the local
+        // auth cache
+        BasicScheme basicAuth = new BasicScheme();
+        authCache.put(target, basicAuth);
+        // Add AuthCache to the execution context
+        clientContext = HttpClientContext.create();
+        clientContext.setAuthCache(authCache);
+        this.baseUri = buildBaseURI(uri);
+        return 0;
     }
 
 
@@ -115,19 +106,20 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         return 80;
     }
 
-
-    private HttpConnectionManager createHttpConnectionManager(HostConfiguration hostConfiguration) {
-        HttpConnectionManager retval = new MultiThreadedHttpConnectionManager();
-        HttpConnectionManagerParams params = retval.getParams();
-        params.setDefaultMaxConnectionsPerHost(1000);
-        params.setMaxConnectionsPerHost(hostConfiguration, 1000);
-        params.setMaxTotalConnections(1000);
-        return retval;
+    private URI buildBaseURI(URI uri) throws URISyntaxException {
+        String path = uri.getPath();
+        if(path.isEmpty() == false){
+            if(path.endsWith("/")){
+               path =  path.substring(0, path.length() - 1);
+            }
+            path = path.concat(RestPathConstants.BASE_REST_PATH);
+        }else{
+            path = RestPathConstants.BASE_REST_PATH;
+        }
+        return new URIBuilder(uri).setPath(path).build();
     }
 
-    public void closeIdleConnections() {
-        connectionManager.closeIdleConnections(30000l);
-    }
+
 
 
     public IssueClient getIssueClient() {
@@ -151,8 +143,12 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
     }
 
 
-    public HttpClient getClient() {
-        return client;
+    public CloseableHttpClient getClient() {
+        return httpclient;
+    }
+
+    public HttpClientContext getClientContext() {
+        return clientContext;
     }
 
     /**
@@ -168,7 +164,4 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         return username;
     }
 
-    public ProxyHost getProxy() {
-        return proxy;
-    }
 }

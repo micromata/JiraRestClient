@@ -1,17 +1,23 @@
 package de.micromata.jira.rest.core.util;
 
-import org.apache.commons.httpclient.methods.*;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.lang3.CharEncoding;
+import org.apache.commons.codec.CharEncoding;
+import org.apache.http.*;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
 
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.nio.charset.Charset;
 
 /**
  * User: Christian Schulze
@@ -21,44 +27,52 @@ import java.net.URI;
 public class HttpMethodFactory {
 
 
-    public static GetMethod createGetMtGetMethod(URI uri){
+    public static HttpGet createGetMethod(URI uri){
         if(uri == null) return null;
-        GetMethod method = new GetMethod(uri.getPath());
-        method.setQueryString(uri.getQuery());
-        method.setRequestHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-        method.setRequestHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
-        method.setDoAuthentication(true);
+        HttpGet method = new HttpGet(uri);
+        setHeader(method);
         return method;
     }
 
-    public static PostMethod createPostMethod(URI uri, String body) throws UnsupportedEncodingException {
+    public static HttpGet createHttpGetForFile(URI uri){
         if(uri == null) return null;
-        PostMethod method = new PostMethod(uri.getPath());
-        method.setRequestHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-        method.setRequestHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
-        RequestEntity entity = new StringRequestEntity(body, MediaType.APPLICATION_JSON, CharEncoding.UTF_8);
-        method.setRequestEntity(entity);
+        HttpGet method = new HttpGet(uri);
+        method.addHeader (HttpHeaders.ACCEPT,
+                MediaType.APPLICATION_OCTET_STREAM);
         return method;
     }
 
-    public static PutMethod createPutMethod(URI uri, String body) throws UnsupportedEncodingException {
+    public static HttpPost createPostMethod(URI uri, String body) throws UnsupportedEncodingException {
         if(uri == null) return null;
-        PutMethod method = new PutMethod(uri.getPath());
-        method.setRequestHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-        method.setRequestHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
-        RequestEntity entity = new StringRequestEntity(body, MediaType.APPLICATION_JSON, CharEncoding.UTF_8);
-        method.setRequestEntity(entity);
+        HttpPost method = new HttpPost(uri);
+        setHeader(method);
+        StringEntity entity = new StringEntity(body, CharEncoding.UTF_8);
+        method.setEntity(entity);
         return method;
     }
 
-    public static PostMethod createMultiPartPostMethod(URI uri, File content, String contentType) throws FileNotFoundException {
+    public static HttpPut createPutMethod(URI uri, String body) throws UnsupportedEncodingException {
         if(uri == null) return null;
-        PostMethod method = new PostMethod(uri.getPath());
-        method.setRequestHeader("X-Atlassian-Token", "nocheck");
-        Part[] parts = {new FilePart(content.getName(), content, contentType, "UTF-8")};
-        MultipartRequestEntity entity = new MultipartRequestEntity(parts, method.getParams());
-        method.setRequestHeader(HttpHeaders.CONTENT_TYPE, entity.getContentType());
-        method.setRequestEntity(entity);
+        HttpPut method = new HttpPut(uri);
+        setHeader(method);
+        StringEntity entity = new StringEntity(body, CharEncoding.UTF_8);
+        method.setEntity(entity);
         return method;
+    }
+
+    public static HttpPost createMultiPartPostMethod(URI uri, File content, String contentType) throws FileNotFoundException {
+        if(uri == null) return null;
+        HttpPost method = new HttpPost(uri.getPath());
+        method.addHeader("X-Atlassian-Token", "nocheck");
+        InputStreamEntity reqEntity = new InputStreamEntity(
+                new FileInputStream(content), -1, ContentType.APPLICATION_OCTET_STREAM);
+        reqEntity.setChunked(true);
+        return method;
+    }
+
+
+    private static void setHeader(HttpMessage httpMessage){
+        httpMessage.addHeader(new BasicHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON));
+        httpMessage.addHeader(new BasicHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON));
     }
 }

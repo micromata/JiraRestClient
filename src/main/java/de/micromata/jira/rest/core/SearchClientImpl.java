@@ -8,12 +8,14 @@ import de.micromata.jira.rest.core.domain.filter.FilterBean;
 import de.micromata.jira.rest.core.jql.JqlSearchBean;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
-import de.micromata.jira.rest.core.util.*;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.PostMethod;
+import de.micromata.jira.rest.core.util.HttpMethodFactory;
+import de.micromata.jira.rest.core.util.RestException;
 import org.apache.commons.lang3.Validate;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
 
-import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -30,53 +32,49 @@ import java.util.concurrent.Future;
  */
 public class SearchClientImpl extends BaseClient implements SearchClient, RestPathConstants, RestParamConstants {
 
-    private JiraRestClient jiraRestClient = null;
-
-    private HttpClient client;
 
     public SearchClientImpl(JiraRestClient jiraRestClient, ExecutorService executorService) {
-        this.jiraRestClient = jiraRestClient;
-        this.client = jiraRestClient.getClient();
+        super(jiraRestClient);
         this.executorService = executorService;
     }
 
-    @Override
     public Future<JqlSearchResult> searchIssues(final JqlSearchBean jsb) throws RestException, IOException {
         Validate.notNull(jsb);
         return executorService.submit(new Callable<JqlSearchResult>() {
-            @Override
             public JqlSearchResult call() throws Exception {
-                URI baseUri = jiraRestClient.getBaseUri();
+                
                 String json = gson.toJson(jsb);
-                URI uri = UriBuilder.fromUri(baseUri).path(SEARCH).build();
-                PostMethod method = HttpMethodFactory.createPostMethod(uri, json);
-                int status = client.executeMethod(method);
-                if (status == HttpURLConnection.HTTP_OK) {
-                    InputStream inputStream = method.getResponseBodyAsStream();
+                URIBuilder uriBuilder = buildPath(SEARCH);
+                HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(), json);
+                CloseableHttpResponse response = client.execute(method, clientContext);
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == HttpURLConnection.HTTP_OK) {
+                    HttpEntity entity = response.getEntity();
+                    InputStream inputStream = entity.getContent();
                     JsonReader jsonReader = toJsonReader(inputStream);
                     JqlSearchResult jqlSearchResult = gson.fromJson(jsonReader, JqlSearchResult.class);
-                    method.releaseConnection();
+                    response.close();
                     return jqlSearchResult;
                 } else {
-                    method.releaseConnection();
-                    throw new RestException(method);
+                    response.close();
+                    throw new RestException(response);
                 }
             }
         });
 
     }
 
-    @Override
+
     public Future<FilterBean> createSearchFilter(FilterBean filter) {
         return null;
     }
 
-    @Override
+
     public Future<List<FilterBean>> getFavoriteFilter() {
         return null;
     }
 
-    @Override
+
     public Future<FilterBean> getFilterById(String id) {
         return null;
     }
