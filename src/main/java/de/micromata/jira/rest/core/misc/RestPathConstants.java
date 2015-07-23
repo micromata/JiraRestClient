@@ -23,48 +23,48 @@ public interface RestPathConstants {
 
     // Common Stuff for Jersey Client
 
-    public static final String AUTHORIZATION = "Authorization";
+    String AUTHORIZATION = "Authorization";
 
-    public static final String BASIC = "Basic";
+    String BASIC = "Basic";
 
     // REST Paths
-    public static final String BASE_REST_PATH = "/rest/api/2";
+    String BASE_REST_PATH = "/rest/api/2";
 
-    public static final String PROJECT = "/project";
+    String PROJECT = "/project";
 
-    public static final String USER = "/user";
+    String USER = "/user";
 
-    public static final String SEARCH = "/search";
+    String SEARCH = "/search";
 
-    public static final String ISSUE = "/issue";
+    String ISSUE = "/issue";
 
-    public static final String COMMENT = "/comment";
+    String COMMENT = "/comment";
 
-    public static final String VERSIONS = "/versions";
+    String VERSIONS = "/versions";
 
-    public static final String COMPONENTS = "/components";
+    String COMPONENTS = "/components";
 
-    public static final String ISSUETPYES = "/issuetype";
+    String ISSUETPYES = "/issuetype";
 
-    public static final String STATUS = "/status";
+    String STATUS = "/status";
 
-    public static final String PRIORITY = "/priority";
+    String PRIORITY = "/priority";
 
-    public static final String TRANSITIONS = "/transitions";
+    String TRANSITIONS = "/transitions";
 
-    public static final String WORKLOG = "/worklog";
+    String WORKLOG = "/worklog";
 
-    public static final String ATTACHMENTS = "/attachments";
+    String ATTACHMENTS = "/attachments";
 
-    public static final String ATTACHMENT = "/attachment";
+    String ATTACHMENT = "/attachment";
 
-    public static final String ASSIGNABLE = "/assignable";
+    String ASSIGNABLE = "/assignable";
 
-    public static final String FILTER = "/filter";
+    String FILTER = "/filter";
 
-    public static final String FAVORITE = "/favourite";
+    String FAVORITE = "/favourite";
 
-    public static final String FIELD = "/field";
+    String FIELD = "/field";
 
-    public static final String META = "/meta";
+    String META = "/meta";
 }

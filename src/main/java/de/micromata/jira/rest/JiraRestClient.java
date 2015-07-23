@@ -2,8 +2,11 @@ package de.micromata.jira.rest;
 
 import de.micromata.jira.rest.client.*;
 import de.micromata.jira.rest.core.*;
+import de.micromata.jira.rest.core.domain.UserBean;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
+import de.micromata.jira.rest.core.util.HttpMethodFactory;
+import de.micromata.jira.rest.core.util.URIHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -11,6 +14,8 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.auth.BasicScheme;
@@ -22,6 +27,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 /**
  * User: Christian Schulze
@@ -85,7 +91,14 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         clientContext = HttpClientContext.create();
         clientContext.setAuthCache(authCache);
         this.baseUri = buildBaseURI(uri);
-        return 0;
+
+        URIBuilder uriBuilder = URIHelper.buildPath(baseUri, USER);
+        uriBuilder.addParameter(USERNAME, username);
+        HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+        CloseableHttpResponse response = httpclient.execute(method, clientContext);
+        int statusCode = response.getStatusLine().getStatusCode();
+        response.close();
+        return statusCode;
     }
 
 

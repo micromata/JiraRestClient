@@ -2,7 +2,7 @@ package de.micromata.jira.rest.junit;
 
 import de.micromata.jira.rest.core.domain.UserBean;
 import de.micromata.jira.rest.core.util.RestException;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;

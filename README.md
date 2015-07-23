@@ -2,6 +2,10 @@
 
 This is a simple JiraRestClient to use the RestAPI V2.0 of Jira.
 
+# Warning
+
+**This is the master snapshot branch and is not recommened to use this in productive enviroment.**
+
 ## Usage
 
 Use the static Method of the Class JiraRestClient to create a new Instance of the Client.

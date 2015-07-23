@@ -7,9 +7,9 @@ import de.micromata.jira.rest.core.domain.update.Operation;
 import de.micromata.jira.rest.core.jql.EField;
 import de.micromata.jira.rest.core.misc.JsonConstants;
 import de.micromata.jira.rest.core.util.RestException;
-import de.micromata.jira.rest.core.util.URIParser;
-import junit.framework.Assert;
+import de.micromata.jira.rest.core.util.URIHelper;
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -72,7 +72,7 @@ public class TestIssueClient extends BaseTest {
         AttachmentBean attachment = attachments.get(0);
         String fileName = attachment.getFilename();
         String contentURI = attachment.getContent();
-        URI uri = URIParser.parseStringToURI(contentURI);
+        URI uri = URIHelper.parseStringToURI(contentURI);
         final Future<Byte[]> future1 = jiraRestClient.getIssueClient().getAttachment(uri);
 
         final Byte[] attachmentBytes = future1.get();

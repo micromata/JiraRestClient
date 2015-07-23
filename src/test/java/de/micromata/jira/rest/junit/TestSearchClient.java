@@ -4,7 +4,8 @@ import de.micromata.jira.rest.core.domain.JqlSearchResult;
 import de.micromata.jira.rest.core.domain.filter.FilterBean;
 import de.micromata.jira.rest.core.jql.*;
 import de.micromata.jira.rest.core.util.RestException;
-import junit.framework.Assert;
+
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 

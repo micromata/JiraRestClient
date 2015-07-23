@@ -30,7 +30,7 @@ public interface IssueClient {
      * Returns a full representation of the issue for the given issue key.
      *
      * @param issueKey = issue key
-     * @return all informations for the issue
+     * @return all informations for the issue or null if the issue did not exist
      * @throws RestException
      */
     Future<IssueBean> getIssueByKey(String issueKey) throws RestException, IOException;
@@ -48,7 +48,7 @@ public interface IssueClient {
      * @param issueKey The IssueKey
      * @param fields The field you want to return.
      * @param expand The Field which must expand.
-     * @return IssueBean
+     * @return IssueBean or null if the issue did not exist
      */
     Future<IssueBean> getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException;
 

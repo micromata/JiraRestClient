@@ -59,9 +59,16 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     HttpEntity entity = response.getEntity();
                     InputStream inputStream = entity.getContent();
                     JsonReader jsonReader = toJsonReader(inputStream);
-                    return (IssueBean) gson.fromJson(jsonReader,
+                    final IssueBean issueBean = gson.fromJson(jsonReader,
                             IssueBean.class);
-                } else {
+                    response.close();
+                    return issueBean;
+                }else if(statusCode == HttpURLConnection.HTTP_NOT_FOUND){
+                    response.close();
+                    return null;
+                }
+                else {
+                    response.close();
                     throw new RestException(response);
                 }
             }

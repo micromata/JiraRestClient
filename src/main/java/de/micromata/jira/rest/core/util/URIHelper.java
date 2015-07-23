@@ -16,6 +16,7 @@
 package de.micromata.jira.rest.core.util;
 
 import org.apache.commons.validator.routines.UrlValidator;
+import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,7 +25,7 @@ import java.net.URISyntaxException;
  * @author Christian Schulze
  * @author Vitali Filippow
  */
-public class URIParser {
+public class URIHelper {
 
     public static URI parseStringToURI(String uri) {
         String[] schemes = {"http","https"};
@@ -39,5 +40,19 @@ public class URIParser {
         return null;
     }
 
+
+    public static URIBuilder buildPath(URI baseUri, String... paths) throws URISyntaxException {
+        URIBuilder uriBuilder = new URIBuilder(baseUri);
+        String basePath = uriBuilder.getPath();
+        for (String path : paths) {
+            if(path.startsWith("/")){
+                basePath = basePath.concat(path);
+            }else{
+                basePath = basePath.concat("/").concat(path);
+            }
+        }
+        uriBuilder.setPath(basePath);
+        return uriBuilder;
+    }
 
 }
