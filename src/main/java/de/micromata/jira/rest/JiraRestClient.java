@@ -2,7 +2,6 @@ package de.micromata.jira.rest;
 
 import de.micromata.jira.rest.client.*;
 import de.micromata.jira.rest.core.*;
-import de.micromata.jira.rest.core.domain.UserBean;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
@@ -21,13 +20,11 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.*;
 
-import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 /**
  * User: Christian Schulze
@@ -72,7 +69,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         String host = uri.getHost();
         int port = getPort(uri.toURL());
         String scheme = "http";
-        if(port == 443) scheme = "https";
+        if (port == 443) scheme = "https";
         HttpHost target = new HttpHost(host, port, scheme);
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
         credsProvider.setCredentials(
@@ -121,18 +118,16 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
 
     private URI buildBaseURI(URI uri) throws URISyntaxException {
         String path = uri.getPath();
-        if(path.isEmpty() == false){
-            if(path.endsWith("/")){
-               path =  path.substring(0, path.length() - 1);
+        if (path.isEmpty() == false) {
+            if (path.endsWith("/")) {
+                path = path.substring(0, path.length() - 1);
             }
             path = path.concat(RestPathConstants.BASE_REST_PATH);
-        }else{
+        } else {
             path = RestPathConstants.BASE_REST_PATH;
         }
         return new URIBuilder(uri).setPath(path).build();
     }
-
-
 
 
     public IssueClient getIssueClient() {
@@ -177,4 +172,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         return username;
     }
 
+    public HttpHost getProxy() {
+        return proxy;
+    }
 }
