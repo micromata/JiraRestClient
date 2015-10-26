@@ -61,13 +61,16 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     JsonReader jsonReader = toJsonReader(inputStream);
                     final IssueBean issueBean = gson.fromJson(jsonReader,
                             IssueBean.class);
+                    method.releaseConnection();
                     response.close();
                     return issueBean;
                 }else if(statusCode == HttpURLConnection.HTTP_NOT_FOUND){
+                    method.releaseConnection();
                     response.close();
                     return null;
                 }
                 else {
+                    method.releaseConnection();
                     response.close();
                     throw new RestException(response);
                 }
@@ -94,6 +97,8 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     JsonReader jsonReader = toJsonReader(content);
                     IssueBean issueBean = gson.fromJson(jsonReader,
                             IssueBean.class);
+                    method.releaseConnection();
+                    response.close();
                     return new IssueResponse(issueBean.getKey());
                 } else if (statusCode == HttpURLConnection.HTTP_BAD_REQUEST) {
                     HttpEntity entity = response.getEntity();
@@ -101,9 +106,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     JsonReader jsonReader = toJsonReader(inputStream);
                     ErrorBean error = gson
                             .fromJson(jsonReader, ErrorBean.class);
+                    method.releaseConnection();
                     response.close();
                     return new IssueResponse(error);
                 } else {
+                    method.releaseConnection();
                     response.close();
                     throw new RestException(response);
                 }
@@ -128,8 +135,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_NO_CONTENT) {
                     final Future<IssueBean> issueByKey = getIssueByKey(issueKey);
+                    method.releaseConnection();
+                    response.close();
                     return issueByKey.get();
                 } else {
+                    method.releaseConnection();
                     response.close();
                     throw new RestException(response);
                 }
@@ -161,9 +171,13 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     HttpEntity entity = response.getEntity();
                     InputStream inputStream = entity.getContent();
                     JsonReader jsonReader = toJsonReader(inputStream);
-                    return (IssueBean) gson.fromJson(jsonReader,
+                    IssueBean issueBean = gson.fromJson(jsonReader,
                             IssueBean.class);
+                    method.releaseConnection();
+                    response.close();
+                    return issueBean;
                 } else {
+                    method.releaseConnection();
                     response.close();
                     throw new RestException(response);
                 }
@@ -189,9 +203,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     JsonReader jsonReader = toJsonReader(inputStream);
                     CommentsBean comments = gson.fromJson(jsonReader,
                             CommentsBean.class);
+                    method.releaseConnection();
                     response.close();
                     return comments;
                 } else {
+                    method.releaseConnection();
                     response.close();
                     throw new RestException(response);
                 }
@@ -213,9 +229,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     HttpEntity entity = response.getEntity();
                     InputStream inputStream = entity.getContent();
                     byte[] bytes = IOUtils.toByteArray(inputStream);
+                    method.releaseConnection();
                     response.close();
                     return ArrayUtils.toObject(bytes);
                 }
+                method.releaseConnection();
                 response.close();
                 return null;
             }
@@ -243,9 +261,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     JsonReader jsonReader = toJsonReader(inputStream);
                     AttachmentBean attachment = gson.fromJson(jsonReader,
                             AttachmentBean.class);
+                    method.releaseConnection();
                     response.close();
                     return attachment;
                 } else {
+                    method.releaseConnection();
                     response.close();
                     throw new RestException(response);
                 }
@@ -270,9 +290,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
         CloseableHttpResponse response = client.execute(method, clientContext);
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode == HttpURLConnection.HTTP_CREATED) {
+            method.releaseConnection();
             response.close();
             return true;
         } else {
+            method.releaseConnection();
             response.close();
             throw new RestException(response);
         }
@@ -290,9 +312,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
         CloseableHttpResponse response = client.execute(method, clientContext);
         int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode == HttpURLConnection.HTTP_NO_CONTENT) {
+            method.releaseConnection();
             response.close();
             return true;
         } else {
+            method.releaseConnection();
             response.close();
             throw new RestException(response);
         }
@@ -316,9 +340,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     JsonReader jsonReader = toJsonReader(inputStream);
                     final IssueBean issueBean = gson.fromJson(jsonReader,
                             IssueBean.class);
+                    method.releaseConnection();
                     response.close();
                     return issueBean.getTransitions();
                 } else {
+                    method.releaseConnection();
                     response.close();
                     throw new RestException(response);
                 }

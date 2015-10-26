@@ -27,7 +27,7 @@ public class BaseTest implements JqlConstants, RestPathConstants {
     static final String USERNAME = "admin";
     static final String PASSWORD = "admin";
     static final String USERNAME_TO_SEARCH = "admin";
-    static final String ISSUEKEY_TO_SEARCH = "DEMO-16";
+    static final String ISSUEKEY_TO_SEARCH = "DEMO-1";
     static final String PROJECT_TO_SEARCH = "DEMO";
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
