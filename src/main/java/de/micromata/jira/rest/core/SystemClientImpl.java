@@ -53,9 +53,7 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     Type listType = new TypeToken<ArrayList<IssuetypeBean>>() {
                     }.getType();
                     List<IssuetypeBean> issuetypes = gson.fromJson(jsonReader, listType);
@@ -81,9 +79,7 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     Type listType = new TypeToken<ArrayList<StatusBean>>() {
                     }.getType();
                     List<StatusBean> states = gson.fromJson(jsonReader, listType);
@@ -109,9 +105,7 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     Type listType = new TypeToken<ArrayList<PriorityBean>>() {
                     }.getType();
                     List<PriorityBean> priorities = gson.fromJson(jsonReader, listType);
@@ -127,22 +121,64 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
 
 
     public Future<List<FieldBean>> getAllFields() {
-        return null;
-    }
-
-
-    public Future<FieldBean> createCustomField(CreateFieldBean customfield) {
-        return null;
+        return executorService.submit(new Callable<List<FieldBean>>() {
+            @Override
+            public List<FieldBean> call() throws Exception {
+                URIBuilder uriBuilder = buildPath(FIELD);
+                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+                CloseableHttpResponse response = client.execute(method, clientContext);
+                int statusCode = response.getStatusLine().getStatusCode();
+                if(statusCode == HttpURLConnection.HTTP_OK){
+                    JsonReader jsonReader = getJsonReader(response);
+                    Type listType = new TypeToken<ArrayList<FieldBean>>() {
+                    }.getType();
+                    List<FieldBean> fields = gson.fromJson(jsonReader, listType);
+                    method.releaseConnection();
+                    return fields;
+                }else{
+                    method.releaseConnection();
+                    throw new RestException(response);
+                }
+            }
+        });
     }
 
 
     public Future<List<FieldBean>> getAllCustomFields() {
-        return null;
+        return executorService.submit(new Callable<List<FieldBean>>() {
+            @Override
+            public List<FieldBean> call() throws Exception {
+                List<FieldBean> retval = new ArrayList<>();
+                Future<List<FieldBean>> allFields = getAllFields();
+                List<FieldBean> fieldBeen = allFields.get();
+                for (FieldBean fieldBean : fieldBeen) {
+                    if(fieldBean.getCustom() == true){
+                        retval.add(fieldBean);
+                    }
+                }
+                return retval;
+            }
+        });
     }
 
 
-    public Future<FieldBean> getCustomFieldById(String id) {
-        return null;
+    public Future<FieldBean> getCustomFieldById(final String id) {
+        return executorService.submit(new Callable<FieldBean>() {
+            @Override
+            public FieldBean call() throws Exception {
+                Future<List<FieldBean>> allFields = getAllFields();
+                List<FieldBean> fieldBeen = allFields.get();
+                for (FieldBean fieldBean : fieldBeen) {
+                    if(fieldBean.getCustom() == false){
+                        continue;
+                    }
+                    if(fieldBean.getId().contains(id) == true){
+                        return fieldBean;
+                    }
+                }
+                return null;
+            }
+        });
     }
 
 

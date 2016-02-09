@@ -1,0 +1,182 @@
+{
+    "expand": "renderedFields,names,schema,transitions,operations,editmeta,changelog,versionedRepresentations",
+    "id": "10000",
+    "self": "http://localhost:2990/jira/rest/api/2/issue/10000",
+    "key": "DEMO-1",
+    "fields": {
+    "issuetype": {
+        "self": "http://localhost:2990/jira/rest/api/2/issuetype/3",
+            "id": "3",
+            "description": "Eine Aufgabe, die erledigt werden muss.",
+            "iconUrl": "http://localhost:2990/jira/secure/viewavatar?size=xsmall&avatarId=10418&avatarType=issuetype",
+            "name": "Aufgabe",
+            "subtask": false,
+            "avatarId": 10418
+    },
+    "components": [],
+        "timespent": null,
+        "timeoriginalestimate": null,
+        "description": "h2. Welcome to your first issue\n{color:#707070}An issue is an item you want to track in a specific JIRA project. You can use JIRA to track all kinds of things.{color}\n\nh4. Types of issues\n{color:#707070}An issue could represent a software bug, a user story, a project task, a helpdesk ticket, or a leave request form, the list is endless!{color}\n\n!IssueTypes.png!\n\nh4. Issue attributes\n{color:#707070}You may have noticed that an issue has some system fields such as: type, priority and status. These fields are there to help you categorise and track the progress of each issue.{color}\n\nNext: [Changing an issue's status|DEMO-2]\n\n\\\\\n\n----\n\n[Learn more about issues|https://confluence.atlassian.com/display/JIRA/What+is+an+Issue]\n\n\\\\",
+        "project": {
+        "self": "http://localhost:2990/jira/rest/api/2/project/10000",
+            "id": "10000",
+            "key": "DEMO",
+            "name": "Demonstration Project",
+            "avatarUrls": {
+            "48x48": "http://localhost:2990/jira/secure/projectavatar?pid=10000&avatarId=10300",
+                "24x24": "http://localhost:2990/jira/secure/projectavatar?size=small&pid=10000&avatarId=10300",
+                "16x16": "http://localhost:2990/jira/secure/projectavatar?size=xsmall&pid=10000&avatarId=10300",
+                "32x32": "http://localhost:2990/jira/secure/projectavatar?size=medium&pid=10000&avatarId=10300"
+        }
+    },
+    "fixVersions": [],
+        "aggregatetimespent": null,
+        "resolution": null,
+        "timetracking": {},
+    "attachment": [
+        {
+            "self": "http://localhost:2990/jira/rest/api/2/attachment/10000",
+            "id": "10000",
+            "filename": "IssueTypes.png",
+            "author": {
+                "self": "http://localhost:2990/jira/rest/api/2/user?username=admin",
+                "name": "admin",
+                "key": "admin",
+                "emailAddress": "admin@example.com",
+                "avatarUrls": {
+                    "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122",
+                    "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                    "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                    "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122"
+                },
+                "displayName": "admin",
+                "active": true,
+                "timeZone": "Europe/Berlin"
+            },
+            "created": "2014-12-15T12:01:27.165+0100",
+            "size": 12880,
+            "mimeType": "image/png",
+            "content": "http://localhost:2990/jira/secure/attachment/10000/IssueTypes.png",
+            "thumbnail": "http://localhost:2990/jira/secure/thumbnail/10000/_thumb_10000.png"
+        }
+    ],
+        "aggregatetimeestimate": null,
+        "resolutiondate": null,
+        "workratio": -1,
+        "summary": "What is an issue?",
+        "lastViewed": "2016-01-19T18:25:40.161+0100",
+        "watches": {
+        "self": "http://localhost:2990/jira/rest/api/2/issue/DEMO-1/watchers",
+            "watchCount": 0,
+            "isWatching": false
+    },
+    "creator": {
+        "self": "http://localhost:2990/jira/rest/api/2/user?username=admin",
+            "name": "admin",
+            "key": "admin",
+            "emailAddress": "admin@example.com",
+            "avatarUrls": {
+            "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122",
+                "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122"
+        },
+        "displayName": "admin",
+            "active": true,
+            "timeZone": "Europe/Berlin"
+    },
+    "subtasks": [],
+        "created": "2014-12-15T12:01:27.165+0100",
+        "reporter": {
+        "self": "http://localhost:2990/jira/rest/api/2/user?username=admin",
+            "name": "admin",
+            "key": "admin",
+            "emailAddress": "admin@example.com",
+            "avatarUrls": {
+            "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122",
+                "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122"
+        },
+        "displayName": "admin",
+            "active": true,
+            "timeZone": "Europe/Berlin"
+    },
+    "customfield_10000": {
+        "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10000",
+            "value": "1",
+            "id": "10000"
+    },
+    "aggregateprogress": {
+        "progress": 0,
+            "total": 0
+    },
+    "priority": {
+        "self": "http://localhost:2990/jira/rest/api/2/priority/3",
+            "iconUrl": "http://localhost:2990/jira/images/icons/priorities/major.svg",
+            "name": "Schwer",
+            "id": "3"
+    },
+    "customfield_10001": "foobar",
+        "labels": [],
+        "environment": null,
+        "timeestimate": null,
+        "aggregatetimeoriginalestimate": null,
+        "versions": [],
+        "duedate": null,
+        "progress": {
+        "progress": 0,
+            "total": 0
+    },
+    "comment": {
+        "startAt": 0,
+            "maxResults": 0,
+            "total": 0,
+            "comments": []
+    },
+    "issuelinks": [],
+        "votes": {
+        "self": "http://localhost:2990/jira/rest/api/2/issue/DEMO-1/votes",
+            "votes": 0,
+            "hasVoted": false
+    },
+    "worklog": {
+        "startAt": 0,
+            "maxResults": 20,
+            "total": 0,
+            "worklogs": []
+    },
+    "assignee": {
+        "self": "http://localhost:2990/jira/rest/api/2/user?username=admin",
+            "name": "admin",
+            "key": "admin",
+            "emailAddress": "admin@example.com",
+            "avatarUrls": {
+            "48x48": "http://localhost:2990/jira/secure/useravatar?avatarId=10122",
+                "24x24": "http://localhost:2990/jira/secure/useravatar?size=small&avatarId=10122",
+                "16x16": "http://localhost:2990/jira/secure/useravatar?size=xsmall&avatarId=10122",
+                "32x32": "http://localhost:2990/jira/secure/useravatar?size=medium&avatarId=10122"
+        },
+        "displayName": "admin",
+            "active": true,
+            "timeZone": "Europe/Berlin"
+    },
+    "updated": "2016-01-19T18:25:39.998+0100",
+        "status": {
+        "self": "http://localhost:2990/jira/rest/api/2/status/1",
+            "description": "Der Vorgang ist offen und bereit, dass der Bearbeiter mit der Arbeit daran beginnen kann.",
+            "iconUrl": "http://localhost:2990/jira/images/icons/statuses/open.png",
+            "name": "Offen",
+            "id": "1",
+            "statusCategory": {
+            "self": "http://localhost:2990/jira/rest/api/2/statuscategory/2",
+                "id": 2,
+                "key": "new",
+                "colorName": "blue-gray",
+                "name": "Aufgaben"
+        }
+    }
+}
+}/**
+ * Created by cschulc on 27.01.2016.
+ */

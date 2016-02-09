@@ -60,34 +60,33 @@ public class TestSystemClient extends BaseTest {
 
 
     @Test
-    @Ignore
     public void testGetFields() throws ExecutionException, InterruptedException {
         final Future<List<FieldBean>> future = jiraRestClient.getSystemClient().getAllFields();
         final List<FieldBean> fieldBeans = future.get();
         Assert.assertNotNull(fieldBeans);
         Assert.assertFalse(fieldBeans.isEmpty());
-        Assert.assertEquals(DEFAULT_NUMBER_OF_FIELDS, fieldBeans.size());
+        int numberOfFields = 0;
+        for (FieldBean fieldBean : fieldBeans) {
+            if(fieldBean.getCustom() == false){
+                numberOfFields = numberOfFields + 1;
+            }
+        }
+        Assert.assertEquals(DEFAULT_NUMBER_OF_FIELDS, numberOfFields);
     }
 
-    @Test
-    @Ignore
-    public void testCreateCustomField() throws ExecutionException, InterruptedException {
-        CreateFieldBean createFieldBean = new CreateFieldBean();
-        createFieldBean.setName("foobar_".concat(new Date().toString()));
-        createFieldBean.setDescription("");
-        createFieldBean.setType("com.atlassian.jira.plugin.system.customfieldtypes:grouppicker");
-        createFieldBean.setSearcherKey("com.atlassian.jira.plugin.system.customfieldtypes:grouppickersearcher");
-        final Future<FieldBean> future = jiraRestClient.getSystemClient().createCustomField(createFieldBean);
-        final FieldBean fieldBean = future.get();
-        Assert.assertNotNull(fieldBean);
-    }
 
     @Test
-    @Ignore
     public void testGetCustomFields() throws ExecutionException, InterruptedException {
         final Future<List<FieldBean>> future = jiraRestClient.getSystemClient().getAllCustomFields();
         final List<FieldBean> fieldBeans = future.get();
         Assert.assertNotNull(fieldBeans);
+    }
+
+    @Test
+    public void testGetCustomFieldById() throws ExecutionException, InterruptedException {
+        Future<FieldBean> future = jiraRestClient.getSystemClient().getCustomFieldById("10000");
+        FieldBean fieldBean = future.get();
+        Assert.assertNotNull(fieldBean);
     }
 
     @Test

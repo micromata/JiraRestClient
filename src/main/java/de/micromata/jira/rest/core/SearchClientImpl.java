@@ -49,9 +49,7 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     JqlSearchResult jqlSearchResult = gson.fromJson(jsonReader, JqlSearchResult.class);
                     response.close();
                     return jqlSearchResult;

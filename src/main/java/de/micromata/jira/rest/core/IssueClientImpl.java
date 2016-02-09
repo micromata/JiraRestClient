@@ -56,9 +56,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     final IssueBean issueBean = gson.fromJson(jsonReader,
                             IssueBean.class);
                     method.releaseConnection();
@@ -92,9 +90,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK
                         || statusCode == HttpURLConnection.HTTP_CREATED) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream content = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(content);
+                    JsonReader jsonReader = getJsonReader(response);
                     IssueBean issueBean = gson.fromJson(jsonReader,
                             IssueBean.class);
                     method.releaseConnection();
@@ -168,9 +164,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     IssueBean issueBean = gson.fromJson(jsonReader,
                             IssueBean.class);
                     method.releaseConnection();
@@ -198,9 +192,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     CommentsBean comments = gson.fromJson(jsonReader,
                             CommentsBean.class);
                     method.releaseConnection();
@@ -256,9 +248,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     AttachmentBean attachment = gson.fromJson(jsonReader,
                             AttachmentBean.class);
                     method.releaseConnection();
@@ -335,9 +325,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     final IssueBean issueBean = gson.fromJson(jsonReader,
                             IssueBean.class);
                     method.releaseConnection();

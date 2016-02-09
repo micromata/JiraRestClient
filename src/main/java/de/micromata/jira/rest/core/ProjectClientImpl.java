@@ -49,9 +49,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     ProjectBean project = gson.fromJson(jsonReader, ProjectBean.class);
                     response.close();
                     return project;
@@ -75,9 +73,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     Type listType = new TypeToken<ArrayList<ProjectBean>>() {
                     }.getType();
                     List<ProjectBean> projects = gson.fromJson(jsonReader, listType);
@@ -103,9 +99,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     Type listType = new TypeToken<ArrayList<VersionBean>>() {
                     }.getType();
                     List<VersionBean> versions = gson.fromJson(jsonReader, listType);
@@ -131,9 +125,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     Type listType = new TypeToken<ArrayList<ComponentBean>>() {
                     }.getType();
                     List<ComponentBean> components = gson.fromJson(jsonReader, listType);

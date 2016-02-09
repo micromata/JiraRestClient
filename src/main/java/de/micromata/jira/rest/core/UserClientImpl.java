@@ -60,9 +60,7 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     UserBean user = gson.fromJson(jsonReader, UserBean.class);
                     method.releaseConnection();
                     return user;
@@ -105,9 +103,7 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
+                    JsonReader jsonReader = getJsonReader(response);
                     Type listType = new TypeToken<ArrayList<UserBean>>() {
                     }.getType();
                     List<UserBean> users = gson.fromJson(jsonReader, listType);

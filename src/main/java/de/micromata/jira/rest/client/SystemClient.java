@@ -53,14 +53,6 @@ public interface SystemClient {
 
 
     /**
-     * Creates a new CustomField
-     *
-     * @param customfield The Customfield to create
-     * @return true if the customfield was created
-     */
-    Future<FieldBean> createCustomField(CreateFieldBean customfield);
-
-    /**
      * Return all Custom Field configure in the Jira
      *
      * @return a List of FieldBean

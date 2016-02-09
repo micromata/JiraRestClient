@@ -1,5 +1,6 @@
 package de.micromata.jira.rest.core;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -9,11 +10,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import de.micromata.jira.rest.JiraRestClient;
+import de.micromata.jira.rest.core.domain.IssueBean;
+import de.micromata.jira.rest.core.typeadapter.IssueBeanTypeAdapter;
+import de.micromata.jira.rest.core.util.URIHelper;
 import org.apache.commons.lang3.Validate;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -29,7 +35,10 @@ public abstract class BaseClient {
     protected final URI baseUri;
     protected ExecutorService executorService;
 
-	protected Gson gson	= new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+	protected Gson gson	= new GsonBuilder()
+            .registerTypeAdapter(IssueBean.class, new IssueBeanTypeAdapter())
+            .excludeFieldsWithoutExposeAnnotation()
+            .create();
 
     public BaseClient(JiraRestClient jiraRestClient) {
         this.baseUri = jiraRestClient.getBaseUri();
@@ -49,16 +58,12 @@ public abstract class BaseClient {
 	}
 
 	protected URIBuilder buildPath(String... paths) throws URISyntaxException {
-		URIBuilder uriBuilder = new URIBuilder(baseUri);
-		String basePath = uriBuilder.getPath();
-		for (String path : paths) {
-            if(path.startsWith("/")){
-                basePath = basePath.concat(path);
-            }else{
-                basePath = basePath.concat("/").concat(path);
-            }
-		}
-		uriBuilder.setPath(basePath);
-		return uriBuilder;
+        return URIHelper.buildPath(baseUri, paths);
 	}
+
+    protected JsonReader getJsonReader(CloseableHttpResponse response) throws IOException {
+        HttpEntity entity = response.getEntity();
+        InputStream inputStream = entity.getContent();
+        return toJsonReader(inputStream);
+    }
 }
