@@ -10,7 +10,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import de.micromata.jira.rest.JiraRestClient;
+import de.micromata.jira.rest.core.domain.CustomFieldBean;
 import de.micromata.jira.rest.core.domain.IssueBean;
+import de.micromata.jira.rest.core.typeadapter.CustomFieldBeanAdapter;
 import de.micromata.jira.rest.core.typeadapter.IssueBeanTypeAdapter;
 import de.micromata.jira.rest.core.util.URIHelper;
 import org.apache.commons.lang3.Validate;
@@ -36,7 +38,6 @@ public abstract class BaseClient {
     protected ExecutorService executorService;
 
 	protected Gson gson	= new GsonBuilder()
-            .registerTypeAdapter(IssueBean.class, new IssueBeanTypeAdapter())
             .excludeFieldsWithoutExposeAnnotation()
             .create();
 

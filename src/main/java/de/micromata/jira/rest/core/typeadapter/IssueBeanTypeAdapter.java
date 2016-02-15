@@ -1,8 +1,5 @@
 package de.micromata.jira.rest.core.typeadapter;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -15,10 +12,6 @@ import java.io.IOException;
  */
 public class IssueBeanTypeAdapter extends TypeAdapter<IssueBean> {
 
-    protected Gson gson	= new GsonBuilder()
-            .excludeFieldsWithoutExposeAnnotation()
-            .create();
-
     @Override
     public void write(JsonWriter jsonWriter, IssueBean issueBean) throws IOException {
 
@@ -27,14 +20,6 @@ public class IssueBeanTypeAdapter extends TypeAdapter<IssueBean> {
     @Override
     public IssueBean read(JsonReader jsonReader) throws IOException {
 
-        final IssueBean issueBean = gson.fromJson(jsonReader,
-                IssueBean.class);
-        jsonReader.beginObject();
-        while(jsonReader.hasNext()){
-            String name = jsonReader.nextName();
-            System.out.println(name);
-        }
-
-        return issueBean;
+       return null;
     }
 }
