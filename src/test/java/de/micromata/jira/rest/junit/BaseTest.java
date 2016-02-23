@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -35,7 +36,7 @@ public class BaseTest implements JqlConstants, RestPathConstants {
     JiraRestClient jiraRestClient;
 
     @Before
-    public void connect() throws URISyntaxException, IOException {
+    public void connect() throws URISyntaxException, IOException, ExecutionException, InterruptedException {
         ExecutorService	executorService	= Executors.newFixedThreadPool(100);
 //        ProxyHost proxy = new ProxyHost("proxy", 3128);
         URI uri = new URI(TEST_SYSTEM_URL);

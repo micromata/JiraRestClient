@@ -16,10 +16,8 @@
 package de.micromata.jira.rest.core.util;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import de.micromata.jira.rest.core.domain.BaseBean;
 import de.micromata.jira.rest.core.misc.JsonConstants;
 
 /**

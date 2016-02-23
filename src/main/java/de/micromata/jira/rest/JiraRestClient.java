@@ -2,11 +2,14 @@ package de.micromata.jira.rest;
 
 import de.micromata.jira.rest.client.*;
 import de.micromata.jira.rest.core.*;
+import de.micromata.jira.rest.core.domain.field.FieldBean;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.util.URIHelper;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.Field;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -24,7 +27,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 /**
  * User: Christian Schulze
@@ -46,12 +54,13 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
     private CookieStore cookieStore = new BasicCookieStore();
     private HttpClientContext clientContext;
 
+    private static Map<String, FieldBean> customfields;
 
     public JiraRestClient(ExecutorService executorService) {
         this.executorService = executorService;
     }
 
-    public int connect(URI uri, String username, String password) throws IOException, URISyntaxException {
+    public int connect(URI uri, String username, String password) throws IOException, URISyntaxException, ExecutionException, InterruptedException {
         return connect(uri, username, password, null);
     }
 
@@ -64,7 +73,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
      * @return 200 succees, 401 for wrong credentials and 403 for captcha is needed, you have to login at the jira website
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    public int connect(URI uri, String username, String password, HttpHost proxyHost) throws IOException, URISyntaxException {
+    public int connect(URI uri, String username, String password, HttpHost proxyHost) throws IOException, URISyntaxException, ExecutionException, InterruptedException {
         this.username = username;
         String host = uri.getHost();
         int port = getPort(uri.toURL());
@@ -94,8 +103,21 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
         CloseableHttpResponse response = httpclient.execute(method, clientContext);
         int statusCode = response.getStatusLine().getStatusCode();
+        if(statusCode == 200){
+            // Get the Cache for the CustomFields, need to deserialize the customFields in Issue Json
+            Future<List<FieldBean>> allCustomFields = getSystemClient().getAllCustomFields();
+            List<FieldBean> fieldBeen = allCustomFields.get();
+            customfields = new HashMap<>();
+            for (FieldBean fieldBean : fieldBeen) {
+                customfields.put(fieldBean.getId(), fieldBean);
+            }
+        }
         response.close();
         return statusCode;
+    }
+
+    public static Map<String, FieldBean> getCustomfields(){
+        return customfields;
     }
 
 
@@ -149,7 +171,6 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
     public UserClient getUserClient() {
         return new UserClientImpl(this, executorService);
     }
-
 
     public CloseableHttpClient getClient() {
         return httpclient;

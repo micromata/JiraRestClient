@@ -1,6 +1,7 @@
 package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
+import de.micromata.jira.rest.core.domain.customFields.CustomFieldBaseBean;
 
 import java.util.List;
 
@@ -82,6 +83,8 @@ public class FieldsBean {
     private WorklogBean worklog;
     @Expose
     private Integer workratio;
+
+    private List<CustomFieldBaseBean> customFields;
 
     public AggregateprogressBean getAggregateprogress() {
         return aggregateprogress;
@@ -385,5 +388,13 @@ public class FieldsBean {
 
     public void setWorkratio(Integer workratio) {
         this.workratio = workratio;
+    }
+
+    public List<CustomFieldBaseBean> getCustomFields() {
+        return customFields;
+    }
+
+    public void setCustomFields(List<CustomFieldBaseBean> customFields) {
+        this.customFields = customFields;
     }
 }
