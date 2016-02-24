@@ -2,9 +2,13 @@
 
 This is a simple JiraRestClient to use the RestAPI V2.0 of Jira.
 
-# Warning
+## Version 2.1
 
-**This is the master snapshot branch and is not recommened to use this in productive enviroment.**
+* adding support for CustomFields. All standard CustomFields comming with Jira.
+
+## Version 2.0
+
+* change Apache HttpClient from Major-Version 3 to 4
 
 ## Usage
 
