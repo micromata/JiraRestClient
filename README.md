@@ -4,7 +4,7 @@ This is a simple JiraRestClient to use the RestAPI V2.0 of Jira.
 
 ## Version 2.1
 
-* adding support for CustomFields. All standard CustomFields comming with Jira.
+* adding support for CustomFields. All standard CustomFields coming with Jira.
 
 ## Version 2.0
 
