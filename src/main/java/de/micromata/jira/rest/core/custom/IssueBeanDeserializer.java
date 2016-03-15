@@ -38,16 +38,21 @@ public class IssueBeanDeserializer implements JsonDeserializer<IssueBean> {
         for (Map.Entry<String, JsonElement> entry : entries) {
             String key = entry.getKey();
             if (key.startsWith("customfield_") == true) {
+                String id = key.replace("customfield_", "");
                 JsonElement value = entry.getValue();
                 if (value.isJsonPrimitive() == true) {
-                    retval.add(getPrimitiveCustomField(key, value));
+                    CustomFieldBaseBean customField = getPrimitiveCustomField(key, value);
+                    customField.setId(id);
+                    retval.add(customField);
                 }
                 if (value.isJsonObject() == true) {
                     CustomFieldBaseBean customField = getObjectCustomField(key, value);
+                    customField.setId(id);
                     retval.add(customField);
                 }
                 if (value.isJsonArray() == true) {
                     CustomFieldBaseBean arrayCustomField = getArrayCustomField(key, value);
+                    arrayCustomField.setId(id);
                     retval.add(arrayCustomField);
                 }
                 if (value.isJsonNull() == true) {
@@ -61,13 +66,13 @@ public class IssueBeanDeserializer implements JsonDeserializer<IssueBean> {
 
 
 
-    private CustomFieldBaseBean getPrimitiveCustomField(String id, JsonElement jsonElement) {
+    private CustomFieldBaseBean getPrimitiveCustomField(String key, JsonElement jsonElement) {
         SingleValueBean retval = new SingleValueBean();
         String value = jsonElement.getAsString();
         ValueBean valueBean = new ValueBean();
         valueBean.setValue(value);
         retval.setValue(valueBean);
-        CustomFieldType type = getCustomFieldType(id);
+        CustomFieldType type = getCustomFieldType(key);
         retval.setType(type);
         return retval;
     }
