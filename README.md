@@ -2,6 +2,10 @@
 
 This is a simple JiraRestClient to use the RestAPI V2.0 of Jira.
 
+## Version 2.1.1
+
+* adding support for IssueType Fields Meta Data.
+
 ## Version 2.1
 
 * adding support for CustomFields. All standard CustomFields coming with Jira.
