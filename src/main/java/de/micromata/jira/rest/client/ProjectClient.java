@@ -3,6 +3,7 @@ package de.micromata.jira.rest.client;
 import de.micromata.jira.rest.core.domain.ComponentBean;
 import de.micromata.jira.rest.core.domain.ProjectBean;
 import de.micromata.jira.rest.core.domain.VersionBean;
+import de.micromata.jira.rest.core.domain.meta.MetaBean;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
@@ -52,5 +53,14 @@ public interface ProjectClient {
      * @throws RestException
      */
     Future<List<ComponentBean>> getProjectComponents(final String projectKey) throws RestException, IOException;
+
+
+    /**
+     * Return the Meta Data for the IssueTypes of a Project. This includes all possible IssueTypes and the Fields including the AllowedValues
+     *
+     * @param projectKey
+     * @return
+     */
+    Future<MetaBean> getIssueTypesMetaForProject(final String projectKey);
 
 }

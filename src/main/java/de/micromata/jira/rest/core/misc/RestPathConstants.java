@@ -67,4 +67,6 @@ public interface RestPathConstants {
     String FIELD = "/field";
 
     String META = "/meta";
+
+    String CREATEMETA = "/createmeta";
 }

@@ -11,11 +11,21 @@ import com.google.gson.annotations.Expose;
 public class BaseBean implements Comparable<BaseBean> {
 
     @Expose
+    private String expand;
+    @Expose
     private String id;
     @Expose
     private String name;
     @Expose
     private String self;
+
+    public String getExpand() {
+        return expand;
+    }
+
+    public void setExpand(String expand) {
+        this.expand = expand;
+    }
 
     public String getId() {
         return id;

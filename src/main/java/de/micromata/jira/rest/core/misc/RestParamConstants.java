@@ -8,21 +8,23 @@ package de.micromata.jira.rest.core.misc;
 public interface RestParamConstants {
 
 
-    static final String USERNAME = "username";
+    String USERNAME = "username";
 
-    static final String EXPAND = "expand";
+    String EXPAND = "expand";
 
-    static final String TRANSITIONS_FIELDS = "transitions.fields";
+    String TRANSITIONS_FIELDS = "transitions.fields";
 
-    static final String RENDERED_FIELDS = "renderedFields";
+    String RENDERED_FIELDS = "renderedFields";
 
-    static final String ISSUEKEY = "issueKey";
+    String ISSUEKEY = "issueKey";
 
-    static final String START_AT = "startAt";
+    String START_AT = "startAt";
 
-    static final String MAX_RESULTS = "maxResults";
+    String MAX_RESULTS = "maxResults";
 
-    static final String PROJECTKEY = "project";
+    String PROJECTKEY = "project";
 
-    static final String FIELDS = "fields";
+    String FIELDS = "fields";
+    
+    String PROJECTKEYS = "projectKeys";
 }

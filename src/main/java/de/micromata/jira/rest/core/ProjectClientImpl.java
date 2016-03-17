@@ -7,6 +7,7 @@ import de.micromata.jira.rest.client.ProjectClient;
 import de.micromata.jira.rest.core.domain.ComponentBean;
 import de.micromata.jira.rest.core.domain.ProjectBean;
 import de.micromata.jira.rest.core.domain.VersionBean;
+import de.micromata.jira.rest.core.domain.meta.MetaBean;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
@@ -132,6 +133,31 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                     response.close();
                     return components;
                 } else {
+                    response.close();
+                    throw new RestException(response);
+                }
+            }
+        });
+    }
+
+    @Override
+    public Future<MetaBean> getIssueTypesMetaForProject(final String projectKey) {
+        Validate.notNull(projectKey);
+        return executorService.submit(new Callable<MetaBean>() {
+            @Override
+            public MetaBean call() throws Exception {
+                URIBuilder uriBuilder = buildPath(ISSUE, CREATEMETA);
+                uriBuilder.addParameter(PROJECTKEYS, projectKey);
+                uriBuilder.addParameter(EXPAND, "projects.issuetypes.fields");
+                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+                CloseableHttpResponse response = client.execute(method, clientContext);
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == HttpURLConnection.HTTP_OK) {
+                    JsonReader jsonReader = getJsonReader(response);
+                    MetaBean metabean = gson.fromJson(jsonReader, MetaBean.class);
+                    response.close();
+                    return metabean;
+                }else{
                     response.close();
                     throw new RestException(response);
                 }

@@ -3,6 +3,7 @@ package de.micromata.jira.rest.junit;
 import de.micromata.jira.rest.core.domain.ComponentBean;
 import de.micromata.jira.rest.core.domain.ProjectBean;
 import de.micromata.jira.rest.core.domain.VersionBean;
+import de.micromata.jira.rest.core.domain.meta.MetaBean;
 import de.micromata.jira.rest.core.util.RestException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -50,5 +51,12 @@ public class TestProjectClient extends BaseTest {
         final List<ComponentBean> componentBeans = future.get();
         Assert.assertNotNull(componentBeans);
         Assert.assertTrue(componentBeans.isEmpty());
+    }
+
+    @Test
+    public void testGetIssueTypesMetaForProject() throws ExecutionException, InterruptedException {
+        Future<MetaBean> future = jiraRestClient.getProjectClient().getIssueTypesMetaForProject(PROJECT_TO_SEARCH);
+        MetaBean metaBean = future.get();
+        Assert.assertNotNull(metaBean);
     }
 }

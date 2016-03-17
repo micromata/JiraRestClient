@@ -5,7 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.core.custom.IssueBeanDeserializer;
+import de.micromata.jira.rest.core.custom.MetaBeanDeserializer;
 import de.micromata.jira.rest.core.domain.IssueBean;
+import de.micromata.jira.rest.core.domain.meta.MetaBean;
 import de.micromata.jira.rest.core.util.URIHelper;
 import org.apache.commons.lang3.Validate;
 import org.apache.http.HttpEntity;
@@ -36,6 +38,7 @@ public abstract class BaseClient {
 	protected Gson gson	= new GsonBuilder()
             .excludeFieldsWithoutExposeAnnotation()
             .registerTypeAdapter(IssueBean.class, new IssueBeanDeserializer())
+            .registerTypeAdapter(MetaBean.class, new MetaBeanDeserializer())
             .create();
 
     public BaseClient(JiraRestClient jiraRestClient) {

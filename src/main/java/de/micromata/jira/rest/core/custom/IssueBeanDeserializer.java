@@ -13,11 +13,7 @@ import java.util.*;
 /**
  * Created by cschulc on 18.02.16.
  */
-public class IssueBeanDeserializer implements JsonDeserializer<IssueBean> {
-
-    protected Gson gson = new GsonBuilder()
-            .excludeFieldsWithoutExposeAnnotation()
-            .create();
+public class IssueBeanDeserializer extends BaseDeserializer  implements JsonDeserializer<IssueBean> {
 
     @Override
     public IssueBean deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -38,21 +34,20 @@ public class IssueBeanDeserializer implements JsonDeserializer<IssueBean> {
         for (Map.Entry<String, JsonElement> entry : entries) {
             String key = entry.getKey();
             if (key.startsWith("customfield_") == true) {
-                String id = key.replace("customfield_", "");
                 JsonElement value = entry.getValue();
                 if (value.isJsonPrimitive() == true) {
                     CustomFieldBaseBean customField = getPrimitiveCustomField(key, value);
-                    customField.setId(id);
+                    customField.setId(key);
                     retval.add(customField);
                 }
                 if (value.isJsonObject() == true) {
                     CustomFieldBaseBean customField = getObjectCustomField(key, value);
-                    customField.setId(id);
+                    customField.setId(key);
                     retval.add(customField);
                 }
                 if (value.isJsonArray() == true) {
                     CustomFieldBaseBean arrayCustomField = getArrayCustomField(key, value);
-                    arrayCustomField.setId(id);
+                    arrayCustomField.setId(key);
                     retval.add(arrayCustomField);
                 }
                 if (value.isJsonNull() == true) {
@@ -180,23 +175,7 @@ public class IssueBeanDeserializer implements JsonDeserializer<IssueBean> {
     }
 
 
-    private CustomFieldType getCustomFieldType(String id) {
-        FieldBean fieldBean = JiraRestClient.getCustomfields().get(id);
-        if(fieldBean == null){
-            return null;
-        }
-        String custom = fieldBean.getSchema().getCustom();
-        if (custom == null) {
-            return null;
-        }
-        CustomFieldType[] values = CustomFieldType.values();
-        for (CustomFieldType value : values) {
-            if (custom.equals(value.getJiraName()) == true) {
-                return value;
-            }
-        }
-        return null;
-    }
+
 
 
 }

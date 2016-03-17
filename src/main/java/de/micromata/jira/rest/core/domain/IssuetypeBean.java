@@ -10,6 +10,8 @@ public class IssuetypeBean extends BaseBean {
     private String iconUrl;
     @Expose
     private Boolean subtask;
+    @Expose
+    private Integer avatarId;
 
     public String getDescription() {
         return description;
@@ -33,5 +35,13 @@ public class IssuetypeBean extends BaseBean {
 
     public void setSubtask(Boolean subtask) {
         this.subtask = subtask;
+    }
+
+    public Integer getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(Integer avatarId) {
+        this.avatarId = avatarId;
     }
 }
