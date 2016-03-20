@@ -8,37 +8,42 @@ import org.apache.commons.lang3.StringUtils;
  */
 public enum CustomFieldType {
     // String Value Custom Fields
-    URL("com.atlassian.jira.plugin.system.customfieldtypes:url"),
-    DATE("com.atlassian.jira.plugin.system.customfieldtypes:datepicker"),
-    DATETIME("com.atlassian.jira.plugin.system.customfieldtypes:datetime"),
-    TEXT("com.atlassian.jira.plugin.system.customfieldtypes:textfield"),
-    TEXTAREA("com.atlassian.jira.plugin.system.customfieldtypes:textarea"),
-    FLOAT("com.atlassian.jira.plugin.system.customfieldtypes:float"),
+    URL("com.atlassian.jira.plugin.system.customfieldtypes:url", false),
+    DATE("com.atlassian.jira.plugin.system.customfieldtypes:datepicker", false),
+    DATETIME("com.atlassian.jira.plugin.system.customfieldtypes:datetime", false),
+    TEXT("com.atlassian.jira.plugin.system.customfieldtypes:textfield", false),
+    TEXTAREA("com.atlassian.jira.plugin.system.customfieldtypes:textarea", false),
+    FLOAT("com.atlassian.jira.plugin.system.customfieldtypes:float", false),
     // Single ValueBean Custom Fields
-    SELECT("com.atlassian.jira.plugin.system.customfieldtypes:select"),
-    RADIO("com.atlassian.jira.plugin.system.customfieldtypes:radiobuttons"),
+    SELECT("com.atlassian.jira.plugin.system.customfieldtypes:select", true),
+    RADIO("com.atlassian.jira.plugin.system.customfieldtypes:radiobuttons", true),
     // Multi ValueBean Custom Fields
-    MULTISELECT("com.atlassian.jira.plugin.system.customfieldtypes:multiselect"),
-    CHECKBOX("com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes"),
-    LABELS("com.atlassian.jira.plugin.system.customfieldtypes:labels"),
-    CASCADING("com.atlassian.jira.plugin.system.customfieldtypes:cascadingselect"),
-    USER("com.atlassian.jira.plugin.system.customfieldtypes:userpicker"),
-    MULTIUSER("com.atlassian.jira.plugin.system.customfieldtypes:multiuserpicker"),
-    PROJECT("com.atlassian.jira.plugin.system.customfieldtypes:project"),
-    VERSION("com.atlassian.jira.plugin.system.customfieldtypes:version"),
-    MULTIVERSION("com.atlassian.jira.plugin.system.customfieldtypes:multiversion"),
-    GROUP("com.atlassian.jira.plugin.system.customfieldtypes:grouppicker"),
-    MULTIGROUP("com.atlassian.jira.plugin.system.customfieldtypes:multigrouppicker");
+    MULTISELECT("com.atlassian.jira.plugin.system.customfieldtypes:multiselect", true),
+    CHECKBOX("com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes", true),
+    LABELS("com.atlassian.jira.plugin.system.customfieldtypes:labels", false),
+    CASCADING("com.atlassian.jira.plugin.system.customfieldtypes:cascadingselect", true),
+    USER("com.atlassian.jira.plugin.system.customfieldtypes:userpicker", false),
+    MULTIUSER("com.atlassian.jira.plugin.system.customfieldtypes:multiuserpicker", false),
+    PROJECT("com.atlassian.jira.plugin.system.customfieldtypes:project", false),
+    VERSION("com.atlassian.jira.plugin.system.customfieldtypes:version", false),
+    MULTIVERSION("com.atlassian.jira.plugin.system.customfieldtypes:multiversion", false),
+    GROUP("com.atlassian.jira.plugin.system.customfieldtypes:grouppicker", false),
+    MULTIGROUP("com.atlassian.jira.plugin.system.customfieldtypes:multigrouppicker", false);
 
-
-    CustomFieldType(String jiraName) {
+    CustomFieldType(String jiraName, boolean hasAllowedValues) {
         this.jiraName = jiraName;
+        this.hasAllowedValues = hasAllowedValues;
     }
 
     public String jiraName = StringUtils.EMPTY;
+
+    public boolean hasAllowedValues = false;
 
     public String getJiraName() {
         return jiraName;
     }
 
+    public boolean isHasAllowedValues() {
+        return hasAllowedValues;
+    }
 }
