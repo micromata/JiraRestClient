@@ -19,7 +19,9 @@ import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * JQL search requirements.
@@ -61,6 +63,12 @@ public class JqlSearchBean {
     public void addField(EField... fields) {
         for (EField f : fields) {
             getFields().add(f.toString());
+        }
+    }
+
+    public void addField(Collection<String> fields){
+        for (String field : fields) {
+            getFields().add(field);
         }
     }
 
