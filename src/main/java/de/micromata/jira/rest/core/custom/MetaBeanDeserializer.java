@@ -95,6 +95,9 @@ public class MetaBeanDeserializer extends BaseDeserializer implements JsonDeseri
     private FieldMetaBean extractCustomFieldMeta(String key, JsonElement json) {
         FieldMetaBean fieldMetaBean = gson.fromJson(json, FieldMetaBean.class);
         CustomFieldType customFieldType = getCustomFieldType(key);
+        if(customFieldType == null){
+            return fieldMetaBean;
+        }
         switch (customFieldType){
             case URL:
                 return fieldMetaBean;
