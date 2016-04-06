@@ -21,7 +21,7 @@ public interface UserClient {
      * @param projectKey the projectkey
      * @param startAt start at position (0-based) can be null the default (0)
      * @param maxResults Number of Results (default 50) can be null then default (50)
-     * @return
+     * @return The List of a assignable Users, or an Empty List if the logged in User has no permission to get assign Issues
      */
     Future<List<UserBean>> getAssignableUserForProject(String projectKey, Integer startAt, Integer maxResults) throws RestException, IOException;
 
@@ -32,7 +32,7 @@ public interface UserClient {
      * @param issueKey The Issuekey
      * @param startAt start at position (0-based) can be null the default (0)
      * @param maxResults Number of Results (default 50) can be null then default (50)
-     * @return
+     * @return The List of a assignable Users, or an Empty List if the logged in User has no permission to get assign Issues
      */
     Future<List<UserBean>> getAssignableUsersForIssue(String issueKey, Integer startAt, Integer maxResults) throws RestException, IOException;
 
@@ -40,7 +40,7 @@ public interface UserClient {
      * Returns a User by his username
      *
      * @param username The username of the User
-     * @return UserBean
+     * @return The UserBean for the username or null if the logged in User has no permission to get another user
      */
     Future<UserBean> getUserByUsername(String username) throws RestException, IOException;
 

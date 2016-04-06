@@ -54,8 +54,10 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
                     response.close();
                     return jqlSearchResult;
                 } else {
+                    RestException restException = new RestException(response);
+                    method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });

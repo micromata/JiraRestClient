@@ -55,8 +55,10 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                     response.close();
                     return project;
                 } else {
+                    RestException restException = new RestException(response);
+                    method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -81,8 +83,10 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                     response.close();
                     return projects;
                 } else {
+                    RestException restException = new RestException(response);
+                    method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -107,8 +111,10 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                     response.close();
                     return versions;
                 } else {
+                    RestException restException = new RestException(response);
+                    method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -133,8 +139,10 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                     response.close();
                     return components;
                 } else {
+                    RestException restException = new RestException(response);
+                    method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -158,8 +166,10 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                     response.close();
                     return metabean;
                 }else{
+                    RestException restException = new RestException(response);
+                    method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });

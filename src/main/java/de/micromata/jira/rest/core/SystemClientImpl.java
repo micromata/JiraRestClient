@@ -60,8 +60,10 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                     method.releaseConnection();
                     return issuetypes;
                 } else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
-                    throw new RestException(response);
+                    response.close();
+                    throw restException;
                 }
             }
         });
@@ -86,8 +88,10 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                     method.releaseConnection();
                     return states;
                 } else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
-                    throw new RestException(response);
+                    response.close();
+                    throw restException;
                 }
             }
         });
@@ -112,8 +116,10 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                     method.releaseConnection();
                     return priorities;
                 } else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
-                    throw new RestException(response);
+                    response.close();
+                    throw restException;
                 }
             }
         });
@@ -136,8 +142,10 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                     method.releaseConnection();
                     return fields;
                 }else{
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
-                    throw new RestException(response);
+                    response.close();
+                    throw restException;
                 }
             }
         });

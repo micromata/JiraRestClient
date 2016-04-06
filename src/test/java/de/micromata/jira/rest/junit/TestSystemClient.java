@@ -25,7 +25,7 @@ import java.util.concurrent.Future;
  */
 public class TestSystemClient extends BaseTest {
 
-    private static final int DEFAULT_NUMBER_OF_ISSUETYPES = 5;
+    private static final int DEFAULT_NUMBER_OF_ISSUETYPES = 6;
     private static final int DEFAULT_NUMBER_OF_STATES = 5;
     private static final int DEFAULT_NUMBER_OF_PRIORITIES = 5;
     private static final int DEFAULT_NUMBER_OF_FIELDS = 40;

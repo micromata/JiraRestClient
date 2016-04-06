@@ -5,12 +5,14 @@ import com.google.gson.reflect.TypeToken;
 import de.micromata.jira.rest.core.domain.ProjectBean;
 import de.micromata.jira.rest.core.domain.VersionBean;
 import de.micromata.jira.rest.core.domain.customFields.CustomFieldType;
-import de.micromata.jira.rest.core.domain.customFields.ValueBean;
 import de.micromata.jira.rest.core.domain.meta.FieldsMetaBean;
 import de.micromata.jira.rest.core.domain.meta.IssueTypeMetaBean;
 import de.micromata.jira.rest.core.domain.meta.MetaBean;
 import de.micromata.jira.rest.core.domain.meta.ProjectMetaBean;
-import de.micromata.jira.rest.core.domain.meta.custom.*;
+import de.micromata.jira.rest.core.domain.meta.custom.ProjectCustomFieldMetaBean;
+import de.micromata.jira.rest.core.domain.meta.custom.ValueMetaBean;
+import de.micromata.jira.rest.core.domain.meta.custom.ValuesCustomFieldMetaBean;
+import de.micromata.jira.rest.core.domain.meta.custom.VersionCustomFieldMetaBean;
 import de.micromata.jira.rest.core.domain.meta.fields.FieldMetaBean;
 
 import java.lang.reflect.Type;

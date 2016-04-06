@@ -64,7 +64,11 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
                     UserBean user = gson.fromJson(jsonReader, UserBean.class);
                     method.releaseConnection();
                     return user;
-                } else {
+                }
+                else if(statusCode == HttpURLConnection.HTTP_UNAUTHORIZED || statusCode == HttpURLConnection.HTTP_FORBIDDEN ){
+                    return null;
+                }
+                else {
                     method.releaseConnection();
                     throw new RestException(response);
                 }
@@ -109,9 +113,13 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
                     List<UserBean> users = gson.fromJson(jsonReader, listType);
                     method.releaseConnection();
                     return users;
-                } else {
+                }
+                else if(statusCode == HttpURLConnection.HTTP_UNAUTHORIZED || statusCode == HttpURLConnection.HTTP_FORBIDDEN ){
+                    return new ArrayList<>();
+                } else{
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });

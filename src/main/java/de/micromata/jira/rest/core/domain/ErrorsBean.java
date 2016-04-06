@@ -19,6 +19,8 @@ public class ErrorsBean {
     private String reporter;
     @Expose
     private String assignee;
+    @Expose
+    private String environment;
 
 
     public String getProject() {
@@ -75,5 +77,13 @@ public class ErrorsBean {
 
     public void setReporter(String reporter) {
         this.reporter = reporter;
+    }
+
+    public String getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
     }
 }

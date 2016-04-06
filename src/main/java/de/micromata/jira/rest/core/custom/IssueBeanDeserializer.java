@@ -19,6 +19,9 @@ public class IssueBeanDeserializer extends BaseDeserializer  implements JsonDese
     public IssueBean deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         IssueBean issueBean = gson.fromJson(json, IssueBean.class);
         FieldsBean fields = issueBean.getFields();
+        if(fields == null){
+            return issueBean;
+        }
         List<CustomFieldBaseBean> customFieldBean = extractCustomFieldBeans(json);
         fields.setCustomFields(customFieldBean);
         return issueBean;
@@ -29,6 +32,9 @@ public class IssueBeanDeserializer extends BaseDeserializer  implements JsonDese
         List<CustomFieldBaseBean> retval = new ArrayList<>();
         JsonObject issueObj = json.getAsJsonObject();
         JsonElement fields = issueObj.get("fields");
+        if(fields == null){
+            return retval;
+        }
         JsonObject fieldsObj = fields.getAsJsonObject();
         Set<Map.Entry<String, JsonElement>> entries = fieldsObj.entrySet();
         for (Map.Entry<String, JsonElement> entry : entries) {

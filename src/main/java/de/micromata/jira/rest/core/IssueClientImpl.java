@@ -24,6 +24,7 @@ import org.apache.http.client.utils.URIBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -56,25 +57,23 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    final IssueBean issueBean = gson.fromJson(jsonReader,
-                            IssueBean.class);
-                    method.releaseConnection();
-                    response.close();
-                    return issueBean;
+                    return extractIssueBean(method, response);
                 }else if(statusCode == HttpURLConnection.HTTP_NOT_FOUND){
                     method.releaseConnection();
                     response.close();
                     return null;
                 }
                 else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
     }
+
+
 
     public Future<IssueResponse> createIssue(final IssueBean issue)
             throws RestException, IOException {
@@ -106,9 +105,10 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     response.close();
                     return new IssueResponse(error);
                 } else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -135,9 +135,10 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     response.close();
                     return issueByKey.get();
                 } else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -164,16 +165,12 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    IssueBean issueBean = gson.fromJson(jsonReader,
-                            IssueBean.class);
-                    method.releaseConnection();
-                    response.close();
-                    return issueBean;
+                    return extractIssueBean(method, response);
                 } else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -199,9 +196,10 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     response.close();
                     return comments;
                 } else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -255,9 +253,10 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                     response.close();
                     return attachment;
                 } else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -284,9 +283,10 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
             response.close();
             return true;
         } else {
+            RestException restException = new RestException(response);
             method.releaseConnection();
             response.close();
-            throw new RestException(response);
+            throw restException;
         }
     }
 
@@ -306,9 +306,10 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
             response.close();
             return true;
         } else {
+            RestException restException = new RestException(response);
             method.releaseConnection();
             response.close();
-            throw new RestException(response);
+            throw restException;
         }
     }
 
@@ -325,18 +326,24 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    final IssueBean issueBean = gson.fromJson(jsonReader,
-                            IssueBean.class);
-                    method.releaseConnection();
-                    response.close();
+                    final IssueBean issueBean = extractIssueBean(method, response);
                     return issueBean.getTransitions();
                 } else {
+                    RestException restException = new RestException(response);
                     method.releaseConnection();
                     response.close();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
+    }
+
+    private IssueBean extractIssueBean(HttpGet method, CloseableHttpResponse response) throws IOException {
+        JsonReader jsonReader = getJsonReader(response);
+        final IssueBean issueBean = gson.fromJson(jsonReader,
+                IssueBean.class);
+        method.releaseConnection();
+        response.close();
+        return issueBean;
     }
 }
