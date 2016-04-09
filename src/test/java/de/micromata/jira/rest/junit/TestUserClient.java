@@ -1,6 +1,7 @@
 package de.micromata.jira.rest.junit;
 
 import de.micromata.jira.rest.core.domain.UserBean;
+import de.micromata.jira.rest.core.domain.permission.MyPermissionsBean;
 import de.micromata.jira.rest.core.util.RestException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -46,5 +47,12 @@ public class TestUserClient extends BaseTest {
         final List<UserBean> userBeans = future.get();
         Assert.assertNotNull(userBeans);
         Assert.assertEquals(2, userBeans.size());
+    }
+
+    @Test
+    public void testGetMyPermissions() throws ExecutionException, InterruptedException {
+        Future<MyPermissionsBean> future = jiraRestClient.getUserClient().getMyPermissions();
+        MyPermissionsBean myPermissionsBean = future.get();
+        Assert.assertNotNull(myPermissionsBean);
     }
 }

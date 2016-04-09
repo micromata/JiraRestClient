@@ -5,19 +5,18 @@ import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.UserClient;
 import de.micromata.jira.rest.core.domain.UserBean;
+import de.micromata.jira.rest.core.domain.permission.MyPermissionsBean;
 import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.util.RestException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -69,8 +68,10 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
                     return null;
                 }
                 else {
+                    RestException restException = new RestException(response);
+                    response.close();
                     method.releaseConnection();
-                    throw new RestException(response);
+                    throw restException;
                 }
             }
         });
@@ -80,6 +81,30 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
     public Future<UserBean> getLoggedInRemoteUser() throws RestException, IOException {
         String username = jiraRestClient.getUsername();
         return getUserByUsername(username);
+    }
+
+    @Override
+    public Future<MyPermissionsBean> getMyPermissions() {
+        return executorService.submit(new Callable<MyPermissionsBean>() {
+            @Override
+            public MyPermissionsBean call() throws Exception {
+                URIBuilder uriBuilder = buildPath(MYPERMISSIONS);
+                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+                CloseableHttpResponse response = client.execute(method, clientContext);
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == HttpURLConnection.HTTP_OK) {
+                    JsonReader jsonReader = getJsonReader(response);
+                    MyPermissionsBean permissionsBean = gson.fromJson(jsonReader, MyPermissionsBean.class);
+                    method.releaseConnection();
+                    return permissionsBean;
+                }else{
+                    RestException restException = new RestException(response);
+                    response.close();
+                    method.releaseConnection();
+                    throw restException;
+                }
+            }
+        });
     }
 
 
@@ -118,6 +143,7 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
                     return new ArrayList<>();
                 } else{
                     RestException restException = new RestException(response);
+                    response.close();
                     method.releaseConnection();
                     throw restException;
                 }

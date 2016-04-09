@@ -69,4 +69,6 @@ public interface RestPathConstants {
     String META = "/meta";
 
     String CREATEMETA = "/createmeta";
+
+    String MYPERMISSIONS = "/mypermissions";
 }

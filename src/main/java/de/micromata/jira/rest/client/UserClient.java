@@ -1,6 +1,7 @@
 package de.micromata.jira.rest.client;
 
 import de.micromata.jira.rest.core.domain.UserBean;
+import de.micromata.jira.rest.core.domain.permission.MyPermissionsBean;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
@@ -51,4 +52,12 @@ public interface UserClient {
      * @throws RestException
      */
     Future<UserBean> getLoggedInRemoteUser() throws RestException, IOException;
+
+    /**
+     * Get the Permissions for the logged in User.
+     * This contains all Permissons, every permission has a flag if it is set or unset.
+     *
+     * @return PermissionsBean with all Permission,
+     */
+    Future<MyPermissionsBean> getMyPermissions();
 }
