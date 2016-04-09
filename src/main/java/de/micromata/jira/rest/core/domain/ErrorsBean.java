@@ -21,6 +21,8 @@ public class ErrorsBean {
     private String assignee;
     @Expose
     private String environment;
+    @Expose
+    private String filterName;
 
 
     public String getProject() {
@@ -85,5 +87,13 @@ public class ErrorsBean {
 
     public void setEnvironment(String environment) {
         this.environment = environment;
+    }
+
+    public String getFilterName() {
+        return filterName;
+    }
+
+    public void setFilterName(String filterName) {
+        this.filterName = filterName;
     }
 }

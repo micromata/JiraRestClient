@@ -61,11 +61,10 @@ public class TestSearchClient extends BaseTest {
 
 
     @Test
-    @Ignore
     public void testCreateFilter() {
         FilterBean filter = new FilterBean();
-        filter.setName("Filter_".concat(new Date().toString()));
-        filter.setDescription("foobar");
+        filter.setName("Demo Project");
+        filter.setDescription("A Filter for the Demo Project");
         filter.setFavourite(Boolean.TRUE);
         filter.setJql("project = DEMO");
         final Future<FilterBean> future = jiraRestClient.getSearchClient().createSearchFilter(filter);
@@ -84,12 +83,18 @@ public class TestSearchClient extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void testGetFilterForLoggedInUser() throws ExecutionException, InterruptedException {
         final Future<List<FilterBean>> future = jiraRestClient.getSearchClient().getFavoriteFilter();
-        while(future.isDone() == false);
         final List<FilterBean> filterBeans = future.get();
         Assert.assertNotNull(filterBeans);
         Assert.assertFalse(filterBeans.isEmpty());
     }
+
+    @Test
+    public void testGetFilterById() throws ExecutionException, InterruptedException {
+        Future<FilterBean> future = jiraRestClient.getSearchClient().getFilterById("10000");
+        FilterBean filterBean = future.get();
+        Assert.assertNotNull(filterBean);
+    }
+
 }

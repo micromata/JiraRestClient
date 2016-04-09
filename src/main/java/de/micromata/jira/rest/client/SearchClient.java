@@ -35,7 +35,7 @@ public interface SearchClient {
 
 
     /**
-     * Get favorite Filter for JqlSearch for hte logged in User
+     * Get favorite Filter for JqlSearch for the logged in User
      *
      * @return List of FilterBeans
      */

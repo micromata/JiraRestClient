@@ -2,18 +2,13 @@
 package de.micromata.jira.rest.core.domain.filter;
 
 import com.google.gson.annotations.Expose;
+import de.micromata.jira.rest.core.domain.BaseBean;
 import de.micromata.jira.rest.core.domain.UserBean;
 
 import java.util.List;
 
-public class FilterBean {
+public class FilterBean extends BaseBean {
 
-    @Expose
-    private String self;
-    @Expose
-    private String id;
-    @Expose
-    private String name;
     @Expose
     private String description;
     @Expose
@@ -49,28 +44,12 @@ public class FilterBean {
         this.favourite = favourite;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getJql() {
         return jql;
     }
 
     public void setJql(String jql) {
         this.jql = jql;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public UserBean getOwner() {
@@ -87,14 +66,6 @@ public class FilterBean {
 
     public void setSearchUrl(String searchUrl) {
         this.searchUrl = searchUrl;
-    }
-
-    public String getSelf() {
-        return self;
-    }
-
-    public void setSelf(String self) {
-        this.self = self;
     }
 
     public SharedUsers getSharedUsers() {
