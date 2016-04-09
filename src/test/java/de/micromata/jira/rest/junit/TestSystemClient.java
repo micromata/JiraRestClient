@@ -90,6 +90,19 @@ public class TestSystemClient extends BaseTest {
     }
 
     @Test
+    public void testCreateCustomField() throws ExecutionException, InterruptedException {
+        CreateFieldBean createFieldBean = new CreateFieldBean();
+        createFieldBean.setName("New Custom Field");
+        createFieldBean.setDescription("Custom field for picking groups");
+        createFieldBean.setType("com.atlassian.jira.plugin.system.customfieldtypes:grouppicker");
+        createFieldBean.setSearcherKey("com.atlassian.jira.plugin.system.customfieldtypes:grouppickersearcher");
+        Future<FieldBean> customField = jiraRestClient.getSystemClient().createCustomField(createFieldBean);
+        FieldBean fieldBean = customField.get();
+        Assert.assertNotNull(fieldBean);
+        Assert.assertEquals(createFieldBean.getName(), fieldBean.getName());
+    }
+
+    @Test
     @Ignore
     public void testGetAttachmentMeta() throws ExecutionException, InterruptedException {
         final Future<AttachmentMetaBean> future = jiraRestClient.getSystemClient().getAttachmentMeta();

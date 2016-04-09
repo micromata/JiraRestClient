@@ -73,4 +73,12 @@ public interface SystemClient {
      */
     Future<AttachmentMetaBean> getAttachmentMeta();
 
+    /**
+     * Creates a Custom Field
+     *
+     * @param fieldBean The CreateFieldBean with the create Informations
+     * @return The created Field as FieldBean
+     */
+    Future<FieldBean> createCustomField(CreateFieldBean fieldBean);
+
 }

@@ -14,9 +14,11 @@ import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.util.RestException;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.io.IOException;
@@ -134,14 +136,14 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                 HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
                 CloseableHttpResponse response = client.execute(method, clientContext);
                 int statusCode = response.getStatusLine().getStatusCode();
-                if(statusCode == HttpURLConnection.HTTP_OK){
+                if (statusCode == HttpURLConnection.HTTP_OK) {
                     JsonReader jsonReader = getJsonReader(response);
                     Type listType = new TypeToken<ArrayList<FieldBean>>() {
                     }.getType();
                     List<FieldBean> fields = gson.fromJson(jsonReader, listType);
                     method.releaseConnection();
                     return fields;
-                }else{
+                } else {
                     RestException restException = new RestException(response);
                     method.releaseConnection();
                     response.close();
@@ -160,7 +162,7 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                 Future<List<FieldBean>> allFields = getAllFields();
                 List<FieldBean> fieldBeen = allFields.get();
                 for (FieldBean fieldBean : fieldBeen) {
-                    if(fieldBean.getCustom() == true){
+                    if (fieldBean.getCustom() == true) {
                         retval.add(fieldBean);
                     }
                 }
@@ -177,10 +179,10 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
                 Future<List<FieldBean>> allFields = getAllFields();
                 List<FieldBean> fieldBeen = allFields.get();
                 for (FieldBean fieldBean : fieldBeen) {
-                    if(fieldBean.getCustom() == false){
+                    if (fieldBean.getCustom() == false) {
                         continue;
                     }
-                    if(fieldBean.getId().contains(id) == true){
+                    if (fieldBean.getId().contains(id) == true) {
                         return fieldBean;
                     }
                 }
@@ -192,5 +194,28 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
 
     public Future<AttachmentMetaBean> getAttachmentMeta() {
         return null;
+    }
+
+    @Override
+    public Future<FieldBean> createCustomField(CreateFieldBean customField) {
+        return executorService.submit(new Callable<FieldBean>() {
+            @Override
+            public FieldBean call() throws Exception {
+                URIBuilder uriBuilder = buildPath(FIELD);
+                HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(), customField.toString());
+                CloseableHttpResponse response = client.execute(method, clientContext);
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == HttpURLConnection.HTTP_CREATED) {
+                    JsonReader jsonReader = getJsonReader(response);
+                    FieldBean fieldBean = gson.fromJson(jsonReader, FieldBean.class);
+                    return fieldBean;
+                } else {
+                    RestException restException = new RestException(response);
+                    method.releaseConnection();
+                    response.close();
+                    throw restException;
+                }
+            }
+        });
     }
 }

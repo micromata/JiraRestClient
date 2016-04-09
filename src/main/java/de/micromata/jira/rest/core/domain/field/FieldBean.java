@@ -2,16 +2,13 @@
 package de.micromata.jira.rest.core.domain.field;
 
 import com.google.gson.annotations.Expose;
+import de.micromata.jira.rest.core.domain.BaseBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FieldBean {
+public class FieldBean extends BaseBean{
 
-    @Expose
-    private String id;
-    @Expose
-    private String name;
     @Expose
     private Boolean custom;
     @Expose
@@ -39,22 +36,6 @@ public class FieldBean {
 
     public void setCustom(Boolean custom) {
         this.custom = custom;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Boolean getNavigable() {

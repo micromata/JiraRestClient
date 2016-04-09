@@ -1,11 +1,9 @@
 package de.micromata.jira.rest.core.domain.field;
 
 import com.google.gson.annotations.Expose;
+import de.micromata.jira.rest.core.domain.BaseBean;
 
-public class CreateFieldBean {
-
-    @Expose
-    private String name;
+public class CreateFieldBean extends BaseBean{
     @Expose
     private String description;
     @Expose
@@ -19,14 +17,6 @@ public class CreateFieldBean {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSearcherKey() {
