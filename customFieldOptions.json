@@ -1,0 +1,948 @@
+{"expand": "projects",
+  "projects": [
+    {
+      "expand": "issuetypes",
+      "self": "http://localhost:2990/jira/rest/api/2/project/10000",
+      "id": "10000",
+      "key": "DEMO",
+      "name": "Demonstration Project",
+      "avatarUrls": {
+        "48x48": "http://localhost:2990/jira/secure/projectavatar?pid=10000&avatarId=10300",
+        "24x24": "http://localhost:2990/jira/secure/projectavatar?size=small&pid=10000&avatarId=10300",
+        "16x16": "http://localhost:2990/jira/secure/projectavatar?size=xsmall&pid=10000&avatarId=10300",
+        "32x32": "http://localhost:2990/jira/secure/projectavatar?size=medium&pid=10000&avatarId=10300"
+      },
+      "issuetypes": [
+        {
+          "self": "http://localhost:2990/jira/rest/api/2/issuetype/1",
+          "id": "1",
+          "description": "Ein Problem, das die Funktionen des Produkts beeinträchtigt oder verhindert.",
+          "iconUrl": "http://localhost:2990/jira/secure/viewavatar?size=xsmall&avatarId=10403&avatarType=issuetype",
+          "name": "Bug",
+          "subtask": false,
+          "expand": "fields",
+          "fields": {
+            "issuetype": {
+              "required": true,
+              "schema": {
+                "type": "issuetype",
+                "system": "issuetype"
+              },
+              "name": "Vorgangstyp",
+              "hasDefaultValue": false,
+              "operations": [],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/issuetype/1",
+                  "id": "1",
+                  "description": "Ein Problem, das die Funktionen des Produkts beeinträchtigt oder verhindert.",
+                  "iconUrl": "http://localhost:2990/jira/secure/viewavatar?size=xsmall&avatarId=10403&avatarType=issuetype",
+                  "name": "Bug",
+                  "subtask": false,
+                  "avatarId": 10403
+                }
+              ]
+            },
+            "components": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "component",
+                "system": "components"
+              },
+              "name": "Komponente(n)",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "set",
+                "remove"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/component/10000",
+                  "id": "10000",
+                  "name": "Komponente 1"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/component/10001",
+                  "id": "10001",
+                  "name": "Komponente 2"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/component/10002",
+                  "id": "10002",
+                  "name": "Komponente 3"
+                }
+              ]
+            },
+            "description": {
+              "required": false,
+              "schema": {
+                "type": "string",
+                "system": "description"
+              },
+              "name": "Beschreibung",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "project": {
+              "required": true,
+              "schema": {
+                "type": "project",
+                "system": "project"
+              },
+              "name": "Projekt",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/project/10000",
+                  "id": "10000",
+                  "key": "DEMO",
+                  "name": "Demonstration Project",
+                  "avatarUrls": {
+                    "48x48": "http://localhost:2990/jira/secure/projectavatar?pid=10000&avatarId=10300",
+                    "24x24": "http://localhost:2990/jira/secure/projectavatar?size=small&pid=10000&avatarId=10300",
+                    "16x16": "http://localhost:2990/jira/secure/projectavatar?size=xsmall&pid=10000&avatarId=10300",
+                    "32x32": "http://localhost:2990/jira/secure/projectavatar?size=medium&pid=10000&avatarId=10300"
+                  }
+                }
+              ]
+            },
+            "fixVersions": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "version",
+                "system": "fixVersions"
+              },
+              "name": "Lösungsversion(en)",
+              "hasDefaultValue": false,
+              "operations": [
+                "set",
+                "add",
+                "remove"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10000",
+                  "id": "10000",
+                  "description": "Das erste Release",
+                  "name": "1.0",
+                  "archived": true,
+                  "released": true,
+                  "startDate": "2016-02-01",
+                  "releaseDate": "2016-02-22",
+                  "userStartDate": "01/Feb/16",
+                  "userReleaseDate": "22/Feb/16",
+                  "projectId": 10000
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10100",
+                  "id": "10100",
+                  "description": "Das erste BugFix Release",
+                  "name": "1.1",
+                  "archived": false,
+                  "released": true,
+                  "startDate": "2016-02-23",
+                  "releaseDate": "2016-03-07",
+                  "userStartDate": "23/Feb/16",
+                  "userReleaseDate": "07/Mär/16",
+                  "projectId": 10000
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10101",
+                  "id": "10101",
+                  "description": "Das erste Release mit neuen Features",
+                  "name": "1.5",
+                  "archived": false,
+                  "released": false,
+                  "startDate": "2016-05-09",
+                  "releaseDate": "2016-07-25",
+                  "overdue": false,
+                  "userStartDate": "09/Mai/16",
+                  "userReleaseDate": "25/Jul/16",
+                  "projectId": 10000
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10001",
+                  "id": "10001",
+                  "description": "Die erste überarbeitete Version",
+                  "name": "2.0",
+                  "archived": false,
+                  "released": false,
+                  "startDate": "2016-08-01",
+                  "releaseDate": "2016-12-05",
+                  "overdue": false,
+                  "userStartDate": "01/Aug/16",
+                  "userReleaseDate": "05/Dez/16",
+                  "projectId": 10000
+                }
+              ]
+            },
+            "customfield_10110": {
+              "required": false,
+              "schema": {
+                "type": "number",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:float",
+                "customId": 10110
+              },
+              "name": "Zahlenfeld",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "timetracking": {
+              "required": false,
+              "schema": {
+                "type": "timetracking",
+                "system": "timetracking"
+              },
+              "name": "Zeitverfolgung",
+              "hasDefaultValue": false,
+              "operations": [
+                "set",
+                "edit"
+              ]
+            },
+            "customfield_10104": {
+              "required": false,
+              "schema": {
+                "type": "date",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datepicker",
+                "customId": 10104
+              },
+              "name": "Datumauswahl",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "customfield_10203": {
+              "required": false,
+              "schema": {
+                "type": "project",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:project",
+                "customId": 10203
+              },
+              "name": "Project-Auswahl single",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/project/10000",
+                  "id": "10000",
+                  "key": "DEMO",
+                  "name": "Demonstration Project",
+                  "avatarUrls": {
+                    "48x48": "http://localhost:2990/jira/secure/projectavatar?pid=10000&avatarId=10300",
+                    "24x24": "http://localhost:2990/jira/secure/projectavatar?size=small&pid=10000&avatarId=10300",
+                    "16x16": "http://localhost:2990/jira/secure/projectavatar?size=xsmall&pid=10000&avatarId=10300",
+                    "32x32": "http://localhost:2990/jira/secure/projectavatar?size=medium&pid=10000&avatarId=10300"
+                  }
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/project/10001",
+                  "id": "10001",
+                  "key": "LOCAL",
+                  "name": "Local",
+                  "avatarUrls": {
+                    "48x48": "http://localhost:2990/jira/secure/projectavatar?pid=10001&avatarId=10011",
+                    "24x24": "http://localhost:2990/jira/secure/projectavatar?size=small&pid=10001&avatarId=10011",
+                    "16x16": "http://localhost:2990/jira/secure/projectavatar?size=xsmall&pid=10001&avatarId=10011",
+                    "32x32": "http://localhost:2990/jira/secure/projectavatar?size=medium&pid=10001&avatarId=10011"
+                  }
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/project/10100",
+                  "id": "10100",
+                  "key": "TEAMLOCAL",
+                  "name": "Team-local",
+                  "avatarUrls": {
+                    "48x48": "http://localhost:2990/jira/secure/projectavatar?pid=10100&avatarId=10011",
+                    "24x24": "http://localhost:2990/jira/secure/projectavatar?size=small&pid=10100&avatarId=10011",
+                    "16x16": "http://localhost:2990/jira/secure/projectavatar?size=xsmall&pid=10100&avatarId=10011",
+                    "32x32": "http://localhost:2990/jira/secure/projectavatar?size=medium&pid=10100&avatarId=10011"
+                  }
+                }
+              ]
+            },
+            "customfield_10105": {
+              "required": false,
+              "schema": {
+                "type": "string",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:url",
+                "customId": 10105
+              },
+              "name": "Url-Feld",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "customfield_10204": {
+              "required": false,
+              "schema": {
+                "type": "version",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:version",
+                "customId": 10204
+              },
+              "name": "Versionsauswahl single",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10000",
+                  "id": "10000",
+                  "description": "Das erste Release",
+                  "name": "1.0",
+                  "archived": true,
+                  "released": true,
+                  "releaseDate": "2016-02-22"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10100",
+                  "id": "10100",
+                  "description": "Das erste BugFix Release",
+                  "name": "1.1",
+                  "archived": false,
+                  "released": true,
+                  "releaseDate": "2016-03-07"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10101",
+                  "id": "10101",
+                  "description": "Das erste Release mit neuen Features",
+                  "name": "1.5",
+                  "archived": false,
+                  "released": false,
+                  "releaseDate": "2016-07-25"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10001",
+                  "id": "10001",
+                  "description": "Die erste überarbeitete Version",
+                  "name": "2.0",
+                  "archived": false,
+                  "released": false,
+                  "releaseDate": "2016-12-05"
+                }
+              ]
+            },
+            "customfield_10106": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "string",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multicheckboxes",
+                "customId": 10106
+              },
+              "name": "Checkbox",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "set",
+                "remove"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10118",
+                  "value": "green",
+                  "id": "10118"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10119",
+                  "value": "red",
+                  "id": "10119"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10120",
+                  "value": "blue",
+                  "id": "10120"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10121",
+                  "value": "yellow",
+                  "id": "10121"
+                }
+              ]
+            },
+            "customfield_10205": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "version",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multiversion",
+                "customId": 10205
+              },
+              "name": "Versionsauswahl multi",
+              "hasDefaultValue": false,
+              "operations": [
+                "set",
+                "add",
+                "remove"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10000",
+                  "id": "10000",
+                  "description": "Das erste Release",
+                  "name": "1.0",
+                  "archived": true,
+                  "released": true,
+                  "releaseDate": "2016-02-22"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10100",
+                  "id": "10100",
+                  "description": "Das erste BugFix Release",
+                  "name": "1.1",
+                  "archived": false,
+                  "released": true,
+                  "releaseDate": "2016-03-07"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10101",
+                  "id": "10101",
+                  "description": "Das erste Release mit neuen Features",
+                  "name": "1.5",
+                  "archived": false,
+                  "released": false,
+                  "releaseDate": "2016-07-25"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10001",
+                  "id": "10001",
+                  "description": "Die erste überarbeitete Version",
+                  "name": "2.0",
+                  "archived": false,
+                  "released": false,
+                  "releaseDate": "2016-12-05"
+                }
+              ]
+            },
+            "customfield_10107": {
+              "required": false,
+              "schema": {
+                "type": "string",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:radiobuttons",
+                "customId": 10107
+              },
+              "name": "Optionsfeld",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10122",
+                  "value": "purple",
+                  "id": "10122"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10123",
+                  "value": "pink",
+                  "id": "10123"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10124",
+                  "value": "lightblue",
+                  "id": "10124"
+                }
+              ]
+            },
+            "attachment": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "attachment",
+                "system": "attachment"
+              },
+              "name": "Anhang",
+              "hasDefaultValue": false,
+              "operations": []
+            },
+            "customfield_10108": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "string",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:labels",
+                "customId": 10108
+              },
+              "name": "Stichwörter",
+              "autoCompleteUrl": "http://localhost:2990/jira/rest/api/1.0/labels/null/suggest?customFieldId=10108&query=",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "set",
+                "remove"
+              ]
+            },
+            "customfield_10109": {
+              "required": false,
+              "schema": {
+                "type": "string",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+                "customId": 10109
+              },
+              "name": "Textfeld mehrzeilig",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "summary": {
+              "required": true,
+              "schema": {
+                "type": "string",
+                "system": "summary"
+              },
+              "name": "Zusammenfassung",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "reporter": {
+              "required": true,
+              "schema": {
+                "type": "user",
+                "system": "reporter"
+              },
+              "name": "Autor",
+              "autoCompleteUrl": "http://localhost:2990/jira/rest/api/latest/user/search?username=",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "customfield_10000": {
+              "required": false,
+              "schema": {
+                "type": "string",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:select",
+                "customId": 10000
+              },
+              "name": "Einfachauswahl",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10000",
+                  "value": "1",
+                  "id": "10000"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10001",
+                  "value": "2",
+                  "id": "10001"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10002",
+                  "value": "3",
+                  "id": "10002"
+                }
+              ]
+            },
+            "priority": {
+              "required": false,
+              "schema": {
+                "type": "priority",
+                "system": "priority"
+              },
+              "name": "Priorität",
+              "hasDefaultValue": true,
+              "operations": [
+                "set"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/priority/1",
+                  "iconUrl": "http://localhost:2990/jira/images/icons/priorities/blocker.svg",
+                  "name": "Blocker",
+                  "id": "1"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/priority/2",
+                  "iconUrl": "http://localhost:2990/jira/images/icons/priorities/critical.svg",
+                  "name": "Kritisch",
+                  "id": "2"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/priority/3",
+                  "iconUrl": "http://localhost:2990/jira/images/icons/priorities/major.svg",
+                  "name": "Schwer",
+                  "id": "3"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/priority/4",
+                  "iconUrl": "http://localhost:2990/jira/images/icons/priorities/minor.svg",
+                  "name": "Unwesentlich",
+                  "id": "4"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/priority/5",
+                  "iconUrl": "http://localhost:2990/jira/images/icons/priorities/trivial.svg",
+                  "name": "Trivial",
+                  "id": "5"
+                }
+              ]
+            },
+            "customfield_10001": {
+              "required": false,
+              "schema": {
+                "type": "string",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+                "customId": 10001
+              },
+              "name": "Textfeld einzeilig",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "customfield_10100": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "string",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:cascadingselect",
+                "customId": 10100
+              },
+              "name": "kaskadierte Auswahlliste",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10100",
+                  "value": "1",
+                  "id": "10100",
+                  "children": [
+                    {
+                      "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10103",
+                      "value": "a",
+                      "id": "10103"
+                    },
+                    {
+                      "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10104",
+                      "value": "b",
+                      "id": "10104"
+                    },
+                    {
+                      "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10105",
+                      "value": "c",
+                      "id": "10105"
+                    }
+                  ]
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10101",
+                  "value": "2",
+                  "id": "10101",
+                  "children": [
+                    {
+                      "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10106",
+                      "value": "x",
+                      "id": "10106"
+                    },
+                    {
+                      "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10107",
+                      "value": "y",
+                      "id": "10107"
+                    },
+                    {
+                      "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10108",
+                      "value": "z",
+                      "id": "10108"
+                    }
+                  ]
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10102",
+                  "value": "3",
+                  "id": "10102",
+                  "children": [
+                    {
+                      "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10109",
+                      "value": "m",
+                      "id": "10109"
+                    },
+                    {
+                      "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10110",
+                      "value": "n",
+                      "id": "10110"
+                    },
+                    {
+                      "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10111",
+                      "value": "o",
+                      "id": "10111"
+                    }
+                  ]
+                }
+              ]
+            },
+            "customfield_10101": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "string",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multiselect",
+                "customId": 10101
+              },
+              "name": "Mehrfachauswahl",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "set",
+                "remove"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10112",
+                  "value": "foo",
+                  "id": "10112"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10113",
+                  "value": "bar",
+                  "id": "10113"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10114",
+                  "value": "black",
+                  "id": "10114"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10115",
+                  "value": "white",
+                  "id": "10115"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10116",
+                  "value": "red",
+                  "id": "10116"
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/customFieldOption/10117",
+                  "value": "green",
+                  "id": "10117"
+                }
+              ]
+            },
+            "customfield_10200": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "user",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multiuserpicker",
+                "customId": 10200
+              },
+              "name": "Benutzerauswahl multi",
+              "autoCompleteUrl": "http://localhost:2990/jira/rest/api/1.0/users/picker?fieldName=customfield_10200&query=",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "set",
+                "remove"
+              ]
+            },
+            "customfield_10102": {
+              "required": false,
+              "schema": {
+                "type": "user",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:userpicker",
+                "customId": 10102
+              },
+              "name": "Benutzerauswahl",
+              "autoCompleteUrl": "http://localhost:2990/jira/rest/api/1.0/users/picker?fieldName=customfield_10102&query=",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "customfield_10201": {
+              "required": false,
+              "schema": {
+                "type": "group",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:grouppicker",
+                "customId": 10201
+              },
+              "name": "Gruppenauswahl single",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "labels": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "string",
+                "system": "labels"
+              },
+              "name": "Stichwörter",
+              "autoCompleteUrl": "http://localhost:2990/jira/rest/api/1.0/labels/suggest?query=",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "set",
+                "remove"
+              ]
+            },
+            "customfield_10103": {
+              "required": false,
+              "schema": {
+                "type": "datetime",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:datetime",
+                "customId": 10103
+              },
+              "name": "Datum Zeit Auswahl",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "customfield_10202": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "group",
+                "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multigrouppicker",
+                "customId": 10202
+              },
+              "name": "Gruppenauswahl multi",
+              "hasDefaultValue": false,
+              "operations": [
+                "add",
+                "set",
+                "remove"
+              ]
+            },
+            "environment": {
+              "required": false,
+              "schema": {
+                "type": "string",
+                "system": "environment"
+              },
+              "name": "Umgebung",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "versions": {
+              "required": false,
+              "schema": {
+                "type": "array",
+                "items": "version",
+                "system": "versions"
+              },
+              "name": "betrifft Version(en)",
+              "hasDefaultValue": false,
+              "operations": [
+                "set",
+                "add",
+                "remove"
+              ],
+              "allowedValues": [
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10000",
+                  "id": "10000",
+                  "description": "Das erste Release",
+                  "name": "1.0",
+                  "archived": true,
+                  "released": true,
+                  "startDate": "2016-02-01",
+                  "releaseDate": "2016-02-22",
+                  "userStartDate": "01/Feb/16",
+                  "userReleaseDate": "22/Feb/16",
+                  "projectId": 10000
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10100",
+                  "id": "10100",
+                  "description": "Das erste BugFix Release",
+                  "name": "1.1",
+                  "archived": false,
+                  "released": true,
+                  "startDate": "2016-02-23",
+                  "releaseDate": "2016-03-07",
+                  "userStartDate": "23/Feb/16",
+                  "userReleaseDate": "07/Mär/16",
+                  "projectId": 10000
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10101",
+                  "id": "10101",
+                  "description": "Das erste Release mit neuen Features",
+                  "name": "1.5",
+                  "archived": false,
+                  "released": false,
+                  "startDate": "2016-05-09",
+                  "releaseDate": "2016-07-25",
+                  "overdue": false,
+                  "userStartDate": "09/Mai/16",
+                  "userReleaseDate": "25/Jul/16",
+                  "projectId": 10000
+                },
+                {
+                  "self": "http://localhost:2990/jira/rest/api/2/version/10001",
+                  "id": "10001",
+                  "description": "Die erste überarbeitete Version",
+                  "name": "2.0",
+                  "archived": false,
+                  "released": false,
+                  "startDate": "2016-08-01",
+                  "releaseDate": "2016-12-05",
+                  "overdue": false,
+                  "userStartDate": "01/Aug/16",
+                  "userReleaseDate": "05/Dez/16",
+                  "projectId": 10000
+                }
+              ]
+            },
+            "duedate": {
+              "required": false,
+              "schema": {
+                "type": "date",
+                "system": "duedate"
+              },
+              "name": "Fälligkeitsdatum",
+              "hasDefaultValue": false,
+              "operations": [
+                "set"
+              ]
+            },
+            "assignee": {
+              "required": true,
+              "schema": {
+                "type": "user",
+                "system": "assignee"
+              },
+              "name": "Bearbeiter",
+              "autoCompleteUrl": "http://localhost:2990/jira/rest/api/latest/user/assignable/search?issueKey=null&username=",
+              "hasDefaultValue": true,
+              "operations": [
+                "set"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
