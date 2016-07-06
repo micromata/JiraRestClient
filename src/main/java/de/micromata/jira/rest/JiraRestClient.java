@@ -7,9 +7,7 @@ import de.micromata.jira.rest.core.misc.RestParamConstants;
 import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.util.URIHelper;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.validator.Field;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -56,6 +54,16 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
 
     private static Map<String, FieldBean> customfields;
 
+    private IssueClient issueClient;
+
+    private UserClient userClient;
+
+    private SearchClient searchClient;
+
+    private ProjectClient projectClient;
+
+    private SystemClient systemClient;
+
     public JiraRestClient(ExecutorService executorService) {
         this.executorService = executorService;
     }
@@ -77,8 +85,8 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         this.username = username;
         String host = uri.getHost();
         int port = getPort(uri.toURL());
-        String scheme = "http";
-        if (port == 443) scheme = "https";
+        String scheme = HTTP;
+        if (port == 443) scheme = HTTPS;
         HttpHost target = new HttpHost(host, port, scheme);
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
         credsProvider.setCredentials(
@@ -103,7 +111,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
         CloseableHttpResponse response = httpclient.execute(method, clientContext);
         int statusCode = response.getStatusLine().getStatusCode();
-        if(statusCode == 200){
+        if (statusCode == 200) {
             // Get the Cache for the CustomFields, need to deserialize the customFields in Issue Json
             Future<List<FieldBean>> allCustomFields = getSystemClient().getAllCustomFields();
             List<FieldBean> fieldBeen = allCustomFields.get();
@@ -116,7 +124,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         return statusCode;
     }
 
-    public static Map<String, FieldBean> getCustomfields(){
+    public static Map<String, FieldBean> getCustomfields() {
         return customfields;
     }
 
@@ -153,23 +161,38 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
 
 
     public IssueClient getIssueClient() {
-        return new IssueClientImpl(this, executorService);
+        if (issueClient == null) {
+            issueClient = new IssueClientImpl(this, executorService);
+        }
+        return issueClient;
     }
 
     public ProjectClient getProjectClient() {
-        return new ProjectClientImpl(this, executorService);
+        if (projectClient == null) {
+            projectClient = new ProjectClientImpl(this, executorService);
+        }
+        return projectClient;
     }
 
     public SearchClient getSearchClient() {
-        return new SearchClientImpl(this, executorService);
+        if (searchClient == null) {
+            searchClient = new SearchClientImpl(this, executorService);
+        }
+        return searchClient;
     }
 
     public SystemClient getSystemClient() {
-        return new SystemClientImpl(this, executorService);
+        if (systemClient == null) {
+            systemClient = new SystemClientImpl(this, executorService);
+        }
+        return systemClient;
     }
 
     public UserClient getUserClient() {
-        return new UserClientImpl(this, executorService);
+        if (userClient == null) {
+            userClient = new UserClientImpl(this, executorService);
+        }
+        return userClient;
     }
 
     public CloseableHttpClient getClient() {

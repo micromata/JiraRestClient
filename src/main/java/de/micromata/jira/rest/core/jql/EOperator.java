@@ -212,7 +212,7 @@ public enum EOperator {
      *
      * @param operator the name of the operator
      */
-    private EOperator(String operator) {
+    EOperator(String operator) {
         this.operator = operator;
     }
 

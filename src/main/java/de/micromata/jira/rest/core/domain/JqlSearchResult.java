@@ -72,7 +72,7 @@ public class JqlSearchResult {
 
     public List<IssueBean> getIssues() {
         if (issues == null) {
-            issues = new ArrayList<IssueBean>();
+            issues = new ArrayList<>();
         }
         return issues;
     }

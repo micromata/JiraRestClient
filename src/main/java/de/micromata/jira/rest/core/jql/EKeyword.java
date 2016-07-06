@@ -86,7 +86,7 @@ public enum EKeyword {
      *
      * @param keyword name of the keyword
      */
-    private EKeyword(String keyword) {
+    EKeyword(String keyword) {
         this.keyword = keyword;
     }
 

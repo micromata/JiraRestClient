@@ -415,7 +415,7 @@ public enum EField {
      * @param field = name of the field
      * @param type  = type of the field
      */
-    private EField(String field, EFieldType type) {
+    EField(String field, EFieldType type) {
         this.field = field;
         this.type = type;
     }

@@ -21,63 +21,63 @@ package de.micromata.jira.rest.core.jql;
  */
 public interface JqlConstants {
 
-    public static final String PROJECT = "project";
+    String PROJECT = "project";
 
-    public static final String ORDER_BY = "ORDER_BY";
+    String ORDER_BY = "ORDER_BY";
 
-    public static final String ISSUETYPE = "issuetype";
+    String ISSUETYPE = "issuetype";
 
-    public static final String STATUS = "status";
+    String STATUS = "status";
 
-    public static final String AND = "and";
+    String AND = "and";
 
-    public static final String OR = "or";
+    String OR = "or";
 
     // Issue Field Names für die JQL Suche
 
-    public static final String FIELD_SUMMARY = "summary";
+    String FIELD_SUMMARY = "summary";
 
-    public static final String FIELD_ISSUETYPE = "issuetype";
+    String FIELD_ISSUETYPE = "issuetype";
 
-    public static final String FIELD_STATUS = "status";
+    String FIELD_STATUS = "status";
 
-    public static final String FIELD_DUEDATE = "duedate";
+    String FIELD_DUEDATE = "duedate";
 
-    public static final String FIELD_PRIORITY = "priority";
+    String FIELD_PRIORITY = "priority";
 
     //Issue Status für die JQL Suche
 
-    public static final String STATUS_OPEN = "open";
+    String STATUS_OPEN = "open";
 
-    public static final String STATUS_CLOSED = "closed";
+    String STATUS_CLOSED = "closed";
 
-    public static final String STATUS_RESOLVED = "resolved";
+    String STATUS_RESOLVED = "resolved";
 
-    public static final String STATUS_IN_PROGRESS = "\"in progress\"";
+    String STATUS_IN_PROGRESS = "\"in progress\"";
 
-    public static final String STATUS_REOPENED = "reopened";
+    String STATUS_REOPENED = "reopened";
 
     //Issue Type für die JQL Suche
 
-    public static final String ISSUETYPE_IMPROVEMENT = "improvement";
+    String ISSUETYPE_IMPROVEMENT = "improvement";
 
-    public static final String ISSUETYPE_BUG = "bug";
+    String ISSUETYPE_BUG = "bug";
 
-    public static final String ISSUETYPE_NEW_FEATURE = "\"new feature\"";
+    String ISSUETYPE_NEW_FEATURE = "\"new feature\"";
 
-    public static final String ISSUETYPE_SUBTASK = "sub-task";
+    String ISSUETYPE_SUBTASK = "sub-task";
 
-    public static final String ISSUETYPE_TASK = "task";
+    String ISSUETYPE_TASK = "task";
 
     //Priority für die SQL Suche
 
-    public static final String PRIORITY_MAJOR = "major";
+    String PRIORITY_MAJOR = "major";
 
-    public static final String PRIORITY_BLOCKER = "blocker";
+    String PRIORITY_BLOCKER = "blocker";
 
-    public static final String PRIORITY_CRITICAL = "critical";
+    String PRIORITY_CRITICAL = "critical";
 
-    public static final String PRIORITY_MINOR = "minor";
+    String PRIORITY_MINOR = "minor";
 
-    public static final String PRIORITY_TRIVIAL = "trivial";
+    String PRIORITY_TRIVIAL = "trivial";
 }

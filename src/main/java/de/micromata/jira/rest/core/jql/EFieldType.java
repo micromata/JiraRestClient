@@ -130,7 +130,7 @@ public enum EFieldType {
      *
      * @param supportedOperators = the supported operators for a type
      */
-    private EFieldType(EOperator... supportedOperators) {
+    EFieldType(EOperator... supportedOperators) {
         this.supportedOperators = Arrays.asList(supportedOperators);
     }
 

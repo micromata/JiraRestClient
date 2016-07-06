@@ -25,7 +25,6 @@ public interface IssueClient {
      */
     Future<IssueResponse> createIssue(IssueBean issue) throws RestException, IOException;
 
-
     /**
      * Returns a full representation of the issue for the given issue key.
      *
