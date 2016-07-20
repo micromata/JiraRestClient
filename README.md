@@ -2,6 +2,12 @@
 
 This is a simple JiraRestClient to use the RestAPI V2.0 of Jira.
 
+## Version 2.2
+
+* adding support to upload Attachments to an Issue (IssueClient)
+* adding support to get/add SearchFilters (SearchClient)
+* adding support to get the Permissions of the logged in User (UserClient)
+
 ## Version 2.1.1
 
 * adding support for IssueType Fields Meta Data.

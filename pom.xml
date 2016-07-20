@@ -20,7 +20,7 @@
 
     <groupId>de.micromata</groupId>
     <artifactId>jiraRestClient</artifactId>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.2</version>
     <packaging>jar</packaging>
 
     <properties>
