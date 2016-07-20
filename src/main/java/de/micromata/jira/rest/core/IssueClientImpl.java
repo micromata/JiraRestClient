@@ -271,7 +271,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
         return executorService.submit(() -> {
             URIBuilder uriBuilder = buildPath(ISSUE, issuekey, ATTACHMENTS);
             HttpPost postMethod = new HttpPost(uriBuilder.build());
-            postMethod.setHeader("X-Atlassian-Token", "nocheck");
+            postMethod.setHeader("X-Atlassian-Token", "no-check");
             MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
             for (File file : files) {
                 FileBody fileBody = new FileBody(file, ContentType.MULTIPART_FORM_DATA);
