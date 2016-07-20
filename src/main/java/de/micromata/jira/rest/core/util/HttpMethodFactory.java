@@ -9,6 +9,8 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.message.BasicHeader;
 
 import javax.ws.rs.core.MediaType;
@@ -59,17 +61,6 @@ public class HttpMethodFactory {
         method.setEntity(entity);
         return method;
     }
-
-    public static HttpPost createMultiPartPostMethod(URI uri, File content, String contentType) throws FileNotFoundException {
-        if(uri == null) return null;
-        HttpPost method = new HttpPost(uri.getPath());
-        method.addHeader("X-Atlassian-Token", "nocheck");
-        InputStreamEntity reqEntity = new InputStreamEntity(
-                new FileInputStream(content), -1, ContentType.APPLICATION_OCTET_STREAM);
-        reqEntity.setChunked(true);
-        return method;
-    }
-
 
     private static void setHeader(HttpMessage httpMessage){
         httpMessage.addHeader(new BasicHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON));

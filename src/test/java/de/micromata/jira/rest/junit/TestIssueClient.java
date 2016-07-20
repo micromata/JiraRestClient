@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -173,10 +174,18 @@ public class TestIssueClient extends BaseTest {
     }
 
     @Test
-    public void testSaveAttachment() throws IOException, RestException {
-        File file = new File("c:\\cat.jpg");
+    public void testSaveAttachment() throws IOException, RestException, ExecutionException, InterruptedException {
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        File file = new File(classLoader.getResource("fields.json").getFile());
+        File file2  = new File(classLoader.getResource("customfields.json").getFile());
         if(file.exists() == true){
-            jiraRestClient.getIssueClient().saveAttachmentToIssue(file, ISSUEKEY_TO_SEARCH);
+            try {
+                Future<List<AttachmentBean>> listFuture = jiraRestClient.getIssueClient().saveAttachmentToIssue(ISSUEKEY_TO_SEARCH, file, file2);
+                List<AttachmentBean> attachmentBeen = listFuture.get();
+                Assert.assertFalse(attachmentBeen.isEmpty());
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

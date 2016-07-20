@@ -81,7 +81,7 @@ public interface IssueClient {
     /**
      * Save Attachment to Issue
      */
-    void saveAttachmentToIssue(File file, String issuekey) throws IOException, RestException;
+    Future<List<AttachmentBean>> saveAttachmentToIssue(String issuekey, File... file) throws IOException, RestException, URISyntaxException;
 
     /**
      * Returns true if the worklog is successfully transfered to the Issue.

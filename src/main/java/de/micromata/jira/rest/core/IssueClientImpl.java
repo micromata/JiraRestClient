@@ -1,5 +1,6 @@
 package de.micromata.jira.rest.core;
 
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.client.IssueClient;
@@ -20,14 +21,16 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -263,8 +266,36 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
 
     }
 
-    public void saveAttachmentToIssue(File file, String issuekey) {
+    public Future<List<AttachmentBean>> saveAttachmentToIssue(String issuekey,File... files) throws URISyntaxException, IOException, RestException {
 
+        return executorService.submit(() -> {
+            URIBuilder uriBuilder = buildPath(ISSUE, issuekey, ATTACHMENTS);
+            HttpPost postMethod = new HttpPost(uriBuilder.build());
+            postMethod.setHeader("X-Atlassian-Token", "nocheck");
+            MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+            for (File file : files) {
+                FileBody fileBody = new FileBody(file, ContentType.MULTIPART_FORM_DATA);
+                multipartEntityBuilder.addPart("file", fileBody);
+            }
+            HttpEntity entity = multipartEntityBuilder.build();
+            postMethod.setEntity(entity);
+            CloseableHttpResponse response = client.execute(postMethod);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if(statusCode == HttpURLConnection.HTTP_OK){
+                JsonReader jsonReader = getJsonReader(response);
+                Type listType = new TypeToken<ArrayList<AttachmentBean>>() {
+                }.getType();
+                List<AttachmentBean> attachments = gson.fromJson(jsonReader, listType);
+                postMethod.releaseConnection();
+                response.close();
+                return attachments;
+            }else{
+                RestException restException = new RestException(response);
+                postMethod.releaseConnection();
+                response.close();
+                throw restException;
+            }
+        });
     }
 
     public boolean transferWorklogInIssue(String issueKey, WorklogBean worklog)
