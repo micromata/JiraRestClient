@@ -1,6 +1,7 @@
 package de.micromata.jira.rest.junit;
 
 import de.micromata.jira.rest.core.domain.*;
+import de.micromata.jira.rest.core.domain.field.FieldBean;
 import de.micromata.jira.rest.core.domain.update.FieldOperation;
 import de.micromata.jira.rest.core.domain.update.IssueUpdate;
 import de.micromata.jira.rest.core.domain.update.Operation;
@@ -38,6 +39,7 @@ public class TestIssueClient extends BaseTest {
     @Test
     public void testGetIssueByKey() throws IOException, RestException, ExecutionException, InterruptedException {
         Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH);
+        Map<String, FieldBean> customfields = jiraRestClient.getCustomfields();
         final IssueBean issueBean = future.get();
         Assert.assertNotNull(issueBean);
         Assert.assertEquals(ISSUEKEY_TO_SEARCH, issueBean.getKey());

@@ -14,6 +14,7 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.protocol.HttpClientContext;
@@ -48,11 +49,13 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
     private URI baseUri;
     private String username = StringUtils.EMPTY;
     private CloseableHttpClient httpclient;
-    private HttpHost proxy;
+
     private CookieStore cookieStore = new BasicCookieStore();
     private HttpClientContext clientContext;
 
     private static Map<String, FieldBean> customfields;
+
+    private static RequestConfig requestConfig;
 
     private IssueClient issueClient;
 
@@ -106,6 +109,11 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         clientContext.setAuthCache(authCache);
         this.baseUri = buildBaseURI(uri);
 
+        // setzen des Proxies
+        if(proxyHost != null){
+            requestConfig = RequestConfig.custom().setProxy(proxyHost).build();
+        }
+
         URIBuilder uriBuilder = URIHelper.buildPath(baseUri, USER);
         uriBuilder.addParameter(USERNAME, username);
         HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
@@ -128,6 +136,9 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         return customfields;
     }
 
+    public static RequestConfig getRequestConfig() {
+        return requestConfig;
+    }
 
     /**
      * Extract port from URL
@@ -216,7 +227,4 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         return username;
     }
 
-    public HttpHost getProxy() {
-        return proxy;
-    }
 }

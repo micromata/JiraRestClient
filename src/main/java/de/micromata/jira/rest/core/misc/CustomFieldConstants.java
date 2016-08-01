@@ -4,11 +4,14 @@ public interface CustomFieldConstants {
 
     /**
      * Custom Field Types
+     * TODO cs+++ weitere Typen hinzufügen
      */
-    public static final String TYPE_GROUP_PICKER = "com.atlassian.jira.plugin.system.customfieldtypes:grouppicker";
+    String TYPE_GROUP_PICKER = "com.atlassian.jira.plugin.system.customfieldtypes:grouppicker";
+
+    String TYPE_NUMBER_FIELD = "com.atlassian.jira.plugin.system.customfieldtypes:float";
 
     /**
      * Searcherkeys
      */
-    public static final String SEARCHERKEY_GROUP_PICKER_SEARCHER = "com.atlassian.jira.plugin.system.customfieldtypes:grouppickersearcher";
+    String SEARCHERKEY_GROUP_PICKER_SEARCHER = "com.atlassian.jira.plugin.system.customfieldtypes:grouppickersearcher";
 }
