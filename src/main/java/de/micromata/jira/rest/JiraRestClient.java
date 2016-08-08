@@ -49,7 +49,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
     private URI baseUri;
     private String username = StringUtils.EMPTY;
     private CloseableHttpClient httpclient;
-
+    private HttpHost proxyHost;
     private CookieStore cookieStore = new BasicCookieStore();
     private HttpClientContext clientContext;
 
@@ -111,7 +111,8 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
 
         // setzen des Proxies
         if(proxyHost != null){
-            requestConfig = RequestConfig.custom().setProxy(proxyHost).build();
+            this.proxyHost = proxyHost;
+            this.requestConfig = RequestConfig.custom().setProxy(proxyHost).build();
         }
 
         URIBuilder uriBuilder = URIHelper.buildPath(baseUri, USER);
@@ -227,4 +228,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         return username;
     }
 
+    public HttpHost getProxy() {
+        return proxyHost;
+    }
 }
