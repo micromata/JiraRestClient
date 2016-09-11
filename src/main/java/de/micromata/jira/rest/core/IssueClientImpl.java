@@ -51,27 +51,24 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
 
     public Future<IssueBean> getIssueByKey(final String issueKey) throws RestException, IOException {
         Validate.notNull(issueKey);
-        return executorService.submit(new Callable<IssueBean>() {
+        return executorService.submit(() -> {
 
-            public IssueBean call() throws Exception {
-                
-                URIBuilder uriBuilder = buildPath(ISSUE, issueKey);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    return extractIssueBean(method, response);
-                }else if(statusCode == HttpURLConnection.HTTP_NOT_FOUND){
-                    method.releaseConnection();
-                    response.close();
-                    return null;
-                }
-                else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            URIBuilder uriBuilder = buildPath(ISSUE, issueKey);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                return extractIssueBean(method, response);
+            }else if(statusCode == HttpURLConnection.HTTP_NOT_FOUND){
+                method.releaseConnection();
+                response.close();
+                return null;
+            }
+            else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }
@@ -81,38 +78,36 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
     public Future<IssueResponse> createIssue(final IssueBean issue)
             throws RestException, IOException {
         Validate.notNull(issue);
-        return executorService.submit(new Callable<IssueResponse>() {
-            public IssueResponse call() throws Exception {
-                
-                String json = gson.toJson(issue);
-                URIBuilder uriBuilder = buildPath(ISSUE);
-                HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(),
-                        json);
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK
-                        || statusCode == HttpURLConnection.HTTP_CREATED) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    IssueBean issueBean = gson.fromJson(jsonReader,
-                            IssueBean.class);
-                    method.releaseConnection();
-                    response.close();
-                    return new IssueResponse(issueBean.getKey());
-                } else if (statusCode == HttpURLConnection.HTTP_BAD_REQUEST) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    JsonReader jsonReader = toJsonReader(inputStream);
-                    ErrorBean error = gson
-                            .fromJson(jsonReader, ErrorBean.class);
-                    method.releaseConnection();
-                    response.close();
-                    return new IssueResponse(error);
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+        return executorService.submit(() -> {
+
+            String json = gson.toJson(issue);
+            URIBuilder uriBuilder = buildPath(ISSUE);
+            HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(),
+                    json);
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK
+                    || statusCode == HttpURLConnection.HTTP_CREATED) {
+                JsonReader jsonReader = getJsonReader(response);
+                IssueBean issueBean = gson.fromJson(jsonReader,
+                        IssueBean.class);
+                method.releaseConnection();
+                response.close();
+                return new IssueResponse(issueBean.getKey());
+            } else if (statusCode == HttpURLConnection.HTTP_BAD_REQUEST) {
+                HttpEntity entity = response.getEntity();
+                InputStream inputStream = entity.getContent();
+                JsonReader jsonReader = toJsonReader(inputStream);
+                ErrorBean error = gson
+                        .fromJson(jsonReader, ErrorBean.class);
+                method.releaseConnection();
+                response.close();
+                return new IssueResponse(error);
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
 
@@ -123,26 +118,23 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
 
         Validate.notNull(issueKey);
         Validate.notNull(issueUpdate);
-        return executorService.submit(new Callable<IssueBean>() {
+        return executorService.submit(() -> {
 
-            public IssueBean call() throws Exception {
-                
-                URIBuilder uriBuilder = buildPath(ISSUE, issueKey);
-                String json = gson.toJson(issueUpdate);
-                HttpPut method = HttpMethodFactory.createPutMethod(uriBuilder.build(), json);
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_NO_CONTENT) {
-                    final Future<IssueBean> issueByKey = getIssueByKey(issueKey);
-                    method.releaseConnection();
-                    response.close();
-                    return issueByKey.get();
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            URIBuilder uriBuilder = buildPath(ISSUE, issueKey);
+            String json = gson.toJson(issueUpdate);
+            HttpPut method = HttpMethodFactory.createPutMethod(uriBuilder.build(), json);
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_NO_CONTENT) {
+                final Future<IssueBean> issueByKey = getIssueByKey(issueKey);
+                method.releaseConnection();
+                response.close();
+                return issueByKey.get();
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }
@@ -151,30 +143,27 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                                            final List<String> fields, final List<String> expand)
             throws RestException, IOException {
 
-        return executorService.submit(new Callable<IssueBean>() {
+        return executorService.submit(() -> {
 
-            public IssueBean call() throws Exception {
-                
-                URIBuilder uriBuilder = buildPath(ISSUE, issueKey);
-                if (fields != null && fields.isEmpty() == false) {
-                    String fieldsParam = StringUtils.join(fields, SEPARATOR);
-                    uriBuilder.addParameter(FIELDS, fieldsParam);
-                }
-                if (expand != null && expand.isEmpty() == false) {
-                    String expandParam = StringUtils.join(expand, SEPARATOR);
-                    uriBuilder.addParameter(EXPAND, expandParam);
-                }
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    return extractIssueBean(method, response);
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            URIBuilder uriBuilder = buildPath(ISSUE, issueKey);
+            if (fields != null && fields.isEmpty() == false) {
+                String fieldsParam = StringUtils.join(fields, SEPARATOR);
+                uriBuilder.addParameter(FIELDS, fieldsParam);
+            }
+            if (expand != null && expand.isEmpty() == false) {
+                String expandParam = StringUtils.join(expand, SEPARATOR);
+                uriBuilder.addParameter(EXPAND, expandParam);
+            }
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                return extractIssueBean(method, response);
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }
@@ -183,27 +172,24 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
             throws RestException, IOException {
 
         Validate.notNull(issueKey);
-        return executorService.submit(new Callable<CommentsBean>() {
+        return executorService.submit(() -> {
 
-            public CommentsBean call() throws Exception {
-                
-                URIBuilder uriBuilder = buildPath(ISSUE, issueKey, COMMENT);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    CommentsBean comments = gson.fromJson(jsonReader,
-                            CommentsBean.class);
-                    method.releaseConnection();
-                    response.close();
-                    return comments;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            URIBuilder uriBuilder = buildPath(ISSUE, issueKey, COMMENT);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                CommentsBean comments = gson.fromJson(jsonReader,
+                        CommentsBean.class);
+                method.releaseConnection();
+                response.close();
+                return comments;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }
@@ -212,24 +198,21 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
             IOException {
 
         Validate.notNull(uri);
-        return executorService.submit(new Callable<Byte[]>() {
-
-            public Byte[] call() throws Exception {
-                HttpGet method = HttpMethodFactory.createHttpGetForFile(uri);
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream inputStream = entity.getContent();
-                    byte[] bytes = IOUtils.toByteArray(inputStream);
-                    method.releaseConnection();
-                    response.close();
-                    return ArrayUtils.toObject(bytes);
-                }
+        return executorService.submit(() -> {
+            HttpGet method = HttpMethodFactory.createHttpGetForFile(uri);
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                HttpEntity entity = response.getEntity();
+                InputStream inputStream = entity.getContent();
+                byte[] bytes = IOUtils.toByteArray(inputStream);
                 method.releaseConnection();
                 response.close();
-                return null;
+                return ArrayUtils.toObject(bytes);
             }
+            method.releaseConnection();
+            response.close();
+            return null;
         });
     }
 
@@ -240,27 +223,24 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
     public Future<AttachmentBean> getAttachment(final long id)
             throws IOException, RestException {
 
-        return executorService.submit(new Callable<AttachmentBean>() {
+        return executorService.submit(() -> {
 
-            public AttachmentBean call() throws Exception {
-                
-                URIBuilder uriBuilder = buildPath(ATTACHMENT, String.valueOf(id));
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    AttachmentBean attachment = gson.fromJson(jsonReader,
-                            AttachmentBean.class);
-                    method.releaseConnection();
-                    response.close();
-                    return attachment;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            URIBuilder uriBuilder = buildPath(ATTACHMENT, String.valueOf(id));
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                AttachmentBean attachment = gson.fromJson(jsonReader,
+                        AttachmentBean.class);
+                method.releaseConnection();
+                response.close();
+                return attachment;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
 
@@ -348,23 +328,20 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
             final String issueKey) throws RestException, IOException {
 
         Validate.notNull(issueKey);
-        return executorService.submit(new Callable<List<TransitionBean>>() {
-
-            public List<TransitionBean> call() throws Exception {
-                URIBuilder uriBuilder = buildPath(ISSUE, issueKey, TRANSITIONS);
-                uriBuilder.addParameter(EXPAND, TRANSITIONS_FIELDS);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    final IssueBean issueBean = extractIssueBean(method, response);
-                    return issueBean.getTransitions();
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+        return executorService.submit(() -> {
+            URIBuilder uriBuilder = buildPath(ISSUE, issueKey, TRANSITIONS);
+            uriBuilder.addParameter(EXPAND, TRANSITIONS_FIELDS);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                final IssueBean issueBean = extractIssueBean(method, response);
+                return issueBean.getTransitions();
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }

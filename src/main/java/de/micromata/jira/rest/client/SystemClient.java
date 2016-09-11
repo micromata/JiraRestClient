@@ -6,6 +6,7 @@ import de.micromata.jira.rest.core.domain.PriorityBean;
 import de.micromata.jira.rest.core.domain.StatusBean;
 import de.micromata.jira.rest.core.domain.field.CreateFieldBean;
 import de.micromata.jira.rest.core.domain.field.FieldBean;
+import de.micromata.jira.rest.core.domain.system.ConfigurationBean;
 import de.micromata.jira.rest.core.util.RestException;
 
 import java.io.IOException;
@@ -17,6 +18,14 @@ import java.util.concurrent.Future;
  */
 public interface SystemClient {
 
+    /**
+     * Return the Configuration of the remote Jira Instanz
+     *
+     * @return ConfigurationBean
+     * @throws RestException
+     * @throws IOException
+     */
+    Future<ConfigurationBean> getConfiguration() throws RestException, IOException;;
 
     /**
      * Returns a list of all issue types visible to the connected client.

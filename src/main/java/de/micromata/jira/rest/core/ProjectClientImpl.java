@@ -42,24 +42,22 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
     public Future<ProjectBean> getProjectByKey(final String projectKey) throws RestException, IOException {
         Validate.notNull(projectKey);
-        return executorService.submit(new Callable<ProjectBean>() {
-            public ProjectBean call() throws Exception {
+        return executorService.submit(() -> {
 
-                URIBuilder uriBuilder = buildPath(PROJECT, projectKey);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    ProjectBean project = gson.fromJson(jsonReader, ProjectBean.class);
-                    response.close();
-                    return project;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            URIBuilder uriBuilder = buildPath(PROJECT, projectKey);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                ProjectBean project = gson.fromJson(jsonReader, ProjectBean.class);
+                response.close();
+                return project;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
 
@@ -67,27 +65,24 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
 
     public Future<List<ProjectBean>> getAllProjects() throws RestException, IOException {
-        return executorService.submit(new Callable<List<ProjectBean>>() {
+        return executorService.submit(() -> {
 
-            public List<ProjectBean> call() throws Exception {
-
-                URIBuilder uriBuilder = buildPath(PROJECT);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    Type listType = new TypeToken<ArrayList<ProjectBean>>() {
-                    }.getType();
-                    List<ProjectBean> projects = gson.fromJson(jsonReader, listType);
-                    response.close();
-                    return projects;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            URIBuilder uriBuilder = buildPath(PROJECT);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                Type listType = new TypeToken<ArrayList<ProjectBean>>() {
+                }.getType();
+                List<ProjectBean> projects = gson.fromJson(jsonReader, listType);
+                response.close();
+                return projects;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }
@@ -95,27 +90,24 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
     public Future<List<VersionBean>> getProjectVersions(final String projectKey) throws RestException, IOException {
         Validate.notNull(projectKey);
-        return executorService.submit(new Callable<List<VersionBean>>() {
+        return executorService.submit(() -> {
 
-            public List<VersionBean> call() throws Exception {
-
-                URIBuilder uriBuilder = buildPath(PROJECT, projectKey, VERSIONS);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    Type listType = new TypeToken<ArrayList<VersionBean>>() {
-                    }.getType();
-                    List<VersionBean> versions = gson.fromJson(jsonReader, listType);
-                    response.close();
-                    return versions;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            URIBuilder uriBuilder = buildPath(PROJECT, projectKey, VERSIONS);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                Type listType = new TypeToken<ArrayList<VersionBean>>() {
+                }.getType();
+                List<VersionBean> versions = gson.fromJson(jsonReader, listType);
+                response.close();
+                return versions;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }
@@ -123,27 +115,24 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
 
     public Future<List<ComponentBean>> getProjectComponents(final String projectKey) throws RestException, IOException {
         Validate.notNull(projectKey);
-        return executorService.submit(new Callable<List<ComponentBean>>() {
+        return executorService.submit(() -> {
 
-            public List<ComponentBean> call() throws Exception {
-
-                URIBuilder uriBuilder = buildPath(PROJECT, projectKey, COMPONENTS);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    Type listType = new TypeToken<ArrayList<ComponentBean>>() {
-                    }.getType();
-                    List<ComponentBean> components = gson.fromJson(jsonReader, listType);
-                    response.close();
-                    return components;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            URIBuilder uriBuilder = buildPath(PROJECT, projectKey, COMPONENTS);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                Type listType = new TypeToken<ArrayList<ComponentBean>>() {
+                }.getType();
+                List<ComponentBean> components = gson.fromJson(jsonReader, listType);
+                response.close();
+                return components;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }
@@ -151,26 +140,23 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
     @Override
     public Future<MetaBean> getIssueTypesMetaForProject(final String projectKey) {
         Validate.notNull(projectKey);
-        return executorService.submit(new Callable<MetaBean>() {
-            @Override
-            public MetaBean call() throws Exception {
-                URIBuilder uriBuilder = buildPath(ISSUE, CREATEMETA);
-                uriBuilder.addParameter(PROJECTKEYS, projectKey);
-                uriBuilder.addParameter(EXPAND, "projects.issuetypes.fields");
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    MetaBean metabean = gson.fromJson(jsonReader, MetaBean.class);
-                    response.close();
-                    return metabean;
-                }else{
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+        return executorService.submit(() -> {
+            URIBuilder uriBuilder = buildPath(ISSUE, CREATEMETA);
+            uriBuilder.addParameter(PROJECTKEYS, projectKey);
+            uriBuilder.addParameter(EXPAND, "projects.issuetypes.fields");
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                MetaBean metabean = gson.fromJson(jsonReader, MetaBean.class);
+                response.close();
+                return metabean;
+            }else{
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }

@@ -47,25 +47,23 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
 
     public Future<JqlSearchResult> searchIssues(final JqlSearchBean jsb) throws RestException, IOException {
         Validate.notNull(jsb);
-        return executorService.submit(new Callable<JqlSearchResult>() {
-            public JqlSearchResult call() throws Exception {
+        return executorService.submit(() -> {
 
-                String json = gson.toJson(jsb);
-                URIBuilder uriBuilder = buildPath(SEARCH);
-                HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(), json);
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    JqlSearchResult jqlSearchResult = gson.fromJson(jsonReader, JqlSearchResult.class);
-                    response.close();
-                    return jqlSearchResult;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+            String json = gson.toJson(jsb);
+            URIBuilder uriBuilder = buildPath(SEARCH);
+            HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(), json);
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                JqlSearchResult jqlSearchResult = gson.fromJson(jsonReader, JqlSearchResult.class);
+                response.close();
+                return jqlSearchResult;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
 
@@ -73,74 +71,65 @@ public class SearchClientImpl extends BaseClient implements SearchClient, RestPa
 
 
     public Future<FilterBean> createSearchFilter(FilterBean filter) {
-        return executorService.submit(new Callable<FilterBean>() {
-            @Override
-            public FilterBean call() throws Exception {
-                URIBuilder uriBuilder = buildPath(FILTER);
-                HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(), filter.toString());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    FilterBean filter = gson.fromJson(jsonReader, FilterBean.class);
-                    response.close();
-                    return filter;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+        return executorService.submit(() -> {
+            URIBuilder uriBuilder = buildPath(FILTER);
+            HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(), filter.toString());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                FilterBean filter1 = gson.fromJson(jsonReader, FilterBean.class);
+                response.close();
+                return filter1;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }
 
 
     public Future<List<FilterBean>> getFavoriteFilter() {
-        return executorService.submit(new Callable<List<FilterBean>>() {
-            @Override
-            public List<FilterBean> call() throws Exception {
-                URIBuilder uriBuilder = buildPath(FILTER, FAVORITE);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    Type listType = new TypeToken<ArrayList<FilterBean>>() {
-                    }.getType();
-                    List<FilterBean> filters = gson.fromJson(jsonReader, listType);
-                    response.close();
-                    return filters;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+        return executorService.submit(() -> {
+            URIBuilder uriBuilder = buildPath(FILTER, FAVORITE);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                Type listType = new TypeToken<ArrayList<FilterBean>>() {
+                }.getType();
+                List<FilterBean> filters = gson.fromJson(jsonReader, listType);
+                response.close();
+                return filters;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }
 
 
     public Future<FilterBean> getFilterById(String id) {
-        return executorService.submit(new Callable<FilterBean>() {
-            @Override
-            public FilterBean call() throws Exception {
-                URIBuilder uriBuilder = buildPath(FILTER, id);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    FilterBean filter = gson.fromJson(jsonReader, FilterBean.class);
-                    response.close();
-                    return filter;
-                } else {
-                    RestException restException = new RestException(response);
-                    method.releaseConnection();
-                    response.close();
-                    throw restException;
-                }
+        return executorService.submit(() -> {
+            URIBuilder uriBuilder = buildPath(FILTER, id);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                FilterBean filter = gson.fromJson(jsonReader, FilterBean.class);
+                response.close();
+                return filter;
+            } else {
+                RestException restException = new RestException(response);
+                method.releaseConnection();
+                response.close();
+                throw restException;
             }
         });
     }

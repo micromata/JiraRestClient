@@ -7,6 +7,7 @@ import de.micromata.jira.rest.core.domain.PriorityBean;
 import de.micromata.jira.rest.core.domain.StatusBean;
 import de.micromata.jira.rest.core.domain.field.CreateFieldBean;
 import de.micromata.jira.rest.core.domain.field.FieldBean;
+import de.micromata.jira.rest.core.domain.system.ConfigurationBean;
 import de.micromata.jira.rest.core.util.RestException;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -30,6 +31,16 @@ public class TestSystemClient extends BaseTest {
     private static final int DEFAULT_NUMBER_OF_PRIORITIES = 5;
     private static final int DEFAULT_NUMBER_OF_FIELDS = 40;
     private static final int DEFAULT_UPLOAD_LIMIT = 10485760;
+    public static final int DEFAULT_WORKING_HOURS_PER_DAY = 8;
+
+    @Test
+    public void testGetConfiguration() throws IOException, RestException, ExecutionException, InterruptedException {
+        Future<ConfigurationBean> future = jiraRestClient.getSystemClient().getConfiguration();
+        ConfigurationBean configurationBean = future.get();
+        Assert.assertNotNull(configurationBean);
+        Assert.assertNotNull(configurationBean.getTimeTrackingConfiguration());
+        Assert.assertEquals(DEFAULT_WORKING_HOURS_PER_DAY, configurationBean.getTimeTrackingConfiguration().getWorkingHoursPerDay().intValue());
+    }
 
     @Test
     public void testGetIssueType() throws RestException, IOException, ExecutionException, InterruptedException {

@@ -50,29 +50,24 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
 
     public Future<UserBean> getUserByUsername(final String username) throws RestException, IOException {
         Validate.notNull(username);
-        return executorService.submit(new Callable<UserBean>() {
-
-            public UserBean call() throws Exception {
-                URIBuilder uriBuilder = buildPath(USER);
-                uriBuilder.addParameter(USERNAME, username);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    UserBean user = gson.fromJson(jsonReader, UserBean.class);
-                    method.releaseConnection();
-                    return user;
-                }
-                else if(statusCode == HttpURLConnection.HTTP_UNAUTHORIZED || statusCode == HttpURLConnection.HTTP_FORBIDDEN ){
-                    return null;
-                }
-                else {
-                    RestException restException = new RestException(response);
-                    response.close();
-                    method.releaseConnection();
-                    throw restException;
-                }
+        return executorService.submit(() -> {
+            URIBuilder uriBuilder = buildPath(USER);
+            uriBuilder.addParameter(USERNAME, username);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                UserBean user = gson.fromJson(jsonReader, UserBean.class);
+                method.releaseConnection();
+                return user;
+            } else if (statusCode == HttpURLConnection.HTTP_UNAUTHORIZED || statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                return null;
+            } else {
+                RestException restException = new RestException(response);
+                response.close();
+                method.releaseConnection();
+                throw restException;
             }
         });
     }
@@ -85,68 +80,63 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
 
     @Override
     public Future<MyPermissionsBean> getMyPermissions() {
-        return executorService.submit(new Callable<MyPermissionsBean>() {
-            @Override
-            public MyPermissionsBean call() throws Exception {
-                URIBuilder uriBuilder = buildPath(MYPERMISSIONS);
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    MyPermissionsBean permissionsBean = gson.fromJson(jsonReader, MyPermissionsBean.class);
-                    method.releaseConnection();
-                    return permissionsBean;
-                }else{
-                    RestException restException = new RestException(response);
-                    response.close();
-                    method.releaseConnection();
-                    throw restException;
-                }
+        return executorService.submit(() -> {
+            URIBuilder uriBuilder = buildPath(MYPERMISSIONS);
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                MyPermissionsBean permissionsBean = gson.fromJson(jsonReader, MyPermissionsBean.class);
+                method.releaseConnection();
+                return permissionsBean;
+            } else {
+                RestException restException = new RestException(response);
+                response.close();
+                method.releaseConnection();
+                throw restException;
             }
         });
     }
 
 
     private Future<List<UserBean>> getAssignableSearch(final String username, final String issueKey, final String projectKey, final Integer startAt, final Integer maxResults) throws RestException, IOException {
-        return executorService.submit(new Callable<List<UserBean>>() {
 
-            public List<UserBean> call() throws Exception {
-                URIBuilder uriBuilder = buildPath(USER, ASSIGNABLE, SEARCH);
-                if (StringUtils.trimToNull(username) != null) {
-                    uriBuilder.addParameter(USERNAME, username);
-                }
-                if (StringUtils.trimToNull(issueKey) != null) {
-                    uriBuilder.addParameter(ISSUEKEY, issueKey);
-                }
-                if (StringUtils.trimToNull(projectKey) != null) {
-                    uriBuilder.addParameter(PROJECTKEY, projectKey);
-                }
-                if (startAt != null && startAt >= 0) {
-                    uriBuilder.addParameter(START_AT, startAt.toString());
-                }
-                if (maxResults != null && maxResults > 0 && maxResults < 1000) {
-                    uriBuilder.addParameter(MAX_RESULTS, maxResults.toString());
-                }
-                HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
-                CloseableHttpResponse response = client.execute(method, clientContext);
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    JsonReader jsonReader = getJsonReader(response);
-                    Type listType = new TypeToken<ArrayList<UserBean>>() {
-                    }.getType();
-                    List<UserBean> users = gson.fromJson(jsonReader, listType);
-                    method.releaseConnection();
-                    return users;
-                }
-                else if(statusCode == HttpURLConnection.HTTP_UNAUTHORIZED || statusCode == HttpURLConnection.HTTP_FORBIDDEN ){
-                    return new ArrayList<>();
-                } else{
-                    RestException restException = new RestException(response);
-                    response.close();
-                    method.releaseConnection();
-                    throw restException;
-                }
+        return executorService.submit(() -> {
+
+            URIBuilder uriBuilder = buildPath(USER, ASSIGNABLE, SEARCH);
+            if (StringUtils.trimToNull(username) != null) {
+                uriBuilder.addParameter(USERNAME, username);
+            }
+            if (StringUtils.trimToNull(issueKey) != null) {
+                uriBuilder.addParameter(ISSUEKEY, issueKey);
+            }
+            if (StringUtils.trimToNull(projectKey) != null) {
+                uriBuilder.addParameter(PROJECTKEY, projectKey);
+            }
+            if (startAt != null && startAt >= 0) {
+                uriBuilder.addParameter(START_AT, startAt.toString());
+            }
+            if (maxResults != null && maxResults > 0 && maxResults < 1000) {
+                uriBuilder.addParameter(MAX_RESULTS, maxResults.toString());
+            }
+            HttpGet method = HttpMethodFactory.createGetMethod(uriBuilder.build());
+            CloseableHttpResponse response = client.execute(method, clientContext);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                JsonReader jsonReader = getJsonReader(response);
+                Type listType = new TypeToken<ArrayList<UserBean>>() {
+                }.getType();
+                List<UserBean> users = gson.fromJson(jsonReader, listType);
+                method.releaseConnection();
+                return users;
+            } else if (statusCode == HttpURLConnection.HTTP_UNAUTHORIZED || statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
+                return new ArrayList<>();
+            } else {
+                RestException restException = new RestException(response);
+                response.close();
+                method.releaseConnection();
+                throw restException;
             }
         });
     }
