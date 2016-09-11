@@ -1,6 +1,7 @@
 package de.micromata.jira.rest.core.domain;
 
 import com.google.gson.annotations.Expose;
+import de.micromata.jira.rest.core.domain.system.AssigneeTypeEnum;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class ProjectBean extends BaseBean {
     private List<VersionBean> versions;
     @Expose
     private List<IssuetypeBean> issueTypes;
+    @Expose
+    private AssigneeTypeEnum assigneeType;
 
     public AvatarUrlsBean getAvatarUrls() {
         return avatarUrls;
@@ -55,5 +58,13 @@ public class ProjectBean extends BaseBean {
 
     public void setIssueTypes(List<IssuetypeBean> issueTypes) {
         this.issueTypes = issueTypes;
+    }
+
+    public AssigneeTypeEnum getAssigneeType() {
+        return assigneeType;
+    }
+
+    public void setAssigneeType(AssigneeTypeEnum assigneeType) {
+        this.assigneeType = assigneeType;
     }
 }
