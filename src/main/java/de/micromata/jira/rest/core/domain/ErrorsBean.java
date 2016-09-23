@@ -23,7 +23,10 @@ public class ErrorsBean {
     private String environment;
     @Expose
     private String filterName;
-
+    @Expose
+    private String versions;
+    @Expose
+    private String components;
 
     public String getProject() {
         return project;
@@ -95,5 +98,21 @@ public class ErrorsBean {
 
     public void setFilterName(String filterName) {
         this.filterName = filterName;
+    }
+
+    public String getVersions() {
+        return versions;
+    }
+
+    public void setVersions(String versions) {
+        this.versions = versions;
+    }
+
+    public String getComponents() {
+        return components;
+    }
+
+    public void setComponents(String components) {
+        this.components = components;
     }
 }

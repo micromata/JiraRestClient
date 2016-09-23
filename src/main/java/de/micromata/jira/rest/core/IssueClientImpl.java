@@ -24,6 +24,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -59,12 +60,11 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == HttpURLConnection.HTTP_OK) {
                 return extractIssueBean(method, response);
-            }else if(statusCode == HttpURLConnection.HTTP_NOT_FOUND){
+            } else if (statusCode == HttpURLConnection.HTTP_NOT_FOUND) {
                 method.releaseConnection();
                 response.close();
                 return null;
-            }
-            else {
+            } else {
                 RestException restException = new RestException(response);
                 method.releaseConnection();
                 response.close();
@@ -72,7 +72,6 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
             }
         });
     }
-
 
 
     public Future<IssueResponse> createIssue(final IssueBean issue)
@@ -246,7 +245,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
 
     }
 
-    public Future<List<AttachmentBean>> saveAttachmentToIssue(String issuekey,File... files) throws URISyntaxException, IOException, RestException {
+    public Future<List<AttachmentBean>> saveAttachmentToIssue(String issuekey, File... files) throws URISyntaxException, IOException, RestException {
 
         return executorService.submit(() -> {
             URIBuilder uriBuilder = buildPath(ISSUE, issuekey, ATTACHMENTS);
@@ -261,7 +260,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
             postMethod.setEntity(entity);
             CloseableHttpResponse response = client.execute(postMethod);
             int statusCode = response.getStatusLine().getStatusCode();
-            if(statusCode == HttpURLConnection.HTTP_OK){
+            if (statusCode == HttpURLConnection.HTTP_OK) {
                 JsonReader jsonReader = getJsonReader(response);
                 Type listType = new TypeToken<ArrayList<AttachmentBean>>() {
                 }.getType();
@@ -269,7 +268,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
                 postMethod.releaseConnection();
                 response.close();
                 return attachments;
-            }else{
+            } else {
                 RestException restException = new RestException(response);
                 postMethod.releaseConnection();
                 response.close();
@@ -283,7 +282,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
 
         Validate.notNull(issueKey);
         Validate.notNull(worklog);
-        
+
         String json = gson.toJson(worklog);
         URIBuilder uriBuilder = buildPath(ISSUE, issueKey, WORKLOG);
         HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(), json);
@@ -305,7 +304,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
             throws RestException, IOException, URISyntaxException {
 
         Validate.notNull(issueKey);
-        
+
         // TODO cs +++ GsonParserUtil entfernen
         String json = GsonParserUtil.parseTransitionToJson(transitionId);
         URIBuilder uriBuilder = buildPath(ISSUE, issueKey, TRANSITIONS);

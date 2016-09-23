@@ -107,21 +107,24 @@ public class TestIssueClient extends BaseTest {
         fields.setPriority(priority);
         fields.setDuedate("2015-08-01");
 
-//        ComponentBean componentBean1 = new ComponentBean();
-//        componentBean1.setName("Backend");
-//        issue.getComponents().add(componentBean1);
-//        ComponentBean componentBean2 = new ComponentBean();
-//        componentBean2.setName("Frontend");
-//        issue.getComponents().add(componentBean2);
-//
-//        VersionBean versionBean1 = new VersionBean();
-//        versionBean1.setName("1.1");
-//        VersionBean versionBean2 = new VersionBean();
-//        versionBean2.setName("1.0");
-//        issue.getVersions().add(versionBean1);
-//        issue.getVersions().add(versionBean2);
-//        issue.getFixVersions().add(versionBean1);
-//        issue.getFixVersions().add(versionBean2);
+        List<ComponentBean> componentBeen = new ArrayList<>();
+        ComponentBean componentBean1 = new ComponentBean();
+        componentBean1.setName("Komponente 1");
+        componentBeen.add(componentBean1);
+        ComponentBean componentBean2 = new ComponentBean();
+        componentBean2.setName("Komponente 2");
+        componentBeen.add(componentBean2);
+        fields.setComponents(componentBeen);
+
+        List<VersionBean> versionBeen = new ArrayList<>();
+        VersionBean versionBean1 = new VersionBean();
+        versionBean1.setName("1.1");
+        versionBeen.add(versionBean1);
+        VersionBean versionBean2 = new VersionBean();
+        versionBean2.setName("1.0");
+        versionBeen.add(versionBean2);
+        fields.setVersions(versionBeen);
+        fields.setFixVersions(versionBeen);
 
         UserBean userBean = new UserBean();
         userBean.setName("admin");
