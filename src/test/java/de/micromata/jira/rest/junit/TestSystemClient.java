@@ -5,6 +5,7 @@ import de.micromata.jira.rest.core.domain.AttachmentMetaBean;
 import de.micromata.jira.rest.core.domain.IssuetypeBean;
 import de.micromata.jira.rest.core.domain.PriorityBean;
 import de.micromata.jira.rest.core.domain.StatusBean;
+import de.micromata.jira.rest.core.domain.customFields.CustomFieldType;
 import de.micromata.jira.rest.core.domain.field.CreateFieldBean;
 import de.micromata.jira.rest.core.domain.field.FieldBean;
 import de.micromata.jira.rest.core.domain.system.ConfigurationBean;
@@ -105,8 +106,7 @@ public class TestSystemClient extends BaseTest {
         CreateFieldBean createFieldBean = new CreateFieldBean();
         createFieldBean.setName("New Custom Field");
         createFieldBean.setDescription("Custom field for picking groups");
-        createFieldBean.setType("com.atlassian.jira.plugin.system.customfieldtypes:grouppicker");
-        createFieldBean.setSearcherKey("com.atlassian.jira.plugin.system.customfieldtypes:grouppickersearcher");
+        createFieldBean.setType(CustomFieldType.GROUP.getJiraName());
         Future<FieldBean> customField = jiraRestClient.getSystemClient().createCustomField(createFieldBean);
         FieldBean fieldBean = customField.get();
         Assert.assertNotNull(fieldBean);

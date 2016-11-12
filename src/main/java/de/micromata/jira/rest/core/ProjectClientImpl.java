@@ -13,18 +13,15 @@ import de.micromata.jira.rest.core.misc.RestPathConstants;
 import de.micromata.jira.rest.core.util.HttpMethodFactory;
 import de.micromata.jira.rest.core.util.RestException;
 import org.apache.commons.lang3.Validate;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -51,6 +48,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
             if (statusCode == HttpURLConnection.HTTP_OK) {
                 JsonReader jsonReader = getJsonReader(response);
                 ProjectBean project = gson.fromJson(jsonReader, ProjectBean.class);
+                method.releaseConnection();
                 response.close();
                 return project;
             } else {
@@ -76,6 +74,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                 Type listType = new TypeToken<ArrayList<ProjectBean>>() {
                 }.getType();
                 List<ProjectBean> projects = gson.fromJson(jsonReader, listType);
+                method.releaseConnection();
                 response.close();
                 return projects;
             } else {
@@ -101,6 +100,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                 Type listType = new TypeToken<ArrayList<VersionBean>>() {
                 }.getType();
                 List<VersionBean> versions = gson.fromJson(jsonReader, listType);
+                method.releaseConnection();
                 response.close();
                 return versions;
             } else {
@@ -126,6 +126,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
                 Type listType = new TypeToken<ArrayList<ComponentBean>>() {
                 }.getType();
                 List<ComponentBean> components = gson.fromJson(jsonReader, listType);
+                method.releaseConnection();
                 response.close();
                 return components;
             } else {
@@ -150,6 +151,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
             if (statusCode == HttpURLConnection.HTTP_OK) {
                 JsonReader jsonReader = getJsonReader(response);
                 MetaBean metabean = gson.fromJson(jsonReader, MetaBean.class);
+                method.releaseConnection();
                 response.close();
                 return metabean;
             }else{
