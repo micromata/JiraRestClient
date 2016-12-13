@@ -59,6 +59,20 @@ public class TestSearchClient extends BaseTest {
 
     }
 
+    @Test
+    public void testCountIssues() throws ExecutionException, InterruptedException, IOException, RestException {
+        JqlSearchBean jsb = new JqlSearchBean();
+        JqlBuilder builder = new JqlBuilder();
+        String jql = builder.addCondition(EField.PROJECT, EOperator.EQUALS, "EXPORT").build();
+        jsb.setJql(jql);
+        jsb.addField(EField.ISSUE_KEY, EField.STATUS, EField.DUE, EField.ISSUE_TYPE);
+        Future<JqlSearchResult> future = jiraRestClient.getSearchClient().searchIssues(jsb);
+        JqlSearchResult jqlSearchResult = future.get();
+        Assert.assertNotNull(jqlSearchResult);
+        Assert.assertEquals(jqlSearchResult.getIssues().size(), jqlSearchResult.getTotal());
+        Assert.assertTrue(jqlSearchResult.getTotal() > 0);
+    }
+
 
     @Test
     public void testCreateFilter() {
