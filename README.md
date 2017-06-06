@@ -1,37 +1,34 @@
 # JiraRestClient
 
-This is a simple JiraRestClient to use the RestAPI V2.0 of Jira.
+A simple JAVA Client to access the [JIRA&copy; REST-API](https://docs.atlassian.com/jira/REST/cloud/).
 
-## Version 2.2
+## Usage 
 
-* adding support to upload Attachments to an Issue (IssueClient)
-* adding support to get/add SearchFilters (SearchClient)
-* adding support to get the Permissions of the logged in User (UserClient)
+Everything you need is a ExecutorService (java.util.concurrent.ExecutorService) for Thread-Pooling.
 
-## Version 2.1.1
+```java
 
-* adding support for IssueType Fields Meta Data.
+  ExecutorService executorService = Executors.newFixedThreadPool(100);
+  ProxyHost proxy = new ProxyHost("proxy", 3128);
+  URI uri = new URI(URL_TO_JIRA_SERVER);
+  JiraRestClient jiraRestClient = new JiraRestClient(executorService);
+  jiraRestClient.connect(uri, USERNAME, PASSWORD);
 
-## Version 2.1
-
-* adding support for CustomFields. All standard CustomFields coming with Jira.
-
-## Version 2.0
-
-* change Apache HttpClient from Major-Version 3 to 4
-
-## Usage
-
-Use the static Method of the Class JiraRestClient to create a new Instance of the Client.
-You need your user credentials and the url to the Jira, also you can configure a proxy for the connection.
-
-With the Client you can use the seperated Clients for Issues, Projects, Users, Search and System.
+```
+After you create the JiraRestClient and connecting to your JIRA&copy;, you can get the specific client from the JiraRestClient.
 
 * IssueClient - everything to issues. Include also Attachments, Transitions, Comments and Worklog
 * ProjectClient - everything to projects. Include also Components and Versions
 * UserClient - everything to users.
 * SearchClient - for jql search
 * SystemClient - every global Info form the Jira. You can get Status, Priority, IssueTypes Informations.
+
+## Tests 
+
+For more Information about usage and some Code Snippets look into the Unit-Tests inside the project. 
+
+
+
 
 
 

@@ -43,20 +43,26 @@ public class IssueBeanDeserializer extends BaseDeserializer  implements JsonDese
                 JsonElement value = entry.getValue();
                 if (value.isJsonPrimitive() == true) {
                     CustomFieldBaseBean customField = getPrimitiveCustomField(key, value);
-                    customField.setId(key);
-                    retval.add(customField);
+                    if(customField != null) {
+                        customField.setId(key);
+                        retval.add(customField);
+                    }
                 }
-                if (value.isJsonObject() == true) {
+                else if (value.isJsonObject() == true) {
                     CustomFieldBaseBean customField = getObjectCustomField(key, value);
-                    customField.setId(key);
-                    retval.add(customField);
+                    if(customField != null){
+                        customField.setId(key);
+                        retval.add(customField);
+                    }
                 }
-                if (value.isJsonArray() == true) {
+                else if (value.isJsonArray() == true) {
                     CustomFieldBaseBean arrayCustomField = getArrayCustomField(key, value);
-                    arrayCustomField.setId(key);
-                    retval.add(arrayCustomField);
+                    if(arrayCustomField != null){
+                        arrayCustomField.setId(key);
+                        retval.add(arrayCustomField);
+                    }
                 }
-                if (value.isJsonNull() == true) {
+                else if (value.isJsonNull() == true) {
 
                 }
             }
@@ -73,13 +79,19 @@ public class IssueBeanDeserializer extends BaseDeserializer  implements JsonDese
         ValueBean valueBean = new ValueBean();
         valueBean.setValue(value);
         retval.setValue(valueBean);
-        CustomFieldType type = getCustomFieldType(key);
-        retval.setType(type);
+        CustomFieldType customFieldType = getCustomFieldType(key);
+        if(customFieldType == null){
+            return null;
+        }
+        retval.setType(customFieldType);
         return retval;
     }
 
     private CustomFieldBaseBean getObjectCustomField(String id, JsonElement jsonElement) {
         CustomFieldType customFieldType = getCustomFieldType(id);
+        if(customFieldType == null){
+            return null;
+        }
         switch (customFieldType){
             case SELECT:
                 ValueBean valueBean = gson.fromJson(jsonElement, ValueBean.class);
@@ -130,6 +142,9 @@ public class IssueBeanDeserializer extends BaseDeserializer  implements JsonDese
 
     private CustomFieldBaseBean getArrayCustomField(String id, JsonElement json) {
         CustomFieldType customFieldType = getCustomFieldType(id);
+        if(customFieldType == null){
+            return null;
+        }
         Type valueBeanType = new TypeToken<Collection<ValueBean>>(){}.getType();
         switch (customFieldType){
             case LABELS:
