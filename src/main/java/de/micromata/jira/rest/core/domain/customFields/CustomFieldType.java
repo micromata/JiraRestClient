@@ -29,7 +29,7 @@ public enum CustomFieldType {
     MULTIVERSION("com.atlassian.jira.plugin.system.customfieldtypes:multiversion", false),
     GROUP("com.atlassian.jira.plugin.system.customfieldtypes:grouppicker", false),
     MULTIGROUP("com.atlassian.jira.plugin.system.customfieldtypes:multigrouppicker", false),
-    UNKNWON("unknown.custom.field.type", false);
+    UNKNOWN("unknown.custom.field.type", false);
 
     CustomFieldType(String jiraName, boolean hasAllowedValues) {
         this.jiraName = jiraName;
