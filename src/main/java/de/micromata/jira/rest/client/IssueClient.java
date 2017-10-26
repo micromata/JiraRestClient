@@ -124,4 +124,10 @@ public interface IssueClient {
      */
     Future<CommentsBean> getCommentsByIssue(String issueKey) throws RestException, IOException;
 
+    /**
+     * Add comment to issue.
+     */
+    boolean addCommentToIssue(String issueKey, CommentBean comment) throws
+       RestException,
+       URISyntaxException, IOException;
 }
