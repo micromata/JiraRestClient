@@ -193,6 +193,33 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
         });
     }
 
+    @Override
+    public boolean addCommentToIssue(final String issueKey, final CommentBean comment) throws
+       RestException,
+       URISyntaxException,
+       IOException
+    {
+        Validate.notNull(issueKey);
+        Validate.notNull(comment);
+
+        final String json = gson.toJson(comment);
+        final URIBuilder uriBuilder = buildPath(ISSUE, issueKey, COMMENT);
+        final HttpPost method = HttpMethodFactory.createPostMethod(uriBuilder.build(), json);
+        final CloseableHttpResponse response = client.execute(method, clientContext);
+        final int statusCode = response.getStatusLine().getStatusCode();
+
+        if (statusCode == HttpURLConnection.HTTP_CREATED) {
+            method.releaseConnection();
+            response.close();
+            return true;
+        } else {
+            final RestException restException = new RestException(response);
+            method.releaseConnection();
+            response.close();
+            throw restException;
+        }
+    }
+
     public Future<Byte[]> getAttachment(final URI uri) throws RestException,
             IOException {
 
