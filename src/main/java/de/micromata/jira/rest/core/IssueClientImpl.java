@@ -194,10 +194,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
     }
 
     @Override
-    public boolean addCommentToIssue(final String issueKey, final CommentBean comment) throws
-       RestException,
-       URISyntaxException,
-       IOException
+    public boolean addCommentToIssue(final String issueKey, final CommentBean comment) throws RestException, URISyntaxException, IOException
     {
         Validate.notNull(issueKey);
         Validate.notNull(comment);

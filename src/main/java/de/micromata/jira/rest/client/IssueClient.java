@@ -126,8 +126,9 @@ public interface IssueClient {
 
     /**
      * Add comment to issue.
+     *
+     * @param issueKey = issue key
+     * @param comment = comment to add
      */
-    boolean addCommentToIssue(String issueKey, CommentBean comment) throws
-       RestException,
-       URISyntaxException, IOException;
+    boolean addCommentToIssue(String issueKey, CommentBean comment) throws RestException, URISyntaxException, IOException;
 }

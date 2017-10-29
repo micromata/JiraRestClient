@@ -193,4 +193,12 @@ public class TestIssueClient extends BaseTest {
             }
         }
     }
+
+    @Test
+    public void testAddCommentToIssue() throws URISyntaxException, IOException, RestException {
+        CommentBean commentBean = new CommentBean();
+        commentBean.setBody("This is a new comment via JiraRestClient.");
+        boolean commentToIssue = jiraRestClient.getIssueClient().addCommentToIssue(ISSUEKEY_TO_SEARCH, commentBean);
+        Assert.assertTrue(commentToIssue);
+    }
 }
