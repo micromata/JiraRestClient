@@ -21,7 +21,6 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -48,7 +47,7 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
     }
 
 
-    public Future<UserBean> getUserByUsername(final String username) throws RestException, IOException {
+    public Future<UserBean> getUserByUsername(final String username) {
         Validate.notNull(username);
         return executorService.submit(() -> {
             URIBuilder uriBuilder = buildPath(USER);
@@ -100,7 +99,7 @@ public class UserClientImpl extends BaseClient implements UserClient, RestPathCo
     }
 
 
-    private Future<List<UserBean>> getAssignableSearch(final String username, final String issueKey, final String projectKey, final Integer startAt, final Integer maxResults) throws RestException, IOException {
+    private Future<List<UserBean>> getAssignableSearch(final String username, final String issueKey, final String projectKey, final Integer startAt, final Integer maxResults) {
 
         return executorService.submit(() -> {
 

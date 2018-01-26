@@ -28,7 +28,7 @@ public class RenderedFieldsBean {
     @Expose
     private String lastViewed;
     @Expose
-    private List<AttachmentBean> attachment = new ArrayList<AttachmentBean>();
+    private List<AttachmentBean> attachment = new ArrayList<>();
     @Expose
     private CommentsBean comment;
     @Expose

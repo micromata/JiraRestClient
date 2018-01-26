@@ -9,7 +9,7 @@ import java.util.List;
 public class CommentsBean {
 
     @Expose
-    private List<CommentBean> comments = new ArrayList<CommentBean>();
+    private List<CommentBean> comments = new ArrayList<>();
     @Expose
     private Integer maxResults;
     @Expose

@@ -21,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * JQL search requirements.
@@ -53,7 +52,7 @@ public class JqlSearchBean {
     private String jql = StringUtils.EMPTY;
 
     @Expose
-    private List<String> expand = new ArrayList<String>();
+    private List<String> expand = new ArrayList<>();
 
     /**
      * Adds fields which should be returned after the request.
@@ -121,7 +120,7 @@ public class JqlSearchBean {
      */
     public List<String> getFields() {
         if (fields == null) {
-            fields = new ArrayList<String>();
+            fields = new ArrayList<>();
         }
         return fields;
     }
@@ -136,7 +135,7 @@ public class JqlSearchBean {
 
     public List<String> getExpand() {
         if(expand == null){
-            expand = new ArrayList<String>();
+            expand = new ArrayList<>();
         }
         return expand;
     }

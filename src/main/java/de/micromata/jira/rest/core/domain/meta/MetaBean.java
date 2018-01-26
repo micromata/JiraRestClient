@@ -2,7 +2,6 @@ package de.micromata.jira.rest.core.domain.meta;
 
 import com.google.gson.annotations.Expose;
 import de.micromata.jira.rest.core.domain.BaseBean;
-import de.micromata.jira.rest.core.domain.ProjectBean;
 
 import java.util.ArrayList;
 import java.util.List;

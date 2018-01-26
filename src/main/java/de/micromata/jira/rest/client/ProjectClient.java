@@ -24,7 +24,7 @@ public interface ProjectClient {
      * @return list of projects
      * @throws RestException
      */
-    Future<List<ProjectBean>> getAllProjects() throws RestException, IOException;
+    Future<List<ProjectBean>> getAllProjects();
 
     /**
      * Returns a full representation of the project for the given key.
@@ -33,7 +33,7 @@ public interface ProjectClient {
      * @return all informations for the project
      * @throws RestException
      */
-    Future<ProjectBean> getProjectByKey(final String projectKey) throws RestException, IOException;
+    Future<ProjectBean> getProjectByKey(final String projectKey);
 
     /**
      * Returns a list of all versions for a project.
@@ -42,7 +42,7 @@ public interface ProjectClient {
      * @return list of versions
      * @throws RestException
      */
-    Future<List<VersionBean>> getProjectVersions(final String projectKey) throws RestException, IOException;
+    Future<List<VersionBean>> getProjectVersions(final String projectKey);
 
 
     /**
@@ -52,7 +52,7 @@ public interface ProjectClient {
      * @return list of components
      * @throws RestException
      */
-    Future<List<ComponentBean>> getProjectComponents(final String projectKey) throws RestException, IOException;
+    Future<List<ComponentBean>> getProjectComponents(final String projectKey);
 
 
     /**

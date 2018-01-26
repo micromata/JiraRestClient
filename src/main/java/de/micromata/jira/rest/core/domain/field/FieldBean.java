@@ -18,7 +18,7 @@ public class FieldBean extends BaseBean{
     @Expose
     private Boolean searchable;
     @Expose
-    private List<String> clauseNames = new ArrayList<String>();
+    private List<String> clauseNames = new ArrayList<>();
     @Expose
     private Schema schema;
 

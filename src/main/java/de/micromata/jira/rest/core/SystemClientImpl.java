@@ -43,7 +43,7 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
 
 
     @Override
-    public Future<ConfigurationBean> getConfiguration() throws RestException, IOException {
+    public Future<ConfigurationBean> getConfiguration() {
         return executorService.submit(() -> {
 
             URIBuilder uriBuilder = buildPath(CONFIGURATION);
@@ -64,7 +64,7 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
         });
     }
 
-    public Future<List<IssuetypeBean>> getIssueTypes() throws RestException, IOException {
+    public Future<List<IssuetypeBean>> getIssueTypes() {
         return executorService.submit(() -> {
 
             URIBuilder uriBuilder = buildPath(ISSUETPYES);
@@ -89,7 +89,7 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
     }
 
 
-    public Future<List<StatusBean>> getStates() throws RestException, IOException {
+    public Future<List<StatusBean>> getStates() {
         return executorService.submit(() -> {
 
             URIBuilder uriBuilder = buildPath(STATUS);
@@ -114,7 +114,7 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
     }
 
 
-    public Future<List<PriorityBean>> getPriorities() throws RestException, IOException {
+    public Future<List<PriorityBean>> getPriorities() {
         return executorService.submit(() -> {
 
             URIBuilder uriBuilder = buildPath(PRIORITY);
@@ -207,6 +207,8 @@ public class SystemClientImpl extends BaseClient implements SystemClient, RestPa
             if (statusCode == HttpURLConnection.HTTP_CREATED) {
                 JsonReader jsonReader = getJsonReader(response);
                 FieldBean fieldBean = gson.fromJson(jsonReader, FieldBean.class);
+                method.releaseConnection();
+                response.close();
                 return fieldBean;
             } else {
                 RestException restException = new RestException(response);

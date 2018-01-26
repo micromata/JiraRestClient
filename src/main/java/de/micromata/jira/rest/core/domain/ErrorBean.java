@@ -8,7 +8,7 @@ import java.util.List;
 public class ErrorBean {
 
     @Expose
-    private List<String> errorMessages = new ArrayList<String>();
+    private List<String> errorMessages = new ArrayList<>();
     @Expose
     private ErrorsBean errors;
 

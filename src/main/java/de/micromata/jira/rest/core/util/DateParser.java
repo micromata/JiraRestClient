@@ -34,7 +34,7 @@ public class DateParser {
 
         private final SimpleDateFormat simpleDateFormat;
 
-        private Format(String pattern) {
+        Format(String pattern) {
             simpleDateFormat = new SimpleDateFormat(pattern);
         }
 

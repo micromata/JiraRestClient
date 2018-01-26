@@ -2,10 +2,8 @@ package de.micromata.jira.rest.core.custom;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.core.domain.*;
 import de.micromata.jira.rest.core.domain.customFields.*;
-import de.micromata.jira.rest.core.domain.field.FieldBean;
 
 import java.lang.reflect.Type;
 import java.util.*;

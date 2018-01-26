@@ -1,7 +1,3 @@
 target/
 .idea/
 jiraRestClient.iml
-bin/
-.classpath
-.settings/
-.project

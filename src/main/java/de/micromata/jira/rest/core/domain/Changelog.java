@@ -16,7 +16,7 @@ public class Changelog {
     @Expose
     private Integer total;
     @Expose
-    private List<History> histories = new ArrayList<History>();
+    private List<History> histories = new ArrayList<>();
 
     public List<History> getHistories() {
         return histories;

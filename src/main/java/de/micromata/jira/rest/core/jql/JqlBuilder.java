@@ -28,7 +28,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class JqlBuilder {
 
-    private StringBuffer jql = null;
+    private StringBuffer jql;
 
     public JqlBuilder() {
         jql = new StringBuffer();
@@ -88,7 +88,7 @@ public class JqlBuilder {
                 jql.append(fields[i]);
             }
 
-            jql.append(" " + order);
+            jql.append(" ").append(order);
 
             return build();
         }

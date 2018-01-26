@@ -37,7 +37,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
         this.executorService = executorService;
     }
 
-    public Future<ProjectBean> getProjectByKey(final String projectKey) throws RestException, IOException {
+    public Future<ProjectBean> getProjectByKey(final String projectKey) {
         Validate.notNull(projectKey);
         return executorService.submit(() -> {
 
@@ -62,7 +62,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
     }
 
 
-    public Future<List<ProjectBean>> getAllProjects() throws RestException, IOException {
+    public Future<List<ProjectBean>> getAllProjects() {
         return executorService.submit(() -> {
 
             URIBuilder uriBuilder = buildPath(PROJECT);
@@ -87,7 +87,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
     }
 
 
-    public Future<List<VersionBean>> getProjectVersions(final String projectKey) throws RestException, IOException {
+    public Future<List<VersionBean>> getProjectVersions(final String projectKey) {
         Validate.notNull(projectKey);
         return executorService.submit(() -> {
 
@@ -113,7 +113,7 @@ public class ProjectClientImpl extends BaseClient implements ProjectClient, Rest
     }
 
 
-    public Future<List<ComponentBean>> getProjectComponents(final String projectKey) throws RestException, IOException {
+    public Future<List<ComponentBean>> getProjectComponents(final String projectKey) {
         Validate.notNull(projectKey);
         return executorService.submit(() -> {
 

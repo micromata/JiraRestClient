@@ -20,7 +20,7 @@ public class FieldMetaBean {
     @Expose
     private Boolean hasDefaultValue;
     @Expose
-    private List<String> operations = new ArrayList<String>();
+    private List<String> operations = new ArrayList<>();
 
     public FieldMetaBean() {
     }

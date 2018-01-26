@@ -22,7 +22,7 @@ public interface SearchClient {
      * @return list of issues
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    Future<JqlSearchResult> searchIssues(JqlSearchBean jsb) throws RestException, IOException;
+    Future<JqlSearchResult> searchIssues(JqlSearchBean jsb);
 
     /**
      * Create a new Search Filter for the logged in User

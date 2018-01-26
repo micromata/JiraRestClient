@@ -25,7 +25,7 @@ public interface SystemClient {
      * @throws RestException
      * @throws IOException
      */
-    Future<ConfigurationBean> getConfiguration() throws RestException, IOException;;
+    Future<ConfigurationBean> getConfiguration();
 
     /**
      * Returns a list of all issue types visible to the connected client.
@@ -33,7 +33,7 @@ public interface SystemClient {
      * @return list of issue types
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    Future<List<IssuetypeBean>> getIssueTypes() throws RestException, IOException;
+    Future<List<IssuetypeBean>> getIssueTypes();
 
     /**
      * Returns a list of all statuses.
@@ -41,7 +41,7 @@ public interface SystemClient {
      * @return list of statuses
      * @throws RestException
      */
-    Future<List<StatusBean>> getStates() throws RestException, IOException;
+    Future<List<StatusBean>> getStates();
 
 
     /**
@@ -50,7 +50,7 @@ public interface SystemClient {
      * @return
      * @throws RestException
      */
-    Future<List<PriorityBean>> getPriorities() throws RestException, IOException;
+    Future<List<PriorityBean>> getPriorities();
 
 
     /**

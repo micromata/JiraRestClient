@@ -1,5 +1,6 @@
 package de.micromata.jira.rest.junit;
 
+import de.micromata.jira.rest.JiraRestClient;
 import de.micromata.jira.rest.core.domain.*;
 import de.micromata.jira.rest.core.domain.field.FieldBean;
 import de.micromata.jira.rest.core.domain.update.FieldOperation;
@@ -22,6 +23,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -39,7 +41,7 @@ public class TestIssueClient extends BaseTest {
     @Test
     public void testGetIssueByKey() throws IOException, RestException, ExecutionException, InterruptedException {
         Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH);
-        Map<String, FieldBean> customfields = jiraRestClient.getCustomfields();
+        Map<String, FieldBean> customfields = JiraRestClient.getCustomfields();
         final IssueBean issueBean = future.get();
         Assert.assertNotNull(issueBean);
         Assert.assertEquals(ISSUEKEY_TO_SEARCH, issueBean.getKey());
@@ -48,10 +50,10 @@ public class TestIssueClient extends BaseTest {
 
     @Test
     public void testGetIssueKeyWithFields() throws RestException, IOException, ExecutionException, InterruptedException {
-        List<String> field = new ArrayList<String>();
+        List<String> field = new ArrayList<>();
         field.add(EField.SUMMARY.getField());
         field.add(EField.DESCRIPTION.getField());
-        List<String> expand = new ArrayList<String>();
+        List<String> expand = new ArrayList<>();
         expand.add(EField.RENDEREDFIELDS.getField());
         expand.add(EField.TRANSITIONS.getField());
         expand.add(EField.CHANGELOG.getField());
@@ -129,7 +131,7 @@ public class TestIssueClient extends BaseTest {
         UserBean userBean = new UserBean();
         userBean.setName("admin");
         fields.setAssignee(userBean);
-        List<String> labels = new ArrayList<String>();
+        List<String> labels = new ArrayList<>();
         labels.add("foobar");
         labels.add("inubit");
         fields.setLabels(labels);
@@ -159,7 +161,7 @@ public class TestIssueClient extends BaseTest {
         String newEnviroment = environment + NEW_LINE + NEW_LINE + issue.getSelf();
         IssueUpdate issueUpdate = new IssueUpdate();
         Map<String, List<FieldOperation>> update = issueUpdate.getUpdate();
-        List<FieldOperation> operations = new ArrayList<FieldOperation>();
+        List<FieldOperation> operations = new ArrayList<>();
         operations.add(new FieldOperation(Operation.SET.getName(), newEnviroment));
         update.put(JsonConstants.PROP_ENVIRONMENT, operations);
         final Future<IssueBean> updateFuture = jiraRestClient.getIssueClient().updateIssue(ISSUEKEY_TO_SEARCH, issueUpdate);
@@ -181,8 +183,8 @@ public class TestIssueClient extends BaseTest {
     @Test
     public void testSaveAttachment() throws IOException, RestException, ExecutionException, InterruptedException {
         ClassLoader classLoader = this.getClass().getClassLoader();
-        File file = new File(classLoader.getResource("fields.json").getFile());
-        File file2  = new File(classLoader.getResource("customfields.json").getFile());
+        File file = new File(Objects.requireNonNull(classLoader.getResource("fields.json")).getFile());
+        File file2  = new File(Objects.requireNonNull(classLoader.getResource("customfields.json")).getFile());
         if(file.exists() == true){
             try {
                 Future<List<AttachmentBean>> listFuture = jiraRestClient.getIssueClient().saveAttachmentToIssue(ISSUEKEY_TO_SEARCH, file, file2);

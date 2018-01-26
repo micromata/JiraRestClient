@@ -35,7 +35,7 @@ public abstract class BaseClient {
     protected final URI baseUri;
     protected ExecutorService executorService;
 
-	protected Gson gson	= new GsonBuilder()
+	protected final Gson gson	= new GsonBuilder()
             .excludeFieldsWithoutExposeAnnotation()
             .registerTypeAdapter(IssueBean.class, new IssueBeanDeserializer())
             .registerTypeAdapter(MetaBean.class, new MetaBeanDeserializer())

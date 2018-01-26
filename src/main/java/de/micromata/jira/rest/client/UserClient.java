@@ -43,7 +43,7 @@ public interface UserClient {
      * @param username The username of the User
      * @return The UserBean for the username or null if the logged in User has no permission to get another user
      */
-    Future<UserBean> getUserByUsername(String username) throws RestException, IOException;
+    Future<UserBean> getUserByUsername(String username);
 
     /**
      * Returns the logged in remote user.

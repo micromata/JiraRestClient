@@ -11,7 +11,7 @@ import de.micromata.jira.rest.core.domain.field.FieldBean;
  */
 public abstract class BaseDeserializer {
 
-    protected Gson gson = new GsonBuilder()
+    protected final Gson gson = new GsonBuilder()
             .excludeFieldsWithoutExposeAnnotation()
             .create();
 

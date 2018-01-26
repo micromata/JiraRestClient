@@ -6,11 +6,9 @@ import de.micromata.jira.rest.core.jql.*;
 import de.micromata.jira.rest.core.util.RestException;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

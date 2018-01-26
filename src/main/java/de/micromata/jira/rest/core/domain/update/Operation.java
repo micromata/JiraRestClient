@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 public enum Operation {
     SET("set"),EDIT("edit"),REMOVE("remove");
 
-    private String name = StringUtils.EMPTY;
+    private String name;
 
     Operation(String name) {
         this.name = name;

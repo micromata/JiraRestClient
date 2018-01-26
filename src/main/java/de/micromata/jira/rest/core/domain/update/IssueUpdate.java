@@ -14,9 +14,9 @@ import java.util.Map;
 public class IssueUpdate {
 
     @Expose
-    private Map<String, Object> fields = new HashMap<String, Object>();
+    private Map<String, Object> fields = new HashMap<>();
     @Expose
-    private Map<String, List<FieldOperation>> update = new HashMap<String, List<FieldOperation>>();
+    private Map<String, List<FieldOperation>> update = new HashMap<>();
 
     public Map<String, Object> getFields() {
         return fields;

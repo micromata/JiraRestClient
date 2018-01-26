@@ -41,7 +41,7 @@ public class URIHelper {
     }
 
 
-    public static URIBuilder buildPath(URI baseUri, String... paths) throws URISyntaxException {
+    public static URIBuilder buildPath(URI baseUri, String... paths) {
         URIBuilder uriBuilder = new URIBuilder(baseUri);
         String basePath = uriBuilder.getPath();
         for (String path : paths) {

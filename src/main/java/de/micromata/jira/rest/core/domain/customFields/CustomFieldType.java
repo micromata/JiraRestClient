@@ -36,9 +36,9 @@ public enum CustomFieldType {
         this.hasAllowedValues = hasAllowedValues;
     }
 
-    public String jiraName = StringUtils.EMPTY;
+    private String jiraName;
 
-    public boolean hasAllowedValues = false;
+    private boolean hasAllowedValues;
 
     public String getJiraName() {
         return jiraName;

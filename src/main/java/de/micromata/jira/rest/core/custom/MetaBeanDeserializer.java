@@ -25,7 +25,7 @@ public class MetaBeanDeserializer extends BaseDeserializer implements JsonDeseri
 
 
     public static final String ALLOWED_VALUES = "allowedValues";
-    private Map<String, FieldMetaBean> customFieldsMetaBeanCache = new HashMap<>();
+    private final Map<String, FieldMetaBean> customFieldsMetaBeanCache = new HashMap<>();
 
     @Override
     public MetaBean deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

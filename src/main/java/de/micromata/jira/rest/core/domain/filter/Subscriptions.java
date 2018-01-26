@@ -11,7 +11,7 @@ public class Subscriptions {
     @Expose
     private Integer size;
     @Expose
-    private List<Object> items = new ArrayList<Object>();
+    private List<Object> items = new ArrayList<>();
     @SerializedName("max-results")
     @Expose
     private Integer maxResults;

@@ -15,7 +15,7 @@ public class History {
     @Expose
     private String created;
     @Expose
-    private List<Item> items = new ArrayList<Item>();
+    private List<Item> items = new ArrayList<>();
 
     public UserBean getAuthor() {
         return author;

@@ -8,20 +8,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.message.BasicHeader;
 
 import javax.ws.rs.core.MediaType;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.nio.charset.Charset;
 
 /**
  * User: Christian Schulze
@@ -49,7 +41,7 @@ public class HttpMethodFactory {
         return method;
     }
 
-    public static HttpPost createPostMethod(URI uri, String body) throws UnsupportedEncodingException {
+    public static HttpPost createPostMethod(URI uri, String body) {
         if(uri == null) return null;
         HttpPost method = new HttpPost(uri);
         setHeader(method);
@@ -59,7 +51,7 @@ public class HttpMethodFactory {
         return method;
     }
 
-    public static HttpPut createPutMethod(URI uri, String body) throws UnsupportedEncodingException {
+    public static HttpPut createPutMethod(URI uri, String body) {
         if(uri == null) return null;
         HttpPut method = new HttpPut(uri);
         setHeader(method);

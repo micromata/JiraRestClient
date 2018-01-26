@@ -112,7 +112,7 @@ public class JiraRestClient implements RestParamConstants, RestPathConstants {
         // setzen des Proxies
         if(proxyHost != null){
             this.proxyHost = proxyHost;
-            this.requestConfig = RequestConfig.custom().setProxy(proxyHost).build();
+            requestConfig = RequestConfig.custom().setProxy(proxyHost).build();
         }
 
         URIBuilder uriBuilder = URIHelper.buildPath(baseUri, USER);

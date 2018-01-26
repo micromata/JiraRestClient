@@ -23,7 +23,7 @@ public enum SortOrder {
 
     ASC("asc"), DESC("desc");
 
-    private String order;
+    private final String order;
 
    SortOrder(String order) {
         this.order = order;

@@ -24,7 +24,6 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -33,7 +32,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -50,7 +48,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
         this.executorService = executorService;
     }
 
-    public Future<IssueBean> getIssueByKey(final String issueKey) throws RestException, IOException {
+    public Future<IssueBean> getIssueByKey(final String issueKey) {
         Validate.notNull(issueKey);
         return executorService.submit(() -> {
 
@@ -74,8 +72,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
     }
 
 
-    public Future<IssueResponse> createIssue(final IssueBean issue)
-            throws RestException, IOException {
+    public Future<IssueResponse> createIssue(final IssueBean issue) {
         Validate.notNull(issue);
         return executorService.submit(() -> {
 
@@ -113,7 +110,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
     }
 
     public Future<IssueBean> updateIssue(final String issueKey,
-                                         final IssueUpdate issueUpdate) throws IOException, RestException {
+                                         final IssueUpdate issueUpdate) {
 
         Validate.notNull(issueKey);
         Validate.notNull(issueUpdate);
@@ -139,8 +136,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
     }
 
     public Future<IssueBean> getIssueByKey(final String issueKey,
-                                           final List<String> fields, final List<String> expand)
-            throws RestException, IOException {
+                                           final List<String> fields, final List<String> expand) {
 
         return executorService.submit(() -> {
 
@@ -167,8 +163,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
         });
     }
 
-    public Future<CommentsBean> getCommentsByIssue(final String issueKey)
-            throws RestException, IOException {
+    public Future<CommentsBean> getCommentsByIssue(final String issueKey) {
 
         Validate.notNull(issueKey);
         return executorService.submit(() -> {
@@ -217,8 +212,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
         }
     }
 
-    public Future<Byte[]> getAttachment(final URI uri) throws RestException,
-            IOException {
+    public Future<Byte[]> getAttachment(final URI uri) {
 
         Validate.notNull(uri);
         return executorService.submit(() -> {
@@ -243,8 +237,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
         return null;
     }
 
-    public Future<AttachmentBean> getAttachment(final long id)
-            throws IOException, RestException {
+    public Future<AttachmentBean> getAttachment(final long id) {
 
         return executorService.submit(() -> {
 
@@ -269,7 +262,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
 
     }
 
-    public Future<List<AttachmentBean>> saveAttachmentToIssue(String issuekey, File... files) throws URISyntaxException, IOException, RestException {
+    public Future<List<AttachmentBean>> saveAttachmentToIssue(String issuekey, File... files) {
 
         return executorService.submit(() -> {
             URIBuilder uriBuilder = buildPath(ISSUE, issuekey, ATTACHMENTS);
@@ -348,7 +341,7 @@ public class IssueClientImpl extends BaseClient implements IssueClient,
     }
 
     public Future<List<TransitionBean>> getIssueTransitionsByKey(
-            final String issueKey) throws RestException, IOException {
+            final String issueKey) {
 
         Validate.notNull(issueKey);
         return executorService.submit(() -> {

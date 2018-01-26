@@ -23,7 +23,7 @@ public interface IssueClient {
      * @return IssueResponse
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    Future<IssueResponse> createIssue(IssueBean issue) throws RestException, IOException;
+    Future<IssueResponse> createIssue(IssueBean issue);
 
     /**
      * Returns a full representation of the issue for the given issue key.
@@ -32,14 +32,14 @@ public interface IssueClient {
      * @return all informations for the issue or null if the issue did not exist
      * @throws RestException
      */
-    Future<IssueBean> getIssueByKey(String issueKey) throws RestException, IOException;
+    Future<IssueBean> getIssueByKey(String issueKey);
 
     /**
      * update Field of an Issue
      *
      *
      */
-    Future<IssueBean> updateIssue(String issueKey, IssueUpdate issueUpdate) throws IOException, RestException;
+    Future<IssueBean> updateIssue(String issueKey, IssueUpdate issueUpdate);
 
     /**
      * Return a Issue with the given Field and Expand Fields.
@@ -49,7 +49,7 @@ public interface IssueClient {
      * @param expand The Field which must expand.
      * @return IssueBean or null if the issue did not exist
      */
-    Future<IssueBean> getIssueByKey(String issueKey, List<String> fields, List<String> expand) throws RestException, IOException;
+    Future<IssueBean> getIssueByKey(String issueKey, List<String> fields, List<String> expand);
 
     /**
      * Get Attachement as byte Array, or null
@@ -58,7 +58,7 @@ public interface IssueClient {
      * @return byte[] or null
      * @throws RestException
      */
-    Future<Byte[]> getAttachment(URI uri) throws RestException, IOException;
+    Future<Byte[]> getAttachment(URI uri);
 
 
     /**
@@ -76,12 +76,12 @@ public interface IssueClient {
      * @param id the id of the attachment
      * @return
      */
-    Future<AttachmentBean> getAttachment(long id) throws IOException, RestException;
+    Future<AttachmentBean> getAttachment(long id);
 
     /**
      * Save Attachment to Issue
      */
-    Future<List<AttachmentBean>> saveAttachmentToIssue(String issuekey, File... file) throws IOException, RestException, URISyntaxException;
+    Future<List<AttachmentBean>> saveAttachmentToIssue(String issuekey, File... file);
 
     /**
      * Returns true if the worklog is successfully transfered to the Issue.
@@ -113,7 +113,7 @@ public interface IssueClient {
      * @return List of TransitionBean
      * @throws RestException
      */
-    Future<List<TransitionBean>> getIssueTransitionsByKey(String issueKey) throws RestException, IOException;
+    Future<List<TransitionBean>> getIssueTransitionsByKey(String issueKey);
 
     /**
      * Returns a summarized representation of all comments for the given issue.
@@ -122,7 +122,7 @@ public interface IssueClient {
      * @return summarized representation of all comments
      * @throws de.micromata.jira.rest.core.util.RestException
      */
-    Future<CommentsBean> getCommentsByIssue(String issueKey) throws RestException, IOException;
+    Future<CommentsBean> getCommentsByIssue(String issueKey);
 
     /**
      * Add comment to issue.

@@ -22,11 +22,11 @@ import java.util.concurrent.Executors;
  * Email: c.schulze@micromata.de
  * Date: 09.08.2014
  */
-public class BaseTest implements JqlConstants, RestPathConstants {
+class BaseTest implements JqlConstants, RestPathConstants {
 
-    static final String TEST_SYSTEM_URL = "http://localhost:2990/jira";
-    static final String USERNAME = "admin";
-    static final String PASSWORD = "admin";
+    private static final String TEST_SYSTEM_URL = "http://localhost:2990/jira";
+    private static final String USERNAME = "admin";
+    private static final String PASSWORD = "admin";
     static final String USERNAME_TO_SEARCH = "admin";
     static final String ISSUEKEY_TO_SEARCH = "DEMO-1";
     static final String PROJECT_TO_SEARCH = "DEMO";
