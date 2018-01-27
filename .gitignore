@@ -1,3 +1,4 @@
 target/
 .idea/
 jiraRestClient.iml
+src/test/resource/config.properties
