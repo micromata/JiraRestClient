@@ -186,13 +186,9 @@ public class TestIssueClient extends BaseTest {
         File file = new File(Objects.requireNonNull(classLoader.getResource("fields.json")).getFile());
         File file2  = new File(Objects.requireNonNull(classLoader.getResource("customfields.json")).getFile());
         if(file.exists() == true){
-            try {
-                Future<List<AttachmentBean>> listFuture = jiraRestClient.getIssueClient().saveAttachmentToIssue(ISSUEKEY_TO_SEARCH, file, file2);
-                List<AttachmentBean> attachmentBeen = listFuture.get();
-                Assert.assertFalse(attachmentBeen.isEmpty());
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
+            Future<List<AttachmentBean>> listFuture = jiraRestClient.getIssueClient().saveAttachmentToIssue(ISSUEKEY_TO_SEARCH, file, file2);
+            List<AttachmentBean> attachmentBeen = listFuture.get();
+            Assert.assertFalse(attachmentBeen.isEmpty());
         }
     }
 
