@@ -35,13 +35,16 @@ import java.util.concurrent.Future;
  */
 public class TestIssueClient extends BaseTest {
 
-    private static final String NEW_LINE = System.getProperty("line.separator");
+    private static final String NEW_LINE = System.getProperty("\r\n");
 
 
     @Test
     public void testGetIssueByKey() throws IOException, RestException, ExecutionException, InterruptedException {
         Future<IssueBean> future = jiraRestClient.getIssueClient().getIssueByKey(ISSUEKEY_TO_SEARCH);
         Map<String, FieldBean> customfields = JiraRestClient.getCustomfields();
+        
+    
+        
         final IssueBean issueBean = future.get();
         Assert.assertNotNull(issueBean);
         Assert.assertEquals(ISSUEKEY_TO_SEARCH, issueBean.getKey());
