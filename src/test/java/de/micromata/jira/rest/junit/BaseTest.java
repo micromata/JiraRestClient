@@ -33,19 +33,20 @@ class BaseTest implements JqlConstants, RestPathConstants {
     static final String PASSWORD_PARAM = "password";
 
     static final String USERNAME_TO_SEARCH = "admin";
-    static final String ISSUEKEY_TO_SEARCH = "DEMO-1";
+    static final String ISSUEKEY_TO_SEARCH = "AIT-1301";
     static final String PROJECT_TO_SEARCH = "DEMO";
 
-    String testSystemUrl = "http://localhost:2990/jira";
-    String login = "admin";
-    String password = "admin";
+    String testSystemUrl = "https://abnamroclearing.metis.prd:59509/jira";
+    String login = "n70761";
+    String password = "Lrmggvh65";
 
     JiraRestClient jiraRestClient;
 
     public BaseTest() {
         try {
-            loadConfig();
-        } catch (IOException e) {
+        	connect();
+            //loadConfig();
+        } catch ( Exception e) {
             e.printStackTrace();
         }
     }
